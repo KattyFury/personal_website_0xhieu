@@ -33,6 +33,8 @@ export async function onRequestPost({ request, env }) {
   const surf = (path, params) => json('https://api.asksurf.ai/gateway/v1' + path + '?' + new URLSearchParams(params), {
     Authorization: 'Bearer ' + env.SURF_API_KEY,
   });
+  const cg = path => json('https://api.coingecko.com/api/v3' + path,
+    env.COINGECKO_API_KEY ? { 'x-cg-demo-api-key': env.COINGECKO_API_KEY } : {});
   try {
     const found = await surf('/search/project', { q: ticker, limit: '100' });
     const matches = (found.data || []).filter(p => String(p.symbol || '').toUpperCase() === ticker);
@@ -50,11 +52,11 @@ export async function onRequestPost({ request, env }) {
     const add = (key, value, sources) => { fields[key] = value; evidence[key] = sources; };
     let coin;
     try {
-      const search = await json('https://api.coingecko.com/api/v3/search?query=' + encodeURIComponent(ticker));
+      const search = await cg('/search?query=' + encodeURIComponent(ticker));
       const coins = (search.coins || []).filter(c => String(c.symbol || '').toUpperCase() === ticker &&
         normalized(c.name) === normalized(detail.overview.name));
       if (coins.length === 1) {
-        coin = await json('https://api.coingecko.com/api/v3/coins/' + encodeURIComponent(coins[0].id) +
+        coin = await cg('/coins/' + encodeURIComponent(coins[0].id) +
           '?localization=false&tickers=false&community_data=false&developer_data=false');
         if (String(coin.symbol || '').toUpperCase() !== ticker || normalized(coin.name) !== normalized(detail.overview.name)) coin = null;
         else add('cgId', coin.id, ['SURF', 'CoinGecko']);
