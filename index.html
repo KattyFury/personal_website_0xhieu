@@ -742,9 +742,17 @@
       /* Khung chung */
       .val-wrap, .ard-wrap { padding-bottom: 32px; }
       .panel-head { gap: 8px; }
-      /* Valuation: tiêu đề dài + 3 nút không đủ chỗ 1 hàng → tiêu đề trọn hàng trên, nút xuống dưới canh phải */
-      #valuation-view .panel-head { flex-wrap: wrap; justify-content: flex-end; }
-      #valuation-view .val-intro { flex-basis: 100%; }
+      /* Valuation luôn một hàng; thu gọn nút và co chữ theo phần ngang còn lại. */
+      #valuation-view .panel-head { flex-wrap: nowrap; }
+      #valuation-view .val-intro { flex: 1; min-width: 0; }
+      #valuation-view .val-intro > span { white-space: nowrap; }
+      #valuation-view .val-head-ctrl { gap: 8px; }
+      #valuation-view .camera-btn { width: 32px; height: 32px; }
+      #valuation-view .camera-btn::before { inset: 8px; }
+      #valuation-view .lang-dd-btn { height: 32px; padding: 0 8px; }
+      #valuation-view .lang-dd-btn.is-plus { width: 32px; min-width: 32px; padding: 0; }
+      #valuation-view .lang-toggle { height: 32px; }
+      #valuation-view .lang-btn { height: 32px; min-width: 28px; padding: 0 8px; }
       /* Tiêu đề dài không cắt "…": fitIntroTitles() lùi dần theo cỡ của design system (24→20→18→16→14) cho vừa 2 dòng */
       .val-intro { height: auto; }
       .val-intro > span { display: block; -webkit-line-clamp: unset; }
@@ -763,7 +771,16 @@
       #tge-section th:nth-child(2), #tge-section td:nth-child(2),
       #tge-section th:nth-child(3), #tge-section td:nth-child(3),
       #tge-section th:nth-child(6), #tge-section td:nth-child(6) { display: none; }
-      .val-boxes { grid-template-columns: 1fr; gap: 16px; }
+      .val-boxes { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+      .val-boxes > .val-card:first-child { grid-column: 1 / -1; }
+      .val-boxes > .val-card:not(:first-child) { min-width: 0; grid-template-rows: 64px 1fr; }
+      .val-boxes > .val-card:not(:first-child) .vc-q1 { height: 64px; padding: 8px; gap: 8px; font-size: 14px; line-height: 20px; letter-spacing: -.006em; }
+      .val-boxes > .val-card:not(:first-child) .vc-q1 .wte-ico { width: 16px; height: 16px; }
+      .val-boxes > .val-card:not(:first-child) .vc-q234 { padding: 8px; }
+      .val-boxes > .val-card:not(:first-child) .list-row { height: auto; min-height: 72px; padding: 8px; flex-direction: column; align-items: flex-start; justify-content: center; gap: 0; }
+      .val-boxes > .val-card:not(:first-child) .lr-title,
+      .val-boxes > .val-card:not(:first-child) .lr-meta { white-space: normal; overflow-wrap: anywhere; }
+      .val-boxes > .val-card:not(:first-child) .lr-val { text-align: left; }
       .tge-modal-body thead th, .tge-modal-body tbody td { padding: 8px; }
 
       /* Work */
@@ -1387,6 +1404,13 @@
       document.querySelectorAll('.val-intro > span').forEach(span => {
         span.style.fontSize = ''; span.style.lineHeight = '';
         if (!span.offsetWidth) return;                       // tab đang ẩn, đo sau
+        if (span.closest('#valuation-view') && matchMedia('(max-width: 640px)').matches) {
+          for (let size = 24; size >= 1; size--) {
+            span.style.fontSize = size + 'px'; span.style.lineHeight = '32px';
+            if (span.scrollWidth <= span.clientWidth) break;
+          }
+          return;
+        }
         // cỡ/dòng đúng thang design system: web-h3 24/32 → h4 20/28 → lead 18/28 → body 16/24 → caption 14/20
         for (const [size, lh] of [[24, 32], [20, 28], [18, 28], [16, 24], [14, 20]]) {
           span.style.fontSize = size + 'px'; span.style.lineHeight = lh + 'px';

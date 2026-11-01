@@ -1,4 +1,4 @@
-# Luật thiết kế — 0xhieu.xyz
+﻿# Luật thiết kế — 0xhieu.xyz
 
 > Chốt 2026-10-24. Site theo **design system nguyen0xhieu** (Figma `hieu` `IPyKVg7ylGw1mjMRyYVrL7` · bản đọc nhanh: Design System artifact), với 1 biến thể riêng cho site này:
 > **ĐEN thay vai trò 0x Blue** (iconic là mèo đen) · **nền TRẮNG** (mắt kính trắng của mèo) · **VÀNG MẮT MÈO** cho chi tiết thiết kế.
@@ -56,7 +56,7 @@ Font hệ thống Apple (`-apple-system, BlinkMacSystemFont, 'SF Pro Text', syst
 | web-body / nav-button | 16/24 (400 / 600) | Thân bài · bullet · caption · tab nav · nút 48 · ô nhập |
 | web-caption / label | 14/20 (400 / 600) | Dòng danh sách · task · thẻ · header + số trong bảng (cả mobile) · nút nhỏ 40 · nhãn form · tab nav mobile |
 
-Tiêu đề màn dài (VI Valuation) trên mobile: **chiếm trọn hàng trên**, cụm nút xuống hàng dưới canh phải → giữ 24/32. Dự phòng `fitIntroTitles()` lùi **theo thang** 24/32 → 20/28 → 18/28 → 16/24 → 14/20 nếu vẫn quá 2 dòng — không bao giờ ra cỡ lẻ, không cắt "…".
+Tiêu đề Valuation trên mobile **luôn cùng 1 hàng với camera, Admin và VI/EN, không xuống dòng hay cắt chữ** (chốt 2026-11-01). Nút cao 32, Admin đệm ngang 8, toggle mỗi nút tối thiểu 28; tiêu đề tự co từ 24px theo chiều ngang còn lại. Đây là ngoại lệ do user chốt với cỡ chữ/kích thước nút mặc định.
 
 ## 3. Thành phần
 
@@ -103,4 +103,4 @@ Mọi khoảng cách là **bội số của 8** — không có khe/đệm 2, 4, 
 | CV — Highlights | 3 × 384, rãnh 24, ảnh 3:2 |
 | CV — timeline | 3 cột `128 / 64 / nội dung`, chấm vàng 16 canh giữa dòng đầu (flex, không số lệch), item cách 32; bullet rộng tối đa 680 |
 
-Màn ≤ 1024: 3 cột → 2. Màn ≤ 640: mọi lưới → 1 cột.
+Màn ≤ 1024: 3 cột → 2. Màn ≤ 640: mọi lưới → 1 cột, trừ Valuation: Hệ số TGE rộng cả hàng, Vùng nguy hiểm + Narrative nằm cạnh nhau (2 cột, khe 16). Hai box nhỏ giữ cao 328, header 64 chữ 14, đệm 8, dòng tối thiểu 72 xếp nhãn trên/số dưới, nội dung thừa cuộn (chốt 2026-11-01).

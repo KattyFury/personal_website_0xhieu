@@ -1,6 +1,8 @@
-# HANDOFF — 0xhieu.xyz (repo `website_personal_0xhieu`, tên cũ `cv`)
+﻿# HANDOFF — 0xhieu.xyz (repo `website_personal_0xhieu`, tên cũ `cv`)
 
-**Chốt trạng thái:** 2026-10-31
+**Chốt trạng thái:** 2026-11-01
+
+Mobile Valuation: Hệ số TGE chiếm cả hàng; Vùng nguy hiểm và Narrative nằm cùng hàng 2 cột. Nhãn/số xếp dọc trong hai box nhỏ, header cho phép xuống dòng. Đã đo Chrome với dữ liệu thật ở 320/360/390/430/640px × VI/EN: cùng hàng, không tràn chữ.
 **Repo:** https://github.com/KattyFury/website_personal_0xhieu · **Local:** `D:\Files\Claude\website_personal_0xhieu` (thư mục đổi tên từ `cv` 10-05; máy khác còn tên cũ thì đổi theo)
 **Live:** Cloudflare Pages, project **`0xhieu-xyz`** (khác tên repo) — auto-deploy từ `main`.
 
@@ -150,6 +152,7 @@ Account `f9df99b7751b7dc3c80a22b6911c6f2b`, project Pages `0xhieu-xyz`. API toke
 
 ## Nhật ký
 
+- 2026-11-01: **Header Valuation mobile luôn 1 hàng** theo yêu cầu user: bỏ wrap/basis 100%, thu gọn nút còn 32px, tự co chữ tiêu đề để hiện đủ. Đã đo Chrome 280/320/360/375/390/430/640px × VI/EN × Admin khóa/mở: 28 trạng thái cùng hàng, không tràn. Quy định cũ cho phép xuống hàng đã bị thay thế.
 - 2026-10-31: **Bảng Quan sát altcoin hiện 5 token mỗi khung**: giảm chiều cao tối đa 440 → 328px (header 48 + 5 dòng × 56), giữ cuộn để xem toàn bộ token; 3 box phân tích bên dưới lên cao hơn 112px.
 - 2026-10-28: **Task tab Work luôn hiện đủ chữ** (user: "buộc phải hiển thị đủ, mở box ra là được"). Trước: desktop ép 1 dòng + "…". Nay hàng cao theo chữ ở mọi màn. Cùng ngày: **thêm trường `website` (ô "Link dự án" trong popup Sửa task)** — bấm tên dự án mở link này thay vì X; `cleanLink` trong `private.js` tự thêm `https://` khi gõ thiếu (trước đó bỏ âm thầm, VD "x.com/binance" bị mất). Data cũ chưa có `website` → phải nhập tay. Verify: chụp `/airdrop` desktop + mobile 0 dòng bị cắt, form 2 cột đúng; ds-audit TỔNG 0; chưa test lưu thật (local không có KV).
 
