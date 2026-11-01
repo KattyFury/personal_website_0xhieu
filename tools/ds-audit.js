@@ -1,5 +1,5 @@
 // Gác cổng design system: đo computed style MỌI phần tử hiển thị ở 3 tab × desktop 1440 / mobile 390 (+ 3 popup Valuation),
-// so với token trong DESIGN_SYSTEM.md (màu, cỡ/dòng/đậm/giãn chữ, khoảng cách bội số 8, radius 16|pill, shadow Y2, nút 40/48, ô nhập 48).
+// so với DESIGN_SYSTEM.md: CV spacious (nhịp 8); Valuation/Work/popup compact (nhịp 4, radius 8/16, ô nhập 40).
 //   node tools/ds-audit.js http://127.0.0.1:8787      (server local có SPA fallback + /api proxy)
 //   node tools/ds-audit.js https://0xhieu.xyz
 // Kết quả đúng: TỔNG 0 (margin căn giữa tự động đã được bỏ qua). Mọi dòng in ra = lỗi phải sửa.
@@ -32,6 +32,7 @@ const PROBE = `(() => {
     const r = el.getBoundingClientRect();
     if (!r.width || !r.height) continue;
     const cs = getComputedStyle(el);
+    const compact = !!el.closest('#valuation-view, #airdrop-view, .wl-modal-backdrop, #rank-filter-float');
     if (cs.visibility === 'hidden' || cs.display === 'none' || +cs.opacity === 0) continue;
     if (['svg','path','circle','rect','polyline','line','img','br','script','style','table','thead','tbody','tr','colgroup','col'].includes(el.tagName.toLowerCase())) continue;
     const hasText = [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim());
@@ -62,15 +63,15 @@ const PROBE = `(() => {
     }
     // khoảng cách
     for (const p of ['paddingTop','paddingRight','paddingBottom','paddingLeft','marginTop','marginRight','marginBottom','marginLeft','rowGap','columnGap']) {
-      const v = cs[p]; if (!v || v === 'normal' || ok8(v)) continue;
+      const v = cs[p]; if (!v || v === 'normal' || (compact ? px(v) % 4 === 0 : ok8(v))) continue;
       // margin 2 bên bằng nhau = căn giữa tự động (margin: auto) → không phải lỗi
       const pair = { marginLeft: 'marginRight', marginRight: 'marginLeft', marginTop: 'marginBottom', marginBottom: 'marginTop' }[p];
       if (pair && cs[pair] === v) continue;
-      bad(el, p + ' ' + v + ' không bội số 8');
+      bad(el, p + ' ' + v + ' sai nhịp ' + (compact ? 4 : 8));
     }
     // bo góc
     const rad = px(cs.borderTopLeftRadius);
-    if (rad && rad !== 16 && !(rad >= r.height / 2 - 0.5) && cs.borderTopLeftRadius.indexOf('%') < 0) bad(el, 'radius ' + rad + ' (chỉ 16 hoặc pill)');
+    if (rad && rad !== 16 && !(compact && rad === 8) && !(rad >= r.height / 2 - 0.5) && cs.borderTopLeftRadius.indexOf('%') < 0) bad(el, 'radius ' + rad + ' sai profile');
     // bóng
     if (cs.boxShadow !== 'none') {
       const s = cs.boxShadow.replace(/\\s+/g, ' ');
@@ -81,9 +82,9 @@ const PROBE = `(() => {
     const isBtn = tag === 'button' || (tag === 'a' && /btn/.test(el.className));
     if (isBtn && !el.closest('nav') && !el.classList.contains('box-title-btn')) {
       const h = Math.round(r.height);
-      if (![40, 48].includes(h) && !(el.classList.contains('predict-link') && h === 56)) bad(el, 'nút cao ' + h + ' (DS: 48, nhỏ 40, icon 40×40)');
+      if (!(compact ? [32, 40, 44, 48] : [40, 48]).includes(h)) bad(el, 'nút cao ' + h + ' sai profile');
     }
-    if ((tag === 'input' || tag === 'select') && Math.round(r.height) !== 48) bad(el, 'ô nhập cao ' + Math.round(r.height));
+    if ((tag === 'input' || tag === 'select') && !(compact ? [40, 44] : [48]).includes(Math.round(r.height))) bad(el, 'ô nhập cao ' + Math.round(r.height));
   }
   return out;
 })()`;
