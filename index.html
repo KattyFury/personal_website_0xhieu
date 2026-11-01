@@ -382,19 +382,28 @@
     .camera-btn[disabled] { background: var(--line); box-shadow: none; cursor: default; }
     .camera-btn[disabled]::before { background: var(--muted); }
 
-    /* ── Bảng altcoin: header cố định tách khỏi vùng cuộn ──
-       7 cột theo tỉ lệ (2 cột mép hẹp hơn chút vì không có khe ngoài), khai bằng % để co theo màn. */
+    /* Bảng altcoin: cột rộng theo nội dung đã đo, ATH đủ chỗ cho cặp số + tỷ số trên một hàng.
+       Màn hẹp cuộn ngang trong bảng, header đồng bộ với thân. */
     #tge-section {
-      display: flex; flex-direction: column; max-height: 360px; margin-bottom: 16px; overflow: hidden;   /* desktop: header 40 + 8 dòng × 40 */
+      display: flex; flex-direction: column; max-height: calc(360px + var(--val-scrollbar-height, 0px)); margin-bottom: 16px; overflow: hidden;   /* header 40 + 8 dòng × 40 + thanh cuộn ngang nếu có */
       background: var(--ground); border-radius: 16px; box-shadow: var(--shadow);
     }
-    #tge-head-wrap { flex: none; overflow: hidden; background: var(--amber-soft); }
+    #tge-head-wrap { flex: none; overflow: hidden; scrollbar-gutter: auto; background: var(--amber-soft); }
     #tge-section .val-table-scroll { flex: 1 1 auto; min-height: 0; overflow: auto; }
     .val-table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 14px; line-height: 20px; letter-spacing: -.006em; }
     #tge-section .val-table-body { border-spacing: 0; }
-    #tge-section th, #tge-section td { width: 14.458%; padding: 0 16px; }
-    #tge-section th:first-child, #tge-section td:first-child { width: 13.855%; padding-left: 16px; }
-    #tge-section th:last-child,  #tge-section td:last-child  { width: 13.855%; padding-right: 16px; }
+    #tge-section, .tge-modal-body {
+      --table-all-min: calc(var(--ck1, 64px) + var(--ck2, 128px) + var(--ck3, 64px) + var(--ck4, 56px) + var(--ck5, 232px) + var(--ck6, 56px) + var(--ck7, 64px) + 112px);
+    }
+    #tge-section .val-table, .tge-modal-body .val-table { min-width: var(--table-all-min); }
+    #tge-section th, #tge-section td { padding: 0 8px; }
+    #tge-section th:nth-child(1), #tge-section td:nth-child(1), .tge-modal-body th:nth-child(1), .tge-modal-body td:nth-child(1) { width: calc(var(--ck1, 64px) + 16px); }
+    #tge-section th:nth-child(2), #tge-section td:nth-child(2), .tge-modal-body th:nth-child(2), .tge-modal-body td:nth-child(2) { width: calc(var(--ck2, 128px) + 16px); }
+    #tge-section th:nth-child(3), #tge-section td:nth-child(3), .tge-modal-body th:nth-child(3), .tge-modal-body td:nth-child(3) { width: calc(var(--ck3, 64px) + 16px); }
+    #tge-section th:nth-child(4), #tge-section td:nth-child(4), .tge-modal-body th:nth-child(4), .tge-modal-body td:nth-child(4) { width: calc(var(--ck4, 56px) + 16px); }
+    #tge-section th:nth-child(5), #tge-section td:nth-child(5), .tge-modal-body th:nth-child(5), .tge-modal-body td:nth-child(5) { width: calc(var(--ck5, 232px) + 16px); }
+    #tge-section th:nth-child(6), #tge-section td:nth-child(6), .tge-modal-body th:nth-child(6), .tge-modal-body td:nth-child(6) { width: calc(var(--ck6, 56px) + 16px); }
+    #tge-section th:nth-child(7), #tge-section td:nth-child(7), .tge-modal-body th:nth-child(7), .tge-modal-body td:nth-child(7) { width: calc(var(--ck7, 64px) + 16px); }
     /* header bảng = web-label 14/600 */
     #tge-section thead th {
       position: sticky; top: 0; z-index: 2; height: 40px; border: none; background: var(--amber-soft);
@@ -416,7 +425,7 @@
     .val-table td.td-ticker.fdv-hi { color: var(--amber-text); }
     #tge-section td.td-ticker { font-weight: 600; }
     #tge-section td.td-ticker.fdv-hi { color: var(--amber-text); }
-    .ath-gain { display: block; font-weight: 600; color: var(--amber-text); }
+    .ath-gain { display: inline; margin-left: 4px; font-weight: 600; color: var(--amber-text); }
     #tge-section td.td-narrative { font-weight: 400; color: var(--grey); }
     #tge-section td.td-date { font-weight: 400; color: var(--muted); }
     #tge-section td.td-atl { font-weight: 400; color: var(--grey); }
@@ -433,16 +442,15 @@
        JS đo --ck1..7 = bề rộng ô dài nhất mỗi cột để cả cột thẳng mép trái. */
     .wl-modal.wl-modal--wide { width: calc(var(--modal-w) * 2); max-width: 100%; }
     .tge-modal-body { display: flex; flex-direction: column; max-height: 78vh; max-height: 78svh; overflow: hidden; }
-    .tge-modal-head { flex: none; overflow: hidden; }
+    .tge-modal-head { flex: none; overflow: hidden; scrollbar-gutter: auto; }
     .tge-modal-scroll { flex: 1 1 auto; min-height: 0; overflow: auto; }
-    .tge-modal-body th, .tge-modal-body td { width: calc(100% / 6); }
     .tge-modal-body thead th {
-      position: sticky; top: 0; z-index: 2; padding: 8px 16px;
+      position: sticky; top: 0; z-index: 2; padding: 8px;
       background: var(--amber-soft);
       font-size: 14px; font-weight: 600; text-align: center; white-space: nowrap; color: var(--ink);
     }
     .tge-modal-body tbody td {
-      height: 56px; padding: 8px 16px; border-bottom: 1px solid var(--line);
+      height: 56px; padding: 8px; border-bottom: 1px solid var(--line);
       text-align: center; vertical-align: middle; white-space: nowrap; color: var(--grey);
     }
     .tge-modal-body tbody tr:last-child td { border-bottom: none; }
@@ -781,14 +789,10 @@
       #airdrop-view .val-head-ctrl .lang-btn { min-width: 28px; padding: 0 4px; }
 
       /* Valuation — bảng ẩn 3 cột phụ Narrative + TGE + ×ATL để giữ chữ 14; ×ATH (dạng "đáy → đỉnh") được cột rộng nhất */
-      #tge-section { overflow-x: visible; } /* mobile cũng hiện 8 dòng */
+      #tge-section .val-table { min-width: calc(var(--ck1, 64px) + var(--ck4, 56px) + var(--ck5, 232px) + var(--ck7, 64px) + 64px); }
       #tge-section thead th, #tge-section tbody td,
       #tge-section th:first-child, #tge-section td:first-child,
       #tge-section th:last-child, #tge-section td:last-child { padding: 0 8px; }
-      #tge-section th:first-child, #tge-section td:first-child { width: 22%; padding-left: 16px; }
-      #tge-section th:last-child, #tge-section td:last-child { width: 22%; padding-right: 16px; }
-      #tge-section th:nth-child(4), #tge-section td:nth-child(4) { width: 20%; }
-      #tge-section th:nth-child(5), #tge-section td:nth-child(5) { width: 36%; }
       #tge-section th:nth-child(2), #tge-section td:nth-child(2),
       #tge-section th:nth-child(3), #tge-section td:nth-child(3),
       #tge-section th:nth-child(6), #tge-section td:nth-child(6) { display: none; }
@@ -1305,6 +1309,15 @@
     // ── TGE table popup ──────────────────────────────
     const tgeModal = document.getElementById('tge-modal');
     const tgeModalBody = document.getElementById('tge-modal-body');
+    const tgeTableScroll = document.querySelector('#tge-section .val-table-scroll');
+    const tgeTableHead = document.getElementById('tge-head-wrap');
+    const fitTableScrollbar = () => {
+      const height = tgeTableScroll.offsetHeight - tgeTableScroll.clientHeight;
+      document.getElementById('tge-section').style.setProperty('--val-scrollbar-height', height + 'px');
+      tgeTableHead.style.width = tgeTableScroll.clientWidth + 'px';
+    };
+    tgeTableScroll.addEventListener('scroll', () => { tgeTableHead.scrollLeft = tgeTableScroll.scrollLeft; }, { passive: true });
+    new ResizeObserver(fitTableScrollbar).observe(tgeTableScroll);
     const closeTge = () => tgeModal.classList.remove('open');
     document.getElementById('tge-intro').addEventListener('click', () => {
       tgeModalBody.innerHTML = '';
@@ -1326,8 +1339,10 @@
         const scrollWrap = document.createElement('div');
         scrollWrap.className = 'tge-modal-scroll thin-scroll';
         scrollWrap.appendChild(mkTable(body));
+        scrollWrap.addEventListener('scroll', () => { headWrap.scrollLeft = scrollWrap.scrollLeft; }, { passive: true });
 
         tgeModalBody.append(headWrap, scrollWrap);
+        new ResizeObserver(() => { headWrap.style.width = scrollWrap.clientWidth + 'px'; }).observe(scrollWrap);
       }
       tgeModal.classList.add('open');
     });

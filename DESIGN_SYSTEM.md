@@ -67,7 +67,7 @@ Chữ nội dung không dưới 14. Task không cắt chữ, được tự xuố
 - **Cả ba panel Valuation cố định cao 328px**, header 56px và thân chiếm phần còn lại; nội dung dài cuộn trong thân. Đây là ngoại lệ product do user yêu cầu, áp dụng mọi màn hình. Hệ số TGE: 3 dòng tối thiểu 56 + nút dự đoán tối thiểu 40, cách 12. Mỗi dòng dùng kẻ `line`, bỏ ô nền/radius và khe riêng.
 - Vùng nguy hiểm/Narrative: dòng desktop tối thiểu 56 (tên, metadata); danh sách nằm trong thân box cố định và cuộn khi dài. Không thêm dòng rỗng `padRows()`.
 - Mobile: cả ba panel cùng lưới 2 cột bằng nhau, khe 12; thứ tự Hệ số TGE → Vùng nguy hiểm → Narrative. Không panel nào tự chiếm cả hàng; header tối thiểu 40 (tăng theo chữ), chữ 14/20; dòng tối thiểu 56, nhãn/tên và metadata bên trái, giá trị bên phải; chừa khoảng 2 dòng chữ và được tăng theo nội dung nếu cần. Cả ba box luôn cao bằng nhau 328px.
-- Mỗi cặp trong ×ATH có thêm `(×N)` = số cuối / số đầu, dùng số gốc rồi làm tròn 2 chữ số; phần ngoặc cam đậm 600, hiện dưới cặp số. Áp dụng cả đáy-trước-đỉnh → ATH và TGE → ATH tuần đầu, không hiện nếu thiếu số đầu hợp lệ. Client/server cùng tính.
+- Mỗi cặp trong ×ATH có thêm `(×N)` = số cuối / số đầu, dùng số gốc rồi làm tròn 2 chữ số; phần ngoặc cam đậm 600, nằm cùng một hàng với cặp số. Cột ATH rộng theo nội dung dài nhất, các cột còn lại cũng được đo; màn hẹp cuộn ngang trong bảng, header cuộn đồng bộ. Bù chiều cao thanh cuộn ngang để vẫn đủ 8 dòng. Áp dụng cả đáy-trước-đỉnh → ATH và TGE → ATH tuần đầu, không hiện nếu thiếu số đầu hợp lệ. Client/server cùng tính.
 - Outer panel bo 16, viền `line`, không shadow; bảng chính giữ shadow hiện có làm vùng dữ liệu chính nổi.
 
 ### Work và thao tác
