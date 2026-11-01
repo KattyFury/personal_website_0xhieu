@@ -24,7 +24,7 @@ Giữ nguyên màu website: ground trắng, ink đen, grey #4B5568, muted #8B95A
 
 Font hệ thống theo token. Nội dung16/24, dữ liệu/task14/20, nhãn14/20 600, panel16/24 600, tiêu đề màn24/32; mobile toolbar20/18/16/14 theo chỗ. Số dùng tabular-nums. Không thu dữ liệu dưới14. Không cắt task/tên/tag. Hover chỉ đổi màu, không thay độ rộng chữ hay nâng card.
 
-Flat + border line là mặc định cho nút/bảng/panel. Radius panel16, control nhỏ8, dòng dữ liệu0, pill9999. Shadow chỉ cho popup/menu/toolbar nổi. Focus2px/offset2. Không invent màu/gradient hay điểm số trang trí.
+Flat + border line là mặc định cho nút/bảng/panel. Workspace Valuation/Work dùng chung token `--ds-workspace-*`: thẻ/bảng radius8, header trắng, padding ngang12, section dọc8, khe12. Popup radius16; control nhỏ8, dòng dữ liệu0, pill9999. Shadow chỉ cho popup/menu/toolbar nổi. Focus2px/offset2. Không invent màu/gradient hay điểm số trang trí.
 
 ## Trang CV `/` — spacious/editorial
 
@@ -36,11 +36,11 @@ Flat + border line là mặc định cho nút/bảng/panel. Radius panel16, cont
 
 ## Valuation `/valuation` — compact/data workspace
 
-- Header bảng chính/popup/ba box dùng chung `--val-header-*` từ token: cao56; desktop16/24 600, mobile14/20 600; nền yellow-soft.
+- Header bảng chính/popup/ba box dùng chung `--val-header-*` từ token: cao56; desktop16/24 600, mobile14/20 600; nền trắng và viền line theo header thẻ Work. Vàng nhạt là highlight có ý nghĩa (DAILY), không phải màu mặc định mọi header.
 - Bảng hiện8 token trên cả desktop/mobile, dòng40. Cao nội dung56 + 8×40; cộng viền2 và scrollbar nếu có. Tất cả ô đo theo content; header/body cùng cột và cuộn đồng bộ. Mobile ẩn Narrative, TGE, ATL; màn thiếu chỗ cuộn ngang trong bảng, không ép ATH xuống dòng hay giảm chữ.
 - ATH `đầu → cuối (×N)` một hàng, N=cuối/đầu từ số gốc, làm tròn2; tỷ số cam đậm. Client/server cùng công thức. Ticker đậm600: FDV VC dưới300M đen, từ300M cam, không chấm.
 - Ba box phụ cố định328. Nhãn/tên trái, giá trị phải; mỗi dòng min56 và được tăng để hiện đủ nội dung. Nội dung dài cuộn trong thân. Không thêm dòng trống.
-- Desktop3 cột (tablet2), mobile2 cột bằng nhau; không tự cho box nào span cả hàng. Khe16 desktop/12 mobile.
+- Desktop3 cột (tablet2), mobile2 cột bằng nhau; không tự cho box nào span cả hàng. Khe12 dùng chung với Work.
 - Header màn luôn một hàng; mobile control nhìn thấy32 là ngoại lệ đã duyệt. Title co20/18/16/14; không làm mất nút.
 
 ## Work `/work` — compact/task workspace

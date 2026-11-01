@@ -44,7 +44,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="/design-tokens.css?v=3-49e7597b5fb5">
+  <link rel="stylesheet" href="/design-tokens.css?v=3-de6eaa692673">
   <style>
     /* ══════════════════════════════════════════════════════════════
        0xhieu.xyz — MỘT stylesheet duy nhất, viết theo thành phần.
@@ -72,7 +72,6 @@
       --font: var(--ds-font-web);
       /* Khung tối đa 1280px (gồm padding), user duyệt cho cả ba trang. */
       --navbar:  64px;
-      --content: 1280px;
       --gutter:  48px;     /* padding CV desktop; workspace giữ padding compact */
       --modal-w: 384px;    /* popup nhỏ = 4 cột; popup rộng = 2× */
     }
@@ -97,6 +96,7 @@
 
     /* web-body 16/24 */
     body {
+      --content: var(--ds-workspace-frame-max-width);
       --amber: var(--ds-accent); --amber-text: var(--ds-accent-text); --amber-soft: var(--ds-accent-soft);
       font-family: var(--font); font-size: var(--ds-web-body-size); font-weight: 400; line-height: var(--ds-web-body-line); letter-spacing: var(--ds-web-body-tracking);
       background: var(--ground); color: var(--ink);
@@ -219,16 +219,16 @@
     }
     .lang-btn.active { background: var(--ink); color: var(--ground); }
 
-    /* ── Box nổi: trắng + shadow Y2, bo 16; hover nhích 2px ──── */
+    /* Workspace cards: chung token hình học/bề mặt cho Valuation và Work. */
     .val-card, .wte-card {
-      background: var(--ground); border-radius: 16px;
-      box-shadow: var(--shadow); overflow: hidden;
+      background: var(--ground); border-radius: var(--ds-workspace-card-radius);
+      border: 1px solid var(--line); box-shadow: none; overflow: hidden;
     }
     /* Header bảng và box Valuation dùng chung token kích thước/chữ. */
     .vc-q1 {
-      grid-row: 1; min-height: var(--val-header-height); margin: 0; padding: 8px 12px; align-self: stretch;
+      grid-row: 1; min-height: var(--val-header-height); margin: 0; padding: var(--ds-workspace-section-padding-y) var(--ds-workspace-card-padding-x); align-self: stretch;
       display: flex; align-items: center; justify-content: flex-start; gap: 8px;
-      background: var(--amber-soft);
+      background: var(--ds-workspace-header-surface); border-bottom: 1px solid var(--line);
       font-size: var(--val-header-font-size); font-weight: 600; line-height: var(--val-header-line-height); letter-spacing: var(--val-header-letter-spacing); color: var(--ink);
     }
     .vc-q1 .wte-ico { color: var(--ink); }
@@ -393,9 +393,9 @@
        Màn hẹp cuộn ngang trong bảng, header đồng bộ với thân. */
     #tge-section {
       display: flex; flex-direction: column; max-height: calc(var(--val-header-height) + 320px + 2px + var(--val-scrollbar-height, 0px)); margin-bottom: var(--ds-val-panel-gap); overflow: hidden;
-      background: var(--ground); border: 1px solid var(--line); border-radius: 16px;
+      background: var(--ground); border: 1px solid var(--line); border-radius: var(--ds-workspace-card-radius);
     }
-    #tge-head-wrap { flex: none; overflow: hidden; scrollbar-gutter: auto; background: var(--amber-soft); }
+    #tge-head-wrap { flex: none; overflow: hidden; scrollbar-gutter: auto; background: var(--ds-workspace-header-surface); }
     #tge-section .val-table-scroll { flex: 1 1 auto; min-height: 0; overflow: auto; }
     .val-table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 14px; line-height: 20px; letter-spacing: -.006em; }
     #tge-section .val-table-body { border-spacing: 0; }
@@ -413,7 +413,7 @@
     #tge-section th:nth-child(7), #tge-section td:nth-child(7), .tge-modal-body th:nth-child(7), .tge-modal-body td:nth-child(7) { width: calc(var(--ck7, 64px) + 16px); }
     /* header bảng = web-label 14/600 */
     #tge-section thead th {
-      position: sticky; top: 0; z-index: 2; height: var(--val-header-height); border: none; background: var(--amber-soft);
+      position: sticky; top: 0; z-index: 2; height: var(--val-header-height); border: none; background: var(--ds-workspace-header-surface); box-shadow: inset 0 -1px 0 var(--line);
       font-size: var(--val-header-font-size); font-weight: 600; line-height: var(--val-header-line-height); letter-spacing: var(--val-header-letter-spacing);
       text-align: center; white-space: nowrap; color: var(--ink);
     }
@@ -453,7 +453,7 @@
     .tge-modal-scroll { flex: 1 1 auto; min-height: 0; overflow: auto; }
     .tge-modal-body thead th {
       position: sticky; top: 0; z-index: 2; height: var(--val-header-height); padding: 8px;
-      background: var(--amber-soft);
+      background: var(--ds-workspace-header-surface); box-shadow: inset 0 -1px 0 var(--line);
       font-size: var(--val-header-font-size); line-height: var(--val-header-line-height); letter-spacing: var(--val-header-letter-spacing); font-weight: 600; text-align: center; white-space: nowrap; color: var(--ink);
     }
     .tge-modal-body tbody td {
@@ -475,7 +475,7 @@
     /* Ba panel cố định cùng chiều cao; nội dung dài cuộn bên trong. */
     .val-boxes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--ds-val-panel-gap); align-items: start; }
     .val-boxes > .val-card { height: var(--ds-val-panel-height); min-width: 0; display: grid; grid-template-rows: var(--val-header-height) minmax(0, 1fr); }
-    .vc-q234 { grid-row: 2; min-height: 0; padding: 12px; overflow-y: auto; }
+    .vc-q234 { grid-row: 2; min-height: 0; padding: var(--ds-workspace-section-padding-y) var(--ds-workspace-card-padding-x); overflow-y: auto; }
     /* Tiêu đề box kiêm nút mở popup giải thích */
     .box-title-btn { cursor: pointer; }
 
@@ -518,13 +518,13 @@
       display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
       font-size: 16px; font-weight: 600; line-height: 24px; letter-spacing: -.011em; color: var(--ink);
     }
-    .wte-rank-group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: start; }
-    .wte-rank-group .wte-card { width: 100%; min-width: 0; display: block; border: 1px solid var(--line); border-radius: 8px; }
+    .wte-rank-group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-workspace-card-gap); align-items: start; }
+    .wte-rank-group .wte-card { width: 100%; min-width: 0; display: block; }
 
     /* Header 2 hàng: hàng 1 = logo + tên TRÁI · icon X + Discord PHẢI (+ ⋮ admin) · hàng 2 = dãy thẻ potential · narrative · rank,
        cách mép card 12. Thẻ tự xuống dòng khi card hẹp — không cắt chữ. */
     .wte-card-head {
-      padding: 12px;
+      padding: var(--ds-workspace-card-padding-x);
       display: grid; grid-template-columns: minmax(0,1fr) auto auto; align-items: center; align-content: start; column-gap: 4px; row-gap: 8px;
     }
     .wte-name-wrap { grid-column: 1; grid-row: 1; min-width: 0; display: flex; align-items: center; gap: 8px; }
@@ -561,9 +561,9 @@
     .wte-rank-v.rank-INCOME { background: var(--amber); color: var(--ink); }
 
     /* Header trung tính; DAILY nổi bật trong từng thẻ. */
-    .wte-card-head { background: var(--ground); }
+    .wte-card-head { background: var(--ds-workspace-header-surface); }
 
-    .wte-section { min-width: 0; padding: 8px 12px; border-top: 1px solid var(--line); }
+    .wte-section { min-width: 0; padding: var(--ds-workspace-section-padding-y) var(--ds-workspace-card-padding-x); border-top: 1px solid var(--line); }
     .wte-section--daily { background: var(--amber-soft); }
     .wte-section-label {
       min-height: 20px; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;
@@ -720,7 +720,6 @@
     /* ══ MÀN VỪA ══════════════════════════════════════════════════ */
     /* Web profiles: CV spacious; Valuation/Work và popup thao tác compact. */
     #cv-view main { padding-bottom: 96px; }
-    .val-card, .wte-card { box-shadow: none; border: 1px solid var(--line); }
     .val-head-ctrl { gap: 12px; }
     .val-head-ctrl .lang-dd-btn, .val-head-ctrl .camera-btn { box-shadow: none; border: 1px solid var(--line); border-radius: 8px; }
     .val-head-ctrl .lang-dd-btn { min-width: 0; padding: 0 12px; }
@@ -805,9 +804,8 @@
       #tge-section th:nth-child(6), #tge-section td:nth-child(6) { display: none; }
       .val-boxes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .val-boxes > .val-card { min-width: 0; }
-      .val-boxes > .val-card .vc-q1 { padding: 8px; gap: 4px; }
+      .val-boxes > .val-card .vc-q1 { gap: 4px; }
       .val-boxes > .val-card .vc-q1 .wte-ico { width: 16px; height: 16px; }
-      .val-boxes > .val-card .vc-q234 { padding: 8px; }
       .val-boxes > .val-card .list-row { min-height: 56px; padding: 4px 0; align-items: center; justify-content: space-between; gap: 8px; }
       .val-boxes > .val-card .list-row > .lr-label,
       .val-boxes > .val-card .list-row > .lr-main { flex: 1; min-width: 0; }
