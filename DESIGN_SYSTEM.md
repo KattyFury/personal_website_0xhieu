@@ -1,93 +1,67 @@
-# Luật thiết kế — 0xhieu.xyz
+# 0xhieu.xyz — Design system v3
 
-> Chốt 2026-10-24. Site theo **design system nguyen0xhieu** (Figma `hieu` `IPyKVg7ylGw1mjMRyYVrL7` · bản đọc nhanh: Design System artifact), với 1 biến thể riêng cho site này:
-> **ĐEN thay vai trò 0x Blue** (iconic là mèo đen) · **nền TRẮNG** (mắt kính trắng của mèo) · **VÀNG MẮT MÈO** cho chi tiết thiết kế.
-> Code ở khối `<style>` duy nhất trong `index.html`, viết theo thành phần, cùng thứ tự các mục dưới đây. Mọi luật ở design system gốc mà file này không nhắc → làm theo gốc.
-> **Mật độ:** CV dùng spacious; Valuation/Work/popup dùng compact theo repo design system v2, chi tiết ở §2. Luật gọn theo 16 trước đây đã được thay thế.
+Nguồn chung: [repo_personal_design](https://github.com/KattyFury/repo_personal_design), `README.md`, `tokens.json` v3 và `web.css` xuất từ token. Chốt 2026-11-01. Website dùng bản local `design-tokens.css`, không tải remote CSS runtime.
 
----
+## Thứ tự ưu tiên
 
-## 1. Màu
+1. Yêu cầu người dùng cho website và `tokens.json → products.0xhieu-xyz`.
+2. Pattern/component trong design system v3.
+3. Profile `spacious` hoặc `compact` của trang/vùng.
 
-| Token | Mã | Dùng cho |
-|---|---|---|
-| `--ground` | `#FFFFFF` | Nền trang |
-| `--ink` | `#000000` | Màu chủ đạo: chữ chính · icon · **nút chính** (nền đen chữ trắng) · toggle đang chọn · thẻ rank S/A/B/C · viền focus 2px |
-| `--grey` | `#4B5568` | Chữ phụ (mô tả, bullet, nhãn) — mã design system, 7.5:1 |
-| `--muted` | `#8B95A8` | Meta, placeholder, ngày, chữ tắt. **Không** dùng cho chữ cần đọc để làm theo |
-| `--mist` | `#ECF0F8` | Box phẳng · dòng danh sách · ô nhập · header card Work rank S/A/B/C · hover dòng bảng |
-| `--line` | `#DCE3EE` | Kẻ mảnh · viền ô nhập · **nền nút tắt** |
-| `--amber` | `#FFA111` | **Vàng mắt mèo** (lấy đúng từ `icon.png`): khối, chấm, vạch. **Chữ trên nền vàng luôn đen** (10.4:1), không bao giờ trắng |
-| `--amber-text` | `#B84A0C` | **CHỈ cho số liệu Valuation.** Chữ cam = **`orange-text` của design system**: 5.2:1 trên trắng · 4.6:1 trên mist · 4.8:1 trên `--amber-soft`. Vàng mắt mèo `#FFA111` không làm chữ được (2:1) |
-| `--amber-soft` | `#FEF5D9` | = **`yellow-soft` của design system** (gần hue mắt mèo nhất): header card · header bảng · ô kết quả · nền hover nút phụ/dòng |
-| `--red-text` / `--red-soft` | `#C42B3F` / `#FDE8EB` | Đỏ design system: nguy hiểm, lỗi, xoá |
-| `--scrim` | `rgba(0,0,0,.48)` | Nền mờ sau popup + lightbox |
+Không tự tạo ngoại lệ trong CSS rồi ghi ngược thành chuẩn. Sửa token trước nếu đó là giá trị shared; ngoại lệ product phải có tên/phạm vi. Figma cũ chưa đồng bộ v3.
 
-> **Mọi mã màu phải là token của design system** (trừ vàng mắt mèo `#FFA111` do user chốt). Không tự pha màu, kể cả màu hover. `tools/ds-audit.js` sẽ báo màu lạ.
+## Nguồn tham khảo
 
-- Chỉ 3 cấp chữ: `ink` · `grey` · `muted`. Không thêm cấp xám thứ 4.
-- Tắt (disabled): nền `--line`, chữ `--muted`, bỏ shadow. **Không giảm opacity.**
-- Không gradient (solid là mặc định của design system; nếu sau này thêm thì tối đa 1 vùng/màn).
-- **Tối đa 2 màu đi kèm/màn:** vàng mắt mèo (màu THIẾT KẾ) + đỏ (màu NGỮ NGHĨA duy nhất: nguy hiểm, lỗi, xoá — `--red-text #C42B3F` chữ, `--red-soft #FDE8EB` nền badge/ô). Rank Work **không** tô mỗi rank 1 màu — rank phân biệt bằng chữ.
-- **Số liệu:** số chính/cần chú ý = **chữ cam `--amber-text` (orange-text) đậm 600** (user: chỉ đen + xám thì flat); số nguy hiểm = đỏ; còn lại ink/grey.
+- [Radix spacing](https://www.radix-ui.com/themes/docs/theme/spacing): scale 4/8/12/16, density điều chỉnh theo component.
+- [Radix Table CSS](https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/components/table.css): padding cell 8, phân tách bằng line.
+- [shadcn Tasks](https://github.com/shadcn-ui/ui/blob/main/apps/v4/app/%28app%29/examples/tasks/components/data-table.tsx): một workspace theo dòng, không lồng card/nhãn/bề mặt.
+- [Carbon table](https://www.carbondesignsystem.com/building-blocks/core/components/data-table/guidelines): row32 dense desktop/40 mặc định. Header56 và panel328 là yêu cầu riêng của user, không gán cho Carbon.
 
-**Vàng mắt mèo xuất hiện ở đâu** (chỉ chỗ mang nghĩa hoặc nhận diện, không rải trang trí):
-- Vạch dưới tab nav đang chọn · vòng quanh ảnh đại diện · chấm timeline · chấm "Available for".
-- Nền `--amber-soft`: header box Valuation, header bảng altcoin, header + dải Daily của card `$`.
-- **HOVER ĐỒNG BỘ (chốt 2026-10-25): mọi thứ bấm được có chữ → chữ đổi cam `--amber-text` #B84A0C + đậm 700, KHÔNG gạch chân** (chữ rộng tự do — nút xã hội, link giữa đoạn văn — đậm bằng `-webkit-text-stroke: .6px` để không nhích) (nút nền đen: chữ trắng → vàng mắt mèo `--amber`, vì cam đậm trên đen không đủ tương phản) — tab nav, tên site, tiêu đề màn/box, tên dự án, nút chính/phụ/Admin/VI-EN, nút xã hội, dòng task Work, dòng danh sách admin, dòng bảng sửa được. **KHÔNG đổi màu nền box, KHÔNG nhích box** (user chê "đổi màu box xấu"). Card không bấm được thì không phản ứng hover. Nút chỉ có icon (không chữ) → nền `--mist` (trắng nếu nằm trên nền màu).
-- Link chữ (timeline, popup) lúc thường đã gạch chân vàng (giữ để biết là link); hover → chữ cam `--amber-text` + đậm (text-stroke).
-- Viên `--amber` chữ đen: nút `$` đang chọn ở thanh lọc.
+## Màu và typography
 
-**Số liệu Valuation:** số thường ink 400 · ×TGE ≥ 13, ×ATH tuần đầu (`×TGE → ×ATH`) = **chữ cam đậm 600** · giá trị bên phải mọi dòng box (Hệ số TGE, Phạt FDV ≥ $300M, Điều kiện thị trường, median narrative) = **chữ cam đậm 600** · ×ATM ≥ 15 trong bảng = viên `--red-soft` chữ `--red-text` · ×ATM trong box Vùng nguy hiểm = chữ đỏ · badge FAKE PUMP/PUMP LÁO = viên `--red-soft` chữ đỏ · ×ATM < 1, ×ATL, đáy-trước-đỉnh = grey · ngày TGE = muted (meta).
-- Ticker luôn đậm 600: FDV VC < $300M đen, ≥ $300M cam `--amber-text`; không có chấm cam.
+Giữ nguyên màu website: ground trắng, ink đen, grey #4B5568, muted #8B95A8, mist #ECF0F8, line #DCE3EE, vàng mắt mèo #FFA111, chữ cam orange-text #B84A0C, yellow-soft #FEF5D9, red-text #C42B3F và red-soft #FDE8EB. Các alias lấy từ CSS token export; palette global 0x Blue không bị đổi.
 
-**Rank (Work):** card `$` (work-to-earn) = header + Daily nền `--amber-soft`, **không có thẻ rank**. Card S/A/B/C = header + Daily nền `--mist`, thẻ `rank: S` nền đen chữ trắng. Thanh lọc: nút đang chọn đen chữ trắng (`$` vàng chữ đen).
+Font hệ thống theo token. Nội dung16/24, dữ liệu/task14/20, nhãn14/20 600, panel16/24 600, tiêu đề màn24/32; mobile toolbar20/18/16/14 theo chỗ. Số dùng tabular-nums. Không thu dữ liệu dưới14. Không cắt task/tên/tag. Hover chỉ đổi màu, không thay độ rộng chữ hay nâng card.
 
-## 2. Hai profile web — 2026-11-01
+Flat + border line là mặc định cho nút/bảng/panel. Radius panel16, control nhỏ8, dòng dữ liệu0, pill9999. Shadow chỉ cho popup/menu/toolbar nổi. Focus2px/offset2. Không invent màu/gradient hay điểm số trang trí.
 
-Nguồn chung: [repo_personal_design](https://github.com/KattyFury/repo_personal_design), `README.md` và `tokens.json → webProfiles` phiên bản 2. Website giữ nguyên bộ màu mèo đen/vàng đã chốt ở §1; profile chỉ đổi mật độ và hình học.
+## Trang CV `/` — spacious/editorial
 
-| Phần | Profile | Quy tắc hiện tại |
-|---|---|---|
-| CV `/` | `spacious` | Nội dung tối đa 1200, lề theo lưới cũ; hero đệm trên 96 desktop / 48 mobile; các section cách 64 / 32; nút xã hội 48. CV dạng portfolio dùng h2 24 và tên 40/32 theo nội dung, không bắt buộc hero marketing 72 |
-| Valuation `/valuation` | `compact` | Khung co giãn, lề desktop 24/mobile 16; đệm panel 12 (panel nhỏ mobile 8); khe panel 16/12 |
-| Work `/airdrop` | `compact` | Nhóm cách 16, tiêu đề nhóm 16/24 → card cách 8; card desktop 2 cột/mobile 1 cột, khe 8; header đệm 4/8, thân ngang 8; task tối thiểu 40, vùng chạm 44 trên thiết bị cảm ứng, tự cao theo chữ |
-| Popup thao tác | `compact` | Ô nhập 40 (touch tối thiểu 44), chữ input mobile vẫn 16; nút chính 40/44; radius control 8; popup giữ radius 16 và shadow Y2 |
+- Khung1200, lề tối thiểu48 desktop/16 mobile. Navbar và nội dung theo cùng khung.
+- Hero editorial: portrait112 desktop, tên/thông điệp cùng trục bên cạnh; mobile portrait72, thông điệp xuống dưới. Hero top96/48; section gap64/32.
+- Giữ nguyên nội dung CV tiếng Anh và tagline **Sharing POVs on Crypto and AI**.
+- CTA xã hội và ảnh Highlights dùng frame border, bỏ bóng trang trí. Mobile ba CTA cùng hàng, chữ14/icon16, chiều cao48.
+- Body đọc tối đa680; timeline và ảnh/caption giữ nội dung hiện có. Không áp spacing landing vào hai workspace.
 
-### Chữ dùng chung
+## Valuation `/valuation` — compact/data workspace
 
-Font hệ thống Apple như token cũ. Dữ liệu và metadata 14/20, nhãn 14/20 600; thân bài 16/24; tiêu đề panel compact 16/24 600; tiêu đề màn 24/32 desktop, mobile co theo 20/28 → 18/28 → 16/28 → 14/28 để giữ toolbar một hàng (line-height 28 là ngoại lệ toolbar). Các cỡ giữ letter-spacing theo token: 14 −.006em; 16 −.011em; 18 −.014em; 20 −.017em; 24 −.019em; 32+ −.022em. Số dùng `tabular-nums`; nhãn trái, số phải; panel mobile vẫn nhãn trái/số phải, được xuống dòng khi cần; không tự chuyển thành nhãn trên/số dưới.
+- Header bảng chính/popup/ba box dùng chung `--val-header-*` từ token: cao56; desktop16/24 600, mobile14/20 600; nền yellow-soft.
+- Bảng hiện8 token trên cả desktop/mobile, dòng40. Cao nội dung56 + 8×40; cộng viền2 và scrollbar nếu có. Tất cả ô đo theo content; header/body cùng cột và cuộn đồng bộ. Mobile ẩn Narrative, TGE, ATL; màn thiếu chỗ cuộn ngang trong bảng, không ép ATH xuống dòng hay giảm chữ.
+- ATH `đầu → cuối (×N)` một hàng, N=cuối/đầu từ số gốc, làm tròn2; tỷ số cam đậm. Client/server cùng công thức. Ticker đậm600: FDV VC dưới300M đen, từ300M cam, không chấm.
+- Ba box phụ cố định328. Nhãn/tên trái, giá trị phải; mỗi dòng min56 và được tăng để hiện đủ nội dung. Nội dung dài cuộn trong thân. Không thêm dòng trống.
+- Desktop3 cột (tablet2), mobile2 cột bằng nhau; không tự cho box nào span cả hàng. Khe16 desktop/12 mobile.
+- Header màn luôn một hàng; mobile control nhìn thấy32 là ngoại lệ đã duyệt. Title co20/18/16/14; không làm mất nút.
 
-Chữ nội dung không dưới 14. Task không cắt chữ, được tự xuống dòng. Compact giảm đệm và khung trước khi giảm chữ.
+## Work `/work` — compact/task workspace
 
-### Valuation
+- `/airdrop` và `/airdrop/` chuyển301 sang `/work`; client fallback giữ query/hash. Audit và nav dùng `/work`.
+- Mỗi rank là một bề mặt danh sách chung, mỗi dự án một hàng phân tách bằng line. Không grid card độc lập cao thấp, không dải Daily xen kẽ.
+- Desktop cột project240, vùng task bên phải; phase104 cạnh nội dung task. Mobile project lên trên, phase và task vẫn chung một hàng.
+- Cell padding8; task min40 desktop/44 touch; chữ14/20, giữ đủ38 task/37 link hiện có (số liệu QA hiện tại, không hardcode trong UI). Group gap16. Metadata/tag được xuống dòng.
+- Toàn bộ field/link/admin vẫn hoạt động. Rank filter nổi giữ chức năng, cuối trang chừa96 cho vùng toolbar, không dùng khoảng này giữa dự án.
 
-- **Header bảng chính, popup bảng và ba box dùng chung token** `--val-header-*`: cao 56px, chữ đậm 600, desktop 16/24 và mobile 14/20, cùng nền amber-soft và căn giữa dọc. Không sửa riêng từng header làm lệch hệ thống.
+## Component và responsive
 
-- Bảng desktop: header 56 + 8 token × 40 = **376px** (cộng bù thanh cuộn ngang nếu có), áp dụng cả desktop lẫn mobile; danh sách token còn lại cuộn. Giữ cách ẩn cột trên mobile và công thức hiện có.
-- Header màn **luôn một hàng**, không wrap/cắt chữ. Mobile nút camera/Admin/VI-EN 32 theo yêu cầu riêng đã duyệt; tiêu đề tự co theo thang 20/18/16/14. Đây là ngoại lệ product cho toolbar, không là chuẩn vùng chạm chung.
-- **Cả ba panel Valuation cố định cao 328px**, header 56px và thân chiếm phần còn lại; nội dung dài cuộn trong thân. Đây là ngoại lệ product do user yêu cầu, áp dụng mọi màn hình. Hệ số TGE: 3 dòng tối thiểu 56 + nút dự đoán tối thiểu 40, cách 12. Mỗi dòng dùng kẻ `line`, bỏ ô nền/radius và khe riêng.
-- Vùng nguy hiểm/Narrative: dòng desktop tối thiểu 56 (tên, metadata); danh sách nằm trong thân box cố định và cuộn khi dài. Không thêm dòng rỗng `padRows()`.
-- Mobile: cả ba panel cùng lưới 2 cột bằng nhau, khe 12; thứ tự Hệ số TGE → Vùng nguy hiểm → Narrative. Không panel nào tự chiếm cả hàng; header cố định 56, chữ 14/20; dòng tối thiểu 56, nhãn/tên và metadata bên trái, giá trị bên phải; chừa khoảng 2 dòng chữ và được tăng theo nội dung nếu cần. Cả ba box luôn cao bằng nhau 328px.
-- Mỗi cặp trong ×ATH có thêm `(×N)` = số cuối / số đầu, dùng số gốc rồi làm tròn 2 chữ số; phần ngoặc cam đậm 600, nằm cùng một hàng với cặp số. Cột ATH rộng theo nội dung dài nhất, các cột còn lại cũng được đo; màn hẹp cuộn ngang trong bảng, header cuộn đồng bộ. Bù chiều cao thanh cuộn ngang để vẫn đủ 8 dòng. Áp dụng cả đáy-trước-đỉnh → ATH và TGE → ATH tuần đầu, không hiện nếu thiếu số đầu hợp lệ. Client/server cùng tính.
-- Outer panel bo 16, viền `line`, không shadow; bảng chính giữ shadow hiện có làm vùng dữ liệu chính nổi.
+Navbar căn theo profile đang mở: spacious theo khung CV, compact theo lề24 desktop/16 mobile. Body dùng `data-ds-product` và `data-ds-profile` để đổi geometry, không gắn global48 vào workspace.
 
-### Work và thao tác
+Popup/input/button dùng component compact; input mobile16, vùng thao tác chính tối thiểu44 touch. Popup có khóa nền, cuộn và Escape theo hành vi hiện tại. Form đang nhập không tự mất do backdrop.
 
-- Khoảng cách card 8px, nhóm 16px, tiêu đề nhóm → card 8px; header card đệm dọc 4/ngang 8, khe trong 4. Nhãn Get Started/Daily/Weekly tối thiểu 20, không margin dưới; đệm dọc chuyển nhóm 4. Không cộng thêm padding 8/12 vào mỗi lớp.
-- Task giữ tối thiểu 40 desktop/44 touch để thao tác được, chữ 14/20; phần này là vùng tương tác, không phải khoảng trống trang trí.
-- Tên dự án và tag dài được xuống dòng, không ellipsis. Icon control desktop 32, touch tối thiểu 44.
-- Chỉ cuối trang Work chừa 96px cho thanh lọc cố định để task cuối không bị che; không áp khoảng này giữa card hoặc nhóm.
+## Đồng bộ và kiểm tra
 
-- Task dùng dòng kẻ mảnh, không thẻ bo 16 cho mỗi dòng. Chữ 14/20, không cắt hoặc ép một dòng. Bỏ khe 8 giữa task; nhóm nội dung vẫn có nhãn và khoảng đệm để phân biệt.
-- Tiêu đề dự án 16/24; giữ đủ trường và liên kết. Header card vẫn hai hàng để tên/social và nhãn phân loại có chỗ riêng.
-- Control nhỏ bo 8; thẻ ngoài bo 16; pill giữ nguyên. Nút toolbar bớt shadow, dùng viền. Native-app button rộng 296 không áp vào nút dự đoán trong panel.
-- Thiết bị cảm ứng: task liên kết, nút social/admin card có vùng chạm tối thiểu 44; form/nút chính tối thiểu 44.
+1. Trong repo design system: `python export_web.py`.
+2. Trong website: `python tools/sync-design-system.py --source <repo_personal_design>`.
+3. `python tools/check-design-system.py --source <repo_personal_design>` kiểm hash bản xuất và thiếu token.
+4. `node tools/ds-audit.js <url>` kiểm màu/type/spacing/radius/control theo profile.
+5. Kiểm browser320/360/390/430/640/768/1024/1440, VI/EN, touch, data dài/rỗng, popup, nav/back/forward, link cũ301. Chụp và xem ảnh thật cả3 trang.
 
-## 3. Spacing và kiểm tra
-
-- Spacious dùng nhịp 8; compact dùng nhịp **4**, cho phép 4/8/12/16/24. Mọi màu và shadow vẫn dùng token cũ.
-- Không tạo box/biểu đồ/dòng rỗng để lấp chỗ. Chỉ vùng danh sách dài mới có giới hạn chiều cao có chủ đích.
-- `tools/ds-audit.js` phân biệt CV spacious và Valuation/Work/popup compact. Không quay lại gác cổng 56px cho mọi dòng hoặc cấm spacing 4/12 và radius 8 ở compact.
-- Kiểm tra 320/360/390/430/640/768/1024/1440px, VI/EN, dữ liệu thật, task dài; header Valuation không vỡ; đủ 8 token/khung cả desktop lẫn mobile; popup mở/đóng được.
-- Figma gốc chưa đồng bộ hai profile; nguồn quy tắc mới là repo design system, không coi khung Figma cũ là lệnh ghi đè compact.
+Mọi sửa hình học của Valuation phải giữ8 dòng, header đồng nhất, panel328 và ATH một hàng. Mọi sửa Work phải giữ nguyên nội dung/link. Không đổi backend/data hay công thức định giá chỉ để phục vụ layout.

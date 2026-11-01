@@ -101,7 +101,7 @@ const PROBE = `(() => {
   const all = new Map();
   const add = (ctx, list) => list.forEach(v => { if (!all.has(v)) all.set(v, new Set()); all.get(v).add(ctx); });
   const runs = [
-    ['/', 'cv'], ['/valuation', 'val'], ['/airdrop', 'work'],
+    ['/', 'cv'], ['/valuation', 'val'], ['/work', 'work'],
     ['/valuation', 'val+popup FDV', '#predict-open-btn'], ['/valuation', 'val+popup info', '#danger-title-text'], ['/valuation', 'val+popup bảng', '#tge-intro'],
   ];
   for (const [w, h, mob] of [[1440, 900, false], [390, 844, true]]) {
@@ -114,5 +114,5 @@ const PROBE = `(() => {
   }
   const lines = [...all.entries()].map(([v, c]) => `${v}   [${[...c].join(', ')}]`).sort();
   console.log(lines.join('\n')); console.log('\nTỔNG:', lines.length);
-  chrome.kill(); process.exit(0);
+  chrome.kill(); process.exit(lines.length ? 1 : 0);
 })();

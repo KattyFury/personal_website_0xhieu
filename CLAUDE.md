@@ -32,7 +32,7 @@ I'm a **Vietnamese vibecoder** — I have ideas, not a programming background. I
 
 ## This Project — `cv` (0xhieu.xyz)
 
-**Bản chất:** website cá nhân **1 file** (`index.html` — HTML + CSS + JS inline) + một ít backend Cloudflare để lưu data. **KHÔNG smart contract.** Host trên **Cloudflare Pages** (project **`0xhieu-xyz`**, auto-deploy từ `main`).
+**Bản chất:** website cá nhân (`index.html` — HTML + component CSS + JS inline), dùng thêm **`design-tokens.css` xuất từ repo `repo_personal_design` v3** + một ít backend Cloudflare để lưu data. Đồng bộ bằng `python tools/sync-design-system.py`, kiểm bằng `python tools/check-design-system.py`. **KHÔNG smart contract.** Host trên **Cloudflare Pages** (project **`0xhieu-xyz`**, auto-deploy từ `main`).
 
 - **Backend DUY NHẤT** = 3 Pages Function ở `functions/api/` (`val.js` · `wte.js` · `private.js`), chung KV binding `WORK` và chung 1 mật khẩu `ADMIN_PASS` (đặt ở Cloudflare Dashboard, **không nằm trong repo**). Đọc công khai không cần mật khẩu; ghi thì cần.
 - **`bot/`** — job Node chạy Docker trên VPS (`/opt/val-price-bot`), lấy giá hằng ngày (CoinGecko + Binance) ghi vào KV cho tab Valuation. Agent (nút mèo) sau này cũng đặt ở repo này.

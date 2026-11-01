@@ -2,7 +2,7 @@
 
 **Chốt trạng thái:** 2026-11-01
 
-Design profiles 2026-11-01: CV spacious; Valuation/Work/popup compact theo repo_personal_design v2. Quy tắc chi tiết và kích thước hiện hành ở DESIGN_SYSTEM.md; các quyết định cũ về 56px/box 328/padRows chỉ là lịch sử. Bảng Valuation mọi màn hình cao 360px/8 token; ba box phụ cố định cao 328px, nội dung dài cuộn bên trong; header một hàng; cả ba box mobile cùng lưới 2 cột bằng nhau, không span; không đệm dòng rỗng.
+Design system v3: nguồn repo_personal_design → design-tokens.css có hash, sync/check bằng tools/sync-design-system.py và tools/check-design-system.py. CV editorial/spacious; Valuation data/compact; Work task/compact tại /work (/airdrop301). Valuation giữ8 token mọi màn hình, header chung56, row40, cộng viền/scrollbar; ba box cố định328, mobile2 cột bằng nhau; ATH một hàng; nhãn trái/số phải. Quy tắc đầy đủ ở DESIGN_SYSTEM.md, không dùng các log thiết kế cũ để ghi đè hiện trạng.
 **Repo:** https://github.com/KattyFury/website_personal_0xhieu · **Local:** `D:\Files\Claude\website_personal_0xhieu` (thư mục đổi tên từ `cv` 10-05; máy khác còn tên cũ thì đổi theo)
 **Live:** Cloudflare Pages, project **`0xhieu-xyz`** (khác tên repo) — auto-deploy từ `main`.
 
@@ -14,7 +14,7 @@ Design profiles 2026-11-01: CV spacious; Valuation/Work/popup compact theo repo_
 ## 1. Repo có gì
 
 ```
-index.html            — TOÀN BỘ website (HTML + 1 khối CSS + JS inline)
+index.html            — HTML + component CSS + JS inline; token CSS dùng design-tokens.css
 functions/api/        — Cloudflare Pages Functions, backend DUY NHẤT
   val.js              — GET công khai / POST cần ADMIN_PASS: dự án Valuation (+ giá từ bot)
   wte.js              — GET công khai: card Work to Earn đang public
@@ -23,6 +23,7 @@ functions/valuation.js — route /valuation: điền sẵn Low/High ×N, Market 
                        (chỉ đọc KV) để AI/bot tải trang là đọc được. Công thức CHÉP từ index.html — sửa bên này phải sửa bên kia
 bot/                  — job lấy giá hằng ngày, chạy Docker trên VPS `/opt/val-price-bot` (xem bot/README.md)
 _redirects            — SPA fallback: /* → /index.html
+design-tokens.css     — bản CSS export v3 từ repo_personal_design, sync bằng tools/sync-design-system.py
 tools/ds-audit.js     — gác cổng design system (xem §7)
 tools/og-gen.html     — nguồn vẽ og.png (ảnh preview khi share link)
 DESIGN_SYSTEM.md      — luật thiết kế (màu, chữ, lưới, thành phần). ĐỌC trước khi đụng giao diện
@@ -41,7 +42,7 @@ Secret: `ADMIN_PASS` đặt ở Cloudflare Dashboard; bot dùng `bot/.env` (giti
 |---|---|---|---|
 | CV | `/` | Hero · Experience (timeline) · Highlights · Available for | **Tiếng Anh cố định** |
 | Valuation | `/valuation` | Tiêu đề "Quan sát altcoin" (EN "Altcoin watch") · Bảng altcoin 7 cột + 3 box phân tích | Toggle VI/EN, mặc định VI |
-| Work | `/airdrop` | Tiêu đề "Danh sách công việc" (EN "Task list") · card theo nhóm work-to-earn / rank + thanh lọc `$ S A B C` | Toggle VI/EN |
+| Work | `/work` | Tiêu đề "Danh sách công việc" (EN "Task list") · card theo nhóm work-to-earn / rank + thanh lọc `$ S A B C` | Toggle VI/EN |
 
 Nút mèo góc dưới phải (cả 3 tab) = **Agent**, mới có vỏ ("coming soon"). Agent là dự án riêng, sẽ ở chung repo với bot.
 
@@ -152,6 +153,7 @@ Account `f9df99b7751b7dc3c80a22b6911c6f2b`, project Pages `0xhieu-xyz`. API toke
 
 ## Nhật ký
 
+- 2026-11-01: **Redesign toàn site theo design system v3:** repo nguồn có README viết lại, tokens v3, CSS exporter và pattern có nguồn Radix/shadcn/Carbon; website sync local design-tokens.css có hash kiểm tra. CV editorial (portrait112/72, CTA/photo frame), Valuation flat/shared tokens giữ8 dòng/panel328/ATH inline, Work danh sách nhóm project + phase/task thay grid card. Navbar theo profile. Đổi route chính /work, /airdrop301 và fallback client. Giữ nguyên palette/nội dung/link/backend/công thức.
 - 2026-11-01: **Rà toàn thiết kế theo user:** thống nhất header Valuation/bảng/popup/3 box qua token dùng chung: cao 56, desktop chữ16/24, mobile14/20, đậm600; bảng header56 + 8 dòng40. Work giảm cardgap8/groupgap16, headerpadding4/8, sectionpadding4/8, bỏ đệm nhãn dư; tên/tag dài hiện đủ. Chừa vùng cuối Work96 cho filter cố định. QA 35 trạng thái 3 trang/7 chiều rộng/VI-EN, touch44 + popup, xem ảnh cả desktop/mobile.
 - 2026-11-01: **ATH một hàng theo user:** cặp số và `(×N)` inline, đo độ rộng nội dung từng cột cho bảng chính/popup; bỏ tỷ lệ % cũ. Mobile giữ 4 cột, màn hẹp cuộn ngang nội bộ, header đồng bộ và bù scrollbar để đủ 8 dòng. QA 18 trạng thái VI/EN 320–1920px + popup: không tràn ô, ATH một dòng, header thẳng cột và cuộn đồng bộ.
 - 2026-11-01: **Ticker/ATH/căn dòng theo user:** mọi ticker đậm; FDV VC <300M đen, ≥300M cam. Cặp ×ATH thêm tỷ số cuối/đầu `(×N)` cam đậm, dùng giá trị gốc, mirror client/server. Dòng trong ba box tối thiểu 56; mobile nhãn/tên trái, số phải, không xếp dọc hay chừa 3 dòng. Box vẫn cố định 328px, bảng 8 token mọi màn hình.
