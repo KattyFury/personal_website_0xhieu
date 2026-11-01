@@ -454,11 +454,10 @@
     .tge-modal-body th:nth-child(5) .ck, .tge-modal-body td:nth-child(5) .ck { min-width: var(--ck5, 0px); }
     .tge-modal-body th:nth-child(6) .ck, .tge-modal-body td:nth-child(6) .ck { min-width: var(--ck6, 0px); }
 
-    /* Compact: panel cao theo nội dung; chỉ danh sách dài có vùng cuộn. */
+    /* Ba panel cố định cùng chiều cao; nội dung dài cuộn bên trong. */
     .val-boxes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
-    .val-boxes > .val-card { min-width: 0; display: grid; grid-template-rows: auto auto; }
-    .vc-q234 { grid-row: 2; min-height: 0; padding: 12px; }
-    #danger-list, #narrative-list { max-height: 264px; overflow-y: auto; }
+    .val-boxes > .val-card { height: 328px; min-width: 0; display: grid; grid-template-rows: 56px minmax(0, 1fr); }
+    .vc-q234 { grid-row: 2; min-height: 0; padding: 12px; overflow-y: auto; }
     /* Tiêu đề box kiêm nút mở popup giải thích */
     .box-title-btn { cursor: pointer; }
 
@@ -780,7 +779,7 @@
       #airdrop-view .val-head-ctrl .lang-btn { min-width: 28px; padding: 0 4px; }
 
       /* Valuation — bảng ẩn 3 cột phụ Narrative + TGE + ×ATL để giữ chữ 14; ×ATH (dạng "đáy → đỉnh") được cột rộng nhất */
-      #tge-section { max-height: 240px; overflow-x: visible; } /* mobile giữ 5 dòng */
+      #tge-section { overflow-x: visible; } /* mobile cũng hiện 8 dòng */
       #tge-section thead th, #tge-section tbody td,
       #tge-section th:first-child, #tge-section td:first-child,
       #tge-section th:last-child, #tge-section td:last-child { padding: 0 8px; }
@@ -792,7 +791,7 @@
       #tge-section th:nth-child(3), #tge-section td:nth-child(3),
       #tge-section th:nth-child(6), #tge-section td:nth-child(6) { display: none; }
       .val-boxes { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-      .val-boxes > .val-card { min-width: 0; grid-template-rows: auto auto; }
+      .val-boxes > .val-card { min-width: 0; }
       .val-boxes > .val-card .vc-q1 { min-height: 40px; padding: 8px; gap: 4px; font-size: 14px; line-height: 20px; letter-spacing: -.006em; }
       .val-boxes > .val-card .vc-q1 .wte-ico { width: 16px; height: 16px; }
       .val-boxes > .val-card .vc-q234 { padding: 8px; }
