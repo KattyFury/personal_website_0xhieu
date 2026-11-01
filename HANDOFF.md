@@ -2,7 +2,7 @@
 
 **Chốt trạng thái:** 2026-11-01
 
-Design profiles 2026-11-01: CV spacious; Valuation/Work/popup compact theo repo_personal_design v2. Quy tắc chi tiết và kích thước hiện hành ở DESIGN_SYSTEM.md; các quyết định cũ về 56px/box 328/padRows chỉ là lịch sử. Bảng Valuation cao 240px vẫn 5 token/khung; header một hàng; hai box nhỏ mobile cạnh nhau; không đệm dòng rỗng.
+Design profiles 2026-11-01: CV spacious; Valuation/Work/popup compact theo repo_personal_design v2. Quy tắc chi tiết và kích thước hiện hành ở DESIGN_SYSTEM.md; các quyết định cũ về 56px/box 328/padRows chỉ là lịch sử. Bảng Valuation desktop cao 360px/8 token, mobile 240px/5 token; header một hàng; cả ba box mobile cùng lưới 2 cột bằng nhau, không span; không đệm dòng rỗng.
 **Repo:** https://github.com/KattyFury/website_personal_0xhieu · **Local:** `D:\Files\Claude\website_personal_0xhieu` (thư mục đổi tên từ `cv` 10-05; máy khác còn tên cũ thì đổi theo)
 **Live:** Cloudflare Pages, project **`0xhieu-xyz`** (khác tên repo) — auto-deploy từ `main`.
 
@@ -152,6 +152,7 @@ Account `f9df99b7751b7dc3c80a22b6911c6f2b`, project Pages `0xhieu-xyz`. API toke
 
 ## Nhật ký
 
+- 2026-11-01: **Điều chỉnh theo user:** bảng desktop 8 token/khung (360px), mobile giữ 5; bỏ chấm cam FDV cao, giữ chữ đậm; bỏ ngoại lệ Hệ số TGE full-width, cả ba box mobile dùng cùng lưới 2 cột. QA data thật 7 kích thước × VI/EN: đúng số dòng, không tràn chữ, box cùng chiều rộng, ticker FDV cao đậm và không có pseudo-dot.
 - 2026-11-01: **Áp hai profile design system v2**: CV spacious (hero 96/48, khối cách 64/32); Valuation/Work compact (nhịp 4, đệm 8/12, dòng bảng 40, task 40/44, panel cao theo nội dung, bỏ padRows). Giữ bộ màu và mọi công thức/dữ liệu. Cập nhật audit theo profile. QA 40 trạng thái trang/chiều rộng/ngôn ngữ với data thật: không tràn chữ/ngang, đủ 5 token, không lỗi JS.
 - 2026-11-01: **Header Valuation mobile luôn 1 hàng** theo yêu cầu user: bỏ wrap/basis 100%, thu gọn nút còn 32px, tự co chữ tiêu đề để hiện đủ. Đã đo Chrome 280/320/360/375/390/430/640px × VI/EN × Admin khóa/mở: 28 trạng thái cùng hàng, không tràn. Quy định cũ cho phép xuống hàng đã bị thay thế.
 - 2026-10-31: **Bảng Quan sát altcoin hiện 5 token mỗi khung**: giảm chiều cao tối đa 440 → 328px (header 48 + 5 dòng × 56), giữ cuộn để xem toàn bộ token; 3 box phân tích bên dưới lên cao hơn 112px.

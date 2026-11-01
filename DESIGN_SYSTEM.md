@@ -39,7 +39,7 @@
 - Viên `--amber` chữ đen: nút `$` đang chọn ở thanh lọc.
 
 **Số liệu Valuation:** số thường ink 400 · ×TGE ≥ 13, ×ATH tuần đầu (`×TGE → ×ATH`) = **chữ cam đậm 600** · giá trị bên phải mọi dòng box (Hệ số TGE, Phạt FDV ≥ $300M, Điều kiện thị trường, median narrative) = **chữ cam đậm 600** · ×ATM ≥ 15 trong bảng = viên `--red-soft` chữ `--red-text` · ×ATM trong box Vùng nguy hiểm = chữ đỏ · badge FAKE PUMP/PUMP LÁO = viên `--red-soft` chữ đỏ · ×ATM < 1, ×ATL, đáy-trước-đỉnh = grey · ngày TGE = muted (meta).
-- Chấm `--amber` 8px cạnh ticker có vcFDV ≥ $300M.
+- Ticker vcFDV ≥ $300M chỉ dùng chữ đậm 600; không có chấm cam.
 
 **Rank (Work):** card `$` (work-to-earn) = header + Daily nền `--amber-soft`, **không có thẻ rank**. Card S/A/B/C = header + Daily nền `--mist`, thẻ `rank: S` nền đen chữ trắng. Thanh lọc: nút đang chọn đen chữ trắng (`$` vàng chữ đen).
 
@@ -62,11 +62,11 @@ Chữ nội dung không dưới 14. Task không cắt chữ, được tự xuố
 
 ### Valuation
 
-- Bảng header 40 + 5 token × 40 = **240px**; danh sách token còn lại cuộn. Giữ cách ẩn cột trên mobile và công thức hiện có.
+- Bảng desktop: header 40 + 8 token × 40 = **360px**. Mobile ≤640px giữ header 40 + 5 token × 40 = **240px**; danh sách token còn lại cuộn. Giữ cách ẩn cột trên mobile và công thức hiện có.
 - Header màn **luôn một hàng**, không wrap/cắt chữ. Mobile nút camera/Admin/VI-EN 32 theo yêu cầu riêng đã duyệt; tiêu đề tự co theo thang 20/18/16/14. Đây là ngoại lệ product cho toolbar, không là chuẩn vùng chạm chung.
 - Panel cao theo nội dung, không ép bằng nhau. Hệ số TGE: 3 dòng tối thiểu 32 + nút dự đoán tối thiểu 40, cách 12. Mỗi dòng dùng kẻ `line`, bỏ ô nền/radius và khe riêng.
 - Vùng nguy hiểm/Narrative: dòng desktop tối thiểu 48 (tên, metadata); danh sách giới hạn cao 264 và cuộn khi dài. Không thêm dòng rỗng `padRows()`.
-- Mobile: Hệ số TGE rộng cả hàng, hai panel nhỏ nằm cạnh nhau khe 12; header tối thiểu 40 (tăng theo chữ), chữ 14/20; dòng tối thiểu 60 để chứa nhãn + metadata + giá trị. Hai box không bắt buộc cao bằng nhau.
+- Mobile: cả ba panel cùng lưới 2 cột bằng nhau, khe 12; thứ tự Hệ số TGE → Vùng nguy hiểm → Narrative. Không panel nào tự chiếm cả hàng; header tối thiểu 40 (tăng theo chữ), chữ 14/20; dòng tối thiểu 60 để chứa nhãn + metadata + giá trị. Hai box không bắt buộc cao bằng nhau.
 - Outer panel bo 16, viền `line`, không shadow; bảng chính giữ shadow hiện có làm vùng dữ liệu chính nổi.
 
 ### Work và thao tác
@@ -81,5 +81,5 @@ Chữ nội dung không dưới 14. Task không cắt chữ, được tự xuố
 - Spacious dùng nhịp 8; compact dùng nhịp **4**, cho phép 4/8/12/16/24. Mọi màu và shadow vẫn dùng token cũ.
 - Không tạo box/biểu đồ/dòng rỗng để lấp chỗ. Chỉ vùng danh sách dài mới có giới hạn chiều cao có chủ đích.
 - `tools/ds-audit.js` phân biệt CV spacious và Valuation/Work/popup compact. Không quay lại gác cổng 56px cho mọi dòng hoặc cấm spacing 4/12 và radius 8 ở compact.
-- Kiểm tra 320/360/390/430/640/768/1024/1440px, VI/EN, dữ liệu thật, task dài; header Valuation không vỡ; vẫn đủ 5 token/khung; popup mở/đóng được.
+- Kiểm tra 320/360/390/430/640/768/1024/1440px, VI/EN, dữ liệu thật, task dài; header Valuation không vỡ; đủ 8 token/khung desktop, 5 token/khung mobile; popup mở/đóng được.
 - Figma gốc chưa đồng bộ hai profile; nguồn quy tắc mới là repo design system, không coi khung Figma cũ là lệnh ghi đè compact.

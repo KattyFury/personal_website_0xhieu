@@ -385,7 +385,7 @@
     /* ── Bảng altcoin: header cố định tách khỏi vùng cuộn ──
        7 cột theo tỉ lệ (2 cột mép hẹp hơn chút vì không có khe ngoài), khai bằng % để co theo màn. */
     #tge-section {
-      display: flex; flex-direction: column; max-height: 240px; margin-bottom: 16px; overflow: hidden;   /* compact: header 40 + 5 dòng × 40 */
+      display: flex; flex-direction: column; max-height: 360px; margin-bottom: 16px; overflow: hidden;   /* desktop: header 40 + 8 dòng × 40 */
       background: var(--ground); border-radius: 16px; box-shadow: var(--shadow);
     }
     #tge-head-wrap { flex: none; overflow: hidden; background: var(--amber-soft); }
@@ -408,16 +408,12 @@
     }
     #tge-section tbody tr:last-child td { box-shadow: none; }
     #tge-section tbody tr.row-editable { cursor: pointer; }
-    /* Ticker ĐẬM + chấm vàng = vcFDV ≥ $300M · THƯỜNG = dưới.
+    /* Ticker ĐẬM = vcFDV ≥ $300M · THƯỜNG = dưới.
        Chữ 3 cấp: số ink · narrative, ×ATL, đáy-trước-đỉnh, ×ATM < 1 grey · ngày TGE muted (meta).
        Số cần chú ý = chữ cam --amber-text đậm 600 (×TGE ≥ 13, ×ATH tuần đầu) — cùng màu với số chính trong 3 box.
        ĐỎ = nguy hiểm (×ATM ≥ 15, badge soft). */
     #tge-section td.td-ticker { font-weight: 400; }
     #tge-section td.td-ticker.fdv-hi { font-weight: 600; }
-    #tge-section td.td-ticker.fdv-hi .ck::after {
-      content: ''; display: inline-block; width: 8px; height: 8px; margin-left: 8px;
-      border-radius: 50%; background: var(--amber); vertical-align: middle;
-    }
     #tge-section td.td-narrative { font-weight: 400; color: var(--grey); }
     #tge-section td.td-date { font-weight: 400; color: var(--muted); }
     #tge-section td.td-atl { font-weight: 400; color: var(--grey); }
@@ -784,7 +780,7 @@
       #airdrop-view .val-head-ctrl .lang-btn { min-width: 28px; padding: 0 4px; }
 
       /* Valuation — bảng ẩn 3 cột phụ Narrative + TGE + ×ATL để giữ chữ 14; ×ATH (dạng "đáy → đỉnh") được cột rộng nhất */
-      #tge-section { overflow-x: visible; }
+      #tge-section { max-height: 240px; overflow-x: visible; } /* mobile giữ 5 dòng */
       #tge-section thead th, #tge-section tbody td,
       #tge-section th:first-child, #tge-section td:first-child,
       #tge-section th:last-child, #tge-section td:last-child { padding: 0 8px; }
@@ -796,15 +792,14 @@
       #tge-section th:nth-child(3), #tge-section td:nth-child(3),
       #tge-section th:nth-child(6), #tge-section td:nth-child(6) { display: none; }
       .val-boxes { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-      .val-boxes > .val-card:first-child { grid-column: 1 / -1; }
-      .val-boxes > .val-card:not(:first-child) { min-width: 0; grid-template-rows: auto auto; }
-      .val-boxes > .val-card:not(:first-child) .vc-q1 { min-height: 40px; padding: 8px; gap: 4px; font-size: 14px; line-height: 20px; letter-spacing: -.006em; }
-      .val-boxes > .val-card:not(:first-child) .vc-q1 .wte-ico { width: 16px; height: 16px; }
-      .val-boxes > .val-card:not(:first-child) .vc-q234 { padding: 8px; }
-      .val-boxes > .val-card:not(:first-child) .list-row { min-height: 60px; padding: 4px 0; flex-direction: column; align-items: flex-start; justify-content: center; gap: 0; }
-      .val-boxes > .val-card:not(:first-child) .lr-title,
-      .val-boxes > .val-card:not(:first-child) .lr-meta { white-space: normal; overflow-wrap: anywhere; }
-      .val-boxes > .val-card:not(:first-child) .lr-val { text-align: left; }
+      .val-boxes > .val-card { min-width: 0; grid-template-rows: auto auto; }
+      .val-boxes > .val-card .vc-q1 { min-height: 40px; padding: 8px; gap: 4px; font-size: 14px; line-height: 20px; letter-spacing: -.006em; }
+      .val-boxes > .val-card .vc-q1 .wte-ico { width: 16px; height: 16px; }
+      .val-boxes > .val-card .vc-q234 { padding: 8px; }
+      .val-boxes > .val-card .list-row { min-height: 60px; padding: 4px 0; flex-direction: column; align-items: flex-start; justify-content: center; gap: 0; }
+      .val-boxes > .val-card .lr-title,
+      .val-boxes > .val-card .lr-meta { white-space: normal; overflow-wrap: anywhere; }
+      .val-boxes > .val-card .lr-val { text-align: left; }
       .tge-modal-body thead th, .tge-modal-body tbody td { padding: 8px; }
 
       /* Work */
