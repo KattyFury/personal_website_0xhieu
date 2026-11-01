@@ -44,7 +44,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="/design-tokens.css?v=3-ecee51d9a93e">
+  <link rel="stylesheet" href="/design-tokens.css?v=3-c2d2118e4446">
   <style>
     /* ══════════════════════════════════════════════════════════════
        0xhieu.xyz — MỘT stylesheet duy nhất, viết theo thành phần.
@@ -366,7 +366,6 @@
     #lightbox.open { display: flex; }
     #lightbox img {
       max-width: 100%; max-height: 90vh; max-height: 90svh; border-radius: 16px; object-fit: contain; cursor: default;
-      box-shadow: var(--shadow);
     }
     #lightbox-close {
       position: fixed; top: 16px; right: 16px; width: 40px; height: 40px; padding: 0; border: none; border-radius: 16px;
@@ -580,7 +579,7 @@
     /* Thanh lọc rank $ S A B C (nổi đáy màn) */
     #rank-filter-float .lang-toggle {
       height: 48px;
-      background: rgba(255,255,255,.92); box-shadow: var(--shadow); backdrop-filter: blur(8px);
+      background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
     }
     #rank-filter-float .lang-btn { min-width: 48px; height: 48px; padding: 0 8px; font-size: 16px; line-height: 24px; letter-spacing: -.011em; transition: color .15s, background .15s; }
     #rank-filter-float #rf-income.active { background: var(--amber); color: var(--ink); }
@@ -597,7 +596,7 @@
     #cat-btn:active { transform: scale(.98); }
     #cat-hint {
       position: fixed; right: 32px; bottom: 96px; z-index: 80; padding: 8px 16px; border-radius: 16px;
-      background: var(--ink); box-shadow: var(--shadow);
+      background: var(--ink);
       font-family: var(--font); font-size: 14px; font-weight: 600; line-height: 20px; color: var(--ground); white-space: nowrap;
       opacity: 0; pointer-events: none; transition: opacity .2s;
     }
@@ -614,7 +613,7 @@
     .wl-modal {
       position: relative; width: var(--modal-w); max-width: 100%; margin: auto; padding: 16px;
       display: flex; flex-direction: column; gap: 16px;
-      background: var(--ground); border-radius: 16px; box-shadow: var(--shadow);
+      background: var(--ground); border-radius: 16px;
     }
     .wl-modal-title { padding-right: 40px; font-size: 20px; font-weight: 600; line-height: 28px; letter-spacing: -.017em; color: var(--ink); }
     #ptask-modal .wl-modal-title { padding-right: 0; text-align: center; }
@@ -719,10 +718,12 @@
     /* Web profiles: CV spacious; Valuation/Work và popup thao tác compact. */
     #cv-view main { padding-bottom: 96px; }
     .val-head-ctrl { gap: 12px; }
-    .val-head-ctrl .lang-dd-btn, .val-head-ctrl .camera-btn { box-shadow: none; border: 1px solid var(--line); border-radius: var(--ds-product-control-radius); }
+    .val-head-ctrl .lang-dd-btn, .val-head-ctrl .camera-btn { border: 1px solid var(--line); border-radius: var(--ds-product-control-radius); }
     .val-head-ctrl .lang-dd-btn { min-width: 0; padding: 0 12px; }
     .val-head-ctrl .lang-dd-btn.is-plus { padding: 0; }
-    .predict-link, .predict-btn-primary, .predict-btn-secondary, .retry-btn { box-shadow: none; }
+    /* Bóng cho nút và icon control; thẻ/nhãn chỉ đọc giữ phẳng. */
+    button:not(.nav-btn), .social-btn, .wte-social { box-shadow: var(--shadow); }
+    button:disabled, .social-btn[aria-disabled="true"], .wte-social[aria-disabled="true"] { box-shadow: none; }
     .wl-modal input, .wl-modal select { height: 40px; border-radius: 8px; }
     .wl-modal .predict-btn-primary, .wl-modal .predict-btn-secondary { min-height: 40px; height: auto; padding: 8px 12px; border-radius: 8px; }
     @media (pointer: coarse) {

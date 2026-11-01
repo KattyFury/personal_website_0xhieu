@@ -24,14 +24,14 @@ Giữ nguyên màu website: ground trắng, ink đen, grey #4B5568, muted #8B95A
 
 Font hệ thống theo token. Nội dung16/24, dữ liệu/task14/20, nhãn14/20 600, panel16/24 600, tiêu đề màn24/32; mobile toolbar20/18/16/14 theo chỗ. Số dùng tabular-nums. Không thu dữ liệu dưới14. Không cắt task/tên/tag. Hover chỉ đổi màu, không thay độ rộng chữ hay nâng card.
 
-Flat + border line là mặc định cho nút/bảng/panel. Cả CV/Valuation/Work dùng chung `--ds-product-card-radius`, `--ds-product-control-radius`, `--ds-product-badge-radius` =8 từ `products.0xhieu-xyz.sharedComponents`. Valuation/Work dùng thêm token density `--ds-workspace-*`: header trắng, padding ngang12, section dọc8, khe12. Popup radius16; dòng dữ liệu0, avatar/language switch tròn. Shadow chỉ cho popup/menu/toolbar nổi. Focus2px/offset2. Không invent màu/gradient hay điểm số trang trí.
+Cả CV/Valuation/Work dùng chung `--ds-product-card-radius`, `--ds-product-control-radius`, `--ds-product-badge-radius` =8 từ `products.0xhieu-xyz.sharedComponents`. Valuation/Work dùng thêm token density `--ds-workspace-*`: header trắng, padding ngang12, section dọc8, khe12. Popup radius16; dòng dữ liệu0, avatar/language switch tròn. Nút và icon control bấm được có drop shadow chung `0 2px 8px rgba(0,0,0,.32)`; disabled, thẻ/nhãn/nội dung chỉ đọc không có bóng. Tab điều hướng và link văn bản giữ kiểu chữ. Không đổ bóng lên cả wrapper toolbar/popup thay cho nút. Focus2px/offset2. Không invent màu/gradient hay điểm số trang trí.
 
 ## Trang CV `/` — spacious/editorial
 
 - Khung tối đa1280px gồm padding, căn giữa cho CV, Valuation, Work và navbar. CV padding48 desktop/16 mobile; workspace24/16.
 - Hero editorial: portrait112 desktop, tên/thông điệp cùng trục bên cạnh; mobile portrait72, thông điệp xuống dưới. Hero top96/48; section gap64/32.
 - Giữ nguyên nội dung CV tiếng Anh và tagline **Sharing POVs on Crypto and AI**.
-- CTA xã hội, thẻ ảnh Highlights và nhãn Available-for dùng component chung của product: radius8, nền trắng, viền line, không bóng. CTA cao48 theo spacious; caption/nhãn giữ padding16. Mobile ba CTA cùng hàng, chữ14/icon16, chiều cao48. Available-for được xuống dòng để không tràn màn320px.
+- CTA xã hội, thẻ ảnh Highlights và nhãn Available-for dùng component chung của product: radius8, nền trắng, viền line. CTA bấm được có shadow; thẻ/nhãn chỉ đọc không bóng. CTA cao48 theo spacious; caption/nhãn giữ padding16. Mobile ba CTA cùng hàng, chữ14/icon16, chiều cao48. Available-for được xuống dòng để không tràn màn320px.
 - Avatar giữ hình tròn với viền line; không vòng vàng trang trí. Tiêu đề section icon + chữ, không đường kẻ kéo dài. Màu vàng của timeline thể hiện mốc thời gian.
 - Body đọc tối đa680; timeline và ảnh/caption giữ nội dung hiện có. Không áp spacing landing vào hai workspace.
 
