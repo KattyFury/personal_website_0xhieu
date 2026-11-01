@@ -2,7 +2,7 @@
 
 **Chốt trạng thái:** 2026-11-01
 
-Work là thẻ độc lập theo hướng Linear đã duyệt, desktop2/mobile1 (≤900px), DAILY nền vàng nhạt + nhãn cam app đậm; giữ nội dung/link/admin. Valuation/Work dùng chung token workspace: radius8, header cam app #FFA111/chữ đen/viền line, padding ngang12/section dọc8/khe12. Accent text cũng #FFA111 đậm600, không cam đất. CV/Valuation/Work/navbar/footer cùng max-width1280px gồm padding. Các thay đổi bố cục/kích thước tiếp theo phải trình user duyệt trước; user không muốn duyệt preview, cần kiểm tra trang thật.
+Work là thẻ độc lập theo hướng Linear đã duyệt, desktop2/mobile1 (≤900px), DAILY nền xanh nhạt + nhãn xanh đậm; giữ nội dung/link/admin. Valuation/Work dùng chung token workspace: radius8, header xanh cobalt #1E6DF7/chữ trắng/viền line, thân box xám #ECF0F8, padding ngang12/section dọc8/khe12. Chữ thường đen, chữ phụ xám, chữ quan trọng xanh đậm #0F3DB2/600; không cam/vàng/cam đất trong UI. CV/Valuation/Work/navbar/footer cùng max-width1280px gồm padding. Các thay đổi bố cục/kích thước tiếp theo phải trình user duyệt trước; user không muốn duyệt preview, cần kiểm tra trang thật.
 
 CV cũng đã đồng bộ component chung: social buttons, Highlights và nhãn Available-for radius8/nền trắng/viền line; bỏ vòng vàng avatar và đường kẻ dài tiêu đề section. Giữ profile spacious: hero top96/48, section gap64/32, body16/24; không áp density của Work vào CV. Available-for được wrap để không tràn320px.
 
@@ -164,6 +164,8 @@ Account `f9df99b7751b7dc3c80a22b6911c6f2b`, project Pages `0xhieu-xyz`. API toke
 ---
 
 ## Nhật ký
+
+- 2026-11-01: **Tone xanh–trắng–đen–xám theo user:** thân box mist, header cobalt/chữ trắng; chữ thường đen, phụ xám, quan trọng blue-strong/600. DAILY xanh nhạt; primary/selected xanh trắng; hover header giữ trắng. Thay alias amber bằng accent, audit loại cam/vàng khỏi palette UI. Giữ đỏ cho danger/destructive, geometry/data/framework/Fetch/shadow không đổi. Các log cam/header trắng trước đó hết hiệu lực.
 
 - 2026-11-01: **Fetch production:** bổ sung `COINGECKO_API_KEY` demo dưới dạng secret_text vì public CoinGecko từ Cloudflare bị giới hạn. Key chỉ gửi server-to-server qua header; không ra frontend. SURF_API_KEY và các env/KV binding hiện có được giữ nguyên. Không cấu hình key cho preview.
 - 2026-11-01: **Fetch dự án + màu user chốt:** form Valuation có Fetch trái/Lưu phải, bỏ input Cặp Binance, Xoá riêng phía dưới khi sửa. `/api/val-fetch` POST cần ADMIN_PASS, chỉ đọc SURF/CoinGecko, không ghi KV. Ticker phải khớp duy nhất/id/symbol; nguồn bất đồng hoặc thiếu thì không điền. Chỉ điền ô trống, giữ dữ liệu đang nhập, hủy/loại phản hồi form cũ, không làm tròn số đã fetch. Source hiện hỗ trợ cgId/totalSupply được đối chiếu, narrative ánh xạ tag rõ ràng, TGE chỉ khi hai nguồn đồng ngày, funding chỉ các vòng công bố đủ số tiền tới TGE; không đoán VC Alloc/giá TGE. SURF_API_KEY đã cấu hình secret_text production; không có key trong frontend/repo. Legacy binanceSymbol giữ nguyên khi sửa bản cũ; bot chưa được đổi nguồn/deploy. Header box/bảng Work/Valuation cam #FFA111/chữ đen; accent text cùng #FFA111 đậm600, bỏ cam đất. ATH hai số đen, chỉ tỷ số cam, giữ một hàng; không đổi công thức.
