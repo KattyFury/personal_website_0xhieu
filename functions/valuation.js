@@ -75,8 +75,10 @@ function compute(projects, prices) {
     const xTGE = multiple(e), xATM = xMult(e.currentPrice, e);
     // ATH trong tuần đầu lên sàn → "×TGE → ×ATH" tô cam (khớp index.html)
     const athEarly = athTooEarly && e.ath > 0 && (e.athWick || (e.athDate && e.tgeDate));
-    const athCell = xATH > 0 ? (xPre > 0 ? `<span class="ath-pre">${fmtMult(xPre)}</span> <span class="ath-arrow">→</span> ${fmtMult(xATH)}` : fmtMult(xATH))
-      : athEarly ? `<span class="ath-early">${fmtMult(xTGE)}</span> <span class="ath-arrow">→</span> <span class="ath-early">${fmtMult(xMult(e.ath, e))}</span>`
+    const athGain = (start, end) => start > 0 && end > 0 && Number.isFinite(end / start)
+      ? `<span class="ath-gain">(×${fmtMult(end / start)})</span>` : '';
+    const athCell = xATH > 0 ? (xPre > 0 ? `<span class="ath-pre">${fmtMult(xPre)}</span> <span class="ath-arrow">→</span> ${fmtMult(xATH)}${athGain(xPre, xATH)}` : fmtMult(xATH))
+      : athEarly ? `<span class="ath-early">${fmtMult(xTGE)}</span> <span class="ath-arrow">→</span> <span class="ath-early">${fmtMult(xMult(e.ath, e))}</span>${athGain(xTGE, xMult(e.ath, e))}`
       : '—';
     const tgeCls = xTGE >= 13 ? 'm-hot' : '';
     const atmCls = xATM >= 15 ? 'm-danger' : (xATM > 0 && xATM < 1 ? 'm-low' : '');

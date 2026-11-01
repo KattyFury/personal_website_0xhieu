@@ -39,7 +39,7 @@
 - Viên `--amber` chữ đen: nút `$` đang chọn ở thanh lọc.
 
 **Số liệu Valuation:** số thường ink 400 · ×TGE ≥ 13, ×ATH tuần đầu (`×TGE → ×ATH`) = **chữ cam đậm 600** · giá trị bên phải mọi dòng box (Hệ số TGE, Phạt FDV ≥ $300M, Điều kiện thị trường, median narrative) = **chữ cam đậm 600** · ×ATM ≥ 15 trong bảng = viên `--red-soft` chữ `--red-text` · ×ATM trong box Vùng nguy hiểm = chữ đỏ · badge FAKE PUMP/PUMP LÁO = viên `--red-soft` chữ đỏ · ×ATM < 1, ×ATL, đáy-trước-đỉnh = grey · ngày TGE = muted (meta).
-- Ticker vcFDV ≥ $300M chỉ dùng chữ đậm 600; không có chấm cam.
+- Ticker luôn đậm 600: FDV VC < $300M đen, ≥ $300M cam `--amber-text`; không có chấm cam.
 
 **Rank (Work):** card `$` (work-to-earn) = header + Daily nền `--amber-soft`, **không có thẻ rank**. Card S/A/B/C = header + Daily nền `--mist`, thẻ `rank: S` nền đen chữ trắng. Thanh lọc: nút đang chọn đen chữ trắng (`$` vàng chữ đen).
 
@@ -64,9 +64,10 @@ Chữ nội dung không dưới 14. Task không cắt chữ, được tự xuố
 
 - Bảng desktop: header 40 + 8 token × 40 = **360px**, áp dụng cả desktop lẫn mobile; danh sách token còn lại cuộn. Giữ cách ẩn cột trên mobile và công thức hiện có.
 - Header màn **luôn một hàng**, không wrap/cắt chữ. Mobile nút camera/Admin/VI-EN 32 theo yêu cầu riêng đã duyệt; tiêu đề tự co theo thang 20/18/16/14. Đây là ngoại lệ product cho toolbar, không là chuẩn vùng chạm chung.
-- **Cả ba panel Valuation cố định cao 328px**, header 56px và thân chiếm phần còn lại; nội dung dài cuộn trong thân. Đây là ngoại lệ product do user yêu cầu, áp dụng mọi màn hình. Hệ số TGE: 3 dòng tối thiểu 32 + nút dự đoán tối thiểu 40, cách 12. Mỗi dòng dùng kẻ `line`, bỏ ô nền/radius và khe riêng.
-- Vùng nguy hiểm/Narrative: dòng desktop tối thiểu 48 (tên, metadata); danh sách nằm trong thân box cố định và cuộn khi dài. Không thêm dòng rỗng `padRows()`.
-- Mobile: cả ba panel cùng lưới 2 cột bằng nhau, khe 12; thứ tự Hệ số TGE → Vùng nguy hiểm → Narrative. Không panel nào tự chiếm cả hàng; header tối thiểu 40 (tăng theo chữ), chữ 14/20; dòng tối thiểu 60 để chứa nhãn + metadata + giá trị. Cả ba box luôn cao bằng nhau 328px.
+- **Cả ba panel Valuation cố định cao 328px**, header 56px và thân chiếm phần còn lại; nội dung dài cuộn trong thân. Đây là ngoại lệ product do user yêu cầu, áp dụng mọi màn hình. Hệ số TGE: 3 dòng tối thiểu 56 + nút dự đoán tối thiểu 40, cách 12. Mỗi dòng dùng kẻ `line`, bỏ ô nền/radius và khe riêng.
+- Vùng nguy hiểm/Narrative: dòng desktop tối thiểu 56 (tên, metadata); danh sách nằm trong thân box cố định và cuộn khi dài. Không thêm dòng rỗng `padRows()`.
+- Mobile: cả ba panel cùng lưới 2 cột bằng nhau, khe 12; thứ tự Hệ số TGE → Vùng nguy hiểm → Narrative. Không panel nào tự chiếm cả hàng; header tối thiểu 40 (tăng theo chữ), chữ 14/20; dòng tối thiểu 56, nhãn/tên và metadata bên trái, giá trị bên phải; chừa khoảng 2 dòng chữ và được tăng theo nội dung nếu cần. Cả ba box luôn cao bằng nhau 328px.
+- Mỗi cặp trong ×ATH có thêm `(×N)` = số cuối / số đầu, dùng số gốc rồi làm tròn 2 chữ số; phần ngoặc cam đậm 600, hiện dưới cặp số. Áp dụng cả đáy-trước-đỉnh → ATH và TGE → ATH tuần đầu, không hiện nếu thiếu số đầu hợp lệ. Client/server cùng tính.
 - Outer panel bo 16, viền `line`, không shadow; bảng chính giữ shadow hiện có làm vùng dữ liệu chính nổi.
 
 ### Work và thao tác

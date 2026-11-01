@@ -152,6 +152,7 @@ Account `f9df99b7751b7dc3c80a22b6911c6f2b`, project Pages `0xhieu-xyz`. API toke
 
 ## Nhật ký
 
+- 2026-11-01: **Ticker/ATH/căn dòng theo user:** mọi ticker đậm; FDV VC <300M đen, ≥300M cam. Cặp ×ATH thêm tỷ số cuối/đầu `(×N)` cam đậm, dùng giá trị gốc, mirror client/server. Dòng trong ba box tối thiểu 56; mobile nhãn/tên trái, số phải, không xếp dọc hay chừa 3 dòng. Box vẫn cố định 328px, bảng 8 token mọi màn hình.
 - 2026-11-01: **Sửa sai theo user:** 8 token/khung trên CẢ desktop và mobile. Ba box phụ cố định cùng chiều cao 328px (header 56 + thân còn lại), nội dung dài cuộn bên trong. Ngoại lệ product này ưu tiên hơn mặc định compact cao theo nội dung. Giữ lưới mobile 2 cột và không chấm cam.
 - 2026-11-01: **Điều chỉnh theo user:** bảng desktop 8 token/khung (360px), mobile giữ 5; bỏ chấm cam FDV cao, giữ chữ đậm; bỏ ngoại lệ Hệ số TGE full-width, cả ba box mobile dùng cùng lưới 2 cột. QA data thật 7 kích thước × VI/EN: đúng số dòng, không tràn chữ, box cùng chiều rộng, ticker FDV cao đậm và không có pseudo-dot.
 - 2026-11-01: **Áp hai profile design system v2**: CV spacious (hero 96/48, khối cách 64/32); Valuation/Work compact (nhịp 4, đệm 8/12, dòng bảng 40, task 40/44, panel cao theo nội dung, bỏ padRows). Giữ bộ màu và mọi công thức/dữ liệu. Cập nhật audit theo profile. QA 40 trạng thái trang/chiều rộng/ngôn ngữ với data thật: không tràn chữ/ngang, đủ 5 token, không lỗi JS.

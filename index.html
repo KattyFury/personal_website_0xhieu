@@ -408,12 +408,15 @@
     }
     #tge-section tbody tr:last-child td { box-shadow: none; }
     #tge-section tbody tr.row-editable { cursor: pointer; }
-    /* Ticker ĐẬM = vcFDV ≥ $300M · THƯỜNG = dưới.
+    /* Ticker luôn đậm: vcFDV ≥ $300M cam, dưới ngưỡng đen.
        Chữ 3 cấp: số ink · narrative, ×ATL, đáy-trước-đỉnh, ×ATM < 1 grey · ngày TGE muted (meta).
        Số cần chú ý = chữ cam --amber-text đậm 600 (×TGE ≥ 13, ×ATH tuần đầu) — cùng màu với số chính trong 3 box.
        ĐỎ = nguy hiểm (×ATM ≥ 15, badge soft). */
-    #tge-section td.td-ticker { font-weight: 400; }
-    #tge-section td.td-ticker.fdv-hi { font-weight: 600; }
+    .val-table td.td-ticker { font-weight: 600; color: var(--ink); }
+    .val-table td.td-ticker.fdv-hi { color: var(--amber-text); }
+    #tge-section td.td-ticker { font-weight: 600; }
+    #tge-section td.td-ticker.fdv-hi { color: var(--amber-text); }
+    .ath-gain { display: block; font-weight: 600; color: var(--amber-text); }
     #tge-section td.td-narrative { font-weight: 400; color: var(--grey); }
     #tge-section td.td-date { font-weight: 400; color: var(--muted); }
     #tge-section td.td-atl { font-weight: 400; color: var(--grey); }
@@ -464,11 +467,10 @@
     /* Compact: nhãn trái, số phải; kẻ mảnh thay cho từng thẻ bo góc. */
     .rt-items { display: flex; flex-direction: column; }
     .list-row {
-      flex-shrink: 0; min-height: 32px; padding: 4px 0; border-bottom: 1px solid var(--line);
+      flex-shrink: 0; min-height: 56px; padding: 4px 0; border-bottom: 1px solid var(--line);
       display: flex; align-items: center; justify-content: space-between; gap: 8px;
       font-size: 14px; line-height: 20px; letter-spacing: -.006em; color: var(--ink);
     }
-    .danger-row, .narrative-row { min-height: 48px; }
     .list-row:last-child { border-bottom: 0; }
     .rt-items > :last-child, .vc-q234 > :last-child { margin-bottom: 0; }
     .lr-main { min-width: 0; display: flex; flex-direction: column; }
@@ -795,10 +797,12 @@
       .val-boxes > .val-card .vc-q1 { min-height: 40px; padding: 8px; gap: 4px; font-size: 14px; line-height: 20px; letter-spacing: -.006em; }
       .val-boxes > .val-card .vc-q1 .wte-ico { width: 16px; height: 16px; }
       .val-boxes > .val-card .vc-q234 { padding: 8px; }
-      .val-boxes > .val-card .list-row { min-height: 60px; padding: 4px 0; flex-direction: column; align-items: flex-start; justify-content: center; gap: 0; }
+      .val-boxes > .val-card .list-row { min-height: 56px; padding: 4px 0; align-items: center; justify-content: space-between; gap: 8px; }
+      .val-boxes > .val-card .list-row > .lr-label,
+      .val-boxes > .val-card .list-row > .lr-main { flex: 1; min-width: 0; }
       .val-boxes > .val-card .lr-title,
       .val-boxes > .val-card .lr-meta { white-space: normal; overflow-wrap: anywhere; }
-      .val-boxes > .val-card .lr-val { text-align: left; }
+      .val-boxes > .val-card .lr-val { max-width: 48%; flex-shrink: 1; text-align: right; overflow-wrap: anywhere; }
       .tge-modal-body thead th, .tge-modal-body tbody td { padding: 8px; }
 
       /* Work */
@@ -1962,10 +1966,12 @@
         // nhưng vẫn hiện để biết token vọt bao nhiêu ngay lúc list: ×TGE → ×ATH, tô CAM
         // cả 2 số để tách khỏi ca thường (ca thường đứng trước là đáy-trước-đỉnh).
         const athEarly = athTooEarly && e.ath > 0 && (e.athWick || (e.athDate && e.tgeDate));
+        const athGain = (start, end) => start > 0 && end > 0 && Number.isFinite(end / start)
+          ? `<span class="ath-gain">(×${fmtMult(end / start)})</span>` : '';
         const athCell = xATH > 0
-          ? (xPre > 0 ? `<span class="ath-pre">${fmtMult(xPre)}</span> <span class="ath-arrow">→</span> ${fmtMult(xATH)}` : fmtMult(xATH))
+          ? (xPre > 0 ? `<span class="ath-pre">${fmtMult(xPre)}</span> <span class="ath-arrow">→</span> ${fmtMult(xATH)}${athGain(xPre, xATH)}` : fmtMult(xATH))
           : athEarly
-            ? `<span class="ath-early">${fmtMult(xTGE)}</span> <span class="ath-arrow">→</span> <span class="ath-early">${fmtMult(xMult(e.ath, e))}</span>`
+            ? `<span class="ath-early">${fmtMult(xTGE)}</span> <span class="ath-arrow">→</span> <span class="ath-early">${fmtMult(xMult(e.ath, e))}</span>${athGain(xTGE, xMult(e.ath, e))}`
             : '—';
         // Cam chỉ ở chỗ mang nghĩa (ngưỡng trùng Market condition ≥13 và Danger Zone ≥15)
         const tgeCls = xTGE >= 13 ? 'm-hot' : '';
