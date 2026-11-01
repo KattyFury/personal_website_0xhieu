@@ -51,26 +51,33 @@ Nguồn chung: [repo_personal_design](https://github.com/KattyFury/repo_personal
 |---|---|---|
 | CV `/` | `spacious` | Nội dung tối đa 1200, lề theo lưới cũ; hero đệm trên 96 desktop / 48 mobile; các section cách 64 / 32; nút xã hội 48. CV dạng portfolio dùng h2 24 và tên 40/32 theo nội dung, không bắt buộc hero marketing 72 |
 | Valuation `/valuation` | `compact` | Khung co giãn, lề desktop 24/mobile 16; đệm panel 12 (panel nhỏ mobile 8); khe panel 16/12 |
-| Work `/airdrop` | `compact` | Nhóm cách 24, tiêu đề nhóm → card 12; card desktop 2 cột khe 16, mobile 1 cột khe 12; header/thân đệm 12; task tối thiểu 40, vùng chạm 44 trên thiết bị cảm ứng, tự cao theo chữ |
+| Work `/airdrop` | `compact` | Nhóm cách 16, tiêu đề nhóm 16/24 → card cách 8; card desktop 2 cột/mobile 1 cột, khe 8; header đệm 4/8, thân ngang 8; task tối thiểu 40, vùng chạm 44 trên thiết bị cảm ứng, tự cao theo chữ |
 | Popup thao tác | `compact` | Ô nhập 40 (touch tối thiểu 44), chữ input mobile vẫn 16; nút chính 40/44; radius control 8; popup giữ radius 16 và shadow Y2 |
 
 ### Chữ dùng chung
 
-Font hệ thống Apple như token cũ. Dữ liệu và metadata 14/20, nhãn 14/20 600; thân bài 16/24; tiêu đề panel compact 16/24 600; tiêu đề màn 24/32 desktop, mobile co theo 20/28 → 18/28 → 16/28 → 14/28 để giữ toolbar một hàng (line-height 28 là ngoại lệ toolbar). Các cỡ giữ letter-spacing theo token: 14 −.006em; 16 −.011em; 18 −.014em; 20 −.017em; 24 −.019em; 32+ −.022em. Số dùng `tabular-nums`; nhãn trái, số phải; mobile panel hẹp được xếp nhãn trên/số dưới.
+Font hệ thống Apple như token cũ. Dữ liệu và metadata 14/20, nhãn 14/20 600; thân bài 16/24; tiêu đề panel compact 16/24 600; tiêu đề màn 24/32 desktop, mobile co theo 20/28 → 18/28 → 16/28 → 14/28 để giữ toolbar một hàng (line-height 28 là ngoại lệ toolbar). Các cỡ giữ letter-spacing theo token: 14 −.006em; 16 −.011em; 18 −.014em; 20 −.017em; 24 −.019em; 32+ −.022em. Số dùng `tabular-nums`; nhãn trái, số phải; panel mobile vẫn nhãn trái/số phải, được xuống dòng khi cần; không tự chuyển thành nhãn trên/số dưới.
 
 Chữ nội dung không dưới 14. Task không cắt chữ, được tự xuống dòng. Compact giảm đệm và khung trước khi giảm chữ.
 
 ### Valuation
 
-- Bảng desktop: header 40 + 8 token × 40 = **360px**, áp dụng cả desktop lẫn mobile; danh sách token còn lại cuộn. Giữ cách ẩn cột trên mobile và công thức hiện có.
+- **Header bảng chính, popup bảng và ba box dùng chung token** `--val-header-*`: cao 56px, chữ đậm 600, desktop 16/24 và mobile 14/20, cùng nền amber-soft và căn giữa dọc. Không sửa riêng từng header làm lệch hệ thống.
+
+- Bảng desktop: header 56 + 8 token × 40 = **376px** (cộng bù thanh cuộn ngang nếu có), áp dụng cả desktop lẫn mobile; danh sách token còn lại cuộn. Giữ cách ẩn cột trên mobile và công thức hiện có.
 - Header màn **luôn một hàng**, không wrap/cắt chữ. Mobile nút camera/Admin/VI-EN 32 theo yêu cầu riêng đã duyệt; tiêu đề tự co theo thang 20/18/16/14. Đây là ngoại lệ product cho toolbar, không là chuẩn vùng chạm chung.
 - **Cả ba panel Valuation cố định cao 328px**, header 56px và thân chiếm phần còn lại; nội dung dài cuộn trong thân. Đây là ngoại lệ product do user yêu cầu, áp dụng mọi màn hình. Hệ số TGE: 3 dòng tối thiểu 56 + nút dự đoán tối thiểu 40, cách 12. Mỗi dòng dùng kẻ `line`, bỏ ô nền/radius và khe riêng.
 - Vùng nguy hiểm/Narrative: dòng desktop tối thiểu 56 (tên, metadata); danh sách nằm trong thân box cố định và cuộn khi dài. Không thêm dòng rỗng `padRows()`.
-- Mobile: cả ba panel cùng lưới 2 cột bằng nhau, khe 12; thứ tự Hệ số TGE → Vùng nguy hiểm → Narrative. Không panel nào tự chiếm cả hàng; header tối thiểu 40 (tăng theo chữ), chữ 14/20; dòng tối thiểu 56, nhãn/tên và metadata bên trái, giá trị bên phải; chừa khoảng 2 dòng chữ và được tăng theo nội dung nếu cần. Cả ba box luôn cao bằng nhau 328px.
+- Mobile: cả ba panel cùng lưới 2 cột bằng nhau, khe 12; thứ tự Hệ số TGE → Vùng nguy hiểm → Narrative. Không panel nào tự chiếm cả hàng; header cố định 56, chữ 14/20; dòng tối thiểu 56, nhãn/tên và metadata bên trái, giá trị bên phải; chừa khoảng 2 dòng chữ và được tăng theo nội dung nếu cần. Cả ba box luôn cao bằng nhau 328px.
 - Mỗi cặp trong ×ATH có thêm `(×N)` = số cuối / số đầu, dùng số gốc rồi làm tròn 2 chữ số; phần ngoặc cam đậm 600, nằm cùng một hàng với cặp số. Cột ATH rộng theo nội dung dài nhất, các cột còn lại cũng được đo; màn hẹp cuộn ngang trong bảng, header cuộn đồng bộ. Bù chiều cao thanh cuộn ngang để vẫn đủ 8 dòng. Áp dụng cả đáy-trước-đỉnh → ATH và TGE → ATH tuần đầu, không hiện nếu thiếu số đầu hợp lệ. Client/server cùng tính.
 - Outer panel bo 16, viền `line`, không shadow; bảng chính giữ shadow hiện có làm vùng dữ liệu chính nổi.
 
 ### Work và thao tác
+
+- Khoảng cách card 8px, nhóm 16px, tiêu đề nhóm → card 8px; header card đệm dọc 4/ngang 8, khe trong 4. Nhãn Get Started/Daily/Weekly tối thiểu 20, không margin dưới; đệm dọc chuyển nhóm 4. Không cộng thêm padding 8/12 vào mỗi lớp.
+- Task giữ tối thiểu 40 desktop/44 touch để thao tác được, chữ 14/20; phần này là vùng tương tác, không phải khoảng trống trang trí.
+- Tên dự án và tag dài được xuống dòng, không ellipsis. Icon control desktop 32, touch tối thiểu 44.
+- Chỉ cuối trang Work chừa 96px cho thanh lọc cố định để task cuối không bị che; không áp khoảng này giữa card hoặc nhóm.
 
 - Task dùng dòng kẻ mảnh, không thẻ bo 16 cho mỗi dòng. Chữ 14/20, không cắt hoặc ép một dòng. Bỏ khe 8 giữa task; nhóm nội dung vẫn có nhãn và khoảng đệm để phân biệt.
 - Tiêu đề dự án 16/24; giữ đủ trường và liên kết. Header card vẫn hai hàng để tên/social và nhãn phân loại có chỗ riêng.

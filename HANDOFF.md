@@ -152,6 +152,7 @@ Account `f9df99b7751b7dc3c80a22b6911c6f2b`, project Pages `0xhieu-xyz`. API toke
 
 ## Nhật ký
 
+- 2026-11-01: **Rà toàn thiết kế theo user:** thống nhất header Valuation/bảng/popup/3 box qua token dùng chung: cao 56, desktop chữ16/24, mobile14/20, đậm600; bảng header56 + 8 dòng40. Work giảm cardgap8/groupgap16, headerpadding4/8, sectionpadding4/8, bỏ đệm nhãn dư; tên/tag dài hiện đủ. Chừa vùng cuối Work96 cho filter cố định. QA 35 trạng thái 3 trang/7 chiều rộng/VI-EN, touch44 + popup, xem ảnh cả desktop/mobile.
 - 2026-11-01: **ATH một hàng theo user:** cặp số và `(×N)` inline, đo độ rộng nội dung từng cột cho bảng chính/popup; bỏ tỷ lệ % cũ. Mobile giữ 4 cột, màn hẹp cuộn ngang nội bộ, header đồng bộ và bù scrollbar để đủ 8 dòng. QA 18 trạng thái VI/EN 320–1920px + popup: không tràn ô, ATH một dòng, header thẳng cột và cuộn đồng bộ.
 - 2026-11-01: **Ticker/ATH/căn dòng theo user:** mọi ticker đậm; FDV VC <300M đen, ≥300M cam. Cặp ×ATH thêm tỷ số cuối/đầu `(×N)` cam đậm, dùng giá trị gốc, mirror client/server. Dòng trong ba box tối thiểu 56; mobile nhãn/tên trái, số phải, không xếp dọc hay chừa 3 dòng. Box vẫn cố định 328px, bảng 8 token mọi màn hình.
 - 2026-11-01: **Sửa sai theo user:** 8 token/khung trên CẢ desktop và mobile. Ba box phụ cố định cùng chiều cao 328px (header 56 + thân còn lại), nội dung dài cuộn bên trong. Ngoại lệ product này ưu tiên hơn mặc định compact cao theo nội dung. Giữ lưới mobile 2 cột và không chấm cam.

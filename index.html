@@ -163,7 +163,14 @@
        ⚠️ Đừng quay lại kiểu tiêu đề canh giữa + nút absolute: màn hẹp là chữ chui
        xuống dưới nút (dính 2 lần, bỏ hẳn 2026-08-17). */
     #valuation-view, #airdrop-view { display: none; }
+    #valuation-view, #tge-modal {
+      --val-header-height: 56px;
+      --val-header-font-size: 16px;
+      --val-header-line-height: 24px;
+      --val-header-letter-spacing: -.011em;
+    }
     .val-wrap, .ard-wrap { margin: 0 auto; padding: 0 24px 24px; }
+    #airdrop-view .ard-wrap { padding-bottom: 96px; } /* chừa vùng cho thanh lọc cố định, không che task cuối */
     .panel-head {
       position: static; display: flex; align-items: center; justify-content: space-between; gap: 16px;
       padding: 16px 0;
@@ -217,12 +224,12 @@
       background: var(--ground); border-radius: 16px;
       box-shadow: var(--shadow); overflow: hidden;
     }
-    /* Compact header: tối thiểu 40, nền vàng nhạt, tiêu đề 16/24. */
+    /* Header bảng và box Valuation dùng chung token kích thước/chữ. */
     .vc-q1 {
-      grid-row: 1; min-height: 40px; margin: 0; padding: 8px 12px; align-self: stretch;
+      grid-row: 1; min-height: var(--val-header-height); margin: 0; padding: 8px 12px; align-self: stretch;
       display: flex; align-items: center; justify-content: flex-start; gap: 8px;
       background: var(--amber-soft);
-      font-size: 16px; font-weight: 600; line-height: 24px; letter-spacing: -.011em; color: var(--ink);
+      font-size: var(--val-header-font-size); font-weight: 600; line-height: var(--val-header-line-height); letter-spacing: var(--val-header-letter-spacing); color: var(--ink);
     }
     .vc-q1 .wte-ico { color: var(--ink); }
 
@@ -385,7 +392,7 @@
     /* Bảng altcoin: cột rộng theo nội dung đã đo, ATH đủ chỗ cho cặp số + tỷ số trên một hàng.
        Màn hẹp cuộn ngang trong bảng, header đồng bộ với thân. */
     #tge-section {
-      display: flex; flex-direction: column; max-height: calc(360px + var(--val-scrollbar-height, 0px)); margin-bottom: 16px; overflow: hidden;   /* header 40 + 8 dòng × 40 + thanh cuộn ngang nếu có */
+      display: flex; flex-direction: column; max-height: calc(var(--val-header-height) + 320px + var(--val-scrollbar-height, 0px)); margin-bottom: 16px; overflow: hidden;   /* header + 8 dòng × 40 + thanh cuộn ngang nếu có */
       background: var(--ground); border-radius: 16px; box-shadow: var(--shadow);
     }
     #tge-head-wrap { flex: none; overflow: hidden; scrollbar-gutter: auto; background: var(--amber-soft); }
@@ -406,8 +413,8 @@
     #tge-section th:nth-child(7), #tge-section td:nth-child(7), .tge-modal-body th:nth-child(7), .tge-modal-body td:nth-child(7) { width: calc(var(--ck7, 64px) + 16px); }
     /* header bảng = web-label 14/600 */
     #tge-section thead th {
-      position: sticky; top: 0; z-index: 2; height: 40px; border: none; background: var(--amber-soft);
-      font-size: 14px; font-weight: 600; letter-spacing: -.006em;
+      position: sticky; top: 0; z-index: 2; height: var(--val-header-height); border: none; background: var(--amber-soft);
+      font-size: var(--val-header-font-size); font-weight: 600; line-height: var(--val-header-line-height); letter-spacing: var(--val-header-letter-spacing);
       text-align: center; white-space: nowrap; color: var(--ink);
     }
     #tge-section tbody td {
@@ -445,9 +452,9 @@
     .tge-modal-head { flex: none; overflow: hidden; scrollbar-gutter: auto; }
     .tge-modal-scroll { flex: 1 1 auto; min-height: 0; overflow: auto; }
     .tge-modal-body thead th {
-      position: sticky; top: 0; z-index: 2; padding: 8px;
+      position: sticky; top: 0; z-index: 2; height: var(--val-header-height); padding: 8px;
       background: var(--amber-soft);
-      font-size: 14px; font-weight: 600; text-align: center; white-space: nowrap; color: var(--ink);
+      font-size: var(--val-header-font-size); line-height: var(--val-header-line-height); letter-spacing: var(--val-header-letter-spacing); font-weight: 600; text-align: center; white-space: nowrap; color: var(--ink);
     }
     .tge-modal-body tbody td {
       height: 56px; padding: 8px; border-bottom: 1px solid var(--line);
@@ -467,7 +474,7 @@
 
     /* Ba panel cố định cùng chiều cao; nội dung dài cuộn bên trong. */
     .val-boxes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
-    .val-boxes > .val-card { height: 328px; min-width: 0; display: grid; grid-template-rows: 56px minmax(0, 1fr); }
+    .val-boxes > .val-card { height: 328px; min-width: 0; display: grid; grid-template-rows: var(--val-header-height) minmax(0, 1fr); }
     .vc-q234 { grid-row: 2; min-height: 0; padding: 12px; overflow-y: auto; }
     /* Tiêu đề box kiêm nút mở popup giải thích */
     .box-title-btn { cursor: pointer; }
@@ -502,30 +509,29 @@
       cursor: pointer; transition: transform .15s;
     }
 
-    /* ══ WORK ═════════════════════════════════════════════════════
-       Card cùng rank dàn 2 cột × 588 (6 cột lưới), rãnh 24; khác rank cách 48. */
-    #wte-cards { display: flex; flex-direction: column; gap: 24px; }
+    /* Work compact: card cách 8, nhóm cách 16; không cộng đệm dọc nhiều lớp. */
+    #wte-cards { display: flex; flex-direction: column; gap: 16px; }
     .wte-group { scroll-margin-top: 88px; }
-    /* tiêu đề nhóm (work-to-earn · Rank: S …) = web-h4 20/28, cách card 16 — KHÔNG kẻ mảnh (user bỏ 2026-10-24) */
+    /* Tiêu đề nhóm 16/24, cách card 8; không kẻ mảnh. */
     .wte-group-label {
-      display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
-      font-size: 20px; font-weight: 600; line-height: 28px; letter-spacing: -.017em; color: var(--ink);
+      display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+      font-size: 16px; font-weight: 600; line-height: 24px; letter-spacing: -.011em; color: var(--ink);
     }
-    .wte-rank-group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+    .wte-rank-group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; align-items: start; }
     .wte-card { width: 100%; min-width: 0; }
 
     /* Header 2 hàng: hàng 1 = logo + tên TRÁI · icon X + Discord PHẢI (+ ⋮ admin) · hàng 2 = dãy thẻ potential · narrative · rank,
-       cách mép card 16 (thẳng mép logo). Thẻ tự xuống dòng khi card hẹp — không cắt chữ. */
+       cách mép card 8. Thẻ tự xuống dòng khi card hẹp — không cắt chữ. */
     .wte-card-head {
-      padding: 8px 12px;
-      display: grid; grid-template-columns: minmax(0,1fr) auto auto; align-items: center; column-gap: 8px; row-gap: 8px;
+      padding: 4px 8px;
+      display: grid; grid-template-columns: minmax(0,1fr) auto auto; align-items: center; column-gap: 4px; row-gap: 4px;
     }
     .wte-name-wrap { grid-column: 1; grid-row: 1; min-width: 0; display: flex; align-items: center; gap: 8px; }
     .wte-socials { grid-column: 2; grid-row: 1; display: flex; gap: 8px; }
     .wte-card-head .wte-opt { grid-column: 3; grid-row: 1; }
-    /* Nút icon 40×40 (icon 20): nghỉ đen, hover nền trắng */
+    /* Icon control 32, thiết bị cảm ứng mở rộng vùng chạm lên 44. */
     .wte-social {
-      width: 40px; height: 40px; border-radius: 16px;
+      width: 32px; height: 32px; border-radius: 8px;
       display: inline-flex; align-items: center; justify-content: center;
       color: var(--ink); transition: background .15s;
     }
@@ -535,16 +541,16 @@
       background: var(--mist);
     }
     .wte-name {
-      flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      flex: 1; min-width: 0; white-space: normal; overflow-wrap: anywhere;
       font-size: 16px; font-weight: 600; line-height: 24px; letter-spacing: -.011em; color: var(--ink); text-decoration: none;
     }
     .wte-tags { grid-column: 1 / -1; grid-row: 2; display: flex; flex-wrap: wrap; gap: 8px; }
     /* Thẻ: viên trắng cao 24, chữ 14/600 */
     .wte-tag {
-      height: 24px; padding: 0 8px; border-radius: 9999px;
+      min-height: 24px; max-width: 100%; padding: 0 8px; border-radius: 9999px;
       display: inline-flex; align-items: center; gap: 8px;
       background: var(--ground); font-size: 14px; font-weight: 600; line-height: 20px; letter-spacing: -.006em;
-      color: var(--ink); white-space: nowrap;
+      color: var(--ink); white-space: normal; overflow-wrap: anywhere;
     }
     .wte-tag .wte-ico { width: 16px; height: 16px; }
     .wte-pot--low, .wte-narr { color: var(--grey); }
@@ -558,25 +564,25 @@
     .wte-card--INCOME .wte-card-head, .wte-card--INCOME .wte-section--daily { background: var(--amber-soft); }
 
     /* Thân: nhãn nhóm (icon + kẻ mảnh) → dòng → … */
-    .wte-section { min-width: 0; padding: 0 12px; }
-    .wte-card-head + .wte-section { padding-top: 8px; }
-    .wte-section:last-of-type { padding-bottom: 12px; }
+    .wte-section { min-width: 0; padding: 0 8px; }
+    .wte-card-head + .wte-section { padding-top: 4px; }
+    .wte-section:last-of-type { padding-bottom: 4px; }
     .wte-section-label {
-      min-height: 28px; margin-bottom: 4px; display: flex; align-items: center; gap: 8px;
+      min-height: 20px; margin-bottom: 0; display: flex; align-items: center; gap: 4px;
       font-size: 14px; font-weight: 600; line-height: 20px; letter-spacing: -.006em; color: var(--grey);
     }
     .wte-section-label .wte-ico { width: 16px; height: 16px; color: var(--ink); }
     .wte-section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
     /* Daily = dải nền theo màu rank tràn 2 mép card. Section vốn đã rộng bằng card nên
        CHỈ đổi padding dọc — đừng thêm margin âm (từng làm chữ dính sát mép). */
-    .wte-section--daily { padding-top: 8px; padding-bottom: 8px; }
-    .wte-section--daily + .wte-section { padding-top: 8px; }
-    .wte-card-head + .wte-section--daily { padding-top: 8px; }
+    .wte-section--daily { padding-top: 4px; padding-bottom: 4px; }
+    .wte-section--daily + .wte-section { padding-top: 4px; }
+    .wte-card-head + .wte-section--daily { padding-top: 4px; }
     .wte-section--daily .wte-task-row { background: transparent; }
     .wte-tasks { list-style: none; display: flex; flex-direction: column; }
     .wte-task-item { display: block; margin: 0; font-size: 14px; line-height: 20px; color: var(--ink); }
     .wte-task-item:last-child .wte-task-row { border-bottom: 0; }
-    .wte-task-row { flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 16px; text-decoration: none; }
+    .wte-task-row { flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 8px; text-decoration: none; }
     /* Task luôn hiện đủ chữ: xuống dòng bao nhiêu cũng được, hàng cao theo — KHÔNG cắt "…" (user chốt 2026-10-28) */
     .wte-task-text { flex: 1; min-width: 0; white-space: normal; overflow-wrap: anywhere; }
 
@@ -742,6 +748,7 @@
        Chữ tối thiểu 14. Tiêu đề lớn đổi sang web-mobile-*. */
     @media (max-width: 640px) {
       :root { --gutter: 16px; --navbar: 56px; }
+      #valuation-view, #tge-modal { --val-header-font-size: 14px; --val-header-line-height: 20px; --val-header-letter-spacing: -.006em; }
 
       .header-home img { width: 24px; height: 24px; }
       nav { gap: 16px; }
@@ -798,7 +805,7 @@
       #tge-section th:nth-child(6), #tge-section td:nth-child(6) { display: none; }
       .val-boxes { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
       .val-boxes > .val-card { min-width: 0; }
-      .val-boxes > .val-card .vc-q1 { min-height: 40px; padding: 8px; gap: 4px; font-size: 14px; line-height: 20px; letter-spacing: -.006em; }
+      .val-boxes > .val-card .vc-q1 { padding: 8px; gap: 4px; }
       .val-boxes > .val-card .vc-q1 .wte-ico { width: 16px; height: 16px; }
       .val-boxes > .val-card .vc-q234 { padding: 8px; }
       .val-boxes > .val-card .list-row { min-height: 56px; padding: 4px 0; align-items: center; justify-content: space-between; gap: 8px; }
@@ -810,8 +817,8 @@
       .tge-modal-body thead th, .tge-modal-body tbody td { padding: 8px; }
 
       /* Work */
-      #wte-cards { gap: 24px; }
-      .wte-rank-group { grid-template-columns: 1fr; gap: 12px; }
+      #wte-cards { gap: 16px; }
+      .wte-rank-group { grid-template-columns: 1fr; gap: 8px; }
 
 
       #cat-btn  { right: 16px; bottom: 16px; }
@@ -2021,6 +2028,10 @@
         <tbody>${tbody.innerHTML}</tbody>
       </table></div>`;
       document.body.appendChild(probe);
+      const headerStyle = getComputedStyle(document.getElementById('valuation-view'));
+      for (const prop of ['--val-header-height', '--val-header-font-size', '--val-header-line-height', '--val-header-letter-spacing']) {
+        probe.style.setProperty(prop, headerStyle.getPropertyValue(prop));
+      }
       for (let i = 1; i <= 7; i++) {
         let w = 0;
         probe.querySelectorAll(`th:nth-child(${i}) .ck, td:nth-child(${i}) .ck`).forEach(s => { w = Math.max(w, s.getBoundingClientRect().width); });
