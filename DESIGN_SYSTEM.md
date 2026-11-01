@@ -37,9 +37,9 @@ Cả CV/Valuation/Work dùng chung `--ds-product-card-radius`, `--ds-product-con
 
 ## Valuation `/valuation` — compact/data workspace
 
-- Header bảng chính/popup/ba box dùng chung `--val-header-*` từ token: cao56; desktop16/24 600, mobile14/20 600; nền trắng và viền line theo header thẻ Work. Vàng nhạt là highlight có ý nghĩa (DAILY), không phải màu mặc định mọi header.
+- Header bảng chính/popup/ba box và header thẻ Work dùng nền cam app #FFA111, chữ đen, viền line. Header Valuation giữ cao56, desktop16/24 600, mobile14/20 600. DAILY giữ nền vàng nhạt trong thân thẻ.
 - Bảng hiện8 token trên cả desktop/mobile, dòng40. Cao nội dung56 + 8×40; cộng viền2 và scrollbar nếu có. Tất cả ô đo theo content; header/body cùng cột và cuộn đồng bộ. Mobile ẩn Narrative, TGE, ATL; màn thiếu chỗ cuộn ngang trong bảng, không ép ATH xuống dòng hay giảm chữ.
-- ATH `đầu → cuối (×N)` một hàng, N=cuối/đầu từ số gốc, làm tròn2; tỷ số cam đậm. Client/server cùng công thức. Ticker đậm600: FDV VC dưới300M đen, từ300M cam, không chấm.
+- ATH `đầu → cuối (×N)` một hàng: hai số màu đen đậm600, chỉ `(×N)` cam app #FFA111 đậm600, kể cả ATH tuần đầu và popup. N=cuối/đầu từ số gốc, làm tròn2. Client/server cùng công thức. Ticker đậm600: FDV VC dưới300M đen, từ300M cam app, không chấm. Accent text của product dùng #FFA111, không thay bằng cam đất #B84A0C.
 - Ba box phụ cố định328. Nhãn/tên trái, giá trị phải; mỗi dòng min56 và được tăng để hiện đủ nội dung. Nội dung dài cuộn trong thân. Không thêm dòng trống.
 - Desktop3 cột (tablet2), mobile2 cột bằng nhau; không tự cho box nào span cả hàng. Khe12 dùng chung với Work.
 - Header màn luôn một hàng; mobile control nhìn thấy32 là ngoại lệ đã duyệt. Title co20/18/16/14; không làm mất nút.
@@ -49,7 +49,7 @@ Cả CV/Valuation/Work dùng chung `--ds-product-card-radius`, `--ds-product-con
 - `/airdrop` và `/airdrop/` chuyển301 sang `/work`; client fallback giữ query/hash. Audit và nav dùng `/work`.
 - User duyệt hướng Linear: mỗi công việc/dự án một thẻ độc lập, viền line, radius8, không gộp thành bề mặt chung.
 - Desktop2 thẻ mỗi hàng; màn≤900px chỉ1 thẻ mỗi hàng. Khe12. Các thẻ căn đầu, chiều cao theo nội dung.
-- Header thẻ padding12; từng phần Get Started/DAILY/Weekly nằm dưới, nhãn trên và nội dung dưới. DAILY nền yellow-soft, nhãn/icon orange-text đậm; header giữ nền trắng.
+- Header thẻ padding12, nền cam app/chữ đen; từng phần Get Started/DAILY/Weekly nằm dưới, nhãn trên và nội dung dưới. DAILY nền yellow-soft, nhãn/icon cam app đậm.
 - Section padding8px 12px; task min40 desktop/44 mobile hoặc touch; chữ14/20, giữ đầy đủ nội dung và link. Group gap16. Metadata/tag được xuống dòng.
 - Toàn bộ field/link/admin vẫn hoạt động. Rank filter nổi giữ chức năng, cuối trang chừa96 cho vùng toolbar, không dùng khoảng này giữa dự án.
 

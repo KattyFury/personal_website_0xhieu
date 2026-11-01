@@ -44,7 +44,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="/design-tokens.css?v=3-c2d2118e4446">
+  <link rel="stylesheet" href="/design-tokens.css?v=3-dd9ad2778ef8">
   <style>
     /* ══════════════════════════════════════════════════════════════
        0xhieu.xyz — MỘT stylesheet duy nhất, viết theo thành phần.
@@ -136,14 +136,15 @@
     .nav-btn.active { color: var(--ink); }
     .nav-btn:hover { color: var(--ink); }
 
-    /* ── HOVER ĐỒNG BỘ (chốt 2026-10-25): mọi thứ bấm được có CHỮ → chữ đổi cam --amber-text + đậm 700 (không gạch chân).
-       Nút nền đen → chữ vàng mắt mèo --amber (cam đậm trên đen không đủ tương phản).
+    /* ── HOVER ĐỒNG BỘ: chữ đổi cam app và đậm600.
+       Nút nền đen dùng cùng cam đặc trưng của product.
        KHÔNG đổi màu nền box, KHÔNG nhích box. Nút chỉ có icon (không chữ) → nền --mist (hoặc trắng nếu nằm trên nền màu). */
     .header-home:hover span, .val-intro-clickable:hover > span, .box-title-btn:hover, .wte-name:hover,
     .nav-btn:not(:disabled):hover, .lang-btn:hover, .lang-dd-btn:not(.is-plus):hover, .social-btn:hover,
     .predict-link:hover, .predict-btn-primary:hover, .predict-btn-secondary:hover, .val-del-btn:hover, .retry-btn:hover,
     .pt-delete:hover, .val-row:hover, .wte-task-row--link:hover .wte-task-text, #tge-section tbody tr.row-editable:hover td {
       color: var(--amber-text);
+      font-weight: 600;
     }
     .predict-btn-primary:hover, .predict-link:hover, .retry-btn:hover, .lang-btn.active:hover { color: var(--amber); }
     /* Chữ có độ rộng tự do (nút xã hội rộng theo chữ, link nằm giữa đoạn văn): đậm thật sẽ làm nút/dòng chữ nhích
@@ -434,9 +435,9 @@
     #tge-section td.td-date { font-weight: 400; color: var(--muted); }
     #tge-section td.td-atl { font-weight: 400; color: var(--grey); }
     .val-table .ck { display: inline-block; text-align: left; }
-    #tge-section .ath-pre { font-weight: 400; color: var(--grey); }
-    #tge-section .ath-arrow { font-weight: 400; color: var(--grey); }
-    #tge-section .ath-early { font-weight: 600; color: var(--amber-text); }  /* ATH trong tuần đầu lên sàn */
+    .val-table td.td-ath, .val-table td.td-ath .ck { color: var(--ink); font-weight: 600; }
+    .val-table .ath-pre, .val-table .ath-early { font-weight: 600; color: var(--ink); }
+    .val-table .ath-arrow { font-weight: 400; color: var(--ink); }
     .val-table .m-hot { font-weight: 600; color: var(--amber-text); }
     .val-table .m-low { font-weight: 400; color: var(--grey); }
     .val-table .m-danger { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; border-radius: 9999px; background: var(--red-soft); color: var(--red-text); font-weight: 600; }
@@ -488,7 +489,7 @@
     .lr-main { min-width: 0; display: flex; flex-direction: column; }
     .lr-title { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; font-weight: 600; overflow-wrap: anywhere; }
     .lr-label, .lr-meta { color: var(--grey); overflow-wrap: anywhere; }
-    .lr-val { flex-shrink: 0; font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; color: var(--amber-text); }   /* số chính của box = chữ cam orange-text (4.6:1 trên mist) */
+    .lr-val { flex-shrink: 0; font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; color: var(--amber-text); }
     .danger-multi { color: var(--red-text); }   /* mọi dòng ở đây đều ×ATM ≥ 15 = nguy hiểm */
     .rt-btn-row { flex-shrink: 0; min-height: 40px; margin-top: 12px; display: flex; }
     .danger-badge-new {
@@ -559,6 +560,9 @@
 
     /* Header trung tính; DAILY nổi bật trong từng thẻ. */
     .wte-card-head { background: var(--ds-workspace-header-surface); }
+    .wte-card-head .wte-name:hover, .vc-q1 .box-title-btn:hover {
+      color: var(--ink); text-decoration: underline;
+    }
 
     .wte-section { min-width: 0; padding: var(--ds-workspace-section-padding-y) var(--ds-workspace-card-padding-x); border-top: 1px solid var(--line); }
     .wte-section--daily { background: var(--amber-soft); }
@@ -688,8 +692,9 @@
     .val-row .vr-warn { font-weight: 600; color: var(--red-text); }
     #val-form-fields { display: flex; flex-direction: column; gap: 16px; }
     #val-list-modal .predict-actions { display: flex; justify-content: center; }
-    #val-form-fields .predict-actions { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-    #val-form-fields .predict-actions button { min-width: 120px; }
+    #val-form-fields .predict-actions { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 16px; }
+    #val-form-fields .predict-actions button { min-width: 0; }
+    .vf-fetch-status { font-size: 14px; line-height: 20px; letter-spacing: -.006em; color: var(--grey); overflow-wrap: anywhere; }
 
     /* Form task cá nhân (cuộn trong popup, ẩn thanh cuộn) */
     #ptask-form {
@@ -1117,15 +1122,14 @@
           <div class="calc-field"><label>Total supply *</label><input type="text" id="vf-totalSupply" placeholder="4.29B" /></div>
           <div class="calc-field"><label>Giá TGE *</label><input type="number" id="vf-priceTGE" inputmode="decimal" step="any" placeholder="1.1783" /></div>
         </div>
-        <div class="ptask-row">
-          <div class="calc-field"><label>CoinGecko id</label><input type="text" id="vf-cgId" placeholder="optimism" /></div>
-          <div class="calc-field"><label>Cặp Binance</label><input type="text" id="vf-binanceSymbol" placeholder="OPUSDT" /></div>
-        </div>
+        <div class="calc-field"><label>CoinGecko id</label><input type="text" id="vf-cgId" placeholder="optimism" /></div>
         <div class="admin-msg" id="vf-error" style="display:none"></div>
+        <div class="vf-fetch-status" id="vf-fetch-status" role="status" aria-live="polite" hidden></div>
         <div class="predict-actions">
-          <button class="val-del-btn" id="vf-delete">Xoá</button>
+          <button class="predict-btn-secondary" id="vf-fetch" type="button">Fetch</button>
           <button class="predict-btn-primary" id="vf-save">Lưu</button>
         </div>
+        <button class="val-del-btn" id="vf-delete">Xoá</button>
       </div>
     </div>
   </div>
@@ -1987,8 +1991,7 @@
         // Ô ×ATH mang 2 con số: đáy-trước-đỉnh → đỉnh. Đọc thành "chiều xuống bao nhiêu
         // rồi mới bật lên bấy nhiêu" (OP: 1,62 → 19,80). Không có số trước thì hiện mình đỉnh.
         // Ca ĐẶC BIỆT (2026-10-05): ATH rơi trong tuần đầu lên sàn → không phải đỉnh thường,
-        // nhưng vẫn hiện để biết token vọt bao nhiêu ngay lúc list: ×TGE → ×ATH, tô CAM
-        // cả 2 số để tách khỏi ca thường (ca thường đứng trước là đáy-trước-đỉnh).
+        // Vẫn hiện ×TGE → ×ATH; hai số đen, chỉ tỷ số (×N) nhấn cam.
         const athEarly = athTooEarly && e.ath > 0 && (e.athWick || (e.athDate && e.tgeDate));
         const athGain = (start, end) => start > 0 && end > 0 && Number.isFinite(end / start)
           ? `<span class="ath-gain">(×${fmtMult(end / start)})</span>` : '';
@@ -2916,7 +2919,8 @@
     const VAL_NARRATIVES = ['stablechain','layer-1','infra','ai','layer-2','prediction',
       'trading','bitcoin','payment','defi','identity','privacy','game','social','desci'];
     const VF = ['ticker','tgeDate','narrative','fundraising','vcAlloc','totalSupply',
-                'priceTGE','cgId','binanceSymbol'];
+                'priceTGE','cgId'];
+    let vfFetchController = null, vfFetchEpoch = 0;
     let vfEditing = null;   // ticker đang sửa; null = thêm mới
 
     // 2 ô nhập theo lối viết tắt: gõ "6.8M" thay vì "6800000", "10B" thay vì 10 số 0.
@@ -2963,6 +2967,8 @@
     }
 
     function openValForm(ticker) {
+      cancelValFetch();
+      document.getElementById('vf-fetch-status').hidden = true;
       vfEditing = ticker || null;
       const p = ticker ? valProjects.find(x => x.ticker === ticker) : null;
       const sel = document.getElementById('vf-narrative');
@@ -2982,6 +2988,59 @@
       document.getElementById('val-form-title').textContent = p ? `Sửa ${p.ticker}` : 'Thêm dự án';
       document.getElementById('vf-error').style.display = 'none';
       document.getElementById('val-form-modal').classList.add('open');
+    }
+
+    function cancelValFetch() {
+      vfFetchEpoch++;
+      vfFetchController?.abort(); vfFetchController = null;
+      document.getElementById('vf-fetch').disabled = false;
+      document.getElementById('vf-fetch').textContent = 'Fetch';
+    }
+    async function fetchValProject() {
+      const ticker = document.getElementById('vf-ticker').value.trim().replace(/^\$/, '').toUpperCase();
+      const status = document.getElementById('vf-fetch-status');
+      const err = document.getElementById('vf-error');
+      err.style.display = 'none'; status.hidden = false;
+      if (!ticker) { status.textContent = 'Nhập ticker trước khi Fetch.'; return; }
+      cancelValFetch();
+      const epoch = vfFetchEpoch;
+      const controller = vfFetchController = new AbortController();
+      const snapshot = Object.fromEntries(VF.map(k => [k, document.getElementById('vf-' + k).value]));
+      const btn = document.getElementById('vf-fetch'); btn.disabled = true; btn.textContent = 'Đang lấy…';
+      status.textContent = 'Đang tra cứu và đối chiếu dữ liệu…';
+      try {
+        const response = await fetch('/api/val-fetch', { method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ pass: adminPass, ticker, tgeDate: snapshot.tgeDate }), signal: controller.signal });
+        const result = await response.json();
+        if (epoch !== vfFetchEpoch || !document.getElementById('val-form-modal').classList.contains('open') ||
+            document.getElementById('vf-ticker').value.trim().replace(/^\$/, '').toUpperCase() !== ticker) return;
+        if (!result.ok) {
+          const messages = { 'ambiguous-ticker':'Ticker trùng nhiều dự án; chưa thể tự điền an toàn.',
+            'not-found':'Chưa tìm được dự án đúng ticker này.', 'identity-mismatch':'Thông tin định danh chưa khớp; không tự điền.',
+            'wrong-pass':'Phiên admin không hợp lệ. Vui lòng đăng nhập lại.', 'rate-limit':'Nguồn dữ liệu đang giới hạn lượt gọi. Thử lại sau.',
+            'surf-not-configured':'Chưa kết nối được SURF trên máy chủ.', 'bad-ticker':'Ticker không hợp lệ.' };
+          throw new Error(messages[result.error] || 'Chưa lấy được dữ liệu. Các ô đang nhập vẫn được giữ nguyên.');
+        }
+        const labels = { tgeDate:'Ngày TGE', narrative:'Narrative', fundraising:'Gọi vốn', vcAlloc:'VC Alloc',
+          totalSupply:'Total supply', priceTGE:'Giá TGE', cgId:'CoinGecko id' };
+        const filled = [], sources = new Set();
+        for (const [key, value] of Object.entries(result.fields || {})) {
+          if (!labels[key] || !result.evidence?.[key]?.length || value === null || value === '') continue;
+          const input = document.getElementById('vf-' + key);
+          // Fill empty fields only, and never overwrite edits made while a request was running.
+          if (snapshot[key].trim() || input.value !== snapshot[key]) continue;
+          input.value = String(value); // Keep the exact numeric value; do not round through fmtShort().
+          filled.push(labels[key]); result.evidence[key].forEach(source => sources.add(source));
+        }
+        status.textContent = (filled.length ? `${result.project.name}: đã điền ${filled.join(', ')}. Nguồn: ${[...sources].join(', ')}.`
+          : `${result.project.name}: chưa có thêm ô trống đủ dữ liệu để điền.`) +
+          ' Ô đã nhập được giữ nguyên; trường chưa xác minh để trống. Fetch chưa lưu dự án.' +
+          (result.warnings?.length ? ' ' + result.warnings.join(' ') : '');
+      } catch (error) {
+        if (error.name !== 'AbortError' && epoch === vfFetchEpoch) status.textContent = error.message;
+      } finally {
+        if (epoch === vfFetchEpoch) { btn.disabled = false; btn.textContent = 'Fetch'; vfFetchController = null; }
+      }
     }
 
     async function saveValProject() {
@@ -3054,6 +3113,10 @@
     document.getElementById('val-form-close').addEventListener('click',
       () => document.getElementById('val-form-modal').classList.remove('open'));
     document.getElementById('vf-save').addEventListener('click', saveValProject);
+    document.getElementById('vf-fetch').addEventListener('click', fetchValProject);
+    document.getElementById('val-form-modal').addEventListener('click', e => {
+      if (e.target === e.currentTarget || e.target.closest('#val-form-close')) cancelValFetch();
+    });
     document.getElementById('vf-delete').addEventListener('click', deleteValProject);
 
     // Bấm thẳng vào một dòng trong bảng → mở form sửa (chỉ khi đã mở khoá)

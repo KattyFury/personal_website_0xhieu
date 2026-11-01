@@ -140,6 +140,8 @@ export async function onRequestPost({ request, env }) {
       projects.push(p);
     } else {
       if (i < 0) return json({ ok: false, error: 'not-found' }, 404);
+      // Legacy bot hint is no longer an input. Preserve existing records on edit.
+      if (body.project?.binanceSymbol === undefined) p.binanceSymbol = projects[i].binanceSymbol || '';
       projects[i] = p;
     }
     await write(projects);

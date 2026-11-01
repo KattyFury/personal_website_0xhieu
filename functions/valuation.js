@@ -73,7 +73,7 @@ function compute(projects, prices) {
     const xATH = athTooEarly ? 0 : xMult(e.ath, e);
     const xPre = e.preAth ? xMult(e.preAth, e) : null;
     const xTGE = multiple(e), xATM = xMult(e.currentPrice, e);
-    // ATH trong tuần đầu lên sàn → "×TGE → ×ATH" tô cam (khớp index.html)
+    // ATH tuần đầu vẫn hiện ×TGE → ×ATH: số đen, chỉ (×N) cam qua CSS chung.
     const athEarly = athTooEarly && e.ath > 0 && (e.athWick || (e.athDate && e.tgeDate));
     const athGain = (start, end) => start > 0 && end > 0 && Number.isFinite(end / start)
       ? `<span class="ath-gain">(×${fmtMult(end / start)})</span>` : '';
