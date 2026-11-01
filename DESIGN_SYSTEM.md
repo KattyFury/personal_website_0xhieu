@@ -16,6 +16,7 @@ Không tự tạo ngoại lệ trong CSS rồi ghi ngược thành chuẩn. Sử
 - [Radix Table CSS](https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/components/table.css): padding cell 8, phân tách bằng line.
 - [shadcn Tasks](https://github.com/shadcn-ui/ui/blob/main/apps/v4/app/%28app%29/examples/tasks/components/data-table.tsx): một workspace theo dòng, không lồng card/nhãn/bề mặt.
 - [Carbon table](https://www.carbondesignsystem.com/building-blocks/core/components/data-table/guidelines): row32 dense desktop/40 mặc định. Header56 và panel328 là yêu cầu riêng của user, không gán cho Carbon.
+- [Linear Board](https://linear.app/docs/board-layout): hướng tham khảo thẻ Work đã được user chọn; số cột, DAILY và màu giữ theo bản duyệt riêng của website.
 
 ## Màu và typography
 
@@ -27,7 +28,7 @@ Flat + border line là mặc định cho nút/bảng/panel. Radius panel16, cont
 
 ## Trang CV `/` — spacious/editorial
 
-- Khung1200, lề tối thiểu48 desktop/16 mobile. Navbar và nội dung theo cùng khung.
+- Khung tối đa1280px gồm padding, căn giữa cho CV, Valuation, Work và navbar. CV padding48 desktop/16 mobile; workspace24/16.
 - Hero editorial: portrait112 desktop, tên/thông điệp cùng trục bên cạnh; mobile portrait72, thông điệp xuống dưới. Hero top96/48; section gap64/32.
 - Giữ nguyên nội dung CV tiếng Anh và tagline **Sharing POVs on Crypto and AI**.
 - CTA xã hội và ảnh Highlights dùng frame border, bỏ bóng trang trí. Mobile ba CTA cùng hàng, chữ14/icon16, chiều cao48.
@@ -45,14 +46,15 @@ Flat + border line là mặc định cho nút/bảng/panel. Radius panel16, cont
 ## Work `/work` — compact/task workspace
 
 - `/airdrop` và `/airdrop/` chuyển301 sang `/work`; client fallback giữ query/hash. Audit và nav dùng `/work`.
-- Mỗi rank là một bề mặt danh sách chung, mỗi dự án một hàng phân tách bằng line. Không grid card độc lập cao thấp, không dải Daily xen kẽ.
-- Desktop cột project240, vùng task bên phải; phase104 cạnh nội dung task. Mobile project lên trên, phase và task vẫn chung một hàng.
-- Cell padding8; task min40 desktop/44 touch; chữ14/20, giữ đủ38 task/37 link hiện có (số liệu QA hiện tại, không hardcode trong UI). Group gap16. Metadata/tag được xuống dòng.
+- User duyệt hướng Linear: mỗi công việc/dự án một thẻ độc lập, viền line, radius8, không gộp thành bề mặt chung.
+- Desktop2 thẻ mỗi hàng; màn≤900px chỉ1 thẻ mỗi hàng. Khe12. Các thẻ căn đầu, chiều cao theo nội dung.
+- Header thẻ padding12; từng phần Get Started/DAILY/Weekly nằm dưới, nhãn trên và nội dung dưới. DAILY nền yellow-soft, nhãn/icon orange-text đậm; header giữ nền trắng.
+- Section padding8px 12px; task min40 desktop/44 mobile hoặc touch; chữ14/20, giữ đầy đủ nội dung và link. Group gap16. Metadata/tag được xuống dòng.
 - Toàn bộ field/link/admin vẫn hoạt động. Rank filter nổi giữ chức năng, cuối trang chừa96 cho vùng toolbar, không dùng khoảng này giữa dự án.
 
 ## Component và responsive
 
-Navbar căn theo profile đang mở: spacious theo khung CV, compact theo lề24 desktop/16 mobile. Body dùng `data-ds-product` và `data-ds-profile` để đổi geometry, không gắn global48 vào workspace.
+Navbar và nội dung đều có max-width1280px, gồm padding; spacious dùng padding48/16, compact24/16. Body dùng `data-ds-product` và `data-ds-profile` để đổi geometry, không gắn global48 vào workspace. Thay đổi bố cục/kích thước tiếp theo phải được user duyệt trước.
 
 Popup/input/button dùng component compact; input mobile16, vùng thao tác chính tối thiểu44 touch. Popup có khóa nền, cuộn và Escape theo hành vi hiện tại. Form đang nhập không tự mất do backdrop.
 

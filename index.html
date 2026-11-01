@@ -70,10 +70,10 @@
       --shadow: var(--ds-shadow-overlay);
       /* font hệ thống Apple, máy khác tự lùi về font hệ thống */
       --font: var(--ds-font-web);
-      /* kích thước — lưới web 1440: lề 120, nội dung 1200, rãnh 24 */
+      /* Khung tối đa 1280px (gồm padding), user duyệt cho cả ba trang. */
       --navbar:  64px;
-      --content: 1200px;
-      --gutter:  48px;     /* lề tối thiểu khi màn < 1440 (ở 1440 tự ra 120) */
+      --content: 1280px;
+      --gutter:  48px;     /* padding CV desktop; workspace giữ padding compact */
       --modal-w: 384px;    /* popup nhỏ = 4 cột; popup rộng = 2× */
     }
 
@@ -114,7 +114,7 @@
       -webkit-backdrop-filter: saturate(1.8) blur(12px); backdrop-filter: saturate(1.8) blur(12px);
     }
     .header-inner {
-      max-width: calc(var(--content) + 2 * var(--gutter)); height: var(--navbar); margin: 0 auto; padding: 0 var(--gutter);
+      max-width: var(--content); height: var(--navbar); margin: 0 auto; padding: 0 var(--gutter);
       display: flex; align-items: center; justify-content: space-between; gap: 24px;
     }
     /* logo mèo 32 + chữ web-h4 20 */
@@ -168,8 +168,8 @@
       --val-header-line-height: var(--ds-val-header-line-height);
       --val-header-letter-spacing: -.011em;
     }
-    body[data-ds-profile="compact"] .header-inner { max-width: none; padding: 0 var(--ds-page-gutter); }
-    .val-wrap, .ard-wrap { margin: 0 auto; padding: 0 var(--ds-page-gutter) var(--ds-space-24); }
+    body[data-ds-profile="compact"] .header-inner { padding: 0 var(--ds-page-gutter); }
+    .val-wrap, .ard-wrap { max-width: var(--content); margin: 0 auto; padding: 0 var(--ds-page-gutter) var(--ds-space-24); }
     #airdrop-view .ard-wrap { padding-bottom: var(--ds-work-safe-bottom); }
     .panel-head {
       position: static; display: flex; align-items: center; justify-content: space-between; gap: 16px;
@@ -266,7 +266,7 @@
     .retry-btn:disabled { background: var(--line); color: var(--muted); box-shadow: none; cursor: default; }
 
     /* ══ CV ═══════════════════════════════════════════════════════ */
-    main { max-width: calc(var(--content) + 2 * var(--gutter)); margin: 0 auto; padding: 0 var(--gutter); }
+    main { max-width: var(--content); margin: 0 auto; padding: 0 var(--gutter); }
     section + section { margin-top: var(--ds-cv-section-gap); }
     /* tiêu đề mục = web-h3 24/32 + icon 24 + kẻ mảnh */
     #cv-view h2 {
@@ -353,7 +353,7 @@
     }
     .avail-list li::before { content: ''; flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--amber); }
 
-    footer { max-width: calc(var(--content) + 2 * var(--gutter)); margin: 48px auto 0; padding: 0 var(--gutter) 48px; }
+    footer { max-width: var(--content); margin: 48px auto 0; padding: 0 var(--gutter) 48px; }
     .footer-inner { display: flex; align-items: center; justify-content: center; padding-top: 24px; border-top: 1px solid var(--line); }
     .footer-links { display: flex; align-items: center; gap: 24px; }
     .footer-links a { display: inline-flex; color: var(--grey); transition: color .15s; }
@@ -509,8 +509,8 @@
       cursor: pointer; transition: transform .15s;
     }
 
-    /* Work: danh sách nhóm phẳng; nhãn phase và task chung một hàng.
-       Tham khảo shadcn Tasks/Radix Table (cell padding 8), Carbon (row 40). */
+    /* Work: thẻ độc lập theo hướng Linear đã duyệt.
+       Desktop 2 thẻ/hàng; mobile 1 thẻ/hàng; DAILY nổi bật trong thẻ. */
     #wte-cards { display: flex; flex-direction: column; gap: var(--ds-work-group-gap); }
     .wte-group { scroll-margin-top: 88px; }
     /* Tiêu đề nhóm 16/24, cách card 8; không kẻ mảnh. */
@@ -518,16 +518,14 @@
       display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
       font-size: 16px; font-weight: 600; line-height: 24px; letter-spacing: -.011em; color: var(--ink);
     }
-    .wte-rank-group { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
-    .wte-rank-group .wte-card { width: 100%; min-width: 0; display: grid; grid-template-columns: var(--ds-work-project-column) minmax(0, 1fr); border: 0; border-radius: 0; }
-    .wte-rank-group .wte-card + .wte-card { border-top: 1px solid var(--line); }
+    .wte-rank-group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: start; }
+    .wte-rank-group .wte-card { width: 100%; min-width: 0; display: block; border: 1px solid var(--line); border-radius: 8px; }
 
     /* Header 2 hàng: hàng 1 = logo + tên TRÁI · icon X + Discord PHẢI (+ ⋮ admin) · hàng 2 = dãy thẻ potential · narrative · rank,
-       cách mép card 8. Thẻ tự xuống dòng khi card hẹp — không cắt chữ. */
+       cách mép card 12. Thẻ tự xuống dòng khi card hẹp — không cắt chữ. */
     .wte-card-head {
-      grid-column: 1; grid-row: 1 / span 3; padding: 8px;
-      display: grid; grid-template-columns: minmax(0,1fr) auto auto; align-items: center; align-content: start; column-gap: 4px; row-gap: 4px;
-      border-right: 1px solid var(--line);
+      padding: 12px;
+      display: grid; grid-template-columns: minmax(0,1fr) auto auto; align-items: center; align-content: start; column-gap: 4px; row-gap: 8px;
     }
     .wte-name-wrap { grid-column: 1; grid-row: 1; min-width: 0; display: flex; align-items: center; gap: 8px; }
     .wte-socials { grid-column: 2; grid-row: 1; display: flex; gap: 8px; }
@@ -547,11 +545,11 @@
       flex: 1; min-width: 0; white-space: normal; overflow-wrap: anywhere;
       font-size: 16px; font-weight: 600; line-height: 24px; letter-spacing: -.011em; color: var(--ink); text-decoration: none;
     }
-    .wte-tags { grid-column: 1 / -1; grid-row: 2; display: flex; flex-wrap: wrap; gap: 8px; }
+    .wte-tags { grid-column: 1 / -1; grid-row: 2; display: flex; flex-wrap: wrap; gap: 4px; }
     /* Thẻ: viên trắng cao 24, chữ 14/600 */
     .wte-tag {
-      min-height: 24px; max-width: 100%; padding: 0 8px; border-radius: 9999px;
-      display: inline-flex; align-items: center; gap: 8px;
+      min-height: 24px; max-width: 100%; padding: 0 8px; border-radius: 8px; border: 1px solid var(--line);
+      display: inline-flex; align-items: center; gap: 4px;
       background: var(--ground); font-size: 14px; font-weight: 600; line-height: 20px; letter-spacing: -.006em;
       color: var(--ink); white-space: normal; overflow-wrap: anywhere;
     }
@@ -562,21 +560,22 @@
     .wte-rank-v { background: var(--ink); color: var(--ground); }
     .wte-rank-v.rank-INCOME { background: var(--amber); color: var(--ink); }
 
-    /* Header + Daily: card $ nền vàng nhạt, card rank S/A/B/C nền mist */
+    /* Header trung tính; DAILY nổi bật trong từng thẻ. */
     .wte-card-head { background: var(--ground); }
 
-    /* Thân: nhãn nhóm (icon + kẻ mảnh) → dòng → … */
-    .wte-section { grid-column: 2; min-width: 0; padding: 0 8px; display: grid; grid-template-columns: var(--ds-work-phase-column) minmax(0, 1fr); column-gap: 8px; align-items: start; }
-    .wte-section + .wte-section { border-top: 1px solid var(--line); }
+    .wte-section { min-width: 0; padding: 8px 12px; border-top: 1px solid var(--line); }
+    .wte-section--daily { background: var(--amber-soft); }
     .wte-section-label {
-      min-height: 40px; margin-bottom: 0; display: flex; align-items: center; gap: 4px;
+      min-height: 20px; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;
       font-size: 14px; font-weight: 600; line-height: 20px; letter-spacing: -.006em; color: var(--grey);
     }
     .wte-section-label .wte-ico { width: 16px; height: 16px; color: var(--ink); }
+    .wte-section--daily .wte-section-label, .wte-section--daily .wte-section-label .wte-ico { color: var(--amber-text); }
     .wte-tasks { list-style: none; display: flex; flex-direction: column; }
     .wte-task-item { display: block; margin: 0; font-size: 14px; line-height: 20px; color: var(--ink); }
     .wte-task-item:last-child .wte-task-row { border-bottom: 0; }
-    .wte-task-row { flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 8px; text-decoration: none; }
+    .wte-task-row { flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 40px; padding: 4px 0; text-decoration: none; }
+    .wte-task-item + .wte-task-item { border-top: 1px solid var(--line); }
     /* Task luôn hiện đủ chữ: xuống dòng bao nhiêu cũng được, hàng cao theo — KHÔNG cắt "…" (user chốt 2026-10-28) */
     .wte-task-text { flex: 1; min-width: 0; white-space: normal; overflow-wrap: anywhere; }
 
@@ -739,6 +738,9 @@
       #highlights-grid, .val-boxes { grid-template-columns: 1fr 1fr; }
     }
 
+    @media (max-width: 900px) {
+      .wte-rank-group { grid-template-columns: minmax(0, 1fr); }
+    }
     /* ══ MOBILE (≤640): lưới web 393 — lề 16, khối cách 32, section 48.
        Chữ tối thiểu 14. Tiêu đề lớn đổi sang web-mobile-*. */
     @media (max-width: 640px) {
@@ -815,9 +817,7 @@
       .tge-modal-body thead th, .tge-modal-body tbody td { padding: 8px; }
 
       /* Work */
-      .wte-rank-group .wte-card { display: block; }
-      .wte-card-head { grid-column: auto; grid-row: auto; border-right: 0; border-bottom: 1px solid var(--line); background: var(--mist); }
-      .wte-card--INCOME .wte-card-head { background: var(--amber-soft); }
+      .wte-task-row { min-height: 44px; }
 
 
       #cat-btn  { right: 16px; bottom: 16px; }
@@ -2579,7 +2579,7 @@
             <span class="wte-tags">${potLv ? `<span class="wte-tag wte-pot--${potLv}">${wteIcon(potLv)}${potLv}-potential</span>` : ''}${p.type ? `<span class="wte-tag wte-narr">${tagCase(p.type)}</span>` : ''}${g === 'INCOME' ? '' : `<b class="wte-tag wte-rank-v rank-${g}">rank: ${RANK_LABEL[g] || g}</b>`}</span>
           </div>
           ${section('Get Started', p.getStarted, 'getStarted')}
-          ${section('Daily', p.daily, 'daily')}
+          ${section('DAILY', p.daily, 'daily')}
           ${section('Weekly', p.weekly, 'weekly')}
         </div>`;
       };

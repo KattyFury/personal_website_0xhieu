@@ -2,6 +2,8 @@
 
 **Chốt trạng thái:** 2026-11-01
 
+Bản local đã triển khai phương án user duyệt theo Linear: Work là thẻ độc lập, desktop2/mobile1 (≤900px), gap12/radius8/header padding12, DAILY nền vàng nhạt + nhãn cam đậm; giữ nội dung/link/admin. CV/Valuation/Work/navbar/footer cùng max-width1280px gồm padding. Chưa push/deploy bản này. Các thay đổi bố cục/kích thước tiếp theo phải trình user duyệt trước.
+
 Design system v3: nguồn repo_personal_design → design-tokens.css có hash, sync/check bằng tools/sync-design-system.py và tools/check-design-system.py. CV editorial/spacious; Valuation data/compact; Work task/compact tại /work (/airdrop301). Valuation giữ8 token mọi màn hình, header chung56, row40, cộng viền/scrollbar; ba box cố định328, mobile2 cột bằng nhau; ATH một hàng; nhãn trái/số phải. Quy tắc đầy đủ ở DESIGN_SYSTEM.md, không dùng các log thiết kế cũ để ghi đè hiện trạng.
 **Repo:** https://github.com/KattyFury/website_personal_0xhieu · **Local:** `D:\Files\Claude\website_personal_0xhieu` (thư mục đổi tên từ `cv` 10-05; máy khác còn tên cũ thì đổi theo)
 **Live:** Cloudflare Pages, project **`0xhieu-xyz`** (khác tên repo) — auto-deploy từ `main`.
@@ -153,6 +155,7 @@ Account `f9df99b7751b7dc3c80a22b6911c6f2b`, project Pages `0xhieu-xyz`. API toke
 
 ## Nhật ký
 
+- 2026-11-01: **Build Work theo bản Linear user duyệt:** thẻ độc lập desktop2/mobile1, DAILY vàng nhạt/nhãn cam, khung ba trang/header/footer1280. Browser QA30 trạng thái (3 trang × 10 chiều rộng320–1920), giữ18 thẻ/toàn bộ task và link, không tràn trang; đã xem ảnh1440/390. Bản local, chưa push/deploy.
 - 2026-11-01: **Redesign toàn site theo design system v3:** repo nguồn có README viết lại, tokens v3, CSS exporter và pattern có nguồn Radix/shadcn/Carbon; website sync local design-tokens.css có hash kiểm tra. CV editorial (portrait112/72, CTA/photo frame), Valuation flat/shared tokens giữ8 dòng/panel328/ATH inline, Work danh sách nhóm project + phase/task thay grid card. Navbar theo profile. Đổi route chính /work, /airdrop301 và fallback client. Giữ nguyên palette/nội dung/link/backend/công thức.
 - 2026-11-01: **Rà toàn thiết kế theo user:** thống nhất header Valuation/bảng/popup/3 box qua token dùng chung: cao 56, desktop chữ16/24, mobile14/20, đậm600; bảng header56 + 8 dòng40. Work giảm cardgap8/groupgap16, headerpadding4/8, sectionpadding4/8, bỏ đệm nhãn dư; tên/tag dài hiện đủ. Chừa vùng cuối Work96 cho filter cố định. QA 35 trạng thái 3 trang/7 chiều rộng/VI-EN, touch44 + popup, xem ảnh cả desktop/mobile.
 - 2026-11-01: **ATH một hàng theo user:** cặp số và `(×N)` inline, đo độ rộng nội dung từng cột cho bảng chính/popup; bỏ tỷ lệ % cũ. Mobile giữ 4 cột, màn hẹp cuộn ngang nội bộ, header đồng bộ và bù scrollbar để đủ 8 dòng. QA 18 trạng thái VI/EN 320–1920px + popup: không tràn ô, ATH một dòng, header thẳng cột và cuộn đồng bộ.
