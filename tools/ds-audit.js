@@ -71,7 +71,7 @@ const PROBE = `(() => {
     }
     // bo góc
     const rad = px(cs.borderTopLeftRadius);
-    if (rad && rad !== 16 && !(compact && rad === 8) && !(rad >= r.height / 2 - 0.5) && cs.borderTopLeftRadius.indexOf('%') < 0) bad(el, 'radius ' + rad + ' sai profile');
+    if (rad && rad !== 16 && rad !== 8 && !(rad >= r.height / 2 - 0.5) && cs.borderTopLeftRadius.indexOf('%') < 0) bad(el, 'radius ' + rad + ' sai component');
     // bóng
     if (cs.boxShadow !== 'none') {
       const s = cs.boxShadow.replace(/\\s+/g, ' ');

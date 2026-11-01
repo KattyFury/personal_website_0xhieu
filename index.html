@@ -44,7 +44,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="/design-tokens.css?v=3-de6eaa692673">
+  <link rel="stylesheet" href="/design-tokens.css?v=3-ecee51d9a93e">
   <style>
     /* ══════════════════════════════════════════════════════════════
        0xhieu.xyz — MỘT stylesheet duy nhất, viết theo thành phần.
@@ -221,7 +221,7 @@
 
     /* Workspace cards: chung token hình học/bề mặt cho Valuation và Work. */
     .val-card, .wte-card {
-      background: var(--ground); border-radius: var(--ds-workspace-card-radius);
+      background: var(--ground); border-radius: var(--ds-product-card-radius);
       border: 1px solid var(--line); box-shadow: none; overflow: hidden;
     }
     /* Header bảng và box Valuation dùng chung token kích thước/chữ. */
@@ -274,14 +274,13 @@
       font-size: 24px; font-weight: 600; line-height: 32px; letter-spacing: -.019em; color: var(--ink);
     }
     #cv-view h2 .wte-ico { width: 24px; height: 24px; color: var(--ink); }
-    #cv-view h2::after { content: ''; flex: 1; height: 1px; margin-left: 16px; background: var(--line); }
 
     /* Hero: ảnh 96 · tên web-h2 40 · châm ngôn web-h3 24 · niềm tin web-lead 18 */
     .hero { padding-top: var(--ds-cv-hero-top); display: grid; grid-template-columns: var(--ds-cv-portrait) minmax(0, 1fr); column-gap: var(--ds-space-32); text-align: left; }
     .hero-top { display: contents; }
     .pfp {
       grid-column: 1; grid-row: 1 / span 3; align-self: start; width: var(--ds-cv-portrait); height: var(--ds-cv-portrait); border-radius: 50%; overflow: hidden; background: var(--ink);
-      outline: 4px solid var(--amber); outline-offset: 4px;
+      border: 1px solid var(--line);
     }
     .pfp img { display: block; width: 100%; height: 100%; object-fit: cover; }
     .pfp-fallback {
@@ -298,10 +297,10 @@
     .hero-tagline { grid-column: 2; grid-row: 2; margin-top: 16px; font-size: 24px; font-weight: 600; line-height: 32px; letter-spacing: -.019em; color: var(--ink); }
     .hero-belief { grid-column: 2; grid-row: 3; max-width: 680px; margin-top: 8px; font-size: 18px; line-height: 28px; letter-spacing: -.014em; color: var(--grey); }
 
-    /* Nút xã hội = nút phụ cao 48, đệm 24: trắng chữ đen + shadow */
+    /* Nút phụ chung của product; CV giữ chiều cao48 theo profile spacious. */
     .socials { grid-column: 2; grid-row: 4; margin-top: 24px; display: flex; flex-wrap: wrap; gap: 16px; }
     .social-btn {
-      height: 48px; padding: 0 24px; border-radius: 16px;
+      height: 48px; padding: 0 24px; border-radius: var(--ds-product-control-radius);
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
       background: var(--ground); border: 1px solid var(--line);
       font-size: 16px; font-weight: 600; line-height: 24px; letter-spacing: -.011em;
@@ -338,20 +337,19 @@
 
     /* Highlights: 3 cột × 384 (4 cột lưới), rãnh 24, ảnh 3:2 */
     #highlights-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .hl-card { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--ground); }
+    .hl-card { border: 1px solid var(--line); border-radius: var(--ds-product-card-radius); overflow: hidden; background: var(--ground); }
     .hl-card img { display: block; width: 100%; aspect-ratio: 3/2; object-fit: cover; cursor: zoom-in; }
     .hl-caption { padding: 16px; font-size: 16px; line-height: 24px; color: var(--grey); }
     .hl-empty { grid-column: 1/-1; padding: 48px 0; text-align: center; font-size: 16px; color: var(--grey); }
 
-    /* Available for — nhãn chỉ-đọc dạng viên mist + chấm vàng, không phải nút */
+    /* Available for dùng cùng component nhãn có viền với Work. */
     .avail-list { list-style: none; display: flex; flex-wrap: wrap; gap: 16px; }
     .avail-list li {
-      height: 40px; padding: 0 16px; border-radius: 9999px;
+      min-height: 40px; max-width: 100%; padding: 8px 16px; border-radius: var(--ds-product-badge-radius); border: 1px solid var(--line);
       display: inline-flex; align-items: center; gap: 8px;
-      background: var(--mist);
-      font-size: 16px; line-height: 24px; color: var(--ink); white-space: nowrap;
+      background: var(--ground);
+      font-size: 16px; line-height: 24px; color: var(--ink); white-space: normal; overflow-wrap: anywhere;
     }
-    .avail-list li::before { content: ''; flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--amber); }
 
     footer { max-width: var(--content); margin: 48px auto 0; padding: 0 var(--gutter) 48px; }
     .footer-inner { display: flex; align-items: center; justify-content: center; padding-top: 24px; border-top: 1px solid var(--line); }
@@ -393,7 +391,7 @@
        Màn hẹp cuộn ngang trong bảng, header đồng bộ với thân. */
     #tge-section {
       display: flex; flex-direction: column; max-height: calc(var(--val-header-height) + 320px + 2px + var(--val-scrollbar-height, 0px)); margin-bottom: var(--ds-val-panel-gap); overflow: hidden;
-      background: var(--ground); border: 1px solid var(--line); border-radius: var(--ds-workspace-card-radius);
+      background: var(--ground); border: 1px solid var(--line); border-radius: var(--ds-product-card-radius);
     }
     #tge-head-wrap { flex: none; overflow: hidden; scrollbar-gutter: auto; background: var(--ds-workspace-header-surface); }
     #tge-section .val-table-scroll { flex: 1 1 auto; min-height: 0; overflow: auto; }
@@ -548,7 +546,7 @@
     .wte-tags { grid-column: 1 / -1; grid-row: 2; display: flex; flex-wrap: wrap; gap: 4px; }
     /* Thẻ: viên trắng cao 24, chữ 14/600 */
     .wte-tag {
-      min-height: 24px; max-width: 100%; padding: 0 8px; border-radius: 8px; border: 1px solid var(--line);
+      min-height: 24px; max-width: 100%; padding: 0 8px; border-radius: var(--ds-product-badge-radius); border: 1px solid var(--line);
       display: inline-flex; align-items: center; gap: 4px;
       background: var(--ground); font-size: 14px; font-weight: 600; line-height: 20px; letter-spacing: -.006em;
       color: var(--ink); white-space: normal; overflow-wrap: anywhere;
@@ -721,7 +719,7 @@
     /* Web profiles: CV spacious; Valuation/Work và popup thao tác compact. */
     #cv-view main { padding-bottom: 96px; }
     .val-head-ctrl { gap: 12px; }
-    .val-head-ctrl .lang-dd-btn, .val-head-ctrl .camera-btn { box-shadow: none; border: 1px solid var(--line); border-radius: 8px; }
+    .val-head-ctrl .lang-dd-btn, .val-head-ctrl .camera-btn { box-shadow: none; border: 1px solid var(--line); border-radius: var(--ds-product-control-radius); }
     .val-head-ctrl .lang-dd-btn { min-width: 0; padding: 0 12px; }
     .val-head-ctrl .lang-dd-btn.is-plus { padding: 0; }
     .predict-link, .predict-btn-primary, .predict-btn-secondary, .retry-btn { box-shadow: none; }
