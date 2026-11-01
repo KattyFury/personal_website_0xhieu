@@ -2,9 +2,9 @@
 
 **Chốt trạng thái:** 2026-11-01
 
-Work là thẻ độc lập theo hướng Linear đã duyệt, desktop2/mobile1 (≤900px), DAILY nền xanh nhạt + nhãn xanh đậm; giữ nội dung/link/admin. Valuation/Work dùng chung token workspace: radius8, header xanh cobalt #1E6DF7/chữ trắng/viền line, thân box xám #ECF0F8, padding ngang12/section dọc8/khe12. Chữ thường đen, chữ phụ xám, chữ quan trọng xanh đậm #0F3DB2/600; không cam/vàng/cam đất trong UI. CV/Valuation/Work/navbar/footer cùng max-width1280px gồm padding. Các thay đổi bố cục/kích thước tiếp theo phải trình user duyệt trước; user không muốn duyệt preview, cần kiểm tra trang thật.
+Work là thẻ độc lập theo hướng Linear đã duyệt, desktop2/mobile1 (≤900px), DAILY nền vàng nhạt, viền cam4px + nhãn/task cam đậm600; giữ nội dung/link/admin. Valuation/Work dùng chung token workspace: radius8, header cam #FFA111/chữ đen/viền line, thân box xám #ECF0F8, padding ngang12/section dọc8/khe12. Chữ thường đen, chữ phụ xám, chữ quan trọng cam đậm #B84A0C/600; nút dùng cam thường. Tone xanh cũ đã bị user rút lại. CV/Valuation/Work/navbar/footer cùng max-width1280px gồm padding. Các thay đổi bố cục/kích thước tiếp theo phải trình user duyệt trước; user không muốn duyệt preview, cần kiểm tra trang thật.
 
-CV cũng đã đồng bộ component chung: social buttons, Highlights và nhãn Available-for radius8/nền trắng/viền line; bỏ vòng vàng avatar và đường kẻ dài tiêu đề section. Giữ profile spacious: hero top96/48, section gap64/32, body16/24; không áp density của Work vào CV. Available-for được wrap để không tràn320px.
+CV cũng dùng component chung: social buttons trắng, Highlights và nhãn Available-for xám, cùng radius8/viền line; bỏ vòng màu avatar và đường kẻ dài tiêu đề section. Giữ profile spacious: hero top96/48, section gap64/32, body16/24; không áp density của Work vào CV. Available-for được wrap để không tràn320px.
 
 **Bóng đã được user chốt lại:** nút/action icon bấm được dùng `0 2px 8px rgba(0,0,0,.32)` trên cả3 trang. Thẻ/nhãn chỉ đọc, tooltip, ảnh lightbox, popup content và nút disabled không bóng. Tab nav/link chữ giữ kiểu text. CSS chung hiện là `button:not(.nav-btn), .social-btn, .wte-social`; không khôi phục rule `box-shadow:none` ghi đè nút. Nguồn nằm tại `products.0xhieu-xyz.sharedComponents`; quy tắc overlay-only cũ đã bị thay thế.
 
@@ -164,6 +164,8 @@ Account `f9df99b7751b7dc3c80a22b6911c6f2b`, project Pages `0xhieu-xyz`. API toke
 ---
 
 ## Nhật ký
+
+- 2026-11-01: **User đổi lại đen–cam, DAILY và toggle:** cam đậm#B84A0C cho text quan trọng, cam thường#FFA111 cho nút/header chữ đen; thân box xám. DAILY nền vàng nhạt, viền trái cam4px, task chữ cam đậm600, giữ căn trục bằng padding. VI/EN Work/Valuation thay2 nút tròn bằng1 native button role=switch, aria-checked, thumb trượt; click/Space/Enter, shadow1control, desktop80×40/mobile64×32. Logic dịch giữ nguyên; rank filter không đổi. Tone xanh và log hai nút trước đó hết hiệu lực.
 
 - 2026-11-01: **Tone xanh–trắng–đen–xám theo user:** thân box mist, header cobalt/chữ trắng; chữ thường đen, phụ xám, quan trọng blue-strong/600. DAILY xanh nhạt; primary/selected xanh trắng; hover header giữ trắng. Thay alias amber bằng accent, audit loại cam/vàng khỏi palette UI. Giữ đỏ cho danger/destructive, geometry/data/framework/Fetch/shadow không đổi. Các log cam/header trắng trước đó hết hiệu lực.
 

@@ -44,7 +44,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="/design-tokens.css?v=3-07bed78ecf95">
+  <link rel="stylesheet" href="/design-tokens.css?v=3-4f12d9dc533f">
   <style>
     /* ══════════════════════════════════════════════════════════════
        0xhieu.xyz — MỘT stylesheet duy nhất, viết theo thành phần.
@@ -219,6 +219,23 @@
       cursor: pointer; transition: background .15s, color .15s;
     }
     .lang-btn.active { background: var(--ds-primary); color: var(--ground); }
+    /* VI/EN là một công tắc có một thumb trượt; không dùng hai nút tròn. */
+    .language-switch {
+      position: relative; isolation: isolate; width: 80px; height: 40px; padding: 4px;
+      display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+      border: 1px solid var(--line); border-radius: var(--ds-product-control-radius); background: var(--mist);
+      font-family: var(--font); font-size: 14px; font-weight: 600; line-height: 20px; letter-spacing: -.006em;
+      color: var(--grey); cursor: pointer; flex-shrink: 0;
+    }
+    .language-switch::before {
+      content: ''; position: absolute; z-index: -1; top: 4px; bottom: 4px; left: 4px;
+      width: calc((100% - 8px) / 2); border-radius: 4px; background: var(--ds-accent);
+      transform: translateX(0); transition: transform .18s ease;
+    }
+    .language-switch[aria-checked="true"]::before { transform: translateX(100%); }
+    .language-switch[aria-checked="false"] .language-option--vi,
+    .language-switch[aria-checked="true"] .language-option--en { color: var(--ink); }
+    @media (prefers-reduced-motion: reduce) { .language-switch::before { transition: none; } }
 
     /* Workspace cards: chung token hình học/bề mặt cho Valuation và Work. */
     .val-card, .wte-card {
@@ -567,13 +584,18 @@
     }
 
     .wte-section { min-width: 0; padding: var(--ds-workspace-section-padding-y) var(--ds-workspace-card-padding-x); border-top: 1px solid var(--line); }
-    .wte-section--daily { background: var(--accent-soft); }
+    .wte-section--daily {
+      background: var(--accent-soft); border-left: 4px solid var(--ds-accent);
+      padding-left: calc(var(--ds-workspace-card-padding-x) - 4px);
+    }
     .wte-section-label {
       min-height: 20px; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;
       font-size: 14px; font-weight: 600; line-height: 20px; letter-spacing: -.006em; color: var(--grey);
     }
     .wte-section-label .wte-ico { width: 16px; height: 16px; color: var(--ink); }
     .wte-section--daily .wte-section-label, .wte-section--daily .wte-section-label .wte-ico { color: var(--accent-text); }
+    .wte-section--daily .wte-task-text { color: var(--accent-text); font-weight: 600; }
+    .wte-section--daily .wte-task-icon { color: var(--accent-text); }
     .wte-tasks { list-style: none; display: flex; flex-direction: column; }
     .wte-task-item { display: block; margin: 0; font-size: 14px; line-height: 20px; color: var(--ink); }
     .wte-task-item:last-child .wte-task-row { border-bottom: 0; }
@@ -664,7 +686,7 @@
     }
     .predict-btn-primary { background: var(--ds-primary); color: var(--ground); }
     .predict-btn-primary:hover, .predict-link:hover, .retry-btn:hover, .lang-btn.active:hover {
-      background: var(--ds-color-blue-strong); color: var(--ground);
+      background: var(--ds-accent-text); color: var(--ground);
     }
     .predict-btn-secondary, .val-del-btn { background: var(--ground); color: var(--ink); }
     /* Xoá hỏi lại 1 nhịp — bấm lần 1 đổi sang trạng thái này */
@@ -734,6 +756,10 @@
     .val-head-ctrl .lang-dd-btn.is-plus { padding: 0; }
     /* Bóng cho nút và icon control; thẻ/nhãn chỉ đọc giữ phẳng. */
     button:not(.nav-btn), .social-btn, .wte-social { box-shadow: var(--shadow); }
+    .predict-btn-primary, .predict-link, .retry-btn, .lang-btn.active,
+    #rank-filter-float #rf-income.active { color: var(--ds-on-primary); }
+    .predict-btn-primary:hover, .predict-link:hover, .retry-btn:hover, .lang-btn.active:hover { color: var(--ground); }
+    #rank-filter-float #rf-income.active:hover { background: var(--ds-accent-text); color: var(--ground); }
     button:disabled, .social-btn[aria-disabled="true"], .wte-social[aria-disabled="true"] { box-shadow: none; }
     .wl-modal input, .wl-modal select { height: 40px; border-radius: 8px; }
     .wl-modal .predict-btn-primary, .wl-modal .predict-btn-secondary { min-height: 40px; height: auto; padding: 8px 12px; border-radius: 8px; }
@@ -803,6 +829,7 @@
       #airdrop-view .val-head-ctrl .lang-dd-btn { height: 32px; padding: 0 4px; }
       #airdrop-view .val-head-ctrl .lang-toggle { height: 32px; }
       #airdrop-view .val-head-ctrl .lang-btn { min-width: 28px; padding: 0 4px; }
+      .language-switch { width: 64px; height: 32px; }
 
       /* Valuation — bảng ẩn 3 cột phụ Narrative + TGE + ×ATL để giữ chữ 14; ×ATH (dạng "đáy → đỉnh") được cột rộng nhất */
       #tge-section .val-table { min-width: calc(var(--ck1, 64px) + var(--ck4, 56px) + var(--ck5, 232px) + var(--ck7, 64px) + 64px); }
@@ -971,10 +998,9 @@
         <div class="val-head-ctrl">
           <button class="camera-btn" id="val-shot-btn" title="Chụp ảnh dashboard" aria-label="Chụp ảnh dashboard"></button>
           <button class="lang-dd-btn" id="val-admin-btn" title="Đăng nhập admin">Admin</button>
-          <div class="lang-toggle">
-            <button class="lang-btn active" id="val-lang-vi-btn">VI</button>
-            <button class="lang-btn" id="val-lang-en-btn">EN</button>
-          </div>
+          <button class="language-switch" id="val-language-switch" type="button" role="switch" aria-label="English" aria-checked="false">
+            <span class="language-option--vi" aria-hidden="true">VI</span><span class="language-option--en" aria-hidden="true">EN</span>
+          </button>
         </div>
       </div>
 
@@ -1048,10 +1074,9 @@
         <div class="val-intro"><span id="wte-title">Danh sách công việc</span></div>
         <div class="val-head-ctrl" id="ard-wte-controls">
           <button class="lang-dd-btn" id="admin-btn" title="Task cá nhân">Admin</button>
-          <div class="lang-toggle">
-            <button class="lang-btn active" id="lang-vi-btn">VI</button>
-            <button class="lang-btn" id="lang-en-btn">EN</button>
-          </div>
+          <button class="language-switch" id="work-language-switch" type="button" role="switch" aria-label="English" aria-checked="false">
+            <span class="language-option--vi" aria-hidden="true">VI</span><span class="language-option--en" aria-hidden="true">EN</span>
+          </button>
         </div>
       </div>
 
@@ -1383,8 +1408,7 @@
 
     // ── Info popups (giải thích số liệu 3 box Valuation) + toggle EN|VI ──
     let valLang = 'VI';
-    const valLangEnBtn = document.getElementById('val-lang-en-btn');
-    const valLangViBtn = document.getElementById('val-lang-vi-btn');
+    const valLanguageSwitch = document.getElementById('val-language-switch');
 
     // ĐÍCH DANH mọi nhãn UI TĨNH của tab Valuation (id → bản EN/VI), áp bằng innerHTML nên
     // được phép nhúng thẻ (vd <span class="td-size"> cho chú thích nhỏ).
@@ -1598,16 +1622,14 @@
     function switchValLang(lang) {
       if (valLang === lang) return;
       valLang = lang;
-      [valLangViBtn, valLangEnBtn].forEach(b => b.classList.remove('active'));
-      ({ VI: valLangViBtn, EN: valLangEnBtn })[lang]?.classList.add('active');
+      valLanguageSwitch.setAttribute('aria-checked', String(lang === 'EN'));
       applyValHeadLabels();
       renderAnalysis(); renderDanger(); renderNarratives();   // Weak/Normal/Strong, empty-state, badge "PUMP LÁO" đều phụ thuộc valLang
       if (infoTgeModal.classList.contains('open')) renderTgeInfo();
       if (infoDangerModal.classList.contains('open')) document.getElementById('info-danger-body').innerHTML = DANGER_INFO[valLang];
       if (infoNarrModal.classList.contains('open')) document.getElementById('info-narratives-body').textContent = NARRATIVES_INFO[valLang];
     }
-    valLangViBtn.addEventListener('click', () => switchValLang('VI'));
-    valLangEnBtn.addEventListener('click', () => switchValLang('EN'));
+    valLanguageSwitch.addEventListener('click', () => switchValLang(valLang === 'VI' ? 'EN' : 'VI'));
 
     /* ── Chụp ảnh dashboard Valuation (nút camera cạnh toggle EN|VI) ────────────────
        html2canvas nạp TỪ CHÍNH DOMAIN (html2canvas-pro.min.js nằm trong repo, không CDN
@@ -2883,20 +2905,17 @@
     })();
 
     // ── Language toggle (EN|VI) ────────────────────────
-    const langEnBtn     = document.getElementById('lang-en-btn');
-    const langViBtn     = document.getElementById('lang-vi-btn');
+    const workLanguageSwitch = document.getElementById('work-language-switch');
 
     async function switchLang(lang) {
       if (wteLang === lang) return;
       wteLang = lang;
-      [langViBtn, langEnBtn].forEach(b => b.classList.remove('active'));
-      ({ VI: langViBtn, EN: langEnBtn })[lang]?.classList.add('active');
+      workLanguageSwitch.setAttribute('aria-checked', String(lang === 'EN'));
       if (wteLang === 'EN' && !wteLoaded.EN) await translateToEN();
       renderWTE();
     }
 
-    langViBtn.addEventListener('click', () => switchLang('VI'));
-    langEnBtn.addEventListener('click', () => switchLang('EN'));
+    workLanguageSwitch.addEventListener('click', () => switchLang(wteLang === 'VI' ? 'EN' : 'VI'));
 
     // ── Init ─────────────────────────────────────────
     routeFromPath(); // tất cả biến đã khai báo xong, an toàn để gọi
