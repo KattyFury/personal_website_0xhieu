@@ -4,6 +4,16 @@
 
 Phương án Linear đã duyệt và deploy: Work là thẻ độc lập, desktop2/mobile1 (≤900px), DAILY nền vàng nhạt + nhãn cam đậm; giữ nội dung/link/admin. Valuation/Work dùng chung token workspace từ repo nguồn: radius8, header trắng/viền line, padding ngang12/section dọc8/khe12. CV/Valuation/Work/navbar/footer cùng max-width1280px gồm padding. Các thay đổi bố cục/kích thước tiếp theo phải trình user duyệt trước; user không muốn duyệt preview, cần kiểm tra trang thật.
 
+CV cũng đã đồng bộ component chung: social buttons, Highlights và nhãn Available-for radius8/nền trắng/viền line; bỏ vòng vàng avatar và đường kẻ dài tiêu đề section. Giữ profile spacious: hero top96/48, section gap64/32, body16/24; không áp density của Work vào CV. Available-for được wrap để không tràn320px.
+
+**Bóng đã được user chốt lại:** nút/action icon bấm được dùng `0 2px 8px rgba(0,0,0,.32)` trên cả3 trang. Thẻ/nhãn chỉ đọc, tooltip, ảnh lightbox, popup content và nút disabled không bóng. Tab nav/link chữ giữ kiểu text. CSS chung hiện là `button:not(.nav-btn), .social-btn, .wte-social`; không khôi phục rule `box-shadow:none` ghi đè nút. Nguồn nằm tại `products.0xhieu-xyz.sharedComponents`; quy tắc overlay-only cũ đã bị thay thế.
+
+**Mốc bàn giao production:** website `06e334f` (shadow), trước đó `6160b7c` (CV), `60c914f` (shared workspace). Repo design system `D:\Files\Claude\repo_personal_design`, main `20f2bee`; đã push cả hai repo. Không còn thay đổi giao diện chưa deploy hay server/script/ảnh QA tạm cần giữ.
+
+**Kiểm chứng đã hoàn tất:** Work/Valuation12 trạng thái browser320–1920 (radius8/header trắng/padding12/frame1280; Valuation8 hàng/panel328; Work desktop2/mobile1). CV9 chiều rộng320–1920 (đủ nội dung/4 section/3 social links, spacing spacious, không clipping/page overflow). Audit3 trang và popup:0 lỗi. Production Chrome1440/390 xác nhận cả3 trang dùng shared component; sau bản shadow, QA9 trạng thái local của3 trang ở1440/390/320 kiểm đúng bóng trên nút và không bóng trên read-only/disabled, gồm nút popup; HTML production đã xác nhận rule shadow mới. Không gọi POST ghi dữ liệu hay thay backend/công thức.
+
+**Cách làm tiếp:** không yêu cầu user xem preview để xác nhận kết quả; tự kiểm tra browser thật và production sau deploy. Không tự sáng tác bố cục/kích thước mới: thay đổi hướng thiết kế phải trình phương án cho user chốt trước. Khi đã được yêu cầu sửa/deploy, thực hiện hết phạm vi được duyệt, không để sót CV rồi báo đã chuẩn hóa toàn site.
+
 Design system v3: nguồn repo_personal_design → design-tokens.css có hash, sync/check bằng tools/sync-design-system.py và tools/check-design-system.py. CV editorial/spacious; Valuation data/compact; Work task/compact tại /work (/airdrop301). Valuation giữ8 token mọi màn hình, header chung56, row40, cộng viền/scrollbar; ba box cố định328, mobile2 cột bằng nhau; ATH một hàng; nhãn trái/số phải. Quy tắc đầy đủ ở DESIGN_SYSTEM.md, không dùng các log thiết kế cũ để ghi đè hiện trạng.
 **Repo:** https://github.com/KattyFury/website_personal_0xhieu · **Local:** `D:\Files\Claude\website_personal_0xhieu` (thư mục đổi tên từ `cv` 10-05; máy khác còn tên cũ thì đổi theo)
 **Live:** Cloudflare Pages, project **`0xhieu-xyz`** (khác tên repo) — auto-deploy từ `main`.
