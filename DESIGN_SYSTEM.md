@@ -19,7 +19,7 @@ Cả3 trang dùng cùng token product: card/control/badge radius8, viền line, 
 
 - CV spacious: hero top96/48, section gap64/32, body16/24, caption/nhãn padding16. Không ép spacing Work vào CV.
 - Valuation/Work compact: padding ngang thẻ12, section dọc8, khe12. Nội dung/task14/20; không giảm dưới14 để nhét dữ liệu. Header16/24 600, Valuation mobile14/20 600. Chữ dài được wrap, không cắt task/tên/tag.
-- Khung CV/Valuation/Work/navbar/footer max1280px gồm padding, căn giữa. CV padding48 desktop/16 mobile; workspace24/16. Không quay lại fluid không giới hạn.
+- Khung CV/Valuation/Work/navbar/footer max1280px gồm padding, căn giữa. Cả ba trang và navbar/footer dùng cùng padding ngang24 desktop/16 mobile; spacious/compact chỉ khác spacing bên trong. Không quay lại fluid không giới hạn.
 - Cỡ chữ theo token; 400/600, 700 dành cho tiêu đề lớn. Số tabular-nums. Mọi thay đổi bố cục/kích thước mới phải được user chốt; user không muốn duyệt preview, cần tự QA trang thật.
 
 ## CV

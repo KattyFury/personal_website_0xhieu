@@ -44,7 +44,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="/design-tokens.css?v=3-7466d24b53e1">
+  <link rel="stylesheet" href="/design-tokens.css?v=3-b7c378053dc6">
   <style>
     /* ══════════════════════════════════════════════════════════════
        0xhieu.xyz — MỘT stylesheet duy nhất, viết theo thành phần.
@@ -72,7 +72,7 @@
       --font: var(--ds-font-web);
       /* Khung tối đa 1280px (gồm padding), user duyệt cho cả ba trang. */
       --navbar:  64px;
-      --gutter:  48px;     /* padding CV desktop; workspace giữ padding compact */
+      --gutter: 24px;     /* Một khung ngang chung cho CV, Valuation và Work. */
       --modal-w: 384px;    /* popup nhỏ = 4 cột; popup rộng = 2× */
     }
 
@@ -169,8 +169,8 @@
       --val-header-line-height: var(--ds-val-header-line-height);
       --val-header-letter-spacing: -.011em;
     }
-    body[data-ds-profile="compact"] .header-inner { padding: 0 var(--ds-page-gutter); }
-    .val-wrap, .ard-wrap { max-width: var(--content); margin: 0 auto; padding: 0 var(--ds-page-gutter) var(--ds-space-24); }
+    body[data-ds-product="0xhieu-xyz"] { --gutter: var(--ds-workspace-frame-padding-x); }
+    .val-wrap, .ard-wrap { max-width: var(--content); margin: 0 auto; padding: 0 var(--gutter) var(--ds-space-24); }
     #airdrop-view .ard-wrap { padding-bottom: var(--ds-work-safe-bottom); }
     .panel-head {
       position: static; display: flex; align-items: center; justify-content: space-between; gap: 16px;
@@ -795,6 +795,7 @@
        Chữ tối thiểu 14. Tiêu đề lớn đổi sang web-mobile-*. */
     @media (max-width: 640px) {
       :root { --gutter: 16px; --navbar: 56px; }
+      body[data-ds-product="0xhieu-xyz"] { --gutter: 16px; }
       #valuation-view, #tge-modal { --val-header-letter-spacing: -.006em; }
 
       .header-home img { width: 24px; height: 24px; }
