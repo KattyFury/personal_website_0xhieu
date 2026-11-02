@@ -1066,7 +1066,7 @@
 
         <!-- 3. Danger Zone -->
         <div class="val-card">
-          <div class="vc-q1"><svg class="wte-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><span id="danger-title-text" class="box-title-btn" role="button" tabindex="0" title="Giải thích">Danger Zone</span></div>
+          <div class="vc-q1"><svg class="wte-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><span id="danger-title-text" class="box-title-btn" role="button" tabindex="0" title="Giải thích">Hero or Zero</span></div>
           <div id="danger-list" class="vc-q234 thin-scroll"></div>
         </div>
 
@@ -1232,7 +1232,7 @@
 
   <div class="wl-modal-backdrop" id="info-danger-modal">
     <div class="wl-modal">
-      <div class="wl-modal-title" id="info-danger-modal-title">Danger Zone</div>
+      <div class="wl-modal-title" id="info-danger-modal-title">Hero or Zero</div>
       <div class="info-modal-body" id="info-danger-body"></div>
     </div>
   </div>
@@ -1437,7 +1437,7 @@
       // headline + 3 tiêu đề box
       'val-headline-text':       { EN: 'Altcoin watch', VI: 'Quan sát altcoin' },
       'tge-title-text':          { EN: 'Valuation baseline', VI: 'Mặt bằng định giá' },
-      'danger-title-text':       { EN: 'Danger Zone', VI: 'Vùng nguy hiểm' },
+      'danger-title-text':       { EN: 'Hero or Zero', VI: 'Hero or Zero' },
       'narr-title-text':         { EN: 'Trending Narratives', VI: 'Narrative đang hot' },
       // nội dung box Recent TGE multiples + header bảng
       'tge-coef-label':          { EN: 'TGE multiple', VI: 'Hệ số TGE' },
@@ -1446,7 +1446,7 @@
       'tge-date-th':             { EN: 'TGE', VI: 'TGE' },   // cột ngày TGE — 2 ngôn ngữ dùng chung 1 chữ cho gọn (mobile)
       // tiêu đề 4 popup (3 info + predict) — tiêu đề nằm trong HTML tĩnh nên dễ bị quên
       'info-tge-modal-title':    { EN: 'Valuation baseline', VI: 'Mặt bằng định giá' },
-      'info-danger-modal-title': { EN: 'Danger Zone', VI: 'Vùng nguy hiểm' },
+      'info-danger-modal-title': { EN: 'Hero or Zero', VI: 'Hero or Zero' },
       'info-narr-modal-title':   { EN: 'Trending Narratives', VI: 'Narrative đang hot' },
       'predict-modal-title':     { EN: 'Predict TGE FDV', VI: 'Dự đoán FDV TGE' },
       // form Predict TGE FDV (nút mở + 3 label + 2 nút hành động)
@@ -1527,38 +1527,46 @@
        Xuống dòng trong template literal là xuống dòng thật vì .info-modal-body
        dùng `white-space: pre-line` (đừng thay bằng <br>). */
     const DANGER_INFO = {
-      VI: `Những dự án lên mức FDV gấp 15 lần FDV mà VC đầu tư trở lên thường rơi vào 2 trường hợp:
+      VI: `Dự án có FDV hiện tại từ 15 lần định giá vốn VC trở lên.
 
-1. Pump mạnh để tạo đỉnh, hoặc là TGE ở vùng đỉnh để rồi nuke về 0
+1. Hero: giữ vững định giá cao theo thời gian.
 
-2. Tính chất dự án quá mạnh, nên giữ vững FDV ở mức cao so với định giá ban đầu VC định ra
+2. Zero: chạm vùng đỉnh nhưng không giữ được, rồi sụp đổ.
 
-<b class="info-key">Dù ở trường hợp nào thì các dự án như này cũng rất rủi ro khi mua vào.</b>`,
-      EN: `Projects trading at ×15 the FDV VCs invested at (or higher) usually fall into one of two cases:
+<b class="info-key">Giữ vững hay sụp đổ? Bội số cao chưa cho biết kết quả.</b>`,
+      EN: `Projects whose current FDV is at least 15× their implied VC-entry FDV.
 
-1. A strong pump forming a top — or TGE-ing straight into the top before nuking to zero
+1. Hero: sustains its high valuation over time.
 
-2. The project is genuinely strong, holding FDV well above what VCs originally priced it at
+2. Zero: reaches a peak, fails to hold it, then collapses.
 
-<b class="info-key">Either way, buying in at this level is very risky.</b>`,
+<b class="info-key">Lasting strength or collapse? A high multiple alone cannot tell.</b>`,
     };
     const NARRATIVES_INFO = {
-      VI: `Trung vị của [FDV khi TGE] / [FDV mà VC đầu tư] của các dự án cùng một Narrative, cho thấy trong điều kiện thị trường hiện tại, Narrative nào đang mạnh và Narrative nào đang yếu.`,
-      EN: `Median of [FDV at TGE] / [FDV VCs invested at] for projects sharing the same Narrative — shows which Narratives are strong and which are weak under current market conditions.`,
+      VI: `Xếp theo trung vị [FDV lúc TGE / định giá vốn VC] của từng narrative chính, chỉ tính dự án TGE từ 01/02/2025.
+
+Số dự án là số được tính trong nhóm, không phải toàn bộ dự án có cùng tag SURF.
+
+Đo định giá lúc TGE, không đo sức nóng hiện tại. Nhóm ít dự án dễ đổi hạng.`,
+      EN: `Ranked by the median [FDV at TGE / implied VC-entry FDV] for each primary narrative, using projects that had their TGE on or after 1 Feb 2025.
+
+The count includes eligible projects in that primary group, not every project sharing a SURF tag.
+
+This measures valuation at TGE, not current momentum. Small groups can change rank easily.`,
     };
     // dùng bởi calculator Predict TGE FDV ở cuối file (khi data không đủ để chạy predictFDV)
     const NOT_ENOUGH_DATA = { VI: 'Không đủ dữ liệu để dự đoán', EN: 'Not enough data to predict' };
     // câu chốt (đậm) của popup Recent TGE multiples — chọn theo Market condition đang hiện
     const TGE_MARKET_LINE = {
       VI: {
-        Weak:   'Thị trường đang rất yếu (hiếm khi altcoin TGE tệ đến vậy).',
-        Normal: 'Thị trường đang ở mức bình thường (ngang mặt bằng chung các đợt TGE altcoin).',
-        Strong: 'Thị trường đang mạnh (altcoin TGE cao vượt xa giá vốn VC).',
+        Weak:   'Điều kiện thị trường: Yếu.',
+        Normal: 'Điều kiện thị trường: Bình thường.',
+        Strong: 'Điều kiện thị trường: Mạnh.',
       },
       EN: {
-        Weak:   'Market is super weak right now (altcoins rarely TGE this poorly).',
-        Normal: 'Market is at a normal level (a typical condition for altcoin TGEs).',
-        Strong: 'Market is strong right now (altcoins are TGE-ing far above VC cost).',
+        Weak:   'Market conditions: Weak.',
+        Normal: 'Market conditions: Normal.',
+        Strong: 'Market conditions: Strong.',
       },
     };
 
@@ -1571,26 +1579,26 @@
       const grpVI = penGrp === 'Weak' ? 'Yếu' : 'Bình thường / Mạnh';
       const grpEN = penGrp === 'Weak' ? 'Weak' : 'Normal / Strong';
       const penVI = pen === '—'
-        ? `Dự án FDV vòng VC từ $300M trở lên: chưa đủ dữ liệu thời thị trường ${grpVI} để tính mức phạt (cần ít nhất ${PENALTY_MIN_HIGH} dự án, đang có ${penN}).`
-        : `Dự án FDV vòng VC từ $300M trở lên bị phạt ${pen}: những lúc thị trường ${grpVI} như hiện tại, nhóm này TGE chỉ bằng ${pen} so với dự án dưới $300M cùng thời điểm (thống kê ${penN} dự án FDV cao).`;
+        ? `FDV vốn VC ≥ $300M: chưa đủ mẫu để tính mức phạt (${penN}/${PENALTY_MIN_HIGH} dự án).`
+        : `FDV vốn VC ≥ $300M: áp dụng mức phạt ${pen}, ước tính từ ${penN} dự án trong thị trường ${grpVI}.`;
       const penEN = pen === '—'
-        ? `Projects with a VC-round FDV of $300M or more: not enough data from ${grpEN} markets to set a penalty (needs at least ${PENALTY_MIN_HIGH} projects, have ${penN}).`
-        : `Projects with a VC-round FDV of $300M or more get a ${pen} penalty: in ${grpEN} markets like now, they've TGE'd at only ${pen} of what sub-$300M projects did at the same time (based on ${penN} high-FDV projects).`;
+        ? `VC-entry FDV ≥ $300M: not enough data for a penalty (${penN}/${PENALTY_MIN_HIGH} projects).`
+        : `VC-entry FDV ≥ $300M: apply a ${pen} adjustment, estimated from ${penN} projects in ${grpEN} markets.`;
       return valLang === 'VI'
-        ? `1. Các dự án gần đây thường TGE ở mức ${coef} so với FDV lúc VC rót vốn.
+        ? `<b class="info-key">${line}</b>
+
+1. Hệ số ${coef}: trung vị bội số TGE của 4–6 dự án gần nhất, đã chuẩn hóa ảnh hưởng FDV vốn VC cao.
 
 2. ${penVI}
 
-<b class="info-key">${line}</b>
+<span class="info-modal-link" id="info-tge-predict-link">Ước tính FDV và giá TGE</span>.`
+        : `<b class="info-key">${line}</b>
 
-<span class="info-modal-link" id="info-tge-predict-link">Bấm vào đây</span> để nhập vài thông tin, mình sẽ dự đoán FDV và giá TGE của dự án bạn đang quan tâm.`
-        : `1. Recent projects typically TGE at ${coef} the FDV VCs invested at.
+1. Baseline ${coef}: the median TGE multiple of the latest 4–6 projects, adjusted for high VC-entry valuations.
 
 2. ${penEN}
 
-<b class="info-key">${line}</b>
-
-<span class="info-modal-link" id="info-tge-predict-link">Click here</span> to enter a few details and I'll predict the TGE FDV and price for the project you're looking at.`;
+<span class="info-modal-link" id="info-tge-predict-link">Estimate TGE FDV and token price</span>.`;
     }
 
     const infoTgeModal = document.getElementById('info-tge-modal');
@@ -2183,7 +2191,7 @@
         .sort((a, b) => new Date(b.e.tgeDate) - new Date(a.e.tgeDate)); // mới nhất lên đầu
 
       if (!danger.length) {
-        listEl.innerHTML = `<div class="danger-empty">${valLang === 'VI' ? 'Chưa có token nào trong vùng nguy hiểm' : 'No tokens in danger zone'}</div>`;
+        listEl.innerHTML = `<div class="danger-empty">${valLang === 'VI' ? 'Chưa có dự án đạt ngưỡng ×15' : 'No projects at or above ×15'}</div>`;
         return;
       }
 
@@ -2191,7 +2199,7 @@
         const isAlert = now - new Date(e.tgeDate) < ALERT_DAYS;
         return `<div class="list-row danger-row${isAlert ? ' danger-new' : ''}">
           <span class="lr-main">
-            <span class="lr-title">${e.ticker}${isAlert ? `<span class="danger-badge-new">${valLang === 'VI' ? 'PUMP LÁO' : 'FAKE PUMP'}</span>` : ''}</span>
+            <span class="lr-title">${e.ticker}${isAlert ? `<span class="danger-badge-new">${valLang === 'VI' ? 'TGE &lt; 30 ngày' : 'TGE &lt; 30 days'}</span>` : ''}</span>
             <span class="lr-meta">TGE ${fmtDate(e.tgeDate)}</span>
           </span>
           <span class="lr-val danger-multi">×${xATM.toFixed(1)}</span>
