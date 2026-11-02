@@ -35,12 +35,12 @@ function safeEqual(a, b) {
 
 const clean = (v, max) => String(v ?? '').replace(/[<>]/g, '').trim().slice(0, max);
 
-// 15 narrative đã chốt. Giá trị lạ → rơi về chuỗi rỗng để admin thấy mà sửa,
+// 17 narrative đã chốt. Giá trị lạ → rơi về chuỗi rỗng để admin thấy mà sửa,
 // KHÔNG tự nhét vào một nhóm bừa (nhét bừa là làm lệch median của box Narrative).
 const NARRATIVES = [
   'stablechain', 'layer-1', 'infra', 'ai', 'layer-2',
   'prediction', 'trading', 'bitcoin', 'payment', 'defi',
-  'identity', 'privacy', 'game', 'social', 'desci',
+  'identity', 'privacy', 'game', 'social', 'desci', 'rwa', 'zk',
 ];
 const cleanNarrative = v => {
   const t = clean(v, 40).toLowerCase();
@@ -128,6 +128,22 @@ export async function onRequestPost({ request, env }) {
 
   const projects = await readJson(kv, KEY_PROJECTS, []);
   const write = list => kv.put(KEY_PROJECTS, JSON.stringify(list));
+
+  // Narrative-only migration: validate the entire batch before writing and
+  // preserve all other fields exactly, including legacy bot hints.
+  if (body.action === 'narratives') {
+    if (!Array.isArray(body.changes) || !body.changes.length) return json({ ok: false, error: 'bad-changes' }, 400);
+    const seen = new Set();
+    for (const change of body.changes) {
+      if (!change || !NARRATIVES.includes(change.narrative) || seen.has(change.ticker)) return json({ ok: false, error: 'bad-changes' }, 400);
+      seen.add(change.ticker);
+      const existing = projects.find(p => p.ticker === change.ticker);
+      if (!existing || existing.narrative !== change.expectedNarrative || existing.cgId !== change.expectedCgId) return json({ ok: false, error: 'conflict', ticker: change.ticker }, 409);
+    }
+    const updates = new Map(body.changes.map(c => [c.ticker, c.narrative]));
+    await write(projects.map(p => updates.has(p.ticker) ? { ...p, narrative: updates.get(p.ticker) } : p));
+    return json({ ok: true, count: updates.size });
+  }
 
   if (body.action === 'add' || body.action === 'update') {
     const p = sanitize(body.project || {});

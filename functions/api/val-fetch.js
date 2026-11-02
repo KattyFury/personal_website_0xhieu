@@ -70,7 +70,11 @@ export async function onRequestPost({ request, env }) {
     const mapping = { 'layer1':'layer-1', 'layer2':'layer-2', 'artificialintelligence':'ai', 'ai':'ai',
       'predictionmarkets':'prediction', 'privacy':'privacy', 'gaming':'game', 'desci':'desci',
       'decentralizedscience':'desci', 'identity':'identity', 'socialfi':'social', 'payments':'payment',
-      'stablechain':'stablechain', 'infrastructure':'infra' };
+      'stablechain':'stablechain', 'infrastructure':'infra',
+      'layer2scaling':'layer-2', 'gamefi':'game', 'dididentity':'identity',
+      'rwarealworldassets':'rwa', 'descidecentralizedscience':'desci',
+      'web3aiagentaigc':'ai', 'predictionmarket':'prediction',
+      'paymentsgateway':'payment' };
     const narratives = [...new Set((detail.overview.tags || []).map(t => mapping[normalized(t)]).filter(Boolean))];
     if (narratives.length === 1) add('narrative', narratives[0], ['SURF']);
 
