@@ -1365,6 +1365,7 @@
     const tgeModal = document.getElementById('tge-modal');
     const tgeModalBody = document.getElementById('tge-modal-body');
     const tgeTableScroll = document.querySelector('#tge-section .val-table-scroll');
+    let scrollToLatestTgePending = false;
     const tgeTableHead = document.getElementById('tge-head-wrap');
     const fitTableScrollbar = () => {
       const height = tgeTableScroll.offsetHeight - tgeTableScroll.clientHeight;
@@ -1830,6 +1831,7 @@
     }
 
     function showValuation(push = true) {
+      scrollToLatestTgePending = true;
       hideAllViews();
       document.body.dataset.dsProfile = 'compact';
       valView.style.display = 'block';
@@ -2111,6 +2113,12 @@
         document.documentElement.style.setProperty('--ck' + i, Math.ceil(w) + 'px');
       }
       probe.remove();
+      // Rows run oldest → newest. Position the visible table at the latest
+      // projects on entry, including when data arrives after the tab opens.
+      if (scrollToLatestTgePending && tgeTableScroll.clientHeight > 0) {
+        tgeTableScroll.scrollTop = tgeTableScroll.scrollHeight;
+        scrollToLatestTgePending = false;
+      }
     }
 
     // ── Render analysis ───────────────────────────────

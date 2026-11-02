@@ -28,6 +28,7 @@ Giữ nội dung tiếng Anh và tagline Sharing POVs on Crypto and AI. Hero por
 
 ## Valuation
 
+- Khi mở tab Valuation, bảng giữ thứ tự TGE cũ→mới và tự cuộn dọc tới cuối để thấy dự án mới nhất; chờ dữ liệu tải xong nếu cần. Chỉ cuộn bảng, không cuộn page; các lần render khác không ép người dùng về cuối.
 - Narrative dùng đúng một nhóm chính/dự án trong17 nhóm: stablechain, layer-1, layer-2, infra, ai, zk, privacy, identity, rwa, defi, trading, payment, bitcoin, prediction, game, social, desci. Chọn theo tag và mô tả SURF; ZK proving khác Privacy. Không nhân một dự án vào nhiều nhóm khi tính trung vị.
 - Bảng hiện8 token trên desktop và mobile, hàng40, header56. Tổng cao56+8×40+viền2+scrollbar. Cột đo theo content, header/body cùng cột và cuộn đồng bộ. Mobile ẩn Narrative/TGE/ATL; thiếu chỗ cuộn trong bảng, không tràn page.
 - ATH `đầu → cuối (×N)` một hàng: hai số đen đậm600; chỉ `(×N)` cam đậm600, cả bảng chính/popup và ATH tuần đầu. N=cuối/đầu từ số gốc, làm tròn2; client/server cùng công thức.
