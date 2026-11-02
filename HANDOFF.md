@@ -233,3 +233,5 @@ User requested pale orange headers (#FDEDE3, black text) and replacement of five
 - 2026-11-02: user supersedes pale orange header with exact DAILY background #FEF5D9 (yellow-soft), black text. Source token/export and website synchronized; no SURF/framework changes in this color update.
 
 - 2026-11-02: fixed CV horizontal mismatch: old48px CV inset differed from24px workspace despite common1280 frame. All three pages/navbar/footer now use shared product frame-padding-x24px, mobile16px. Chrome measured exact matching left/right content edges on all three routes at1920/1440/1024/768/390/320, no overflow.
+
+- 2026-11-02: user selected one primary narrative per project from17 (added rwa/zk). Reviewed81 against SURF, migrated19 narrative fields via authenticated guarded action narratives;62 unchanged including unverified ROBO/BASED. API validates full batch + expected narrative/cgId and preserves every other field. Verified before/after project equality except planned narrative. Trending formula/cutoff unchanged: RWA includes2 after Feb2025 (PLUME Jan2025 excluded); ZK5. Fetch recognizes current SURF tag spellings; multi-tag ambiguity stays blank.9 tests passed.
