@@ -17,7 +17,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 const PROBE = `(() => {
   const ALLOWED_COLORS = {
     '0,0,0':'ink','255,255,255':'ground','75,85,104':'grey','139,149,168':'muted','236,240,248':'mist','220,227,238':'line',
-    '255,161,17':'accent-orange','184,74,12':'important-orange','254,245,217':'orange-soft',
+    '255,161,17':'accent-orange','184,74,12':'important-orange','254,245,217':'daily-soft','253,237,227':'orange-soft',
     '196,43,63':'red-text','253,232,235':'red-soft'
   };
   const TYPE = { 14:[20], 16:[24], 18:[28], 20:[28], 24:[32], 32:[40], 40:[48] };   // cỡ → line-height hợp lệ

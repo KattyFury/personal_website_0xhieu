@@ -6,7 +6,8 @@ Nguồn: repo_personal_design/tokens.json → export_web.py → web.css → desi
 
 - Trang trắng #FFFFFF; thân box xám mist #ECF0F8; viền line #DCE3EE.
 - Đen #000000: nội dung thường và hai số đầu/cuối ATH. Xám #4B5568: chữ phụ, metadata, caption.
-- Cam thường #FFA111: nút primary, selected state, header box/bảng, dấu mốc timeline; chữ trên nền cam là đen.
+- Cam thường #FFA111: nút primary, selected state, dấu mốc timeline; chữ trên nền cam là đen.
+- Header box/bảng: cam nhạt #FDEDE3, chữ đen; không dùng cam đặc cho mảng header lớn.
 - Cam đậm #B84A0C: chữ quan trọng đậm600, gồm tỷ số ATH, ticker VC FDV≥300M và số liệu cần nhấn. Không tô toàn bộ ô ATH cam.
 - DAILY nền vàng nhạt #FEF5D9, viền trái cam4px; nhãn/icon/task text cam đậm600. Padding trái giảm4px để nội dung vẫn cùng trục các phần khác. Không đổi nội dung/thứ tự/link hay số cột.
 - Đỏ chỉ dành cho nguy hiểm và thao tác phá hủy. Theme xanh trước đây hết hiệu lực; global palette của sản phẩm khác không đổi.
@@ -36,7 +37,7 @@ Giữ nội dung tiếng Anh và tagline Sharing POVs on Crypto and AI. Hero por
 
 ## Work
 
-Tham khảo Linear Board theo user chọn. Mỗi công việc/dự án là thẻ độc lập. Desktop2 thẻ/hàng; ≤900px1 thẻ/hàng. Gap12, căn đầu, cao theo nội dung. Header padding12; các section Get Started/DAILY/Weekly có nhãn trên, task dưới. DAILY nhấn bằng nền vàng nhạt/viền cam4px/chữ cam đậm600. Task min40 desktop/44 mobile hoặc touch. Giữ đủ nội dung/link/admin. Filter rank có chức năng cũ, cuối trang chừa96 để không che task cuối. Route/work; /airdrop301 và client fallback giữ query/hash.
+Tham khảo Linear Board theo user chọn. Mỗi công việc/dự án là thẻ độc lập. Desktop2 thẻ/hàng; ≤900px1 thẻ/hàng. Gap12, căn đầu, cao theo nội dung. Header padding12; các section Get Started/DAILY/Weekly có nhãn trên, task dưới. DAILY nhấn bằng nền vàng nhạt/viền cam4px/chữ cam đậm600. Task min40 desktop/44 mobile hoặc touch. Giữ đủ nội dung/link/admin. Rank là một thanh liền248×48 với một vùng cam trượt qua $/S/A/B/C; kéo/click/phím mũi tên để tới nhóm, cuộn trang đồng bộ vị trí sáng. Không dùng5 nút tròn. Filter cuối trang chừa96 để không che task cuối. Route/work; /airdrop301 và client fallback giữ query/hash.
 
 ## Đồng bộ và kiểm tra
 

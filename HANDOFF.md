@@ -225,3 +225,7 @@ Account `f9df99b7751b7dc3c80a22b6911c6f2b`, project Pages `0xhieu-xyz`. API toke
 - 2026-09-24: **Bản sáng.** Desktop Roboto, Condensed chỉ cho bảng altcoin + toàn site trên mobile. Chữ mobile ≥14 (trừ bảng altcoin). Navbar/header/nút bỏ nền đen → trắng/ngà, nút chính amber. Navbar → nội dung 24 (bỏ hàng trống 48).
 - 2026-09-24: **Bản sang** cho tab Work rồi áp cả site: icon SVG, tiêu đề card canh trái + icon, chip `#F5F5F4`, bóng mềm 2 lớp, viền 1px.
 - 2026-09-24: Nav tab (CV/Valuation/AI/Work) bỏ ô rộng cố định 88px canh giữa, chuyển sang rộng theo chữ + khoảng cách đều 16px. Icon `low-potential` đổi từ 1 gạch ngang phẳng sang mũi tên giảm (mirror icon `high-potential`, cùng kiểu trending). Thêm điểm nhấn cam nhạt (`rgba(255,161,17,.06–.08)`) cho header card Work (`.wte-card-head`) và nhóm Daily (`.wte-section--daily`, viền trên/dưới amber nhạt) — ngoại lệ so với `--head-bg` trắng ngà chung trong DESIGN_SYSTEM.md §3.
+
+## 2026-11-02 — pale headers, continuous rank slider
+
+User requested pale orange headers (#FDEDE3, black text) and replacement of five circular rank controls with one continuous slider. Work now has one 248x48 bar, one orange selected region, native range keyboard semantics plus pointer capture for click/drag. Selection scrolls directly to its section; scroll spy updates the slider. Verified drag across all five positions, ArrowLeft, scroll spy and no overflow at1440/390/320 in Chrome. Design source and generated CSS synchronized.
