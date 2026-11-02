@@ -1800,11 +1800,11 @@
       rankBar.classList.add('is-dragging');
       selectRankAtPointer(event);
     });
-    rankSlider.addEventListener('pointermove', event => { if (rankDragging) selectRankAtPointer(event); });
+    window.addEventListener('pointermove', event => { if (rankDragging) selectRankAtPointer(event); });
     const endRankDrag = () => { rankDragging = false; rankBar.classList.remove('is-dragging'); };
-    rankSlider.addEventListener('pointerup', endRankDrag);
-    rankSlider.addEventListener('pointercancel', endRankDrag);
-    rankSlider.addEventListener('lostpointercapture', endRankDrag);
+    window.addEventListener('pointerup', endRankDrag);
+    window.addEventListener('pointercancel', endRankDrag);
+    window.addEventListener('blur', endRankDrag);
     rankSlider.addEventListener('input', scrollToSelectedRank);
 
     // IntersectionObserver: đổi active khi section vào viewport
