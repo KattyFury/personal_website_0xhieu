@@ -229,3 +229,5 @@ Account `f9df99b7751b7dc3c80a22b6911c6f2b`, project Pages `0xhieu-xyz`. API toke
 ## 2026-11-02 — pale headers, continuous rank slider
 
 User requested pale orange headers (#FDEDE3, black text) and replacement of five circular rank controls with one continuous slider. Work now has one 248x48 bar, one orange selected region, native range keyboard semantics plus pointer capture for click/drag. Selection scrolls directly to its section; scroll spy updates the slider. Verified drag across all five positions, ArrowLeft, scroll spy and no overflow at1440/390/320 in Chrome. Design source and generated CSS synchronized.
+
+- 2026-11-02: user supersedes pale orange header with exact DAILY background #FEF5D9 (yellow-soft), black text. Source token/export and website synchronized; no SURF/framework changes in this color update.

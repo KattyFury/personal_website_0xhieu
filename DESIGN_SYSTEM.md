@@ -7,7 +7,7 @@ Nguồn: repo_personal_design/tokens.json → export_web.py → web.css → desi
 - Trang trắng #FFFFFF; thân box xám mist #ECF0F8; viền line #DCE3EE.
 - Đen #000000: nội dung thường và hai số đầu/cuối ATH. Xám #4B5568: chữ phụ, metadata, caption.
 - Cam thường #FFA111: nút primary, selected state, dấu mốc timeline; chữ trên nền cam là đen.
-- Header box/bảng: cam nhạt #FDEDE3, chữ đen; không dùng cam đặc cho mảng header lớn.
+- Header box/bảng: cùng nền DAILY #FEF5D9, chữ đen; không dùng cam đặc cho mảng header lớn.
 - Cam đậm #B84A0C: chữ quan trọng đậm600, gồm tỷ số ATH, ticker VC FDV≥300M và số liệu cần nhấn. Không tô toàn bộ ô ATH cam.
 - DAILY nền vàng nhạt #FEF5D9, viền trái cam4px; nhãn/icon/task text cam đậm600. Padding trái giảm4px để nội dung vẫn cùng trục các phần khác. Không đổi nội dung/thứ tự/link hay số cột.
 - Đỏ chỉ dành cho nguy hiểm và thao tác phá hủy. Theme xanh trước đây hết hiệu lực; global palette của sản phẩm khác không đổi.
