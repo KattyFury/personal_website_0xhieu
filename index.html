@@ -44,13 +44,13 @@
   }
   </script>
 
-  <link rel="stylesheet" href="/design-tokens.css?v=3-b7c378053dc6">
+  <link rel="stylesheet" href="/design-tokens.css?v=3-a2f1b9bc40d4">
   <style>
     /* ══════════════════════════════════════════════════════════════
        0xhieu.xyz — MỘT stylesheet duy nhất, viết theo thành phần.
        Theo design system nguyen0xhieu (Figma `hieu`), riêng site này:
        ĐEN thay vai trò 0x Blue (mèo đen), nền TRẮNG (mắt kính trắng),
-       VÀNG MẮT MÈO #FFA111 cho chi tiết thiết kế. Luật ở DESIGN_SYSTEM.md.
+       VÀNG MẮT MÈO #FFA111 chỉ cho nút và highlight. Luật ở DESIGN_SYSTEM.md.
        Mobile gom hết về khối @media cuối file.
        ══════════════════════════════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -97,7 +97,7 @@
     /* web-body 16/24 */
     body {
       --content: var(--ds-workspace-frame-max-width);
-      --accent: var(--ds-accent); --accent-text: var(--ds-accent-text); --accent-soft: var(--ds-accent-soft);
+      --accent: var(--ds-accent); --accent-text: var(--ds-accent-text);
       font-family: var(--font); font-size: var(--ds-web-body-size); font-weight: 400; line-height: var(--ds-web-body-line); letter-spacing: var(--ds-web-body-tracking);
       background: var(--ground); color: var(--ink);
       -webkit-font-smoothing: antialiased;
@@ -143,10 +143,9 @@
     .nav-btn:not(:disabled):hover, .lang-btn:hover, .lang-dd-btn:not(.is-plus):hover, .social-btn:hover,
     .predict-link:hover, .predict-btn-primary:hover, .predict-btn-secondary:hover, .val-del-btn:hover, .retry-btn:hover,
     .pt-delete:hover, .val-row:hover, .wte-task-row--link:hover .wte-task-text, #tge-section tbody tr.row-editable:hover td {
-      color: var(--accent-text);
+      color: var(--ink);
       font-weight: 600;
     }
-    .predict-btn-primary:hover, .predict-link:hover, .retry-btn:hover, .lang-btn.active:hover { color: var(--accent); }
     /* Chữ có độ rộng tự do (nút xã hội rộng theo chữ, link nằm giữa đoạn văn): đậm thật sẽ làm nút/dòng chữ nhích
        → giữ đậm gốc, tô đậm bằng viền chữ cùng màu (không đổi độ rộng). */
     .social-btn:hover { font-weight: 600; }
@@ -194,7 +193,7 @@
 
     /* Nút Admin = nút nhỏ (cao 40, đệm 16, web-label 14) · nút phụ: trắng chữ đen + shadow */
     .lang-dd-btn {
-      min-width: 88px; height: 40px; padding: 0 16px; border-radius: 16px;
+      min-width: 88px; height: 40px; padding: 0 16px; border-radius: var(--ds-product-control-radius);
       display: inline-flex; align-items: center; justify-content: center;
       background: var(--ground); border: none; box-shadow: var(--shadow);
       font-family: var(--font); font-size: 14px; font-weight: 600; line-height: 20px; letter-spacing: -.006em; color: var(--ink);
@@ -268,7 +267,7 @@
 
     /* Nút ⋮ của admin (card Work). ::after nới vùng bấm. */
     .wte-opt, .modal-corner-close, .calc-reset-btn, .pt-item-del {
-      position: relative; flex-shrink: 0; width: 40px; height: 40px; padding: 0; border: none; border-radius: 16px;
+      position: relative; flex-shrink: 0; width: 40px; height: 40px; padding: 0; border: none; border-radius: var(--ds-product-control-radius);
       display: inline-flex; align-items: center; justify-content: center;
       background: transparent; color: var(--grey); cursor: pointer; transition: background .15s, color .15s;
     }
@@ -277,7 +276,7 @@
     /* Báo lỗi tải data + nút thử lại */
     .data-error { padding: 24px 0; text-align: center; font-size: 14px; line-height: 20px; color: var(--grey); }
     .retry-btn {
-      height: 40px; margin-left: 8px; padding: 0 16px; border-radius: 16px;
+      height: 40px; margin-left: 8px; padding: 0 16px; border-radius: var(--ds-product-control-radius);
       background: var(--ds-primary); border: none; box-shadow: var(--shadow);
       font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--ground); cursor: pointer;
     }
@@ -343,7 +342,7 @@
     .tl-gutter { position: relative; height: 28px; display: flex; align-items: center; justify-content: center; }
     .tl-gutter::before {
       content: ''; width: 16px; height: 16px; border-radius: 50%;
-      background: var(--accent); outline: 4px solid var(--ground);
+      background: var(--ink); outline: 4px solid var(--ground);
     }
     .tl-role { font-size: 20px; font-weight: 600; line-height: 28px; letter-spacing: -.017em; color: var(--ink); }
     .tl-bullets { max-width: 680px; margin-top: 8px; padding-left: 24px; list-style: disc; }
@@ -351,7 +350,7 @@
     .tl-bullets li + li { margin-top: 8px; }
     .tl-bullets li::marker { color: var(--muted); }
     .tl-bullets a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
-    .tl-bullets a:hover { color: var(--accent-text); }
+    .tl-bullets a:hover { color: var(--ink); }
 
     /* Highlights: 3 cột × 384 (4 cột lưới), rãnh 24, ảnh 3:2 */
     #highlights-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -410,7 +409,7 @@
       display: flex; flex-direction: column; max-height: calc(var(--val-header-height) + 320px + 2px + var(--val-scrollbar-height, 0px)); margin-bottom: var(--ds-val-panel-gap); overflow: hidden;
       background: var(--ds-product-card-surface); border: 1px solid var(--line); border-radius: var(--ds-product-card-radius);
     }
-    #tge-head-wrap { flex: none; overflow: hidden; scrollbar-gutter: auto; background: var(--ds-workspace-header-surface); }
+    #tge-head-wrap { flex: none; overflow: hidden; scrollbar-gutter: auto; background: var(--ds-workspace-header-surface); box-shadow: inset 0 -1px 0 var(--line); }
     #tge-section .val-table-scroll { flex: 1 1 auto; min-height: 0; overflow: auto; }
     .val-table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 14px; line-height: 20px; letter-spacing: -.006em; }
     #tge-section .val-table-body { border-spacing: 0; }
@@ -441,7 +440,7 @@
     #tge-section tbody tr.row-editable { cursor: pointer; }
     /* Ticker luôn đậm: vcFDV ≥ $300M cam, dưới ngưỡng đen.
        Chữ 3 cấp: số ink · narrative, ×ATL, đáy-trước-đỉnh, ×ATM < 1 grey · ngày TGE muted (meta).
-       Số cần chú ý = chữ cam --accent-text đậm 600 (×TGE ≥ 13, ×ATH tuần đầu) — cùng màu với số chính trong 3 box.
+       Số cần chú ý = chữ cam #FFA111 đậm 600 (×TGE ≥ 13, ×ATH tuần đầu) — cùng màu với số chính trong 3 box.
        ĐỎ = nguy hiểm (×ATM ≥ 15, badge soft). */
     .val-table td.td-ticker { font-weight: 600; color: var(--ink); }
     .val-table td.td-ticker.fdv-hi { color: var(--accent-text); }
@@ -576,14 +575,14 @@
     /* Header trung tính; DAILY nổi bật trong từng thẻ. */
     .wte-card-head { background: var(--ds-workspace-header-surface); }
     .wte-card-head .wte-name, .wte-card-head .wte-social, .wte-card-head .wte-opt { color: var(--ds-workspace-header-foreground); }
-    .wte-card-head .wte-social:hover, .wte-card-head .wte-opt:hover { background: var(--ground); color: var(--ds-accent-text); }
+    .wte-card-head .wte-social:hover, .wte-card-head .wte-opt:hover { background: var(--ground); color: var(--ink); }
     .wte-card-head .wte-name:hover, .vc-q1 .box-title-btn:hover {
       color: var(--ds-workspace-header-foreground); text-decoration: underline;
     }
 
     .wte-section { min-width: 0; padding: var(--ds-workspace-section-padding-y) var(--ds-workspace-card-padding-x); border-top: 1px solid var(--line); }
     .wte-section--daily {
-      background: var(--accent-soft); border-left: 4px solid var(--ds-accent);
+      border-left: 4px solid var(--ds-accent);
       padding-left: calc(var(--ds-workspace-card-padding-x) - 4px);
     }
     .wte-section-label {
@@ -658,7 +657,7 @@
     .wl-modal {
       position: relative; width: var(--modal-w); max-width: 100%; margin: auto; padding: 16px;
       display: flex; flex-direction: column; gap: 16px;
-      background: var(--ds-product-card-surface); border-radius: 16px;
+      background: var(--mist); border-radius: 16px;
     }
     .wl-modal-title { padding-right: 40px; font-size: 20px; font-weight: 600; line-height: 28px; letter-spacing: -.017em; color: var(--ink); }
     #ptask-modal .wl-modal-title { padding-right: 0; text-align: center; }
@@ -668,7 +667,7 @@
     #shot-modal-img { display: block; width: 100%; max-height: 56vh; max-height: 56svh; object-fit: contain; border: 1px solid var(--line); border-radius: 16px; }
     .shot-modal-hint { font-size: 14px; color: var(--grey); }
     .info-modal-link { font-weight: 600; color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; cursor: pointer; }
-    .info-modal-link:hover { color: var(--accent-text); }
+    .info-modal-link:hover { color: var(--ink); }
     .admin-msg { font-size: 14px; font-weight: 400; color: var(--red-text); }
     .admin-remember { display: flex; align-items: center; gap: 8px; font-size: 14px; line-height: 20px; color: var(--ink); cursor: pointer; }
     .wl-modal .admin-remember input { -webkit-appearance: auto; appearance: auto; flex: none; width: 16px; height: 16px; margin: 0; padding: 0; accent-color: var(--accent); cursor: pointer; }
@@ -689,7 +688,7 @@
     .wl-modal input::placeholder, .wl-modal select:invalid { color: var(--muted); }
     .wl-modal select { cursor: pointer; }
     .wl-modal input, .wl-modal select, .wl-modal textarea { background: var(--ground); }
-    .wl-modal input:focus, .wl-modal select:focus { border-color: var(--ds-accent); box-shadow: inset 0 0 0 1px var(--ds-accent); }
+    .wl-modal input:focus, .wl-modal select:focus { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
     .wl-modal input:disabled, .wl-modal select:disabled { color: var(--muted); background: var(--line); cursor: default; }
     .wl-modal input[type=number]::-webkit-inner-spin-button,
     .wl-modal input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
@@ -698,14 +697,14 @@
     /* Nút — cao 48, đệm 24, bo 16, có shadow */
     .predict-actions { margin-top: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .predict-btn-primary, .predict-btn-secondary, .val-del-btn {
-      height: 48px; min-width: 96px; padding: 0 24px; border: none; border-radius: 16px; box-shadow: var(--shadow);
+      height: 48px; min-width: 96px; padding: 0 24px; border: none; border-radius: var(--ds-product-control-radius); box-shadow: var(--shadow);
       display: inline-flex; align-items: center; justify-content: center;
       font-family: var(--font); font-size: 16px; font-weight: 600; line-height: 24px; letter-spacing: -.011em; cursor: pointer;
       transition: background .15s, color .15s;
     }
     .predict-btn-primary { background: var(--ds-primary); color: var(--ground); }
     .predict-btn-primary:hover, .predict-link:hover, .retry-btn:hover, .lang-btn.active:hover {
-      background: var(--ds-accent-text); color: var(--ground);
+      background: var(--ink); color: var(--ground);
     }
     .predict-btn-secondary, .val-del-btn { background: var(--ground); color: var(--ink); }
     /* Xoá hỏi lại 1 nhịp — bấm lần 1 đổi sang trạng thái này */
@@ -714,8 +713,8 @@
     /* Dự đoán FDV TGE */
     #calc-form { display: flex; flex-direction: column; gap: 16px; }
     #calc-result {
-      position: relative; margin-top: 8px; padding: 16px; border-radius: 16px;
-      background: var(--accent-soft);
+      position: relative; margin-top: 8px; padding: 16px; border-radius: var(--ds-product-card-radius);
+      background: var(--ground);
     }
     #calc-res-sub { display: flex; flex-direction: column; gap: 8px; padding-right: 48px; }
     #calc-res-sub .res-expected {
@@ -732,8 +731,8 @@
     .val-list-head { padding: 0 16px 8px; border-bottom: 1px solid var(--line); font-size: 14px; font-weight: 600; color: var(--grey); }
     #val-list { max-height: 52vh; max-height: 52svh; padding-top: 8px; overflow-y: auto; }
     .val-row {
-      height: 56px; margin-bottom: 8px; padding: 0 16px; border-radius: 16px;
-      background: var(--mist); font-size: 14px; color: var(--ink); cursor: pointer; transition: background .15s;
+      height: 56px; margin-bottom: 8px; padding: 0 16px; border-radius: var(--ds-product-card-radius);
+      background: var(--ground); font-size: 14px; color: var(--ink); cursor: pointer; transition: background .15s;
     }
     .val-row b { font-weight: 600; }
     .val-row .vr-warn { font-weight: 600; color: var(--red-text); }
@@ -755,7 +754,7 @@
     .pt-item-head { display: flex; align-items: center; gap: 8px; }
     .pt-item-head input { flex: 1; }
     .pt-row-add {
-      align-self: flex-start; width: 40px; height: 40px; padding: 0; border-radius: 16px; cursor: pointer;
+      align-self: flex-start; width: 40px; height: 40px; padding: 0; border-radius: var(--ds-product-control-radius); cursor: pointer;
       display: inline-flex; align-items: center; justify-content: center;
       border: 1px dashed var(--line); background: var(--ground); color: var(--grey);
       transition: border-color .15s, color .15s;
@@ -779,12 +778,12 @@
     .predict-btn-primary:hover, .predict-link:hover, .retry-btn:hover, .lang-btn.active:hover { color: var(--ground); }
     button:disabled, .social-btn[aria-disabled="true"], .wte-social[aria-disabled="true"] { box-shadow: none; }
     .wl-modal input, .wl-modal select { height: 40px; border-radius: 8px; }
-    .wl-modal .predict-btn-primary, .wl-modal .predict-btn-secondary { min-height: 40px; height: auto; padding: 8px 12px; border-radius: 8px; }
+    .wl-modal .predict-btn-primary, .wl-modal .predict-btn-secondary, .wl-modal .val-del-btn { min-height: 40px; height: auto; padding: 8px 12px; border-radius: 8px; }
     @media (pointer: coarse) {
       .wte-task-row--link, .wte-social, .wte-opt { min-height: 44px; }
       .wte-social, .wte-opt { min-width: 44px; }
       .predict-link, .wl-modal input, .wl-modal select,
-      .wl-modal .predict-btn-primary, .wl-modal .predict-btn-secondary { min-height: 44px; }
+      .wl-modal .predict-btn-primary, .wl-modal .predict-btn-secondary, .wl-modal .val-del-btn { min-height: 44px; }
     }
     @media (max-width: 1024px) {
       #highlights-grid, .val-boxes { grid-template-columns: 1fr 1fr; }
@@ -1373,7 +1372,7 @@
     const fitTableScrollbar = () => {
       const height = tgeTableScroll.offsetHeight - tgeTableScroll.clientHeight;
       document.getElementById('tge-section').style.setProperty('--val-scrollbar-height', height + 'px');
-      tgeTableHead.style.width = tgeTableScroll.clientWidth + 'px';
+      tgeTableHead.style.paddingRight = (tgeTableScroll.offsetWidth - tgeTableScroll.clientWidth) + 'px';
     };
     tgeTableScroll.addEventListener('scroll', () => { tgeTableHead.scrollLeft = tgeTableScroll.scrollLeft; }, { passive: true });
     new ResizeObserver(fitTableScrollbar).observe(tgeTableScroll);
@@ -1401,7 +1400,7 @@
         scrollWrap.addEventListener('scroll', () => { headWrap.scrollLeft = scrollWrap.scrollLeft; }, { passive: true });
 
         tgeModalBody.append(headWrap, scrollWrap);
-        new ResizeObserver(() => { headWrap.style.width = scrollWrap.clientWidth + 'px'; }).observe(scrollWrap);
+        new ResizeObserver(() => { headWrap.style.paddingRight = (scrollWrap.offsetWidth - scrollWrap.clientWidth) + 'px'; }).observe(scrollWrap);
       }
       tgeModal.classList.add('open');
     });

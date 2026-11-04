@@ -4,14 +4,14 @@ Nguồn: repo_personal_design/tokens.json → export_web.py → web.css → desi
 
 ## Phân vai màu hiện hành
 
-- Trang trắng #FFFFFF; thân box xám mist #ECF0F8; viền line #DCE3EE.
+- Tone trắng-xám-đen (user chốt 04/11/2026). Trang và thân box trắng #FFFFFF; header box/bảng và popup xám mist #ECF0F8; viền line #DCE3EE.
 - Đen #000000: nội dung thường và hai số đầu/cuối ATH. Xám #4B5568: chữ phụ, metadata, caption.
-- Cam thường #FFA111: nút primary, selected state, dấu mốc timeline; chữ trên nền cam là đen.
-- Header box/bảng: cùng nền DAILY #FEF5D9, chữ đen; không dùng cam đặc cho mảng header lớn.
-- Cam đậm #B84A0C: chữ quan trọng đậm600, gồm tỷ số ATH, ticker VC FDV≥300M và số liệu cần nhấn. Không tô toàn bộ ô ATH cam.
-- DAILY nền vàng nhạt #FEF5D9, viền trái cam4px; nhãn/icon/task text đen, giữ độ đậm600. Padding trái giảm4px để nội dung vẫn cùng trục các phần khác. Không đổi nội dung/thứ tự/link hay số cột.
+- Cam #FFA111 CHỈ cho nút, control đang chọn và highlight; chữ trên nền cam là đen. Không dùng cam cho chi tiết trang trí (chấm timeline màu đen).
+- Header box/bảng: nền mist, chữ đen; không dùng cam hay kem cho mảng lớn.
+- Chữ nhấn: cam #FFA111 đậm600, gồm tỷ số ATH, ticker VC FDV≥300M và số liệu cần nhấn. Không tô toàn bộ ô ATH cam. CẤM cam đất #B84A0C và nền kem #FEF5D9 trên site này; `tools/ds-audit.js` báo lỗi nếu chúng quay lại.
+- DAILY nền trắng như các section khác, viền trái cam4px; nhãn/icon/task text đen, giữ độ đậm600. Padding trái giảm4px để nội dung vẫn cùng trục các phần khác. Không đổi nội dung/thứ tự/link hay số cột.
 - Đỏ chỉ dành cho nguy hiểm và thao tác phá hủy. Theme xanh trước đây hết hiệu lực; global palette của sản phẩm khác không đổi.
-- Hover nút cam chuyển cam đậm/chữ trắng. Header link giữ chữ đen và underline; không để chữ chìm vào nền cùng màu.
+- Hover nút cam chuyển nền đen/chữ trắng. Hover chữ giữ màu đen. Header link giữ chữ đen và underline. Input focus viền đen.
 
 ## Component chung, hai profile density
 
@@ -31,8 +31,8 @@ Giữ nội dung tiếng Anh và tagline Sharing POVs on Crypto and AI. Hero por
 - Khi mở tab Valuation, bảng giữ thứ tự TGE cũ→mới và tự cuộn dọc tới cuối để thấy dự án mới nhất; chờ dữ liệu tải xong nếu cần. Chỉ cuộn bảng, không cuộn page; các lần render khác không ép người dùng về cuối.
 - Narrative dùng đúng một nhóm chính/dự án trong17 nhóm: stablechain, layer-1, layer-2, infra, ai, zk, privacy, identity, rwa, defi, trading, payment, bitcoin, prediction, game, social, desci. Chọn theo tag và mô tả SURF; ZK proving khác Privacy. Không nhân một dự án vào nhiều nhóm khi tính trung vị.
 - Bảng hiện8 token trên desktop và mobile, hàng40, header56. Tổng cao56+8×40+viền2+scrollbar. Cột đo theo content, header/body cùng cột và cuộn đồng bộ. Mobile ẩn Narrative/TGE/ATL; thiếu chỗ cuộn trong bảng, không tràn page.
-- ATH `đầu → cuối (×N)` một hàng: hai số đen đậm600; chỉ `(×N)` cam đậm600, cả bảng chính/popup và ATH tuần đầu. N=cuối/đầu từ số gốc, làm tròn2; client/server cùng công thức.
-- Ticker dưới VC FDV300M đen đậm; từ300M cam đậm; không chấm màu.
+- ATH `đầu → cuối (×N)` một hàng: hai số đen đậm600; chỉ `(×N)` cam #FFA111 đậm600, cả bảng chính/popup và ATH tuần đầu. N=cuối/đầu từ số gốc, làm tròn2; client/server cùng công thức.
+- Ticker dưới VC FDV300M đen đậm; từ300M cam #FFA111 đậm; không chấm màu.
 - Ba box phụ cố định328, nội dung dài cuộn trong thân. Desktop3 cột, tablet2, mobile2 cột bằng nhau; không box nào tự span cả hàng. Nhãn/tên trái, số phải; hàng min56 để hiện đủ dữ liệu.
 - Toolbar luôn1 hàng, chữ co20/18/16/14 và control mobile32 theo yêu cầu product đã chốt.
 - Form thêm/sửa: Fetch trái/Lưu phải, Xoá riêng dưới khi sửa; không input Cặp Binance. Fetch chỉ điền ô trống có bằng chứng, không ghi KV, không làm tròn số fetch, không ghi đè edits trong lúc request. Key SURF/CoinGecko chỉ trên server. Không đổi framework/hệ số/priceTGE để phục vụ tính năng hay giao diện.
@@ -41,7 +41,7 @@ Giữ nội dung tiếng Anh và tagline Sharing POVs on Crypto and AI. Hero por
 
 Nhãn rank và nhãn phân loại (Work-to-Earn, v.v.) đồng cấp: nền trắng, chữ xám, cùng viền/cỡ chữ; không tô đen nhãn rank.
 
-Tham khảo Linear Board theo user chọn. Mỗi công việc/dự án là thẻ độc lập. Desktop2 thẻ/hàng; ≤900px1 thẻ/hàng. Gap12, căn đầu, cao theo nội dung. Header padding12; các section Get Started/DAILY/Weekly có nhãn trên, task dưới. DAILY nhấn bằng nền vàng nhạt/viền cam4px; nhãn, icon và nội dung task đen600. Task min40 desktop/44 mobile hoặc touch. Giữ đủ nội dung/link/admin. Rank là một thanh liền248×48 với một vùng cam trượt qua $/S/A/B/C; kéo/click/phím mũi tên để tới nhóm, cuộn trang đồng bộ vị trí sáng. Không dùng5 nút tròn. Filter cuối trang chừa96 để không che task cuối. Route/work; /airdrop301 và client fallback giữ query/hash.
+Tham khảo Linear Board theo user chọn. Mỗi công việc/dự án là thẻ độc lập. Desktop2 thẻ/hàng; ≤900px1 thẻ/hàng. Gap12, căn đầu, cao theo nội dung. Header padding12; các section Get Started/DAILY/Weekly có nhãn trên, task dưới. DAILY nhấn bằng viền cam4px; nhãn, icon và nội dung task đen600. Task min40 desktop/44 mobile hoặc touch. Giữ đủ nội dung/link/admin. Rank là một thanh liền248×48 với một vùng cam trượt qua $/S/A/B/C; kéo/click/phím mũi tên để tới nhóm, cuộn trang đồng bộ vị trí sáng. Không dùng5 nút tròn. Filter cuối trang chừa96 để không che task cuối. Route/work; /airdrop301 và client fallback giữ query/hash.
 
 ## Đồng bộ và kiểm tra
 

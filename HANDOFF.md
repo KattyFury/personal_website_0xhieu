@@ -23,13 +23,13 @@ Chốt bàn giao: 02/11/2026 (Asia/Saigon). Code đang live: `80cbc37`. Handoff 
 
 Chi tiết chuẩn tại [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md), ưu tiên hiện trạng này hơn các log cũ.
 
-- Đen–cam–trắng–xám. Text thường đen; phụ xám; quan trọng cam đậm `#B84A0C`/600. Nút/selection nhỏ cam `#FFA111`.
-- Header box/bảng dùng đúng nền DAILY `#FEF5D9`, chữ đen. Body box mist `#ECF0F8`. Không đổi lại cam đặc/cam đất/xanh.
+- Tone trắng-xám-đen (anh chốt 04/11/2026). Text thường đen; phụ xám; cam `#FFA111` chỉ cho nút, control đang chọn và highlight (chữ nhấn đậm600). CẤM cam đất `#B84A0C` và nền kem `#FEF5D9`.
+- Header box/bảng nền mist `#ECF0F8`, chữ đen. Thân box trắng. Popup mist, ô nhập trắng, focus đen. Không đổi lại cam đặc/cam đất/kem/xanh.
 - Cả3 trang/navbar/footer chung frame border-box max1280, inset24 desktop/16 mobile. CV spacious chỉ khác khoảng dọc/nội bộ, không khác trục ngang.
 - Work/Valuation compact: card paddingX12, sectionY8, gap12; header16/24/600; body14/20. Card/control/badge radius8, popup16.
 - Nút/action icon bấm được có shadow `0 2px 8px rgba(0,0,0,.32)`; card/chip/read-only/disabled không bóng. Tab nav/link chữ giữ kiểu text.
 - VI/EN: một native button role=switch, một thumb trượt, không phải2 nút tròn. Desktop80×40/mobile64×32. Shadow trên control tổng.
-- Work mỗi dự án một thẻ: desktop2/hàng, ≤900px1/hàng. DAILY nền vàng nhạt, viền trái cam4px, chữ/icon đen600. Task không cắt chữ. User chốt 03/11/2026: cam chữ dành để nhấn số liệu.
+- Work mỗi dự án một thẻ: desktop2/hàng, ≤900px1/hàng. DAILY nền trắng, viền trái cam4px, chữ/icon đen600. Task không cắt chữ.
 - Rank Work: một thanh liền248×48 với vùng cam trượt qua $/S/A/B/C. Kéo/click/phím và scroll spy. Pointer move/up theo window để cuộn không làm mất thao tác. Nhãn rank trong card nền trắng/viền/chữ xám, đồng cấp nhãn phân loại.
 - CV hero top96/48, section gap64/32, body16/24. Giữ nội dung và tagline `Sharing POVs on Crypto and AI`.
 
