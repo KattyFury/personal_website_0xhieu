@@ -64,6 +64,8 @@ const PROBE = `(() => {
     // khoảng cách
     for (const p of ['paddingTop','paddingRight','paddingBottom','paddingLeft','marginTop','marginRight','marginBottom','marginLeft','rowGap','columnGap']) {
       const v = cs[p]; if (!v || v === 'normal' || (compact ? px(v) % 4 === 0 : ok8(v))) continue;
+      // đệm phải của header bảng = đúng bề rộng thanh cuộn thân bảng, để cột thẳng hàng; không phải spacing thiết kế
+      if (p === 'paddingRight' && el.matches('#tge-head-wrap, .tge-modal-head')) continue;
       // margin 2 bên bằng nhau = căn giữa tự động (margin: auto) → không phải lỗi
       const pair = { marginLeft: 'marginRight', marginRight: 'marginLeft', marginTop: 'marginBottom', marginBottom: 'marginTop' }[p];
       if (pair && cs[pair] === v) continue;
