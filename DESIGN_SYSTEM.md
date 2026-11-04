@@ -9,7 +9,7 @@ Nguồn: repo_personal_design/tokens.json → export_web.py → web.css → desi
 - Cam #FFA111 CHỈ cho nút, control đang chọn và highlight; chữ trên nền cam là đen. Không dùng cam cho chi tiết trang trí (chấm timeline màu đen).
 - Header box/bảng: nền mist, chữ đen; không dùng cam hay kem cho mảng lớn.
 - Chữ nhấn: cam #FFA111 đậm600, gồm tỷ số ATH, ticker VC FDV≥300M và số liệu cần nhấn. Không tô toàn bộ ô ATH cam. CẤM cam đất #B84A0C và nền kem #FEF5D9 trên site này; `tools/ds-audit.js` báo lỗi nếu chúng quay lại.
-- DAILY nền trắng như các section khác, viền trái cam4px; nhãn/icon/task text đen, giữ độ đậm600. Padding trái giảm4px để nội dung vẫn cùng trục các phần khác. Không đổi nội dung/thứ tự/link hay số cột.
+- DAILY nền xám mist, không viền cam; nhãn/icon đen; task text đen đậm400, rê chuột mới đậm600 như mọi thứ bấm được. Không đổi nội dung/thứ tự/link hay số cột.
 - Đỏ chỉ dành cho nguy hiểm và thao tác phá hủy. Theme xanh trước đây hết hiệu lực; global palette của sản phẩm khác không đổi.
 - Hover nút cam chuyển nền đen/chữ trắng. Hover chữ giữ màu đen. Header link giữ chữ đen và underline. Input focus viền đen.
 
@@ -41,7 +41,7 @@ Giữ nội dung tiếng Anh và tagline Sharing POVs on Crypto and AI. Hero por
 
 Nhãn rank và nhãn phân loại (Work-to-Earn, v.v.) đồng cấp: nền trắng, chữ xám, cùng viền/cỡ chữ; không tô đen nhãn rank.
 
-Tham khảo Linear Board theo user chọn. Mỗi công việc/dự án là thẻ độc lập. Desktop2 thẻ/hàng; ≤900px1 thẻ/hàng. Gap12, căn đầu, cao theo nội dung. Header padding12; các section Get Started/DAILY/Weekly có nhãn trên, task dưới. DAILY nhấn bằng viền cam4px; nhãn, icon và nội dung task đen600. Task min40 desktop/44 mobile hoặc touch. Giữ đủ nội dung/link/admin. Rank là một thanh liền248×48 với một vùng cam trượt qua $/S/A/B/C; kéo/click/phím mũi tên để tới nhóm, cuộn trang đồng bộ vị trí sáng. Không dùng5 nút tròn. Filter cuối trang chừa96 để không che task cuối. Route/work; /airdrop301 và client fallback giữ query/hash.
+Tham khảo Linear Board theo user chọn. Mỗi công việc/dự án là thẻ độc lập. Desktop2 thẻ/hàng; ≤900px1 thẻ/hàng. Gap12, căn đầu, cao theo nội dung. Header padding12; các section Get Started/DAILY/Weekly có nhãn trên, task dưới. DAILY nhấn bằng nền xám mist; nhãn, icon và nội dung task đen, task chỉ đậm khi rê chuột. Task min40 desktop/44 mobile hoặc touch. Giữ đủ nội dung/link/admin. Rank là một thanh liền248×48 với một vùng cam trượt qua w2e/S/A/B/C; kéo/click/phím mũi tên để tới nhóm, cuộn trang đồng bộ vị trí sáng. Không dùng5 nút tròn. Filter cuối trang chừa96 để không che task cuối. Route/work; /airdrop301 và client fallback giữ query/hash.
 
 ## Đồng bộ và kiểm tra
 

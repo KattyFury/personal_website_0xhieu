@@ -44,7 +44,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="/design-tokens.css?v=3-a2f1b9bc40d4">
+  <link rel="stylesheet" href="/design-tokens.css?v=3-80956136a6ce">
   <style>
     /* ══════════════════════════════════════════════════════════════
        0xhieu.xyz — MỘT stylesheet duy nhất, viết theo thành phần.
@@ -581,17 +581,14 @@
     }
 
     .wte-section { min-width: 0; padding: var(--ds-workspace-section-padding-y) var(--ds-workspace-card-padding-x); border-top: 1px solid var(--line); }
-    .wte-section--daily {
-      border-left: 4px solid var(--ds-accent);
-      padding-left: calc(var(--ds-workspace-card-padding-x) - 4px);
-    }
+    .wte-section--daily { background: var(--mist); }
     .wte-section-label {
       min-height: 20px; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;
       font-size: 14px; font-weight: 600; line-height: 20px; letter-spacing: -.006em; color: var(--grey);
     }
     .wte-section-label .wte-ico { width: 16px; height: 16px; color: var(--ink); }
     .wte-section--daily .wte-section-label, .wte-section--daily .wte-section-label .wte-ico { color: var(--ink); }
-    .wte-section--daily .wte-task-text { color: var(--ink); font-weight: 600; }
+    .wte-section--daily .wte-task-text { color: var(--ink); }
     .wte-section--daily .wte-task-icon { color: var(--ink); }
     .wte-tasks { list-style: none; display: flex; flex-direction: column; }
     .wte-task-item { display: block; margin: 0; font-size: 14px; line-height: 20px; color: var(--ink); }
@@ -1120,12 +1117,12 @@
 
   <div id="rank-filter-float" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:50">
     <div class="rank-bar" id="rank-filter">
-      <span class="active" data-rank="INCOME" aria-hidden="true">$</span>
+      <span class="active" data-rank="INCOME" aria-hidden="true">w2e</span>
       <span data-rank="S" aria-hidden="true">S</span>
       <span data-rank="A" aria-hidden="true">A</span>
       <span data-rank="B" aria-hidden="true">B</span>
       <span data-rank="C" aria-hidden="true">C</span>
-      <input id="rank-slider" type="range" min="0" max="4" step="1" value="0" aria-label="Nhóm công việc" aria-valuetext="Work to Earn ($)">
+      <input id="rank-slider" type="range" min="0" max="4" step="1" value="0" aria-label="Nhóm công việc" aria-valuetext="Work to Earn (w2e)">
     </div>
   </div>
 
@@ -1786,7 +1783,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       if (index < 0) return;
       rankBar.style.setProperty('--rank-index', index);
       rankSlider.value = index;
-      rankSlider.setAttribute('aria-valuetext', rank === 'INCOME' ? 'Work to Earn ($)' : 'Rank ' + rank);
+      rankSlider.setAttribute('aria-valuetext', rank === 'INCOME' ? 'Work to Earn (w2e)' : 'Rank ' + rank);
       rankLabels.forEach(label => label.classList.toggle('active', label.dataset.rank === rank));
     }
     function scrollToSelectedRank() {
@@ -2471,7 +2468,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     //   $ (INCOME)  gradient thương hiệu — việc RA TIỀN ngắn hạn.
     //               KHÔNG phải rank: nhóm này suy ra từ thẻ phân loại
     //               WTE_INCOME_TYPE, bỏ qua rank lưu trong KV, và chỗ badge
-    //               rank hiện "$" thay cho chữ.
+    //               rank hiện "w2e" thay cho chữ.
     //   S           tím  #6155F5 — kèo 10K
     //   A           xanh dương #0088FF — kèo 1K
     //   B           xanh lá #34C759 — kèo xxx
@@ -2481,7 +2478,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     const WTE_INCOME_TYPE = 'Work-to-Earn';
     const WTE_GROUPS      = ['INCOME','S','A','B','C'];
     const WTE_RANKS       = WTE_GROUPS.filter(g => g !== 'INCOME'); // rank chọn tay được trong form admin
-    const RANK_LABEL      = { INCOME: '$', S: 'S', A: 'A', B: 'B', C: 'C' };
+    const RANK_LABEL      = { INCOME: 'w2e', S: 'S', A: 'A', B: 'B', C: 'C' };
 
     // Tiêu đề nhóm — SUY RA từ RANK_LABEL, không khai lại danh sách thứ 2.
     // INCOME = "work-to-earn" (không phải rank, viết thường như thẻ phân loại); còn lại "Rank: S" — khớp chữ trên thẻ rank của card.
