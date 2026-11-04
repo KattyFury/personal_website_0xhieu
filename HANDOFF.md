@@ -1,12 +1,12 @@
 # HANDOFF — 0xhieu.xyz
 
-Chốt bàn giao: 02/11/2026 (Asia/Saigon). Code đang live: `80cbc37`. Handoff này thay các mô tả cũ; lịch sử được giữ ở [docs/handoff-history-through-2026-11-02.md](docs/handoff-history-through-2026-11-02.md).
+Chốt bàn giao: 04/11/2026 (Asia/Saigon). Code đang live: `cfec72c` (commit handoff chỉ đổi tài liệu). Handoff này thay các mô tả cũ; lịch sử được giữ ở [docs/handoff-history-through-2026-11-02.md](docs/handoff-history-through-2026-11-02.md).
 
 ## Repo và vận hành
 
 - Local: `D:/Files/Claude/website_personal_0xhieu`. GitHub: https://github.com/KattyFury/website_personal_0xhieu, nhánh main.
 - Production: https://0xhieu.xyz. Cloudflare Pages project `0xhieu-xyz`, auto-deploy main. Push GitHub rồi xác minh production.
-- Design source: `D:/Files/Claude/repo_personal_design`, main `42495b5`. `tokens.json` → `export_web.py` → `web.css`; website dùng CSS sinh ra `design-tokens.css` có hash.
+- Design source: `D:/Files/Claude/repo_personal_design`, main `9280adc`. `tokens.json` → `export_web.py` → `web.css`; website dùng CSS sinh ra `design-tokens.css` có hash.
 - Trang: CV `/`, Valuation `/valuation`, Work `/work`. `/airdrop` redirect sang `/work`. CV tiếng Anh cố định; Valuation/Work có VI/EN.
 - `index.html`: giao diện/CSS component/JS. `functions/api/val.js`: dữ liệu Valuation. `functions/api/val-fetch.js`: Fetch SURF/CoinGecko. `functions/api/private.js`: CRUD Work. `functions/api/wte.js`: Work public.
 - `functions/valuation.js`: SSR đọc KV, điền hệ số/market/table để crawler đọc được. Công thức và markup phải khớp client nếu sau này sửa.
@@ -80,11 +80,22 @@ Ghi chú3 box VI/EN đã rút gọn và kiểm đúng ý. Narrative note nói r�
 ## Xác minh / trạng thái bàn giao
 
 - Workspace sạch trước khi viết handoff; mọi thay đổi giao diện/dữ liệu đã deploy.
--9 test backend (`node --test tests/val-fetch.test.mjs tests/val-narratives.test.mjs`) đã pass; narrative-only migration giữ nguyên trường khác.
+- 14 test backend (`node --test tests/*.mjs`, gồm `admin-auth`) đã pass 04/11; narrative-only migration giữ nguyên trường khác.
 - Đã QA Chrome production:3 info popups×VI/EN×1440/390, calculator CTA; auto-scroll direct/reopen/back×1440/390; frame3 routes×1920/1440/1024/768/390/320; rank drag/keyboard/scroll spy×1440/390/320.
-- Design audit gần nhất sau rank/header:0 lỗi. Thay spacing/component mới phải chạy lại phù hợp.
+- Design audit gần nhất 04/11 trên production: 0 lỗi. Thay spacing/component mới phải chạy lại phù hợp. Audit không mở popup cần đăng nhập admin.
+- QA tone 04/11: local cả 3 trang × 1920/1440/1024/768/640/390/360/320 không tràn ngang, không còn màu cấm; production cả 3 trang × 1440/390 cùng kết quả, header và thân bảng thẳng cột.
+- QA "Nhớ máy này" 04/11: Chrome thật + server local 17/17, production bằng script API 10/10. Token thử trên production đã xoá; lúc đó chưa có máy nào được nhớ, anh tự tick trên từng máy.
+- CHƯA xem bằng mắt sau đổi tone: popup cần admin (danh sách dự án, form sửa có nút Xoá, form task). Cổng 8787 trên máy Dell có thể đang bị app khác chiếm; xem thử local thì dùng cổng khác, đừng tắt app đó.
 - Commands: `python tools/sync-design-system.py`; `python tools/check-design-system.py --source D:/Files/Claude/repo_personal_design`; `node tools/ds-audit.js <local-or-live-url>`.
 - Secret không ở repo. Artifacts/backup narrative ở `C:/Users/Dell/.codex/visualizations/2026/10/31/01a19278-d691-7691-916e-ee30f78c4e30`, không coi là dữ liệu live.
+
+## Câu hỏi đang chờ anh chốt (04/11, chưa có câu trả lời; không tự đổi)
+
+- Số nhấn `#FFA111` trên nền trắng chỉ đạt tương phản khoảng 2:1. Đang giữ chữ cam; phương án thay là chữ đen trên nền cam kiểu bút dạ.
+- Số đỏ ở box Hero or Zero: đang giữ vì đỏ là màu nguy hiểm theo design system; phương án thay là đen đậm.
+- Xám mist `#ECF0F8` hơi ngả xanh: đang giữ theo token; muốn xám trung tính thì phải thêm token riêng cho site.
+
+Anh đã nhận xét tone mới "nhìn thuận mắt hơn rồi".
 
 ## Công việc tiếp theo (chỉ thảo luận)
 
@@ -92,4 +103,5 @@ Anh đề xuất dashboard quan sát dự án chưa TGE để tham gia airdrop: 
 
 ## Nhật ký bàn giao
 
+- 04/11/2026: thêm "Nhớ máy này" (`55bb10d`); đổi tone trắng-xám-đen, bỏ cam đất + nền kem, sửa lệch compact và dải hở header bảng (`8659563`, `cfec72c`; design system `9280adc`).
 -02/11/2026: chốt lại tài liệu theo code live80cbc37; lưu handoff cũ vào docs lịch sử; bắt đầu nghiên cứu dashboard pre-TGE, không thay code hoặc data live.
