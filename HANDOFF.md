@@ -69,6 +69,14 @@ Ghi chú3 box VI/EN đã rút gọn và kiểm đúng ý. Narrative note nói r�
 - Không dùng wrangler.toml ghi đè Cloudflare dashboard/bindings. Cẩn thận SSR/client nếu thay công thức.
 - Camera dùng html2canvas-pro; không đổi lại bản html2canvas gốc (không đọc color-mix). HTML mask không render đúng trong ảnh; loại toolbar khỏi capture. Mobile share/save vẫn cần QA thiết bị thật nếu sửa.
 
+## Quyền admin theo máy (04/11/2026)
+
+- Anh chốt phương án token lưu trên máy, vẫn giữ ô nhập tay. Popup Admin có ô "Nhớ máy này": đúng pass + tick thì server cấp token 400 ngày trong cookie HttpOnly (`cvAdminDevice`, Path=/api, Secure, SameSite=Strict). Không tick thì giữ nguyên kiểu cũ, đóng trình duyệt là mất quyền.
+- Code chung: `functions/_lib/admin-auth.mjs`, dùng cho `private.js`, `val.js`, `val-fetch.js`. Bot giá vẫn dùng `ADMIN_PASS`, không phải đổi. Cờ `cvAdminDevice` trong localStorage chỉ để khách thường không gọi `/api/private` khi tải trang; nó không phải quyền.
+- KV `WORK` chỉ lưu hash: `admin-device:<hash>`, metadata ghi trình duyệt + ngày tạo. Không có nút quản lý trên site (anh muốn ít nút).
+- Thu hồi 1 máy: xoá đúng key đó trong KV (hiệu lực có thể trễ tới khoảng 60 giây do cache KV). Thu hồi tất cả: đổi `ADMIN_PASS`, nhưng phải đổi luôn cho bot trên VPS.
+- Hết 400 ngày thì nhập pass + tick lại một lần; token không tự gia hạn.
+
 ## Xác minh / trạng thái bàn giao
 
 - Workspace sạch trước khi viết handoff; mọi thay đổi giao diện/dữ liệu đã deploy.

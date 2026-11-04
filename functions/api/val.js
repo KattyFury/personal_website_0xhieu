@@ -17,6 +17,8 @@
 // render, một nguồn duy nhất. Bản cũ từng lưu sẵn ×TGE trong Sheet rồi dùng lẫn lộn
 // với số client tự tính, hai chỗ lệch nhau mà không ai biết.
 
+import { adminVia } from '../_lib/admin-auth.mjs';
+
 const KEY_PROJECTS = 'val-projects';
 const KEY_PRICES   = 'val-prices';
 
@@ -24,14 +26,6 @@ const json = (obj, status = 200) => new Response(JSON.stringify(obj), {
   status,
   headers: { 'content-type': 'application/json', 'cache-control': 'no-store' },
 });
-
-// So sánh không rò rỉ thời gian (giống private.js/ai.js — chống dò mật khẩu bằng độ trễ)
-function safeEqual(a, b) {
-  if (a.length !== b.length) return false;
-  let diff = 0;
-  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  return diff === 0;
-}
 
 const clean = (v, max) => String(v ?? '').replace(/[<>]/g, '').trim().slice(0, max);
 
@@ -96,7 +90,7 @@ export async function onRequestPost({ request, env }) {
   let body;
   try { body = await request.json(); } catch { return json({ ok: false, error: 'bad-json' }, 400); }
 
-  if (!safeEqual(String(body.pass ?? ''), String(env.ADMIN_PASS))) {
+  if (!await adminVia(request, body, env)) {
     await new Promise(r => setTimeout(r, 400));   // làm chậm việc dò mật khẩu hàng loạt
     return json({ ok: false, error: 'wrong-pass' }, 401);
   }

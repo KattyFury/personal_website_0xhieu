@@ -6,20 +6,14 @@
 //
 // Sai mật khẩu → trả 401 và KHÔNG trả về bất kỳ dữ liệu nào.
 
+import { adminVia, rememberDevice } from '../_lib/admin-auth.mjs';
+
 const KEY = 'personal-tasks';
 
 const json = (obj, status = 200) => new Response(JSON.stringify(obj), {
   status,
   headers: { 'content-type': 'application/json', 'cache-control': 'no-store' },
 });
-
-// So sánh không rò rỉ thời gian (chống dò mật khẩu bằng cách đo độ trễ)
-function safeEqual(a, b) {
-  if (a.length !== b.length) return false;
-  let diff = 0;
-  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  return diff === 0;
-}
 
 // Cắt độ dài + bỏ < > để nội dung không phá HTML khi render bằng innerHTML
 const clean = (v, max) => String(v ?? '').replace(/[<>]/g, '').trim().slice(0, max);
@@ -76,7 +70,8 @@ export async function onRequestPost({ request, env }) {
   let body;
   try { body = await request.json(); } catch { return json({ ok: false, error: 'bad-json' }, 400); }
 
-  if (!safeEqual(String(body.pass ?? ''), String(env.ADMIN_PASS))) {
+  const via = await adminVia(request, body, env);
+  if (!via) {
     await new Promise(r => setTimeout(r, 400));   // làm chậm việc dò mật khẩu hàng loạt
     return json({ ok: false, error: 'wrong-pass' }, 401);
   }
@@ -84,7 +79,10 @@ export async function onRequestPost({ request, env }) {
   const kv = env.WORK;
 
   if (body.action === 'list') {
-    return json({ ok: true, tasks: await readTasks(kv) });
+    const res = json({ ok: true, tasks: await readTasks(kv) });
+    // Chỉ cấp token khi vừa gõ đúng mật khẩu — máy đã nhớ không tự đẻ thêm token được
+    if (body.rememberDevice && via === 'pass') res.headers.append('set-cookie', await rememberDevice(request, env));
+    return res;
   }
 
   if (body.action === 'add') {

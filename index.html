@@ -670,6 +670,8 @@
     .info-modal-link { font-weight: 600; color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; cursor: pointer; }
     .info-modal-link:hover { color: var(--accent-text); }
     .admin-msg { font-size: 14px; font-weight: 400; color: var(--red-text); }
+    .admin-remember { display: flex; align-items: center; gap: 8px; font-size: 14px; line-height: 20px; color: var(--ink); cursor: pointer; }
+    .wl-modal .admin-remember input { -webkit-appearance: auto; appearance: auto; flex: none; width: 16px; height: 16px; margin: 0; padding: 0; accent-color: var(--accent); cursor: pointer; }
 
     .modal-corner-close { position: absolute; top: 8px; right: 8px; }
 
@@ -1253,6 +1255,7 @@
         <label>Mật khẩu</label>
         <input type="password" id="admin-pass" autocomplete="current-password" placeholder="••••••••" />
       </div>
+      <label class="admin-remember"><input type="checkbox" id="admin-remember" /> Nhớ máy này</label>
       <div class="admin-msg" id="admin-error" style="display:none"></div>
       <div class="predict-actions">
         <button class="predict-btn-secondary" id="admin-cancel">Cancel</button>
@@ -2789,14 +2792,21 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       if (!pass) return;
       adminPass = pass;
       $('admin-ok').disabled = true;
-      const r = await apiPrivate('list');
+      const remember = $('admin-remember').checked;
+      const r = await apiPrivate('list', remember ? { rememberDevice: true } : {});
       $('admin-ok').disabled = false;
       if (!r.ok) {
         adminPass = '';
         showMsg(adminError, r.status === 401 ? 'Sai mật khẩu' : (r.error || 'Không kết nối được'));
         return;
       }
-      sessionStorage.setItem('cvAdminPass', adminPass);
+      // Máy đã nhớ giữ token trong cookie HttpOnly nên không cần cất mật khẩu vào storage
+      if (remember) {
+        sessionStorage.removeItem('cvAdminPass');
+        localStorage.setItem('cvAdminDevice', '1');
+      } else {
+        sessionStorage.setItem('cvAdminPass', adminPass);
+      }
       setAdminUnlocked(true);
       adminModal.classList.remove('open');
       await refreshTasksView(r.tasks);
@@ -2952,12 +2962,14 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
     });
 
-    // Đã mở khoá ở phiên này → tự lấy lại task, không phải gõ mật khẩu lần nữa
+    // Đã mở khoá ở phiên này hoặc máy đã nhớ → tự lấy lại task, không phải gõ mật khẩu lần nữa.
+    // Khách thường không có cờ cvAdminDevice nên không gọi /api/private.
     (async () => {
-      if (!adminPass) return;
+      if (!adminPass && !localStorage.getItem('cvAdminDevice')) return;
       const r = await apiPrivate('list');
-      if (r.ok) { setAdminUnlocked(true); await refreshTasksView(r.tasks); }
-      else { adminPass = ''; sessionStorage.removeItem('cvAdminPass'); }
+      if (r.ok) { setAdminUnlocked(true); await refreshTasksView(r.tasks); return; }
+      adminPass = ''; sessionStorage.removeItem('cvAdminPass');
+      if (r.status === 401) localStorage.removeItem('cvAdminDevice');   // lỗi mạng thì giữ cờ, lần sau thử lại
     })();
 
     // ── Language toggle (EN|VI) ────────────────────────

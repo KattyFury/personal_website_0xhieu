@@ -1,12 +1,8 @@
 // Read-only admin lookup. Fetch never writes KV or changes valuation rules.
+import { adminVia } from '../_lib/admin-auth.mjs';
 const respond = (value, status = 200) => new Response(JSON.stringify(value), {
   status, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' },
 });
-const equal = (a, b) => {
-  if (a.length !== b.length) return false;
-  let diff = 0; for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  return diff === 0;
-};
 const normalized = value => String(value || '').normalize('NFKD').replace(/[^a-z0-9]/gi, '').toLowerCase();
 const dateOnly = value => {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(String(value || ''))) return '';
@@ -24,7 +20,7 @@ async function json(url, headers = {}) {
 export async function onRequestPost({ request, env }) {
   let body; try { body = await request.json(); } catch { return respond({ ok: false, error: 'bad-request' }, 400); }
   if (!body || typeof body !== 'object' || Array.isArray(body)) return respond({ ok: false, error: 'bad-request' }, 400);
-  if (!env.ADMIN_PASS || !equal(String(body.pass || ''), String(env.ADMIN_PASS))) {
+  if (!await adminVia(request, body, env)) {
     return respond({ ok: false, error: 'wrong-pass' }, 401);
   }
   const ticker = String(body.ticker || '').trim().replace(/^\$/, '').toUpperCase();

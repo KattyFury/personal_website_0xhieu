@@ -1,7 +1,8 @@
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-const source = await readFile(new URL('../functions/api/val.js', import.meta.url), 'utf8');
+const source = (await readFile(new URL('../functions/api/val.js', import.meta.url), 'utf8'))
+  .replace('../_lib/admin-auth.mjs', new URL('../functions/_lib/admin-auth.mjs', import.meta.url).href);
 const { onRequestPost } = await import('data:text/javascript;base64,' + Buffer.from(source).toString('base64'));
 const projects = [{ ticker:'TEST', cgId:'test', narrative:'infra', priceTGE:1.23456789, legacy:{ keep:true } }];
 async function run(changes, pass='secret') {
