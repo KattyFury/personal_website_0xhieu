@@ -39,7 +39,7 @@ Giữ nội dung tiếng Anh và tagline Sharing POVs on Crypto and AI. Hero por
 
 ## Work
 
-Thẻ trong header card (user chốt 06/11/2026): thẻ quan trọng nền đen chữ trắng — rank S, nhãn work-to-earn (đóng vai rank w2e), high-potential, narrative nằm trong top 4 box Narrative đang hot của Valuation (so tên không phân biệt hoa thường, tự đổi theo data). Còn lại (rank A/B/C, low-potential, narrative khác) nền trắng viền line chữ đen.
+Thẻ trong header card (user chốt 06/11/2026): thẻ quan trọng nền đen chữ trắng — rank S, nhãn work-to-earn (đóng vai rank w2e), high-potential, narrative nằm trong top 5 box Narrative đang hot của Valuation (so tên không phân biệt hoa thường, tự đổi theo data). Còn lại (rank A/B/C, low-potential, narrative khác) nền trắng viền line chữ đen.
 
 Tham khảo Linear Board theo user chọn. Mỗi công việc/dự án là thẻ độc lập. Desktop2 thẻ/hàng; ≤900px1 thẻ/hàng. Gap12, căn đầu, cao theo nội dung. Header padding12; các section Get Started/DAILY/Weekly có nhãn trên, task dưới. DAILY nhấn bằng nền xám trung tính; nhãn, icon và nội dung task đen, task chỉ đậm khi rê chuột. Task min40 desktop/44 mobile hoặc touch. Giữ đủ nội dung/link/admin. Rank là một thanh liền248×48 với một vùng cam trượt qua w2e/S/A/B/C; kéo/click/phím mũi tên để tới nhóm, cuộn trang đồng bộ vị trí sáng. Không dùng5 nút tròn. Filter cuối trang chừa96 để không che task cuối. Route/work; /airdrop301 và client fallback giữ query/hash.
 

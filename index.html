@@ -569,7 +569,7 @@
       color: var(--ink); white-space: normal; overflow-wrap: anywhere;
     }
     .wte-tag .wte-ico { width: 16px; height: 16px; }
-    /* Thẻ quan trọng nền đen chữ trắng: rank w2e/S, high-potential, narrative top 4 của Trending Narratives
+    /* Thẻ quan trọng nền đen chữ trắng: rank w2e/S, high-potential, narrative top 5 của Trending Narratives
        (Valuation). Còn lại trắng viền chữ đen (user chốt 2026-11-06). */
     .wte-tag--strong { background: var(--ink); border-color: var(--ink); color: var(--ground); }
 
@@ -2638,9 +2638,9 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         return;
       }
 
-      // Narrative top 4 của box Trending Narratives (Valuation) — so tên không phân biệt hoa thường.
+      // Narrative top 5 của box Trending Narratives (Valuation) — so tên không phân biệt hoa thường.
       // Work-to-Earn không có bên Valuation: thẻ đó là "rank" w2e của nhóm nên luôn đen.
-      const topNarr = new Set(narrativeRanking().slice(0, 4).map(g => g.name.toLowerCase()));
+      const topNarr = new Set(narrativeRanking().slice(0, 5).map(g => g.name.toLowerCase()));
       const strong  = on => on ? ' wte-tag--strong' : '';
       const cardHtml = (p, personal = false) => {
         const handle   = p.twitter

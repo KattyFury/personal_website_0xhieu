@@ -6,7 +6,7 @@ Chốt bàn giao: 06/11/2026 (Asia/Saigon). Code đang live: commit mới nhất
 
 - Local: `D:/Files/Claude/website_personal_0xhieu`. GitHub: https://github.com/KattyFury/website_personal_0xhieu, nhánh main.
 - Production: https://0xhieu.xyz. Cloudflare Pages project `0xhieu-xyz`, auto-deploy main. Push GitHub rồi xác minh production.
-- Design source: `D:/Files/Claude/repo_personal_design`, main `47fc26f`. `tokens.json` → `export_web.py` → `web.css`; website dùng CSS sinh ra `design-tokens.css` có hash.
+- Design source: `D:/Files/Claude/repo_personal_design`, main `fd14198`. `tokens.json` → `export_web.py` → `web.css`; website dùng CSS sinh ra `design-tokens.css` có hash.
 - Trang: CV `/`, Valuation `/valuation`, Work `/work`. `/airdrop` redirect sang `/work`. CV tiếng Anh cố định; Valuation/Work có VI/EN.
 - `index.html`: giao diện/CSS component/JS. `functions/api/val.js`: dữ liệu Valuation. `functions/api/val-fetch.js`: Fetch SURF/CoinGecko. `functions/api/private.js`: CRUD Work. `functions/api/wte.js`: Work public.
 - `functions/valuation.js`: SSR đọc KV, điền hệ số/market/table để crawler đọc được. Công thức và markup phải khớp client nếu sau này sửa.
@@ -29,7 +29,7 @@ Chi tiết chuẩn tại [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md), ưu tiên hiện 
 - Work/Valuation compact: card paddingX12, sectionY8, gap12; header16/24/600; body14/20. Card/control/badge radius8, popup16.
 - Nút/action icon bấm được có shadow `0 2px 8px rgba(0,0,0,.32)`; card/chip/read-only/disabled không bóng. Tab nav/link chữ giữ kiểu text.
 - VI/EN: một native button role=switch, một thumb trượt, không phải2 nút tròn. Desktop80×40/mobile64×32. Shadow trên control tổng.
-- Thẻ trong header card Work (06/11): nền đen chữ trắng cho rank S, nhãn work-to-earn (thay rank w2e), high-potential, narrative top 4 của box Narrative đang hot (lấy `narrativeRanking()` lúc render, tự đổi theo data). Còn lại trắng viền chữ đen; không còn chữ xám trên thẻ.
+- Thẻ trong header card Work (06/11): nền đen chữ trắng cho rank S, nhãn work-to-earn (thay rank w2e), high-potential, narrative top 5 của box Narrative đang hot (lấy `narrativeRanking()` lúc render, tự đổi theo data). Còn lại trắng viền chữ đen; không còn chữ xám trên thẻ.
 - Work mỗi dự án một thẻ: desktop2/hàng, ≤900px1/hàng. DAILY nền xám trung tính, không viền cam; task đen đậm400, rê chuột mới đậm600. Task không cắt chữ.
 - Rank Work: một thanh liền248×48 với vùng cam trượt qua w2e/S/A/B/C (`$` trông giống `S` nên đã đổi). Kéo/click/phím và scroll spy. Pointer move/up theo window để cuộn không làm mất thao tác. Nhãn rank trong card nền trắng/viền/chữ xám, đồng cấp nhãn phân loại.
 - CV hero top96/48, section gap64/32, body16/24. Giữ nội dung và tagline `Sharing POVs on Crypto and AI`.
@@ -100,7 +100,7 @@ Anh đề xuất dashboard quan sát dự án chưa TGE để tham gia airdrop: 
 
 ## Nhật ký bàn giao
 
-- 06/11/2026: xám trung tính `#E5E5E5` thay mist (design system `47fc26f`); số nhấn kiểu bút dạ; thẻ Work đen/trắng theo rank/potential/narrative top 4. Ảnh QA ở Desktop `0xhieu-2026-11-06`. Chụp headless Chrome ở 390 bị cắt mép phải cả production — là giới hạn của headless, không phải lỗi trang.
+- 06/11/2026: xám trung tính `#E5E5E5` thay mist (design system `47fc26f`); số nhấn kiểu bút dạ; thẻ Work đen/trắng theo rank/potential/narrative top 5 (ban đầu top 4, anh đổi thành 5 cùng ngày). Ảnh QA ở Desktop `0xhieu-2026-11-06`. Chụp headless Chrome ở 390 bị cắt mép phải cả production — là giới hạn của headless, không phải lỗi trang.
 
 - 04/11/2026: DAILY đổi sang nền xám, bỏ chữ đậm sẵn và viền cam; nhãn rank `$` đổi thành `w2e`.
 - 04/11/2026: thêm "Nhớ máy này" (`55bb10d`); đổi tone trắng-xám-đen, bỏ cam đất + nền kem, sửa lệch compact và dải hở header bảng (`8659563`, `cfec72c`; design system `9280adc`).
