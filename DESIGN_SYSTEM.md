@@ -8,7 +8,7 @@ Nguồn: repo_personal_design/tokens.json → export_web.py → web.css → desi
 - Đen #000000: nội dung thường và hai số đầu/cuối ATH. Xám #4B5568: chữ phụ, metadata, caption.
 - Cam #FFA111 CHỈ cho nút, control đang chọn và highlight; chữ trên nền cam là đen. Không dùng cam cho chi tiết trang trí (chấm timeline màu đen).
 - Header box/bảng: nền xám trung tính, chữ đen; không dùng cam hay kem cho mảng lớn.
-- Chữ nhấn kiểu bút dạ (user chốt 06/11/2026): chữ đen đậm600 trên nền cam #FFA111, đệm ngang4, không bo; gồm tỷ số ATH, ticker VC FDV≥300M, ×TGE≥13 và số chính 3 box (riêng Hero or Zero giữ chữ đỏ, không nền). Không tô toàn bộ ô ATH cam; không còn chữ cam trên nền trắng. CẤM cam đất #B84A0C và nền kem #FEF5D9 trên site này; `tools/ds-audit.js` báo lỗi nếu chúng quay lại.
+- Chữ nhấn kiểu bút dạ (user chốt 06/11/2026): chữ đen đậm600 trên nền cam #FFA111, đệm ngang4, không bo; gồm tỷ số ATH, ticker VC FDV≥300M, ×TGE≥13 và số chính cả 3 box, kể cả Hero or Zero (user bỏ chữ đỏ ở đây 06/11). Không tô toàn bộ ô ATH cam; không còn chữ cam trên nền trắng. CẤM cam đất #B84A0C và nền kem #FEF5D9 trên site này; `tools/ds-audit.js` báo lỗi nếu chúng quay lại.
 - DAILY nền xám trung tính, không viền cam; nhãn/icon đen; task text đen đậm400, rê chuột mới đậm600 như mọi thứ bấm được. Không đổi nội dung/thứ tự/link hay số cột.
 - Đỏ chỉ dành cho nguy hiểm và thao tác phá hủy. Theme xanh trước đây hết hiệu lực; global palette của sản phẩm khác không đổi.
 - Hover nút cam chuyển nền đen/chữ trắng. Hover chữ giữ màu đen. Header link giữ chữ đen và underline. Input focus viền đen.

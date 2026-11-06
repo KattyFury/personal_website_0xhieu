@@ -6,7 +6,7 @@ Chốt bàn giao: 06/11/2026 (Asia/Saigon). Code đang live: commit mới nhất
 
 - Local: `D:/Files/Claude/website_personal_0xhieu`. GitHub: https://github.com/KattyFury/website_personal_0xhieu, nhánh main.
 - Production: https://0xhieu.xyz. Cloudflare Pages project `0xhieu-xyz`, auto-deploy main. Push GitHub rồi xác minh production.
-- Design source: `D:/Files/Claude/repo_personal_design`, main `fd14198`. `tokens.json` → `export_web.py` → `web.css`; website dùng CSS sinh ra `design-tokens.css` có hash.
+- Design source: `D:/Files/Claude/repo_personal_design`, main `20627b8`. `tokens.json` → `export_web.py` → `web.css`; website dùng CSS sinh ra `design-tokens.css` có hash.
 - Trang: CV `/`, Valuation `/valuation`, Work `/work`. `/airdrop` redirect sang `/work`. CV tiếng Anh cố định; Valuation/Work có VI/EN.
 - `index.html`: giao diện/CSS component/JS. `functions/api/val.js`: dữ liệu Valuation. `functions/api/val-fetch.js`: Fetch SURF/CoinGecko. `functions/api/private.js`: CRUD Work. `functions/api/wte.js`: Work public.
 - `functions/valuation.js`: SSR đọc KV, điền hệ số/market/table để crawler đọc được. Công thức và markup phải khớp client nếu sau này sửa.
@@ -39,7 +39,7 @@ Chi tiết chuẩn tại [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md), ưu tiên hiện 
 - Bảng7 cột,8 hàng hiện trên desktop/mobile. Header56, row40; cuộn trong bảng, không tràn page. Mobile ẩn Narrative/TGE/ATL.
 - Giữ thứ tự ngày TGE cũ→mới. Mỗi lần mở Valuation tự cuộn bảng tới cuối (dự án mới nhất), kể cả tải data chậm; không cuộn page, không ép xuống cuối khi chỉ đổi ngôn ngữ/render khác.
 -3 box phụ cao cố định328: desktop3 cột, tablet/mobile2 cột bằng nhau. Nhãn trái, giá trị phải; thân dài thì cuộn.
-- ATH `đầu → cuối (×N)` trên1 dòng: hai số đen600, tỷ số bút dạ. Ticker VC FDV<300M đen đậm, ≥300M bút dạ, không chấm cam. Số chính 3 box cũng bút dạ, trừ Hero or Zero giữ chữ đỏ.
+- ATH `đầu → cuối (×N)` trên1 dòng: hai số đen600, tỷ số bút dạ. Ticker VC FDV<300M đen đậm, ≥300M bút dạ, không chấm cam. Số chính cả 3 box cũng bút dạ, kể cả Hero or Zero (anh bỏ chữ đỏ ở box này 06/11, thấy đỏ lẻ loi).
 - Toolbar Valuation luôn1 hàng trên mobile: co chữ/nút khi thiếu diện tích, không bẻ dòng.
 -81 dự án tại lúc bàn giao. Một narrative chính/dự án trong17 slug: stablechain, layer-1, layer-2, infra, ai, zk, privacy, identity, rwa, defi, trading, payment, bitcoin, prediction, game, social, desci.
 - Đã rà SURF và đổi19 narrative,62 giữ nguyên. ROBO/BASED giữ nguyên vì chưa xác minh đúng dự án. Không tự lấy tất cả tag SURF để nhân mẫu.
@@ -92,7 +92,7 @@ Ghi chú3 box VI/EN đã rút gọn và kiểm đúng ý. Narrative note nói r�
 
 ## Đã chốt 06/11 (3 câu hỏi của 04/11)
 
-- Số nhấn: bút dạ (chữ đen trên nền cam). Số đỏ Hero or Zero: giữ đỏ. Xám: trung tính `#E5E5E5`, đậm hơn mist một chút.
+- Số nhấn: bút dạ (chữ đen trên nền cam). Số đỏ Hero or Zero: lúc đầu giữ đỏ, sau anh đổi sang bút dạ như các số khác. Badge đỏ ×ATM≥15 trong bảng chính vẫn giữ. Xám: trung tính `#E5E5E5`, đậm hơn mist một chút.
 
 ## Công việc tiếp theo (chỉ thảo luận)
 
