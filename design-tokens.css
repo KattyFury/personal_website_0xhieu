@@ -157,9 +157,9 @@
   --ds-control-height: 40px;
 }
 [data-ds-product="0xhieu-xyz"] {
-  --ds-primary: #FFA111;
-  --ds-accent: #FFA111;
-  --ds-accent-text: #FFA111;
+  --ds-primary: #FFBE5C;
+  --ds-accent: #FFBE5C;
+  --ds-accent-text: #FFBE5C;
   --ds-color-surface: #E5E5E5;
   --ds-color-line: #A3A3A3;
   --ds-color-grey: #525252;
