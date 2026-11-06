@@ -44,7 +44,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="/design-tokens.css?v=3-80956136a6ce">
+  <link rel="stylesheet" href="/design-tokens.css?v=3-eb041d765e54">
   <style>
     /* ══════════════════════════════════════════════════════════════
        0xhieu.xyz — MỘT stylesheet duy nhất, viết theo thành phần.
@@ -61,7 +61,6 @@
       --ink:        var(--ds-color-ink);
       --grey:       var(--ds-color-grey);
       --muted:      var(--ds-color-muted);
-      --mist:       var(--ds-color-mist);
       --line:       var(--ds-color-line);
       --scrim:      rgba(0,0,0,.48);
       --red-text:   var(--ds-color-red-text);
@@ -97,7 +96,8 @@
     /* web-body 16/24 */
     body {
       --content: var(--ds-workspace-frame-max-width);
-      --accent: var(--ds-accent); --accent-text: var(--ds-accent-text);
+      --accent: var(--ds-accent);
+      --mist: var(--ds-color-surface);   /* xám trung tính #E5E5E5 của site (user chốt 2026-11-06) */
       font-family: var(--font); font-size: var(--ds-web-body-size); font-weight: 400; line-height: var(--ds-web-body-line); letter-spacing: var(--ds-web-body-tracking);
       background: var(--ground); color: var(--ink);
       -webkit-font-smoothing: antialiased;
@@ -440,13 +440,15 @@
     #tge-section tbody tr.row-editable { cursor: pointer; }
     /* Ticker luôn đậm: vcFDV ≥ $300M cam, dưới ngưỡng đen.
        Chữ 3 cấp: số ink · narrative, ×ATL, đáy-trước-đỉnh, ×ATM < 1 grey · ngày TGE muted (meta).
-       Số cần chú ý = chữ cam #FFA111 đậm 600 (×TGE ≥ 13, ×ATH tuần đầu) — cùng màu với số chính trong 3 box.
+       Số cần chú ý = bút dạ: chữ đen đậm 600 trên nền cam #FFA111 (×TGE ≥ 13, tỷ số ATH, ticker FDV cao, số chính 3 box) — user chốt 2026-11-06.
        ĐỎ = nguy hiểm (×ATM ≥ 15, badge soft). */
     .val-table td.td-ticker { font-weight: 600; color: var(--ink); }
-    .val-table td.td-ticker.fdv-hi { color: var(--accent-text); }
     #tge-section td.td-ticker { font-weight: 600; }
-    #tge-section td.td-ticker.fdv-hi { color: var(--accent-text); }
-    .ath-gain { display: inline; margin-left: 4px; font-weight: 600; color: var(--accent-text); }
+    .ath-gain { display: inline; margin-left: 4px; }
+    .val-table td.td-ticker.fdv-hi .ck, .ath-gain, .val-table .m-hot, .lr-val {
+      padding: 0 4px; background: var(--accent); color: var(--ink); font-weight: 600;
+      -webkit-box-decoration-break: clone; box-decoration-break: clone;
+    }
     #tge-section td.td-narrative { font-weight: 400; color: var(--grey); }
     #tge-section td.td-date { font-weight: 400; color: var(--muted); }
     #tge-section td.td-atl { font-weight: 400; color: var(--grey); }
@@ -454,7 +456,6 @@
     .val-table td.td-ath, .val-table td.td-ath .ck { color: var(--ink); font-weight: 600; }
     .val-table .ath-pre, .val-table .ath-early { font-weight: 600; color: var(--ink); }
     .val-table .ath-arrow { font-weight: 400; color: var(--ink); }
-    .val-table .m-hot { font-weight: 600; color: var(--accent-text); }
     .val-table .m-low { font-weight: 400; color: var(--grey); }
     .val-table .m-danger { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; border-radius: 9999px; background: var(--red-soft); color: var(--red-text); font-weight: 600; }
     .val-empty { padding: 40px 16px; text-align: center; font-size: 16px; color: var(--grey); }
@@ -505,8 +506,8 @@
     .lr-main { min-width: 0; display: flex; flex-direction: column; }
     .lr-title { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; font-weight: 600; overflow-wrap: anywhere; }
     .lr-label, .lr-meta { color: var(--grey); overflow-wrap: anywhere; }
-    .lr-val { flex-shrink: 0; font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; color: var(--accent-text); }
-    .danger-multi { color: var(--red-text); }   /* mọi dòng ở đây đều ×ATM ≥ 15 = nguy hiểm */
+    .lr-val { flex-shrink: 0; font-variant-numeric: tabular-nums; text-align: right; }
+    .lr-val.danger-multi { padding: 0; background: none; color: var(--red-text); }   /* mọi dòng ở đây đều ×ATM ≥ 15 = nguy hiểm */
     .rt-btn-row { flex-shrink: 0; min-height: 40px; margin-top: 12px; display: flex; }
     .danger-badge-new {
       display: inline-flex; align-items: center; height: 24px; padding: 0 8px; border-radius: 9999px;
@@ -568,9 +569,9 @@
       color: var(--ink); white-space: normal; overflow-wrap: anywhere;
     }
     .wte-tag .wte-ico { width: 16px; height: 16px; }
-    .wte-pot--low, .wte-narr { color: var(--grey); }
-    /* Rank và phân loại đồng cấp: cùng nền trắng, viền và màu chữ. */
-    .wte-rank-v { background: var(--ground); color: var(--grey); }
+    /* Thẻ quan trọng nền đen chữ trắng: rank w2e/S, high-potential, narrative top 4 của Trending Narratives
+       (Valuation). Còn lại trắng viền chữ đen (user chốt 2026-11-06). */
+    .wte-tag--strong { background: var(--ink); border-color: var(--ink); color: var(--ground); }
 
     /* Header trung tính; DAILY nổi bật trong từng thẻ. */
     .wte-card-head { background: var(--ds-workspace-header-surface); }
@@ -2637,6 +2638,10 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         return;
       }
 
+      // Narrative top 4 của box Trending Narratives (Valuation) — so tên không phân biệt hoa thường.
+      // Work-to-Earn không có bên Valuation: thẻ đó là "rank" w2e của nhóm nên luôn đen.
+      const topNarr = new Set(narrativeRanking().slice(0, 4).map(g => g.name.toLowerCase()));
+      const strong  = on => on ? ' wte-tag--strong' : '';
       const cardHtml = (p, personal = false) => {
         const handle   = p.twitter
           ? p.twitter.replace(/.*twitter\.com\/|.*x\.com\/|^@/, '').split('?')[0].trim()
@@ -2659,7 +2664,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
             <span class="wte-name-wrap">${logoHtml}${nameHtml}</span>
             <span class="wte-socials">${p.twitter ? `<a class="wte-social" href="${p.twitter}" target="_blank" rel="noopener" title="X" aria-label="X">${wteIcon('x')}</a>` : ''}${p.discord ? `<a class="wte-social" href="${p.discord}" target="_blank" rel="noopener" title="Discord" aria-label="Discord">${wteIcon('discord')}</a>` : ''}</span>
             ${adminUnlocked ? `<button class="wte-opt" data-id="${p.id}" title="Sửa task" aria-label="Sửa task">${wteIcon('more')}</button>` : ''}
-            <span class="wte-tags">${potLv ? `<span class="wte-tag wte-pot--${potLv}">${wteIcon(potLv)}${potLv}-potential</span>` : ''}${p.type ? `<span class="wte-tag wte-narr">${tagCase(p.type)}</span>` : ''}${g === 'INCOME' ? '' : `<b class="wte-tag wte-rank-v rank-${g}">rank: ${RANK_LABEL[g] || g}</b>`}</span>
+            <span class="wte-tags">${potLv ? `<span class="wte-tag wte-pot--${potLv}${strong(potLv === 'high')}">${wteIcon(potLv)}${potLv}-potential</span>` : ''}${p.type ? `<span class="wte-tag wte-narr${strong(g === 'INCOME' || topNarr.has(p.type.toLowerCase()))}">${tagCase(p.type)}</span>` : ''}${g === 'INCOME' ? '' : `<b class="wte-tag wte-rank-v rank-${g}${strong(g === 'S')}">rank: ${RANK_LABEL[g] || g}</b>`}</span>
           </div>
           ${section('Get Started', p.getStarted, 'getStarted')}
           ${section('DAILY', p.daily, 'daily')}

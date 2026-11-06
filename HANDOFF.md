@@ -1,12 +1,12 @@
 # HANDOFF — 0xhieu.xyz
 
-Chốt bàn giao: 04/11/2026 (Asia/Saigon). Code đang live: `0432d54` (commit handoff chỉ đổi tài liệu). Handoff này thay các mô tả cũ; lịch sử được giữ ở [docs/handoff-history-through-2026-11-02.md](docs/handoff-history-through-2026-11-02.md).
+Chốt bàn giao: 06/11/2026 (Asia/Saigon). Code đang live: commit mới nhất trên main (06/11: xám trung tính, bút dạ, thẻ Work đen/trắng). Handoff này thay các mô tả cũ; lịch sử được giữ ở [docs/handoff-history-through-2026-11-02.md](docs/handoff-history-through-2026-11-02.md).
 
 ## Repo và vận hành
 
 - Local: `D:/Files/Claude/website_personal_0xhieu`. GitHub: https://github.com/KattyFury/website_personal_0xhieu, nhánh main.
 - Production: https://0xhieu.xyz. Cloudflare Pages project `0xhieu-xyz`, auto-deploy main. Push GitHub rồi xác minh production.
-- Design source: `D:/Files/Claude/repo_personal_design`, main `9686934`. `tokens.json` → `export_web.py` → `web.css`; website dùng CSS sinh ra `design-tokens.css` có hash.
+- Design source: `D:/Files/Claude/repo_personal_design`, main `47fc26f`. `tokens.json` → `export_web.py` → `web.css`; website dùng CSS sinh ra `design-tokens.css` có hash.
 - Trang: CV `/`, Valuation `/valuation`, Work `/work`. `/airdrop` redirect sang `/work`. CV tiếng Anh cố định; Valuation/Work có VI/EN.
 - `index.html`: giao diện/CSS component/JS. `functions/api/val.js`: dữ liệu Valuation. `functions/api/val-fetch.js`: Fetch SURF/CoinGecko. `functions/api/private.js`: CRUD Work. `functions/api/wte.js`: Work public.
 - `functions/valuation.js`: SSR đọc KV, điền hệ số/market/table để crawler đọc được. Công thức và markup phải khớp client nếu sau này sửa.
@@ -23,13 +23,14 @@ Chốt bàn giao: 04/11/2026 (Asia/Saigon). Code đang live: `0432d54` (commit h
 
 Chi tiết chuẩn tại [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md), ưu tiên hiện trạng này hơn các log cũ.
 
-- Tone trắng-xám-đen (anh chốt 04/11/2026). Text thường đen; phụ xám; cam `#FFA111` chỉ cho nút, control đang chọn và highlight (chữ nhấn đậm600). CẤM cam đất `#B84A0C` và nền kem `#FEF5D9`.
-- Header box/bảng nền mist `#ECF0F8`, chữ đen. Thân box trắng. Popup mist, ô nhập trắng, focus đen. Không đổi lại cam đặc/cam đất/kem/xanh.
+- Tone trắng-xám-đen (anh chốt 04/11/2026). Text thường đen; phụ xám; cam `#FFA111` chỉ cho nút, control đang chọn và highlight. Highlight = bút dạ: chữ đen đậm600 trên nền cam (06/11). CẤM cam đất `#B84A0C` và nền kem `#FEF5D9`.
+- Header box/bảng nền xám trung tính `#E5E5E5` (token product `--ds-color-surface`, 06/11 thay mist `#ECF0F8`), chữ đen. Thân box trắng. Popup xám, ô nhập trắng, focus đen. Trong CSS site `--mist` giờ trỏ vào token này (khai trên body). Không đổi lại cam đặc/cam đất/kem/xanh.
 - Cả3 trang/navbar/footer chung frame border-box max1280, inset24 desktop/16 mobile. CV spacious chỉ khác khoảng dọc/nội bộ, không khác trục ngang.
 - Work/Valuation compact: card paddingX12, sectionY8, gap12; header16/24/600; body14/20. Card/control/badge radius8, popup16.
 - Nút/action icon bấm được có shadow `0 2px 8px rgba(0,0,0,.32)`; card/chip/read-only/disabled không bóng. Tab nav/link chữ giữ kiểu text.
 - VI/EN: một native button role=switch, một thumb trượt, không phải2 nút tròn. Desktop80×40/mobile64×32. Shadow trên control tổng.
-- Work mỗi dự án một thẻ: desktop2/hàng, ≤900px1/hàng. DAILY nền xám mist, không viền cam; task đen đậm400, rê chuột mới đậm600. Task không cắt chữ.
+- Thẻ trong header card Work (06/11): nền đen chữ trắng cho rank S, nhãn work-to-earn (thay rank w2e), high-potential, narrative top 4 của box Narrative đang hot (lấy `narrativeRanking()` lúc render, tự đổi theo data). Còn lại trắng viền chữ đen; không còn chữ xám trên thẻ.
+- Work mỗi dự án một thẻ: desktop2/hàng, ≤900px1/hàng. DAILY nền xám trung tính, không viền cam; task đen đậm400, rê chuột mới đậm600. Task không cắt chữ.
 - Rank Work: một thanh liền248×48 với vùng cam trượt qua w2e/S/A/B/C (`$` trông giống `S` nên đã đổi). Kéo/click/phím và scroll spy. Pointer move/up theo window để cuộn không làm mất thao tác. Nhãn rank trong card nền trắng/viền/chữ xám, đồng cấp nhãn phân loại.
 - CV hero top96/48, section gap64/32, body16/24. Giữ nội dung và tagline `Sharing POVs on Crypto and AI`.
 
@@ -38,7 +39,7 @@ Chi tiết chuẩn tại [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md), ưu tiên hiện 
 - Bảng7 cột,8 hàng hiện trên desktop/mobile. Header56, row40; cuộn trong bảng, không tràn page. Mobile ẩn Narrative/TGE/ATL.
 - Giữ thứ tự ngày TGE cũ→mới. Mỗi lần mở Valuation tự cuộn bảng tới cuối (dự án mới nhất), kể cả tải data chậm; không cuộn page, không ép xuống cuối khi chỉ đổi ngôn ngữ/render khác.
 -3 box phụ cao cố định328: desktop3 cột, tablet/mobile2 cột bằng nhau. Nhãn trái, giá trị phải; thân dài thì cuộn.
-- ATH `đầu → cuối (×N)` trên1 dòng: hai số đen600, tỷ số cam đậm600. Ticker VC FDV<300M đen đậm, ≥300M cam đậm, không chấm cam.
+- ATH `đầu → cuối (×N)` trên1 dòng: hai số đen600, tỷ số bút dạ. Ticker VC FDV<300M đen đậm, ≥300M bút dạ, không chấm cam. Số chính 3 box cũng bút dạ, trừ Hero or Zero giữ chữ đỏ.
 - Toolbar Valuation luôn1 hàng trên mobile: co chữ/nút khi thiếu diện tích, không bẻ dòng.
 -81 dự án tại lúc bàn giao. Một narrative chính/dự án trong17 slug: stablechain, layer-1, layer-2, infra, ai, zk, privacy, identity, rwa, defi, trading, payment, bitcoin, prediction, game, social, desci.
 - Đã rà SURF và đổi19 narrative,62 giữ nguyên. ROBO/BASED giữ nguyên vì chưa xác minh đúng dự án. Không tự lấy tất cả tag SURF để nhân mẫu.
@@ -82,26 +83,24 @@ Ghi chú3 box VI/EN đã rút gọn và kiểm đúng ý. Narrative note nói r�
 - Workspace sạch trước khi viết handoff; mọi thay đổi giao diện/dữ liệu đã deploy.
 - 14 test backend (`node --test tests/*.mjs`, gồm `admin-auth`) đã pass 04/11; narrative-only migration giữ nguyên trường khác.
 - Đã QA Chrome production:3 info popups×VI/EN×1440/390, calculator CTA; auto-scroll direct/reopen/back×1440/390; frame3 routes×1920/1440/1024/768/390/320; rank drag/keyboard/scroll spy×1440/390/320.
-- Design audit gần nhất 04/11 trên production: 0 lỗi. Thay spacing/component mới phải chạy lại phù hợp. Audit không mở popup cần đăng nhập admin.
+- Design audit gần nhất 06/11 (local trước deploy + production sau deploy): 0 lỗi; `tools/ds-audit.js` đã đổi màu được phép mist → surface `229,229,229`. Thay spacing/component mới phải chạy lại phù hợp. Audit không mở popup cần đăng nhập admin.
 - QA tone 04/11: local cả 3 trang × 1920/1440/1024/768/640/390/360/320 không tràn ngang, không còn màu cấm; production cả 3 trang × 1440/390 cùng kết quả, header và thân bảng thẳng cột.
 - QA "Nhớ máy này" 04/11: Chrome thật + server local 17/17, production bằng script API 10/10. Token thử trên production đã xoá; lúc đó chưa có máy nào được nhớ, anh tự tick trên từng máy.
 - CHƯA xem bằng mắt sau đổi tone: popup cần admin (danh sách dự án, form sửa có nút Xoá, form task). Cổng 8787 trên máy Dell có thể đang bị app khác chiếm; xem thử local thì dùng cổng khác, đừng tắt app đó.
 - Commands: `python tools/sync-design-system.py`; `python tools/check-design-system.py --source D:/Files/Claude/repo_personal_design`; `node tools/ds-audit.js <local-or-live-url>`.
 - Secret không ở repo. Artifacts/backup narrative ở `C:/Users/Dell/.codex/visualizations/2026/10/31/01a19278-d691-7691-916e-ee30f78c4e30`, không coi là dữ liệu live.
 
-## Câu hỏi đang chờ anh chốt (04/11, chưa có câu trả lời; không tự đổi)
+## Đã chốt 06/11 (3 câu hỏi của 04/11)
 
-- Số nhấn `#FFA111` trên nền trắng chỉ đạt tương phản khoảng 2:1. Đang giữ chữ cam; phương án thay là chữ đen trên nền cam kiểu bút dạ.
-- Số đỏ ở box Hero or Zero: đang giữ vì đỏ là màu nguy hiểm theo design system; phương án thay là đen đậm.
-- Xám mist `#ECF0F8` hơi ngả xanh: đang giữ theo token; muốn xám trung tính thì phải thêm token riêng cho site.
-
-Anh đã nhận xét tone mới "nhìn thuận mắt hơn rồi".
+- Số nhấn: bút dạ (chữ đen trên nền cam). Số đỏ Hero or Zero: giữ đỏ. Xám: trung tính `#E5E5E5`, đậm hơn mist một chút.
 
 ## Công việc tiếp theo (chỉ thảo luận)
 
 Anh đề xuất dashboard quan sát dự án chưa TGE để tham gia airdrop: tên/X/Discord/narrative/TGE/hướng tham gia/hoạt động X. Chưa chốt UI, route, kiến trúc, chưa cho phép thay Work hoặc Valuation để nhét dashboard. Đã thăm dò SURF API, phương án ở `docs/SURF_PRE_TGE_DASHBOARD.md`. Không tự build/deploy dashboard mới khi mới đang bàn ý tưởng.
 
 ## Nhật ký bàn giao
+
+- 06/11/2026: xám trung tính `#E5E5E5` thay mist (design system `47fc26f`); số nhấn kiểu bút dạ; thẻ Work đen/trắng theo rank/potential/narrative top 4. Ảnh QA ở Desktop `0xhieu-2026-11-06`. Chụp headless Chrome ở 390 bị cắt mép phải cả production — là giới hạn của headless, không phải lỗi trang.
 
 - 04/11/2026: DAILY đổi sang nền xám, bỏ chữ đậm sẵn và viền cam; nhãn rank `$` đổi thành `w2e`.
 - 04/11/2026: thêm "Nhớ máy này" (`55bb10d`); đổi tone trắng-xám-đen, bỏ cam đất + nền kem, sửa lệch compact và dải hở header bảng (`8659563`, `cfec72c`; design system `9280adc`).

@@ -4,12 +4,12 @@ Nguồn: repo_personal_design/tokens.json → export_web.py → web.css → desi
 
 ## Phân vai màu hiện hành
 
-- Tone trắng-xám-đen (user chốt 04/11/2026). Trang và thân box trắng #FFFFFF; header box/bảng và popup xám mist #ECF0F8; viền line #DCE3EE.
+- Tone trắng-xám-đen (user chốt 04/11/2026). Trang và thân box trắng #FFFFFF; header box/bảng, popup và DAILY xám trung tính #E5E5E5 (token product `--ds-color-surface`, user chốt 06/11/2026 thay mist #ECF0F8 ngả xanh); viền line #DCE3EE.
 - Đen #000000: nội dung thường và hai số đầu/cuối ATH. Xám #4B5568: chữ phụ, metadata, caption.
 - Cam #FFA111 CHỈ cho nút, control đang chọn và highlight; chữ trên nền cam là đen. Không dùng cam cho chi tiết trang trí (chấm timeline màu đen).
-- Header box/bảng: nền mist, chữ đen; không dùng cam hay kem cho mảng lớn.
-- Chữ nhấn: cam #FFA111 đậm600, gồm tỷ số ATH, ticker VC FDV≥300M và số liệu cần nhấn. Không tô toàn bộ ô ATH cam. CẤM cam đất #B84A0C và nền kem #FEF5D9 trên site này; `tools/ds-audit.js` báo lỗi nếu chúng quay lại.
-- DAILY nền xám mist, không viền cam; nhãn/icon đen; task text đen đậm400, rê chuột mới đậm600 như mọi thứ bấm được. Không đổi nội dung/thứ tự/link hay số cột.
+- Header box/bảng: nền xám trung tính, chữ đen; không dùng cam hay kem cho mảng lớn.
+- Chữ nhấn kiểu bút dạ (user chốt 06/11/2026): chữ đen đậm600 trên nền cam #FFA111, đệm ngang4, không bo; gồm tỷ số ATH, ticker VC FDV≥300M, ×TGE≥13 và số chính 3 box (riêng Hero or Zero giữ chữ đỏ, không nền). Không tô toàn bộ ô ATH cam; không còn chữ cam trên nền trắng. CẤM cam đất #B84A0C và nền kem #FEF5D9 trên site này; `tools/ds-audit.js` báo lỗi nếu chúng quay lại.
+- DAILY nền xám trung tính, không viền cam; nhãn/icon đen; task text đen đậm400, rê chuột mới đậm600 như mọi thứ bấm được. Không đổi nội dung/thứ tự/link hay số cột.
 - Đỏ chỉ dành cho nguy hiểm và thao tác phá hủy. Theme xanh trước đây hết hiệu lực; global palette của sản phẩm khác không đổi.
 - Hover nút cam chuyển nền đen/chữ trắng. Hover chữ giữ màu đen. Header link giữ chữ đen và underline. Input focus viền đen.
 
@@ -39,9 +39,9 @@ Giữ nội dung tiếng Anh và tagline Sharing POVs on Crypto and AI. Hero por
 
 ## Work
 
-Nhãn rank và nhãn phân loại (Work-to-Earn, v.v.) đồng cấp: nền trắng, chữ xám, cùng viền/cỡ chữ; không tô đen nhãn rank.
+Thẻ trong header card (user chốt 06/11/2026): thẻ quan trọng nền đen chữ trắng — rank S, nhãn work-to-earn (đóng vai rank w2e), high-potential, narrative nằm trong top 4 box Narrative đang hot của Valuation (so tên không phân biệt hoa thường, tự đổi theo data). Còn lại (rank A/B/C, low-potential, narrative khác) nền trắng viền line chữ đen.
 
-Tham khảo Linear Board theo user chọn. Mỗi công việc/dự án là thẻ độc lập. Desktop2 thẻ/hàng; ≤900px1 thẻ/hàng. Gap12, căn đầu, cao theo nội dung. Header padding12; các section Get Started/DAILY/Weekly có nhãn trên, task dưới. DAILY nhấn bằng nền xám mist; nhãn, icon và nội dung task đen, task chỉ đậm khi rê chuột. Task min40 desktop/44 mobile hoặc touch. Giữ đủ nội dung/link/admin. Rank là một thanh liền248×48 với một vùng cam trượt qua w2e/S/A/B/C; kéo/click/phím mũi tên để tới nhóm, cuộn trang đồng bộ vị trí sáng. Không dùng5 nút tròn. Filter cuối trang chừa96 để không che task cuối. Route/work; /airdrop301 và client fallback giữ query/hash.
+Tham khảo Linear Board theo user chọn. Mỗi công việc/dự án là thẻ độc lập. Desktop2 thẻ/hàng; ≤900px1 thẻ/hàng. Gap12, căn đầu, cao theo nội dung. Header padding12; các section Get Started/DAILY/Weekly có nhãn trên, task dưới. DAILY nhấn bằng nền xám trung tính; nhãn, icon và nội dung task đen, task chỉ đậm khi rê chuột. Task min40 desktop/44 mobile hoặc touch. Giữ đủ nội dung/link/admin. Rank là một thanh liền248×48 với một vùng cam trượt qua w2e/S/A/B/C; kéo/click/phím mũi tên để tới nhóm, cuộn trang đồng bộ vị trí sáng. Không dùng5 nút tròn. Filter cuối trang chừa96 để không che task cuối. Route/work; /airdrop301 và client fallback giữ query/hash.
 
 ## Đồng bộ và kiểm tra
 
