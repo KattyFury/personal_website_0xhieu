@@ -5,7 +5,8 @@ Nguồn: repo_personal_design/tokens.json → export_web.py → web.css → desi
 ## Phân vai màu hiện hành
 
 - Tone trắng-xám-đen (user chốt 04/11/2026). Trang và thân box trắng #FFFFFF; header box/bảng, popup và DAILY xám trung tính #E5E5E5 (token product `--ds-color-surface`, user chốt 06/11/2026 thay mist #ECF0F8 ngả xanh); viền line #DCE3EE.
-- Đen #000000: nội dung thường và hai số đầu/cuối ATH. Xám #4B5568: chữ phụ, metadata, caption.
+- Đen #000000: nội dung thường và hai số đầu/cuối ATH. Chữ phụ, metadata, caption: MỘT màu xám trung tính #525252 (grey = muted, user chốt 06/11/2026, bỏ xám ngả xanh #4B5568/#8B95A8).
+- Đường kẻ, viền (`--line`): ĐEN #000000 (user chốt 06/11/2026; #DCE3EE cũ ngả xanh trên nền xám). Nền ô/nút bị vô hiệu dùng xám surface, không dùng `--line`.
 - Cam #FFA111 CHỈ cho nút, control đang chọn và highlight; chữ trên nền cam là đen. Không dùng cam cho chi tiết trang trí (chấm timeline màu đen).
 - Header box/bảng: nền xám trung tính, chữ đen; không dùng cam hay kem cho mảng lớn.
 - Chữ nhấn kiểu bút dạ (user chốt 06/11/2026): chữ đen đậm600 trên nền cam #FFA111, đệm ngang4, không bo; gồm tỷ số ATH, ticker VC FDV≥300M, ×TGE≥13 và số chính cả 3 box, kể cả Hero or Zero (user bỏ chữ đỏ ở đây 06/11). Không tô toàn bộ ô ATH cam; không còn chữ cam trên nền trắng. CẤM cam đất #B84A0C và nền kem #FEF5D9 trên site này; `tools/ds-audit.js` báo lỗi nếu chúng quay lại.
@@ -38,6 +39,8 @@ Giữ nội dung tiếng Anh và tagline Sharing POVs on Crypto and AI. Hero por
 - Form thêm/sửa: Fetch trái/Lưu phải, Xoá riêng dưới khi sửa; không input Cặp Binance. Fetch chỉ điền ô trống có bằng chứng, không ghi KV, không làm tròn số fetch, không ghi đè edits trong lúc request. Key SURF/CoinGecko chỉ trên server. Không đổi framework/hệ số/priceTGE để phục vụ tính năng hay giao diện.
 
 ## Work
+
+Thứ tự thẻ trong mỗi rank (user chốt 06/11/2026): high-potential trước, rồi narrative đang hot (top 5 Narrative của Valuation), rồi thứ tự thẻ phân loại WTE_TYPES.
 
 Thẻ trong header card (user chốt 06/11/2026): thẻ quan trọng nền đen chữ trắng — rank S, nhãn work-to-earn (đóng vai rank w2e), high-potential, narrative nằm trong top 5 box Narrative đang hot của Valuation (so tên không phân biệt hoa thường, tự đổi theo data). Còn lại (rank A/B/C, low-potential, narrative khác) nền trắng viền line chữ đen.
 

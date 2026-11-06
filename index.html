@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-ds-product="0xhieu-xyz">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content" />
@@ -44,7 +44,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="/design-tokens.css?v=3-eb041d765e54">
+  <link rel="stylesheet" href="/design-tokens.css?v=3-2c436d3436cd">
   <style>
     /* ══════════════════════════════════════════════════════════════
        0xhieu.xyz — MỘT stylesheet duy nhất, viết theo thành phần.
@@ -59,9 +59,6 @@
       /* màu — 3 cấp chữ ink/grey/muted, không thêm cấp xám thứ 4 */
       --ground:     var(--ds-color-ground);
       --ink:        var(--ds-color-ink);
-      --grey:       var(--ds-color-grey);
-      --muted:      var(--ds-color-muted);
-      --line:       var(--ds-color-line);
       --scrim:      rgba(0,0,0,.48);
       --red-text:   var(--ds-color-red-text);
       --red-soft:   var(--ds-color-red-soft);
@@ -87,16 +84,19 @@
     html::-webkit-scrollbar, .thin-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
     html::-webkit-scrollbar-track, .thin-scroll::-webkit-scrollbar-track,
     html::-webkit-scrollbar-corner, .thin-scroll::-webkit-scrollbar-corner { background: transparent; }
-    html::-webkit-scrollbar-thumb, .thin-scroll::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 999px; }
+    html::-webkit-scrollbar-thumb, .thin-scroll::-webkit-scrollbar-thumb { background: var(--ds-color-muted); border-radius: 999px; }
     html::-webkit-scrollbar-button, .thin-scroll::-webkit-scrollbar-button { display: none; }
     @supports not selector(::-webkit-scrollbar) {
-      html, .thin-scroll { scrollbar-width: thin; scrollbar-color: var(--muted) transparent; }
+      html, .thin-scroll { scrollbar-width: thin; scrollbar-color: var(--ds-color-muted) transparent; }
     }
 
     /* web-body 16/24 */
     body {
       --content: var(--ds-workspace-frame-max-width);
       --accent: var(--ds-accent);
+      --grey: var(--ds-color-grey);      /* chữ phụ: grey = muted = xám trung tính #525252 (user chốt 06/11) — khai ở body để nhận màu product */
+      --muted: var(--ds-color-muted);
+      --line: var(--ds-color-line);      /* khai ở body (không phải :root) để nhận màu line của product = đen ink (user chốt 06/11), hết ánh xanh #DCE3EE */
       --mist: var(--ds-color-surface);   /* xám trung tính #E5E5E5 của site (user chốt 2026-11-06) */
       font-family: var(--font); font-size: var(--ds-web-body-size); font-weight: 400; line-height: var(--ds-web-body-line); letter-spacing: var(--ds-web-body-tracking);
       background: var(--ground); color: var(--ink);
@@ -280,7 +280,7 @@
       background: var(--ds-primary); border: none; box-shadow: var(--shadow);
       font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--ground); cursor: pointer;
     }
-    .retry-btn:disabled { background: var(--line); color: var(--muted); box-shadow: none; cursor: default; }
+    .retry-btn:disabled { background: var(--mist); color: var(--muted); box-shadow: none; cursor: default; }
 
     /* ══ CV ═══════════════════════════════════════════════════════ */
     main { max-width: var(--content); margin: 0 auto; padding: 0 var(--gutter); }
@@ -400,7 +400,7 @@
     .camera-btn::before { content: ''; position: absolute; inset: 10px; background: var(--ink); }
     .camera-btn::before { -webkit-mask: url(camera.svg) center / contain no-repeat; mask: url(camera.svg) center / contain no-repeat; }
     .camera-btn:hover { background: var(--mist); }
-    .camera-btn[disabled] { background: var(--line); box-shadow: none; cursor: default; }
+    .camera-btn[disabled] { background: var(--mist); box-shadow: none; cursor: default; }
     .camera-btn[disabled]::before { background: var(--muted); }
 
     /* Bảng altcoin: cột rộng theo nội dung đã đo, ATH đủ chỗ cho cặp số + tỷ số trên một hàng.
@@ -686,7 +686,7 @@
     .wl-modal select { cursor: pointer; }
     .wl-modal input, .wl-modal select, .wl-modal textarea { background: var(--ground); }
     .wl-modal input:focus, .wl-modal select:focus { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
-    .wl-modal input:disabled, .wl-modal select:disabled { color: var(--muted); background: var(--line); cursor: default; }
+    .wl-modal input:disabled, .wl-modal select:disabled { color: var(--muted); background: var(--mist); cursor: default; }
     .wl-modal input[type=number]::-webkit-inner-spin-button,
     .wl-modal input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
     .wl-modal input[type=number] { -moz-appearance: textfield; }
@@ -2671,11 +2671,15 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         </div>`;
       };
 
-      // Trong mỗi nhóm: xếp theo thứ tự thẻ phân loại của WTE_TYPES.
-      // Cùng thẻ thì giữ nguyên thứ tự trong KV (sort của JS là stable).
+      // Trong mỗi nhóm (user chốt 06/11): 1) high-potential lên trước, 2) narrative đang hot
+      // (top 5 Trending Narratives) lên trước, 3) thứ tự thẻ phân loại của WTE_TYPES.
+      // Bằng nhau hết thì giữ nguyên thứ tự trong KV (sort của JS là stable).
+      const isHigh = p => potLevel(p.potential) === 'high' ? 0 : 1;
+      const isHot  = p => (p.type && topNarr.has(p.type.toLowerCase())) ? 0 : 1;
       const groups = Object.fromEntries(WTE_GROUPS.map(g => [g, []]));
       projects.forEach(p => { const g = groupOf(p); if (groups[g]) groups[g].push(p); });
-      Object.values(groups).forEach(g => g.sort((a, b) => typeOrder(a) - typeOrder(b)));
+      Object.values(groups).forEach(g => g.sort((a, b) =>
+        (isHigh(a) - isHigh(b)) || (isHot(a) - isHot(b)) || (typeOrder(a) - typeOrder(b))));
 
       // Nhóm "Cá nhân" nằm TRÊN cùng (trên cả nhóm $). Id cố tình KHÔNG bắt đầu bằng "wte-rank-"
       // để scroll-spy của thanh lọc $/S/A/B/C không nhận nhầm nhóm này.
