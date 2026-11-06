@@ -16,7 +16,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 // Chạy trong trang: trả về danh sách vi phạm
 const PROBE = `(() => {
   const ALLOWED_COLORS = {
-    '0,0,0':'ink','255,255,255':'ground','82,82,82':'grey/muted','229,229,229':'surface',
+    '0,0,0':'ink','255,255,255':'ground','82,82,82':'grey/muted','229,229,229':'surface','163,163,163':'line',
     '255,161,17':'accent-orange',
     '196,43,63':'red-text','253,232,235':'red-soft'
   };

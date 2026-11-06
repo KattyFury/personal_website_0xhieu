@@ -6,7 +6,7 @@ Nguồn: repo_personal_design/tokens.json → export_web.py → web.css → desi
 
 - Tone trắng-xám-đen (user chốt 04/11/2026). Trang và thân box trắng #FFFFFF; header box/bảng, popup và DAILY xám trung tính #E5E5E5 (token product `--ds-color-surface`, user chốt 06/11/2026 thay mist #ECF0F8 ngả xanh); viền line #DCE3EE.
 - Đen #000000: nội dung thường và hai số đầu/cuối ATH. Chữ phụ, metadata, caption: MỘT màu xám trung tính #525252 (grey = muted, user chốt 06/11/2026, bỏ xám ngả xanh #4B5568/#8B95A8).
-- Đường kẻ, viền (`--line`): ĐEN #000000 (user chốt 06/11/2026; #DCE3EE cũ ngả xanh trên nền xám). Nền ô/nút bị vô hiệu dùng xám surface, không dùng `--line`.
+- Đường kẻ, viền (`--line`): mỏng 1px, xám trung tính #A3A3A3 — đậm hơn nền header #E5E5E5, nhạt hơn chữ phụ #525252 (user chốt 06/11/2026; bỏ #DCE3EE ngả xanh, user không nhận đen). Không bao giờ 2 đường kẻ chồng nhau thành 2px. Nền ô/nút bị vô hiệu dùng xám surface, không dùng `--line`.
 - Cam #FFA111 CHỈ cho nút, control đang chọn và highlight; chữ trên nền cam là đen. Không dùng cam cho chi tiết trang trí (chấm timeline màu đen).
 - Header box/bảng: nền xám trung tính, chữ đen; không dùng cam hay kem cho mảng lớn.
 - Chữ nhấn kiểu bút dạ (user chốt 06/11/2026): chữ đen đậm600 trên nền cam #FFA111, đệm ngang4, không bo; gồm tỷ số ATH, ticker VC FDV≥300M, ×TGE≥13 và số chính cả 3 box, kể cả Hero or Zero (user bỏ chữ đỏ ở đây 06/11). Không tô toàn bộ ô ATH cam; không còn chữ cam trên nền trắng. CẤM cam đất #B84A0C và nền kem #FEF5D9 trên site này; `tools/ds-audit.js` báo lỗi nếu chúng quay lại.
