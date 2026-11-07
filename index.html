@@ -1767,12 +1767,19 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
 
     async function renderValuationPng() {
       const html2canvas = await loadHtml2Canvas();
-      const canvas = await html2canvas(document.querySelector('#valuation-view .val-wrap'), {
-        scale: 2,                                                          // nét trên màn retina
+      const wrap = document.querySelector('#valuation-view .val-wrap');
+      // Cắt ảnh ngay dưới 3 ô (bảng TGE bị loại thì vẫn chừa chỗ trống nếu không cắt chiều cao).
+      const boxes = wrap.querySelector('.val-boxes');
+      const height = Math.ceil(boxes.getBoundingClientRect().bottom - wrap.getBoundingClientRect().top) + 16;
+      const canvas = await html2canvas(wrap, {
+        scale: 2,
+        height,                                                          // nét trên màn retina
         backgroundColor: getComputedStyle(document.body).backgroundColor,   // .val-wrap trong suốt
         logging: false,
         // Loại khỏi ảnh cụm nút (Admin · VI/EN · camera): điều khiển, không phải nội dung.
-        ignoreElements: el => el.classList?.contains('val-head-ctrl'),
+        // Ảnh CHỈ gồm tiêu đề + 3 ô đầu trang (Mặt bằng định giá · Hero or Zero · Narrative),
+        // bỏ bảng TGE bên dưới (user chốt 07/11).
+        ignoreElements: el => el.classList?.contains('val-head-ctrl') || el.id === 'tge-section',
       });
       return new Promise((res, rej) => canvas.toBlob(b => b ? res(b) : rej(new Error('toBlob rỗng')), 'image/png'));
     }
