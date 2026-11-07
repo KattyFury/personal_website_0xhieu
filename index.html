@@ -651,36 +651,6 @@
     /* Task luôn hiện đủ chữ: xuống dòng bao nhiêu cũng được, KHÔNG cắt "…" (user chốt 2026-10-28) */
     .wte-task-text { flex: 1; min-width: 0; white-space: normal; overflow-wrap: anywhere; }
 
-    /* Thanh rank nổi: cùng đáy với nút mèo (cao 48 cả hai) → hai thứ thẳng một hàng. */
-    #rank-filter-float { position: fixed; z-index: 50; bottom: 32px; left: 50%; transform: translateX(-50%); }
-    /* Một thanh rank liền: một vùng sáng trượt, native range hỗ trợ kéo/phím. */
-    .rank-bar {
-      --rank-index: 0; --rank-count: 6; position: relative; isolation: isolate; width: calc(var(--rank-count) * 48px + 8px); height: 48px;
-      display: grid; grid-template-columns: repeat(var(--rank-count), 1fr); align-items: center; padding: 4px;
-      background: var(--tile); border-radius: 9999px; box-shadow: 0 2px 12px rgba(0,0,0,.16);
-    }
-    .rank-bar::before {
-      content: ''; position: absolute; z-index: -1; left: 4px; top: 4px; bottom: 4px;
-      width: calc((100% - 8px) / var(--rank-count)); border-radius: 9999px; background: var(--ds-accent);
-      transform: translateX(calc(var(--rank-index) * 100%)); transition: transform .18s ease;
-    }
-    .rank-bar [data-rank] {
-      pointer-events: none; text-align: center; color: var(--grey);
-      font-size: 16px; font-weight: 600; line-height: 24px; letter-spacing: -.011em;
-    }
-    .rank-bar [data-rank].active { color: var(--ink); }
-    .rank-bar [data-rank][hidden] { display: none; }
-    #rank-slider {
-      position: absolute; z-index: 2; inset: 4px; width: calc(100% - 8px); height: 40px;
-      padding: 0; margin: 0; opacity: 0; appearance: none; -webkit-appearance: none;
-      cursor: grab; touch-action: pan-y;
-    }
-    #rank-slider::-webkit-slider-thumb { appearance: none; -webkit-appearance: none; width: 48px; height: 40px; }
-    #rank-slider::-moz-range-thumb { width: 48px; height: 40px; border: 0; }
-    .rank-bar:focus-within { outline: 2px solid var(--ink); outline-offset: 2px; }
-    .rank-bar.is-dragging::before { transition: none; }
-    @media (prefers-reduced-motion: reduce) { .rank-bar::before { transition: none; } }
-
     /* ══ NÚT MÈO (Agent) — mới có vỏ, bấm hiện "coming soon" ════════ */
     #cat-btn {
       position: fixed; right: 32px; bottom: 32px; z-index: 80;
@@ -944,8 +914,6 @@
 
 
       #cat-btn  { right: 16px; bottom: 16px; }
-      /* Thanh rank cùng đáy 16 với mèo; căn giữa phần ngang còn lại bên trái mèo (16 + 48 + 16) để không đè lên mèo */
-      #rank-filter-float { bottom: 16px; left: calc((100% - 80px) / 2); }
       #cat-hint { right: 16px; bottom: 80px; }
     }
   </style>
@@ -1200,18 +1168,6 @@
     <img src="icon.png?v=3" width="80" height="80" alt="" />
   </button>
   <div id="cat-hint">Agent — coming soon</div>
-
-  <div id="rank-filter-float" style="display:none">
-    <div class="rank-bar" id="rank-filter">
-      <span class="active" data-rank="LEARN" aria-hidden="true">l2g</span>
-      <span data-rank="INCOME" aria-hidden="true">w2e</span>
-      <span data-rank="S" aria-hidden="true">S</span>
-      <span data-rank="A" aria-hidden="true">A</span>
-      <span data-rank="B" aria-hidden="true">B</span>
-      <span data-rank="C" aria-hidden="true">C</span>
-      <input id="rank-slider" type="range" min="0" max="5" step="1" value="0" aria-label="Nhóm công việc" aria-valuetext="learn-to-grow (l2g)">
-    </div>
-  </div>
 
   <!-- TGE table modal -->
   <div class="wl-modal-backdrop" id="tge-modal">
@@ -1861,79 +1817,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       cvView.style.display = 'none';
       valView.style.display = 'none';
       ardView.style.display = 'none';
-      document.getElementById('rank-filter-float').style.display = 'none';
       [navCvBtn, navValBtn, navArdBtn].forEach(b => b.classList.remove('active'));
-    }
-
-    // ── Rank filter $/S/A/B/C → scroll to section ──────
-    // Rank filter: click → scroll, scroll → highlight
-    const rankBar = document.getElementById('rank-filter');
-    const rankSlider = document.getElementById('rank-slider');
-    const allRankLabels = [...rankBar.querySelectorAll('[data-rank]')];
-    let rankLabels = allRankLabels;
-    let rankDragging = false;
-    rankSlider.max = rankLabels.length - 1;
-    // l2g toàn task cá nhân → khách không có nhóm này: ẩn nút trên thanh, thanh co lại.
-    function syncRankLabels() {
-      allRankLabels.forEach(l => { l.hidden = l.dataset.rank === 'LEARN' && !document.getElementById('wte-rank-LEARN'); });
-      rankLabels = allRankLabels.filter(l => !l.hidden);
-      rankBar.style.setProperty('--rank-count', rankLabels.length);
-      rankSlider.max = rankLabels.length - 1;
-      const cur = rankBar.querySelector('[data-rank].active');
-      setActiveRankBtn(cur && !cur.hidden ? cur.dataset.rank : rankLabels[0].dataset.rank);
-    }
-    function setActiveRankBtn(rank) {
-      const index = rankLabels.findIndex(label => label.dataset.rank === rank);
-      if (index < 0) return;
-      rankBar.style.setProperty('--rank-index', index);
-      rankSlider.value = index;
-      rankSlider.setAttribute('aria-valuetext', GROUP_NAME[rank] ? `${GROUP_NAME[rank]} (${RANK_LABEL[rank]})` : 'Rank ' + rank);
-      rankLabels.forEach(label => label.classList.toggle('active', label.dataset.rank === rank));
-    }
-    function scrollToSelectedRank() {
-      const rank = rankLabels[Number(rankSlider.value)]?.dataset.rank;
-      if (!rank) return;
-      setActiveRankBtn(rank);
-      const box = document.getElementById('wte-projects');
-      if (box && !box.open) box.open = true;   // nhóm nằm trong dropdown dự án: mở ra rồi mới cuộn tới
-      document.getElementById('wte-rank-' + rank)?.scrollIntoView({ behavior: 'instant', block: 'start' });
-    }
-    function selectRankAtPointer(event) {
-      const rect = rankSlider.getBoundingClientRect();
-      const thumbWidth = rect.width / rankLabels.length;
-      const fraction = (event.clientX - rect.left - thumbWidth / 2) / (rect.width - thumbWidth);
-      rankSlider.value = Math.max(0, Math.min(rankLabels.length - 1, Math.round(fraction * (rankLabels.length - 1))));
-      scrollToSelectedRank();
-    }
-    rankSlider.addEventListener('pointerdown', event => {
-      event.preventDefault();
-      rankSlider.focus({ preventScroll: true });
-      rankSlider.setPointerCapture(event.pointerId);
-      rankDragging = true;
-      rankBar.classList.add('is-dragging');
-      selectRankAtPointer(event);
-    });
-    window.addEventListener('pointermove', event => { if (rankDragging) selectRankAtPointer(event); });
-    const endRankDrag = () => { rankDragging = false; rankBar.classList.remove('is-dragging'); };
-    window.addEventListener('pointerup', endRankDrag);
-    window.addEventListener('pointercancel', endRankDrag);
-    window.addEventListener('blur', endRankDrag);
-    rankSlider.addEventListener('input', scrollToSelectedRank);
-
-    // IntersectionObserver: đổi active khi section vào viewport
-    let rankObserver = null;
-    function observeRankSections() {
-      if (rankObserver) rankObserver.disconnect();
-      syncRankLabels();
-      const sections = document.querySelectorAll('[id^="wte-rank-"]');
-      if (!sections.length) return;
-      rankObserver = new IntersectionObserver(() => {
-        if (rankDragging) return;
-        const visible = [...sections].filter(section => section.getBoundingClientRect().bottom > 0);
-        const current = visible.find(section => section.getBoundingClientRect().bottom > window.innerHeight * .15);
-        if (current) setActiveRankBtn(current.id.replace('wte-rank-', ''));
-      }, { rootMargin: `-${(window.innerHeight / 30) * 2}px 0px -60% 0px`, threshold: 0 });
-      sections.forEach(s => rankObserver.observe(s));
     }
 
     function showCV(push = true) {
@@ -1961,7 +1845,6 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       document.body.dataset.dsProfile = 'compact';
       ardView.style.display = 'block';
       navArdBtn.classList.add('active');
-      document.getElementById('rank-filter-float').style.display = 'block';
       if (push) history.pushState({}, '', '/work');
       renderWTE();
     }
@@ -2588,7 +2471,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     //   B           xanh lá #34C759 — kèo xxx
     //   C           trắng (viền xám) — kèo rác
     // Thêm/đổi nhóm → sửa 3 hằng số dưới đây, rồi thêm class `.rank-*` +
-    // `.wte-card--*` trong CSS và nút cùng `data-rank` trong #rank-filter.
+    // `.wte-card--*` trong CSS.
     // Phân loại → nhóm cố định (không có rank). Khớp TYPE_GROUPS trong functions/api/private.js.
     const WTE_TYPE_GROUP  = { 'Learn-to-Grow': 'LEARN', 'Work-to-Earn': 'INCOME' };
     const isTypeGroup     = g => Object.values(WTE_TYPE_GROUP).includes(g);
@@ -2872,7 +2755,6 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
 
       container.innerHTML = projHtml + todayHtml + weekHtml;
       syncTodayRing();
-      observeRankSections();
     }
 
     // Tick checklist: lưu localStorage { period, keys } — ngày ('d') / tuần ('w', tính từ thứ Hai).
