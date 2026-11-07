@@ -2,6 +2,10 @@
 
 Nguồn: repo_personal_design/tokens.json → export_web.py → web.css → design-tokens.css. Quy tắc product 0xhieu-xyz được user chốt 2026-11-01, ưu tiên hơn profile chung và mọi log màu cũ.
 
+## Kiểu chữ theo chức năng — user chốt 08/11/2026 (ưu tiên cao nhất)
+
+Nguồn sự thật: `D:\Files\Claudeepo_personal_design` → README mục "Kiểu chữ — đặt tên theo chức năng" + `tokens.json → bento.type`. Site dùng biến `--ds-type-<tên>-size/line/tracking` (Tiêu đề lớn `display`, Tiêu đề trang `page`, `header`, Nội dung `content`, Nội dung phụ `secondary`, Số liệu `data`, Nhãn `label`, Nút `button`, Ghi chú `note`, Ô nhập `input`, `hero`). **Cấm gõ font-size px tay**; mobile tự đổi cỡ qua biến (≤640), không viết đè cỡ chữ trong media query. Weight chỉ 400/600/700. Mọi cỡ chữ ghi ở các mục cũ bên dưới đã hết hiệu lực.
+
 ## Bento V2 — user chốt 07/11/2026 (ƯU TIÊN hơn mọi mục bên dưới nếu mâu thuẫn)
 
 - Nền trang canvas `#F2F2F0`; mọi khối là ô (tile) trắng bo 20, không viền, không bóng; ô cách nhau 12 (mobile 10). Kẻ mảnh trong ô `--hair #ECECEA` (thay `--line` trong bảng/danh sách/task).
