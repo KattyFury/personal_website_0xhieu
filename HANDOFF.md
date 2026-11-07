@@ -23,7 +23,7 @@ Chốt bàn giao: 06/11/2026 (Asia/Saigon). Code đang live: commit mới nhất
 
 Chi tiết chuẩn tại [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md), ưu tiên hiện trạng này hơn các log cũ.
 
-- Tone trắng-xám-đen (anh chốt 04/11/2026). Text thường đen; phụ xám; cam `#FFBE5C` chỉ cho nút, control đang chọn và highlight. Highlight = bút dạ: chữ đen đậm600 trên nền cam (06/11). CẤM cam đất `#B84A0C` và nền kem `#FEF5D9`.
+- Tone trắng-xám-đen (anh chốt 04/11/2026). Text thường đen; phụ xám; cam `#F5B301` chỉ cho nút, control đang chọn và highlight. Highlight = bút dạ: chữ đen đậm600 trên nền cam (06/11). CẤM cam đất `#B84A0C` và nền kem `#FEF5D9`.
 - Header box/bảng nền xám trung tính `#E5E5E5` (token product `--ds-color-surface`, 06/11 thay mist `#ECF0F8`), chữ đen. Thân box trắng. Popup xám, ô nhập trắng, focus đen. Trong CSS site `--mist` giờ trỏ vào token này (khai trên body). Không đổi lại cam đặc/cam đất/kem/xanh.
 - Cả3 trang/navbar/footer chung frame border-box max1280, inset24 desktop/16 mobile. CV spacious chỉ khác khoảng dọc/nội bộ, không khác trục ngang.
 - Work/Valuation compact: card paddingX12, sectionY8, gap12; header16/24/600; body14/20. Card/control/badge radius8, popup16.

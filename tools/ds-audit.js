@@ -17,7 +17,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 const PROBE = `(() => {
   const ALLOWED_COLORS = {
     '0,0,0':'ink','255,255,255':'ground','82,82,82':'grey/muted','229,229,229':'surface','163,163,163':'line',
-    '255,190,92':'accent-orange',
+    '245,179,1':'accent-orange',
     '196,43,63':'red-text','253,232,235':'red-soft'
   };
   const TYPE = { 14:[20], 16:[24], 18:[28], 20:[28], 24:[32], 32:[40], 40:[48] };   // cỡ → line-height hợp lệ
