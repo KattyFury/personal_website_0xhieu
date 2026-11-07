@@ -2715,13 +2715,13 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       Object.values(groups).forEach(g => g.sort((a, b) =>
         (isHigh(a) - isHigh(b)) || (isHot(a) - isHot(b)) || (typeOrder(a) - typeOrder(b))));
 
-      // Task cá nhân phân loại Learn-to-Grow vào nhóm learn-to-grow (chỉ admin thấy), không vào "Cá nhân".
+      // Learn-to-grow LÀ việc cá nhân (user chốt 08/11): nằm trong nhóm "Cá nhân", xếp TRÊN CÙNG nhóm đó.
+      // myOther = toàn bộ việc cá nhân, l2g lên đầu. (l2g public, nếu có, vẫn ở nhóm Learn-to-grow riêng.)
       const myTasks = adminUnlocked ? (wteLang === 'EN' && personalTasksEN.length ? personalTasksEN : personalTasks) : [];
-      myTasks.filter(p => groupOf(p) === 'LEARN').forEach(p => groups.LEARN.push({ ...p, _personal: true }));
-      const myOther = myTasks.filter(p => groupOf(p) !== 'LEARN');
+      // Trong nhóm Cá nhân: Learn-to-grow → Work-to-earn → S → A → B → C (sort ổn định, giữ thứ tự KV trong cùng loại)
+      const myOther = [...myTasks].sort((a, b) => WTE_GROUPS.indexOf(groupOf(a)) - WTE_GROUPS.indexOf(groupOf(b)));
 
-      // Nhóm "Cá nhân" nằm TRÊN cùng (trên cả nhóm $). Id cố tình KHÔNG bắt đầu bằng "wte-rank-"
-      // để scroll-spy của thanh lọc $/S/A/B/C không nhận nhầm nhóm này.
+      // Nhóm "Cá nhân" nằm TRÊN cùng.
       const personalHtml = myOther.length
         ? `<div id="wte-personal" class="wte-group">
              <div class="wte-group-label">${wteLang === 'EN' ? 'Personal' : 'Cá nhân'}</div>
@@ -2731,7 +2731,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
 
       // ── Checklist ngày + tuần: gom mọi task DAILY / WEEKLY (l2g → cá nhân → w2e → S … C) ──
       const EN = wteLang === 'EN';
-      const ordered = [...groups.LEARN, ...myOther,
+      const ordered = [...myOther, ...groups.LEARN,
                        ...WTE_GROUPS.filter(r => r !== 'LEARN').flatMap(r => groups[r])];
       // Giờ báo hiển thị: việc ngày "20:00" · việc tuần "T3 · 20:00" (hoặc chỉ thứ / chỉ giờ)
       const DOW = EN ? ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] : ['', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
@@ -2774,13 +2774,12 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         EN ? 'weekly<br>tasks' : 'việc<br>hằng tuần', true);
 
       // ── Box "Dự án & hướng dẫn tham gia" — đầu trang, trên checklist ──
-      // Thứ tự nhóm (user chốt 08/11): Learn-to-grow cao nhất → Cá nhân → Work-to-earn → Rank S…C.
+      // Thứ tự nhóm (user chốt 08/11): Cá nhân (l2g trên cùng) → Work-to-earn → Rank S…C.
       const rankGroupHtml = r => `<div id="wte-rank-${r}" class="wte-group">
              <div class="wte-group-label">${groupLabel(r)}</div>
              <div class="wte-rank-group wte-rank-group--${r}">${groups[r].map(p => cardHtml(p, !!p._personal)).join('')}</div>
            </div>`;
-      const groupsHtml = (groups.LEARN.length ? rankGroupHtml('LEARN') : '') + personalHtml
-        + WTE_GROUPS.filter(r => r !== 'LEARN' && groups[r].length).map(rankGroupHtml).join('');
+      const groupsHtml = personalHtml + WTE_GROUPS.filter(r => groups[r].length).map(rankGroupHtml).join('');
       const nProj = myOther.length + WTE_GROUPS.reduce((n, r) => n + groups[r].length, 0);
       // Dropdown: mặc định GẬP, chỉ 1 hàng tiêu đề (user chốt 07/11). Render lại giữ nguyên trạng thái mở/gập.
       const wasOpen = !!document.querySelector('#wte-projects[open]');

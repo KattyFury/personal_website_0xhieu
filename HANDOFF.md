@@ -57,7 +57,7 @@ Mọi gạch đầu dòng cũ bên dưới file đó (header xám, viền, radiu
 
 **Dropdown "Dự án & hướng dẫn tham gia"**
 - Mặc định gập; đổi ngôn ngữ thì giữ nguyên trạng thái mở/gập.
-- Bên trong chia nhóm theo thứ tự **Learn-to-grow (cao nhất) → Cá nhân → Work-to-earn → Rank S…C**. Nhãn nhóm viết hoa chữ đầu.
+- Bên trong chia nhóm: **Cá nhân → Work-to-earn → Rank S…C**. Việc Learn-to-grow là việc cá nhân: nằm trong nhóm Cá nhân, xếp trên cùng; trong nhóm Cá nhân thứ tự là l2g → w2e → S…C (anh chốt 08/11, thay quy tắc cũ "l2g có nhóm riêng"). Nhãn nhóm viết hoa chữ đầu.
 - Mỗi dự án KHÔNG gập: logo · tên · thẻ `High potential`/`Low potential` + narrative · ⋮ (admin).
 - Ngay dưới là 1 hàng chip cao 30: Website · X (icon) · Discord (icon) · **Hướng dẫn tham gia**.
   - Chip Hướng dẫn tham gia nền đen chữ vàng, mở bài đăng X.
@@ -78,7 +78,7 @@ Mọi gạch đầu dòng cũ bên dưới file đó (header xám, viền, radiu
 
 **Đã bỏ:** thanh kéo chọn rank l2g/w2e/S/A/B/C (anh nói không cần nữa).
 
-**Nhóm Learn-to-grow (l2g):** phân loại `Learn-to-Grow`, xếp trên w2e, không có rank, mặc định Personal. `TYPE_GROUPS` trong `private.js` phải khớp `WTE_TYPE_GROUP` trong `index.html`.
+**Learn-to-grow (l2g):** phân loại `Learn-to-Grow`, không có rank, mặc định Personal. Việc l2g cá nhân nằm trong nhóm Cá nhân, xếp trên cùng; checklist cũng đặt l2g lên đầu. `TYPE_GROUPS` trong `private.js` phải khớp `WTE_TYPE_GROUP` trong `index.html`.
 
 ## Figma + design system (08/11/2026)
 
