@@ -576,10 +576,18 @@
     .dt-link .wte-ico { width: 16px; height: 16px; }
 
     /* Box "Dự án & hướng dẫn tham gia" (đầu trang Work): 1 ô trắng, mỗi dự án 1 hàng gập/mở */
-    .pj-box { padding: 16px 16px 4px; border-radius: var(--tile-r); background: var(--tile); }
-    .pj-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
-    .pj-title { font-size: 20px; font-weight: 800; line-height: 28px; letter-spacing: -.025em; color: var(--ink); }
-    .pj-sub { flex: none; font-size: 13px; font-weight: 600; color: var(--grey); }
+    .pj-box { border-radius: var(--tile-r); background: var(--tile); }
+    .pj-head { padding: 16px; list-style: none; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+    .pj-head::-webkit-details-marker { display: none; }
+    .pj-head::after {
+      content: ''; flex: none; width: 9px; height: 9px; margin: 0 6px 4px 0;
+      border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: rotate(45deg); transition: transform .15s;
+    }
+    .pj-box[open] > .pj-head::after { margin: 4px 6px 0 0; transform: rotate(-135deg); }
+    .pj-title { flex: 1; min-width: 0; font-size: 18px; font-weight: 800; line-height: 26px; letter-spacing: -.02em; color: var(--ink); }
+    .pj-sub { flex: none; min-width: 28px; height: 24px; padding: 0 8px; border-radius: 9999px; display: grid; place-items: center; background: var(--canvas); font-size: 13px; font-weight: 700; color: var(--ink); }
+    .pj-body { padding: 0 16px 4px; }
+    .pj-body > .wte-group:first-child { padding-top: 0; }
     .wte-group { padding-top: 12px; scroll-margin-top: 80px; }
     .wte-group-label {
       display: flex; align-items: center; gap: 8px; margin-bottom: 2px;
@@ -1875,6 +1883,8 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       const rank = rankLabels[Number(rankSlider.value)]?.dataset.rank;
       if (!rank) return;
       setActiveRankBtn(rank);
+      const box = document.getElementById('wte-projects');
+      if (box && !box.open) box.open = true;   // nhóm nằm trong dropdown dự án: mở ra rồi mới cuộn tới
       document.getElementById('wte-rank-' + rank)?.scrollIntoView({ behavior: 'instant', block: 'start' });
     }
     function selectRankAtPointer(event) {
@@ -2842,10 +2852,12 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
            </div>`)
         .join('');
       const nProj = myOther.length + WTE_GROUPS.reduce((n, r) => n + groups[r].length, 0);
-      const projHtml = `<section class="pj-box" id="wte-projects">
-          <div class="pj-head"><span class="pj-title">${EN ? 'Projects & how to join' : 'Dự án & hướng dẫn tham gia'}</span><span class="pj-sub">${nProj}</span></div>
-          ${groupsHtml}
-        </section>`;
+      // Dropdown: mặc định GẬP, chỉ 1 hàng tiêu đề (user chốt 07/11). Render lại giữ nguyên trạng thái mở/gập.
+      const wasOpen = !!document.querySelector('#wte-projects[open]');
+      const projHtml = `<details class="pj-box" id="wte-projects"${wasOpen ? ' open' : ''}>
+          <summary class="pj-head"><span class="pj-title">${EN ? 'Projects & how to join' : 'Dự án & hướng dẫn tham gia'}</span><span class="pj-sub">${nProj}</span></summary>
+          <div class="pj-body">${groupsHtml}</div>
+        </details>`;
 
       container.innerHTML = projHtml + todayHtml + weekHtml;
       syncTodayRing();
