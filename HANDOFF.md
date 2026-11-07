@@ -1,12 +1,14 @@
 # HANDOFF — 0xhieu.xyz
 
+Chốt bàn giao: 08/11/2026 (Asia/Saigon). Code đang live: commit mới nhất trên main (08/11: Bento + kiểu chữ theo chức năng, box dự án hiện sẵn link + Hướng dẫn tham gia, lịch hẹn giờ). Handoff này thay các mô tả cũ; lịch sử ở git và [docs/handoff-history-through-2026-11-02.md](docs/handoff-history-through-2026-11-02.md)
+
 Chốt bàn giao: 06/11/2026 (Asia/Saigon). Code đang live: commit mới nhất trên main (06/11: xám trung tính, bút dạ, thẻ Work đen/trắng). Handoff này thay các mô tả cũ; lịch sử được giữ ở [docs/handoff-history-through-2026-11-02.md](docs/handoff-history-through-2026-11-02.md).
 
 ## Repo và vận hành
 
 - Local: `D:/Files/Claude/website_personal_0xhieu`. GitHub: https://github.com/KattyFury/website_personal_0xhieu, nhánh main.
 - Production: https://0xhieu.xyz. Cloudflare Pages project `0xhieu-xyz`, auto-deploy main. Push GitHub rồi xác minh production.
-- Design source: `D:/Files/Claude/repo_personal_design`, main `20627b8`. `tokens.json` → `export_web.py` → `web.css`; website dùng CSS sinh ra `design-tokens.css` có hash.
+- Design source: `D:/Files/Claude/repo_personal_design` (design system **v4 Bento**, main `9ad5b8a`). Figma: https://www.figma.com/design/V0GuQUwipow6yFqNi4y7qg/hieu. `tokens.json` → `export_web.py` → `web.css`; website dùng CSS sinh ra `design-tokens.css` có hash.
 - Trang: CV `/`, Valuation `/valuation`, Work `/work`. `/airdrop` redirect sang `/work`. CV tiếng Anh cố định; Valuation/Work có VI/EN.
 - `index.html`: giao diện/CSS component/JS. `functions/api/val.js`: dữ liệu Valuation. `functions/api/val-fetch.js`: Fetch SURF/CoinGecko. `functions/api/private.js`: CRUD Work. `functions/api/wte.js`: Work public.
 - `functions/valuation.js`: SSR đọc KV, điền hệ số/market/table để crawler đọc được. Công thức và markup phải khớp client nếu sau này sửa.
@@ -19,27 +21,88 @@ Chốt bàn giao: 06/11/2026 (Asia/Saigon). Code đang live: commit mới nhất
 - Không in/commit secret. Secret chung: `D:/Files/Claude/.secrets/keys.env`; production dùng encrypted bindings. Admin credential `ADMIN_PASS`; key SURF local tên `SURF_API`, runtime `SURF_API_KEY`. Không ghi giá trị vào handoff/chat/script args.
 - Không nhắn người khác hoặc tự gửi thông báo ra dịch vụ ngoài.
 
-## Design đang dùng
+## Design đang dùng (08/11/2026)
 
-- **07/11/2026: site chuyển sang giao diện Bento V2** (anh chọn từ 3 mockup ở `docs/redesign-2026-11/`). Luật chi tiết: mục "Bento V2" đầu `DESIGN_SYSTEM.md` — ưu tiên hơn các gạch đầu dòng cũ bên dưới khi mâu thuẫn (header xám, viền line, Work 2 thẻ/hàng, thanh DAILY trong thẻ…).
+Nguồn sự thật:
+- `repo_personal_design`: README mục "Bento v4" và "Kiểu chữ — đặt tên theo chức năng", cùng `tokens.json`.
+- Trong repo này: mục đầu `DESIGN_SYSTEM.md`.
 
-Chi tiết chuẩn tại [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md), ưu tiên hiện trạng này hơn các log cũ.
+Mọi gạch đầu dòng cũ bên dưới file đó (header xám, viền, radius 8, Work 2 thẻ/hàng, thanh rank…) đã hết hiệu lực.
 
-- Tone trắng-xám-đen (anh chốt 04/11/2026). Text thường đen; phụ xám; cam `#F5B301` chỉ cho nút, control đang chọn và highlight. Highlight = bút dạ: chữ đen đậm600 trên nền cam (06/11). CẤM cam đất `#B84A0C` và nền kem `#FEF5D9`.
-- Header box/bảng nền xám trung tính `#E5E5E5` (token product `--ds-color-surface`, 06/11 thay mist `#ECF0F8`), chữ đen. Thân box trắng. Popup xám, ô nhập trắng, focus đen. Trong CSS site `--mist` giờ trỏ vào token này (khai trên body). Không đổi lại cam đặc/cam đất/kem/xanh.
-- Cả3 trang/navbar/footer chung frame border-box max1280, inset24 desktop/16 mobile. CV spacious chỉ khác khoảng dọc/nội bộ, không khác trục ngang.
-- Work/Valuation compact: card paddingX12, sectionY8, gap12; header16/24/600; body14/20. Card/control/badge radius8, popup16.
-- Nút/action icon bấm được có shadow `0 2px 8px rgba(0,0,0,.32)`; card/chip/read-only/disabled không bóng. Tab nav/link chữ giữ kiểu text.
-- VI/EN: một native button role=switch, một thumb trượt, không phải2 nút tròn. Desktop80×40/mobile64×32. Shadow trên control tổng.
-- Thẻ trong header card Work (06/11): nền đen chữ trắng cho rank S, nhãn work-to-earn (thay rank w2e), high-potential, narrative top 5 của box Narrative đang hot (lấy `narrativeRanking()` lúc render, tự đổi theo data). Còn lại trắng viền chữ đen; không còn chữ xám trên thẻ.
-- Work mỗi dự án một thẻ: desktop2/hàng, ≤900px1/hàng. DAILY nền xám trung tính, không viền cam; task đen đậm400, rê chuột mới đậm600. Task không cắt chữ.
-- Nhóm **learn-to-grow (l2g)** (07/11): phân loại `Learn-to-Grow`, xếp trên cả w2e, không có rank (như w2e). Việc học hằng ngày của anh → form mặc định Personal; card l2g cá nhân nằm trong nhóm learn-to-grow (không vào "Cá nhân"), chỉ admin thấy. Khách không có card l2g thì nút l2g trên thanh tự ẩn. Server: `TYPE_GROUPS` trong `functions/api/private.js` khớp `WTE_TYPE_GROUP` trong index.html.
-- Rank Work: một thanh liền 48px/ô (l2g/w2e/S/A/B/C, co theo số nút đang hiện) với vùng cam trượt qua (`$` trông giống `S` nên đã đổi). Kéo/click/phím và scroll spy. Pointer move/up theo window để cuộn không làm mất thao tác. Nhãn rank trong card nền trắng/viền/chữ xám, đồng cấp nhãn phân loại.
-- CV hero top96/48, section gap64/32, body16/24. Giữ nội dung và tagline `Sharing POVs on Crypto and AI`.
+**Phong cách chung**
+- **Bento:** nền canvas `#F2F2F0`, tile trắng bo 20, không viền, không bóng. Đường kẻ hair `#ECECEA`. Tile tối `#161616`. Accent `#F5B301`, để đậm hết mức, không làm nhạt.
+- **Giới hạn màu:** mỗi màn tối đa 1 tile vàng và 1 tile đen.
+- **Bo góc:** chỉ 3 mức, 20 / 10 / pill.
+- **Bóng:** chỉ cho thứ nổi: navbar, nút trên toolbar, nút mèo, popup.
+- **Navbar:** viên trắng nổi, tab đang mở nền vàng.
+- **Hàng tiêu đề trang:** nằm thẳng trên canvas, không có dải trắng.
+
+**Chữ**
+- Kiểu chữ đặt tên theo chức năng, gọi bằng biến `--ds-type-<tên>-size/line/tracking`.
+- Các kiểu: display = Tiêu đề lớn, page, header, content, secondary, data, label, button, note, input, hero.
+- **Cấm gõ font-size px tay**, cấm viết đè cỡ chữ trong media query. Mobile (≤640) tự đổi cỡ qua biến.
+- Mobile nhỏ và thoáng; desktop to, chụp ra làm banner được. Độ đậm chỉ 400 / 600 / 700.
+- Bảng cỡ chi tiết nằm trong README của repo design. Lần sau anh chỉnh kiểu nào thì sửa `tokens.json` (`bento.type`) → `python export_web.py` → `python tools/sync-design-system.py` ở repo này.
+- Font: site dùng font hệ thống (iPhone/Mac là SF Pro, Windows là Segoe UI), Figma dùng Inter. Anh đã hỏi font chính là gì; tôi đề xuất tải Inter cho site để mọi máy giống nhau, **anh chưa trả lời**.
+
+**Icon trên site:** vẫn là SVG nội tuyến trong `WTE_ICON`.
+
+**App icon / favicon:** mèo bo góc (góc trong suốt), cache `?v=4`.
+
+## Work (08/11/2026)
+
+**Tiêu đề trang:** "Work-to-earn" (cả VI và EN).
+
+**Thứ tự trên trang:** dropdown "Dự án & hướng dẫn tham gia" → checklist Hôm nay → ô Lịch hôm nay → checklist Tuần này.
+
+**Dropdown "Dự án & hướng dẫn tham gia"**
+- Mặc định gập; đổi ngôn ngữ thì giữ nguyên trạng thái mở/gập.
+- Bên trong chia nhóm: Learn-to-grow / Cá nhân / Work-to-earn / Rank S…C. Nhãn nhóm viết hoa chữ đầu.
+- Mỗi dự án KHÔNG gập: logo · tên · thẻ `High potential`/`Low potential` + narrative · ⋮ (admin).
+- Ngay dưới là 1 hàng chip cao 30: Website · X (icon) · Discord (icon) · **Hướng dẫn tham gia**.
+  - Chip Hướng dẫn tham gia nền đen chữ vàng, mở bài đăng X.
+  - Link lấy từ Get Started: ưu tiên mục có chữ hướng dẫn/tham gia; không có thì lấy link đầu tiên.
+- Mobile: hàng chip bỏ thụt trái để nằm 1 dòng.
+
+**Checklist**
+- Checklist ngày: ô vàng (ngày, số việc, vòng tiến độ) + danh sách mọi việc DAILY. Thứ tự l2g → cá nhân → w2e → S…C.
+- Checklist tuần: ô đen (vòng vàng) + mọi việc WEEKLY. Tick tự về 0 vào thứ Hai.
+- Tick lưu localStorage `wte-done` / `wte-done-week`, **chỉ trên máy đang dùng**. Đồng bộ tick giữa các máy qua KV chưa làm.
+
+**Giờ báo (tuỳ chọn)**
+- Form: việc ngày có `time` (HH:MM); việc tuần có `dow` (1 = T2 … 7 = CN) + `time`. Server `itemList` trong `functions/api/private.js` lọc và giữ 2 trường này.
+- Ô "Lịch hôm nay": gồm việc ngày có giờ và việc tuần rơi đúng thứ hôm nay.
+  - Việc kế tiếp = chip vàng "Sắp tới"; quá giờ chưa tick = đỏ "Quá giờ"; đã tick = gạch ngang.
+  - Tự cập nhật mỗi phút. Không có việc hẹn hôm nay thì ô không hiện.
+- **Chỉ báo trên web.** Anh chọn không dùng Telegram hay push.
+
+**Đã bỏ:** thanh kéo chọn rank l2g/w2e/S/A/B/C (anh nói không cần nữa).
+
+**Nhóm Learn-to-grow (l2g):** phân loại `Learn-to-Grow`, xếp trên w2e, không có rank, mặc định Personal. `TYPE_GROUPS` trong `private.js` phải khớp `WTE_TYPE_GROUP` trong `index.html`.
+
+## Figma + design system (08/11/2026)
+
+**File Figma:** https://www.figma.com/design/V0GuQUwipow6yFqNi4y7qg/hieu, 4 page Cover / Foundations / Components / Icons.
+- **Variables:**
+  - `Primitives`: 16 họ màu × 11 sắc độ + neutral.
+  - `Bento`: 22 màu ngữ nghĩa, Light/Dark.
+  - `Spacing & Radius`.
+- **Style:** 24 text style `Mobile/<Kiểu>` và `Desktop/<Kiểu>`, font Inter; effect style `Shadow/Floating`.
+- **Components:** Button, Tag, Link chip, Checkbox, Stat tile, Task row, Project row, Dropdown tile, Navbar. Tất cả gắn biến màu và text style.
+- **Icons:**
+  - 328 icon Lucide 1.59.0, component `Icon/<tên>`, chia 9 nhóm.
+  - Nhóm Brand: `Brand/x`, `Brand/discord`, `Brand/telegram`, `Brand/github`. Lucide 1.x đã bỏ logo thương hiệu nên vẽ thêm, nét stroke 2, dùng đúng hình vẽ X/Discord của site.
+
+**Repo `repo_personal_design`**
+- `tokens.json` có thêm `palette` (bảng màu mở rộng) và `figma` (link, cấu trúc file). Export ra `--ds-palette-<họ>-<sắc độ>`.
+- Repo và Figma phải khớp nhau. Sửa token thì nhớ cập nhật cả Figma, hoặc báo anh.
 
 ## Valuation: UI và dữ liệu
 
-- Bảng7 cột,8 hàng hiện trên desktop/mobile. Header56, row40; cuộn trong bảng, không tràn page. Mobile ẩn Narrative/TGE/ATL.
+- Bảng 7 cột, hiện 8 hàng. Header 56, hàng 40; cuộn dọc trong bảng.
+- Mobile **không kéo ngang**: ẩn Narrative/TGE/ATL, và ô ×ATH bỏ phần "đáy →" (class `.ath-from`), chỉ còn `đỉnh (×N)`. Cột đo bằng `--ck5m` (anh chốt 07/11).
+- Bố cục Bento: 3 ô (Mặt bằng định giá = ô vàng, Hero or Zero = ô đen, Narrative = ô trắng) nằm TRÊN bảng.
+- Nút camera chỉ chụp tiêu đề + 3 ô, không chụp bảng (cắt chiều cao ngay dưới `.val-boxes`).
 - Giữ thứ tự ngày TGE cũ→mới. Mỗi lần mở Valuation tự cuộn bảng tới cuối (dự án mới nhất), kể cả tải data chậm; không cuộn page, không ép xuống cuối khi chỉ đổi ngôn ngữ/render khác.
 -3 box phụ cao cố định328: desktop3 cột, tablet/mobile2 cột bằng nhau. Nhãn trái, giá trị phải; thân dài thì cuộn.
 - ATH `đầu → cuối (×N)` trên1 dòng: hai số đen600, tỷ số bút dạ. Ticker VC FDV<300M đen đậm, ≥300M bút dạ, không chấm cam. Số chính cả 3 box cũng bút dạ, kể cả Hero or Zero (anh bỏ chữ đỏ ở box này 06/11, thấy đỏ lẻ loi).
@@ -102,6 +165,18 @@ Ghi chú3 box VI/EN đã rút gọn và kiểm đúng ý. Narrative note nói r�
 Anh đề xuất dashboard quan sát dự án chưa TGE để tham gia airdrop: tên/X/Discord/narrative/TGE/hướng tham gia/hoạt động X. Chưa chốt UI, route, kiến trúc, chưa cho phép thay Work hoặc Valuation để nhét dashboard. Đã thăm dò SURF API, phương án ở `docs/SURF_PRE_TGE_DASHBOARD.md`. Không tự build/deploy dashboard mới khi mới đang bàn ý tưởng.
 
 ## Nhật ký bàn giao
+
+- **08/11/2026:**
+  - Design system v4 Bento, kiểu chữ đặt tên theo chức năng; site bỏ mọi cỡ px viết tay.
+  - App icon bo góc.
+  - Box dự án hiện sẵn link + Hướng dẫn tham gia; High/Low potential; nhãn nhóm viết hoa.
+  - Chép design system sang Figma: biến, style, component, 328 icon Lucide + Brand.
+- **07/11/2026:**
+  - Giao diện Bento V2, l2g.
+  - Hôm nay / Tuần này / Lịch hôm nay, giờ báo tuỳ chọn.
+  - Bỏ thanh rank.
+  - Bảng TGE mobile không kéo ngang; camera chỉ chụp 3 ô.
+  - Brand `#F5B301`.
 
 - 06/11/2026: xám trung tính `#E5E5E5` thay mist (design system `47fc26f`); số nhấn kiểu bút dạ; thẻ Work đen/trắng theo rank/potential/narrative top 5 (ban đầu top 4, anh đổi thành 5 cùng ngày). Ảnh QA ở Desktop `0xhieu-2026-11-06`. Chụp headless Chrome ở 390 bị cắt mép phải cả production — là giới hạn của headless, không phải lỗi trang.
 
