@@ -651,6 +651,8 @@
     /* Task luôn hiện đủ chữ: xuống dòng bao nhiêu cũng được, KHÔNG cắt "…" (user chốt 2026-10-28) */
     .wte-task-text { flex: 1; min-width: 0; white-space: normal; overflow-wrap: anywhere; }
 
+    /* Thanh rank nổi: cùng đáy với nút mèo (cao 48 cả hai) → hai thứ thẳng một hàng. */
+    #rank-filter-float { position: fixed; z-index: 50; bottom: 32px; left: 50%; transform: translateX(-50%); }
     /* Một thanh rank liền: một vùng sáng trượt, native range hỗ trợ kéo/phím. */
     .rank-bar {
       --rank-index: 0; --rank-count: 6; position: relative; isolation: isolate; width: calc(var(--rank-count) * 48px + 8px); height: 48px;
@@ -942,6 +944,8 @@
 
 
       #cat-btn  { right: 16px; bottom: 16px; }
+      /* Thanh rank cùng đáy 16 với mèo; căn giữa phần ngang còn lại bên trái mèo (16 + 48 + 16) để không đè lên mèo */
+      #rank-filter-float { bottom: 16px; left: calc((100% - 80px) / 2); }
       #cat-hint { right: 16px; bottom: 80px; }
     }
   </style>
@@ -1197,7 +1201,7 @@
   </button>
   <div id="cat-hint">Agent — coming soon</div>
 
-  <div id="rank-filter-float" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:50">
+  <div id="rank-filter-float" style="display:none">
     <div class="rank-bar" id="rank-filter">
       <span class="active" data-rank="LEARN" aria-hidden="true">l2g</span>
       <span data-rank="INCOME" aria-hidden="true">w2e</span>
