@@ -172,7 +172,6 @@
       position: static; display: flex; align-items: center; justify-content: space-between; gap: 16px;
       padding: 16px 0;
     }
-    .ard-subtabs { background: var(--ground); }
     /* tiêu đề màn = web-h3 24/32 */
     .val-intro {
       flex: 1; min-width: 0; min-height: 40px; padding: 0; overflow: hidden;
@@ -548,6 +547,10 @@
       width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; background: var(--accent);
       font-size: 20px; font-weight: 800; letter-spacing: -.03em; font-variant-numeric: tabular-nums; color: var(--ink);
     }
+    .today-hero--dark { background: var(--dark-tile); }
+    .today-hero--dark .today-date, .today-hero--dark .today-count { color: var(--ground); }
+    .today-hero--dark .today-ring { background: conic-gradient(var(--accent) calc(var(--p) * 1%), rgba(255,255,255,.16) 0); }
+    .today-hero--dark .today-ring span { background: var(--dark-tile); color: var(--accent); }
     .today-list { padding: 4px 16px; border-radius: var(--tile-r); background: var(--tile); }
     .today-empty { padding: 16px 0; font-size: 15px; color: var(--grey); }
     .dt { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-top: 1px solid var(--hair); }
@@ -572,30 +575,37 @@
     .dt-link:hover { color: var(--ink); background: var(--mist); }
     .dt-link .wte-ico { width: 16px; height: 16px; }
 
-    .wte-group { scroll-margin-top: 80px; }
+    /* Box "Dự án & hướng dẫn tham gia" (đầu trang Work): 1 ô trắng, mỗi dự án 1 hàng gập/mở */
+    .pj-box { padding: 16px 16px 4px; border-radius: var(--tile-r); background: var(--tile); }
+    .pj-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+    .pj-title { font-size: 20px; font-weight: 800; line-height: 28px; letter-spacing: -.025em; color: var(--ink); }
+    .pj-sub { flex: none; font-size: 13px; font-weight: 600; color: var(--grey); }
+    .wte-group { padding-top: 12px; scroll-margin-top: 80px; }
     .wte-group-label {
-      display: flex; align-items: center; gap: 8px; margin: 0 4px 8px;
-      font-size: 14px; font-weight: 600; line-height: 20px; letter-spacing: -.006em; color: var(--grey);
+      display: flex; align-items: center; gap: 8px; margin-bottom: 2px;
+      font-size: 13px; font-weight: 600; line-height: 18px; color: var(--grey);
     }
-    .wte-rank-group { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: start; }
-    .wte-rank-group .wte-card { width: 100%; min-width: 0; display: block; }
-    .wte-card[open] { grid-column: span 2; }
+    .wte-rank-group { display: flex; flex-direction: column; }
+    .wte-rank-group .wte-card { width: 100%; min-width: 0; display: block; border-radius: 0; background: none; border-top: 1px solid var(--hair); }
 
-    /* Đầu ô (summary): logo 36 · chip rank góc phải · tên · thẻ */
+    /* Hàng dự án (summary): logo · tên + thẻ · nút sửa (admin) · mũi tên gập */
     .wte-card-head {
-      position: relative; padding: 16px; list-style: none; cursor: pointer;
-      display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
+      padding: 10px 0; list-style: none; cursor: pointer;
+      display: flex; align-items: center; gap: 12px;
     }
     .wte-card-head::-webkit-details-marker { display: none; }
-    .wte-card-top { width: 100%; display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .wte-card-head::after {
+      content: ''; flex: none; width: 8px; height: 8px; margin: 0 6px 4px 0;
+      border-right: 2px solid var(--grey); border-bottom: 2px solid var(--grey); transform: rotate(45deg); transition: transform .15s;
+    }
+    .wte-card[open] > .wte-card-head::after { margin: 4px 6px 0 0; transform: rotate(-135deg); }
+    .wte-card-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
     .wte-logo { display: block; flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; object-fit: cover; background: var(--mist); }
-    .wte-card-top .wte-logo, .wte-logo-txt { width: 40px; height: 40px; border-radius: 12px; }
-    .wte-logo-txt { display: grid; place-items: center; background: var(--canvas); font-size: 16px; font-weight: 700; color: var(--ink); }
-    .wte-rank-chip { flex: none; min-width: 32px; height: 28px; padding: 0 8px; border-radius: 8px; display: grid; place-items: center; background: var(--canvas); font-size: 13px; font-weight: 800; color: var(--ink); }
-    .wte-rank-chip--strong { background: var(--ink); color: var(--accent); }
+    .wte-card-head .wte-logo, .wte-logo-txt { width: 36px; height: 36px; border-radius: 10px; }
+    .wte-logo-txt { display: grid; place-items: center; flex-shrink: 0; background: var(--canvas); font-size: 16px; font-weight: 700; color: var(--ink); }
     .wte-name {
       min-width: 0; white-space: normal; overflow-wrap: anywhere;
-      font-size: 17px; font-weight: 700; line-height: 24px; letter-spacing: -.02em; color: var(--ink); text-decoration: none;
+      font-size: 16px; font-weight: 700; line-height: 22px; letter-spacing: -.02em; color: var(--ink); text-decoration: none;
     }
     .wte-tags { display: flex; flex-wrap: wrap; gap: 4px; }
     .wte-tag {
@@ -607,12 +617,11 @@
     .wte-tag .wte-ico { width: 14px; height: 14px; }
     /* Thẻ quan trọng (high-potential, narrative top 5, nhóm l2g/w2e) nền đen chữ trắng */
     .wte-tag--strong { background: var(--ink); color: var(--ground); }
-    .wte-card-acts { display: flex; align-items: center; gap: 4px; }
-    .wte-card-head .wte-opt { width: 28px; height: 28px; box-shadow: none; }
+    .wte-card-head .wte-opt { flex: none; width: 28px; height: 28px; box-shadow: none; }
     .wte-card-head .wte-opt .wte-ico { width: 16px; height: 16px; }
 
     /* Thân ô khi mở */
-    .wte-card-body { padding: 0 16px 8px; }
+    .wte-card-body { padding: 0 0 8px 48px; }
     .wte-socials { display: flex; gap: 8px; padding-bottom: 8px; }
     .wte-social {
       height: 36px; padding: 0 12px; border-radius: 10px; gap: 6px;
@@ -804,7 +813,7 @@
     /* Web profiles: CV spacious; Valuation/Work và popup thao tác compact. */
     #cv-view main { padding-bottom: 96px; }
     .val-head-ctrl { gap: 12px; }
-    .val-head-ctrl .lang-dd-btn, .val-head-ctrl .camera-btn { border: 1px solid var(--line); border-radius: var(--ds-product-control-radius); }
+    .val-head-ctrl .lang-dd-btn, .val-head-ctrl .camera-btn { border: none; border-radius: 9999px; background: var(--tile); }
     .val-head-ctrl .lang-dd-btn { min-width: 0; padding: 0 12px; }
     .val-head-ctrl .lang-dd-btn.is-plus { padding: 0; }
     /* Bóng cho nút và icon control; thẻ/nhãn chỉ đọc giữ phẳng. */
@@ -888,8 +897,11 @@
       #airdrop-view .val-head-ctrl .lang-btn { min-width: 28px; padding: 0 4px; }
       .language-switch { width: 64px; height: 32px; }
 
-      /* Valuation — bảng ẩn 3 cột phụ Narrative + TGE + ×ATL để giữ chữ 14; ×ATH (dạng "đáy → đỉnh") được cột rộng nhất */
-      #tge-section .val-table { min-width: calc(var(--ck1, 64px) + var(--ck4, 56px) + var(--ck5, 232px) + var(--ck7, 64px) + 64px); }
+      /* Valuation — thiếu chỗ thì BỎ BỚT, không bắt kéo ngang (user chốt 07/11): ẩn Narrative + TGE + ×ATL,
+         ×ATH bỏ phần "đáy →" chỉ còn "đỉnh (×N)" */
+      #tge-section .val-table { min-width: calc(var(--ck1, 64px) + var(--ck4, 56px) + var(--ck5m, 120px) + var(--ck7, 64px) + 64px); }
+      #tge-section th:nth-child(5), #tge-section td:nth-child(5) { width: calc(var(--ck5m, 120px) + 16px); }
+      #tge-section .ath-from { display: none; }
       #tge-section thead th, #tge-section tbody td,
       #tge-section th:first-child, #tge-section td:first-child,
       #tge-section th:last-child, #tge-section td:last-child { padding: 0 8px; }
@@ -918,12 +930,7 @@
       .today-count { font-size: 28px; line-height: 32px; }
       .today-ring { right: 16px; width: 80px; height: 80px; margin-top: -40px; }
       .today-ring span { width: 62px; height: 62px; font-size: 17px; }
-      .wte-rank-group { gap: 10px; }
-      .wte-card[open] { grid-column: 1 / -1; }
-      .wte-card-head { padding: 14px; }
-      .wte-card-top .wte-logo, .wte-logo-txt { width: 36px; height: 36px; border-radius: 10px; }
-      .wte-name { font-size: 16px; line-height: 22px; }
-      .wte-card-body { padding: 0 14px 6px; }
+      .wte-card-body { padding: 0 0 8px; }
 
 
       #cat-btn  { right: 16px; bottom: 16px; }
@@ -2152,9 +2159,9 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         const athGain = (start, end) => start > 0 && end > 0 && Number.isFinite(end / start)
           ? `<span class="ath-gain">(×${fmtMult(end / start)})</span>` : '';
         const athCell = xATH > 0
-          ? (xPre > 0 ? `<span class="ath-pre">${fmtMult(xPre)}</span> <span class="ath-arrow">→</span> ${fmtMult(xATH)}${athGain(xPre, xATH)}` : fmtMult(xATH))
+          ? (xPre > 0 ? `<span class="ath-from"><span class="ath-pre">${fmtMult(xPre)}</span> <span class="ath-arrow">→</span> </span>${fmtMult(xATH)}${athGain(xPre, xATH)}` : fmtMult(xATH))
           : athEarly
-            ? `<span class="ath-early">${fmtMult(xTGE)}</span> <span class="ath-arrow">→</span> <span class="ath-early">${fmtMult(xMult(e.ath, e))}</span>${athGain(xTGE, xMult(e.ath, e))}`
+            ? `<span class="ath-from"><span class="ath-early">${fmtMult(xTGE)}</span> <span class="ath-arrow">→</span> </span><span class="ath-early">${fmtMult(xMult(e.ath, e))}</span>${athGain(xTGE, xMult(e.ath, e))}`
             : '—';
         // Cam chỉ ở chỗ mang nghĩa (ngưỡng trùng Market condition ≥13 và Danger Zone ≥15)
         const tgeCls = xTGE >= 13 ? 'm-hot' : '';
@@ -2198,6 +2205,11 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         probe.querySelectorAll(`th:nth-child(${i}) .ck, td:nth-child(${i}) .ck`).forEach(s => { w = Math.max(w, s.getBoundingClientRect().width); });
         document.documentElement.style.setProperty('--ck' + i, Math.ceil(w) + 'px');
       }
+      // Mobile bỏ phần "đáy →" của ×ATH (chỉ còn đỉnh + (×N)) → đo lại cột 5 không có phần đó.
+      probe.querySelectorAll('.ath-from').forEach(x => { x.style.display = 'none'; });
+      let w5 = 0;
+      probe.querySelectorAll('th:nth-child(5) .ck, td:nth-child(5) .ck').forEach(x => { w5 = Math.max(w5, x.getBoundingClientRect().width); });
+      document.documentElement.style.setProperty('--ck5m', Math.ceil(w5) + 'px');
       probe.remove();
       // Rows run oldest → newest. Position the visible table at the latest
       // projects on entry, including when data arrives after the tab opens.
@@ -2733,8 +2745,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
           ? `<img class="${cls}" src="https://unavatar.io/twitter/${handle}" alt="" loading="lazy" />`
           : `<span class="wte-logo-txt">${(p.name || '?').trim().charAt(0)}</span>`;
       };
-      // Ô dự án (bento): <details> gập sẵn — đầu ô = logo · chip rank · tên · thẻ; mở ra = link + Get Started + Weekly.
-      // DAILY không lặp lại trong ô: đã gom hết lên checklist "Hôm nay".
+      // Hàng dự án: <details> gập sẵn — logo · tên · thẻ; mở ra = hướng dẫn tham gia.
       const cardHtml = (p, personal = false) => {
         const cardId = personal
           ? 'wte-personal-' + p.id
@@ -2746,14 +2757,14 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
           p.twitter ? `<a class="wte-social" href="${p.twitter}" target="_blank" rel="noopener" aria-label="X">${wteIcon('x')}X</a>` : '',
           p.discord ? `<a class="wte-social" href="${p.discord}" target="_blank" rel="noopener" aria-label="Discord">${wteIcon('discord')}Discord</a>` : '',
         ].join('');
+        // Mở ra = hướng dẫn tham gia (link + Get Started). Daily/Weekly đã gom lên checklist ngày/tuần.
         const body = (links ? `<div class="wte-socials">${links}</div>` : '')
-          + section('Get Started', p.getStarted || [], 'getStarted')
-          + section('Weekly', p.weekly || [], 'weekly');
+          + section('Get Started', p.getStarted || [], 'getStarted');
         return `<details class="wte-card wte-card--${g}" id="${cardId}">
-          <summary class="wte-card-head">
-            <span class="wte-card-top">${logoOf(p)}<span class="wte-card-acts">${adminUnlocked ? `<button class="wte-opt" data-id="${p.id}" title="Sửa task" aria-label="Sửa task">${wteIcon('more')}</button>` : ''}<span class="wte-rank-chip${(isTypeGroup(g) || g === 'S') ? ' wte-rank-chip--strong' : ''}">${RANK_LABEL[g] || g}</span></span></span>
-            <span class="wte-name">${p.name}</span>
-            <span class="wte-tags">${potLv ? `<span class="wte-tag wte-pot--${potLv}${strong(potLv === 'high')}">${wteIcon(potLv)}${potLv}</span>` : ''}${p.type ? `<span class="wte-tag wte-narr${strong(isTypeGroup(g) || topNarr.has(p.type.toLowerCase()))}">${tagCase(p.type)}</span>` : ''}</span>
+          <summary class="wte-card-head">${logoOf(p)}
+            <span class="wte-card-main"><span class="wte-name">${p.name}</span>
+              <span class="wte-tags">${potLv ? `<span class="wte-tag wte-pot--${potLv}${strong(potLv === 'high')}">${wteIcon(potLv)}${potLv}</span>` : ''}${p.type ? `<span class="wte-tag wte-narr${strong(isTypeGroup(g) || topNarr.has(p.type.toLowerCase()))}">${tagCase(p.type)}</span>` : ''}</span></span>
+            ${adminUnlocked ? `<button class="wte-opt" data-id="${p.id}" title="Sửa task" aria-label="Sửa task">${wteIcon('more')}</button>` : ''}
           </summary>
           <div class="wte-card-body">${body || `<div class="today-empty">${wteLang === 'EN' ? 'No guide yet' : 'Chưa có hướng dẫn'}</div>`}</div>
         </details>`;
@@ -2783,70 +2794,96 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
            </div>`
         : '';
 
-      // ── "Hôm nay": gom mọi task DAILY (l2g → cá nhân → w2e → S … C), tick lưu theo ngày trên máy này ──
-      const day = todayStr();
-      const done = loadDone(day);
+      // ── Checklist ngày + tuần: gom mọi task DAILY / WEEKLY (l2g → cá nhân → w2e → S … C) ──
+      const EN = wteLang === 'EN';
       const ordered = [...groups.LEARN, ...myOther,
                        ...WTE_GROUPS.filter(r => r !== 'LEARN').flatMap(r => groups[r])];
-      const rows = [];
-      ordered.forEach(p => (p.daily || []).forEach((item, i) => {
-        const k = (p.id || p.name) + '#' + i;
-        const g = groupOf(p);
-        rows.push(`<div class="dt">
-          <label class="dt-check"><input type="checkbox" data-k="${k}"${done.has(k) ? ' checked' : ''} /><span class="dt-box">${wteIcon('check')}</span>
-            <span class="dt-main"><span class="dt-text">${item.text}</span>
-              <span class="dt-meta">${logoOf(p)}${p.name}<span class="wte-tag${strong(isTypeGroup(g) || g === 'S')}">${RANK_LABEL[g] || g}</span></span></span></label>
-          ${item.link ? `<a class="dt-link" href="${item.link}" target="_blank" rel="noopener" aria-label="Link">${wteIcon('link')}</a>` : ''}
-        </div>`);
-      }));
-      const EN = wteLang === 'EN';
-      const dateLabel = new Date().toLocaleDateString(EN ? 'en-US' : 'vi-VN', { weekday: 'long', day: '2-digit', month: '2-digit' });
-      const todayHtml = `<section class="today" id="wte-today">
-          <div class="today-hero">
-            <div class="today-date">${dateLabel}</div>
-            <div class="today-count">${rows.length} ${EN ? 'daily<br>tasks' : 'việc<br>hằng ngày'}</div>
+      const checkRows = (field, scope) => {
+        const done = loadDone(scope);
+        const rows = [];
+        ordered.forEach(p => (p[field] || []).forEach((item, i) => {
+          const k = (p.id || p.name) + '#' + i;
+          const g = groupOf(p);
+          rows.push(`<div class="dt">
+            <label class="dt-check"><input type="checkbox" data-s="${scope}" data-k="${k}"${done.has(k) ? ' checked' : ''} /><span class="dt-box">${wteIcon('check')}</span>
+              <span class="dt-main"><span class="dt-text">${item.text}</span>
+                <span class="dt-meta">${logoOf(p)}${p.name}<span class="wte-tag${strong(isTypeGroup(g) || g === 'S')}">${RANK_LABEL[g] || g}</span></span></span></label>
+            ${item.link ? `<a class="dt-link" href="${item.link}" target="_blank" rel="noopener" aria-label="Link">${wteIcon('link')}</a>` : ''}
+          </div>`);
+        }));
+        return rows;
+      };
+      const checklist = (id, scope, field, date, unit, dark) => {
+        const rows = checkRows(field, scope);
+        return `<section class="today" id="${id}">
+          <div class="today-hero${dark ? ' today-hero--dark' : ''}">
+            <div class="today-date">${date}</div>
+            <div class="today-count">${rows.length} ${unit}</div>
             <div class="today-ring"><span></span></div>
           </div>
-          <div class="today-list">${rows.join('') || `<div class="today-empty">${EN ? 'No daily tasks' : 'Chưa có việc hằng ngày'}</div>`}</div>
+          <div class="today-list">${rows.join('') || `<div class="today-empty">${EN ? 'Nothing yet' : 'Chưa có việc'}</div>`}</div>
         </section>`;
+      };
+      const dm = d => `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}`;
+      const mon = new Date(weekStr() + 'T00:00'); const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
+      const todayHtml = checklist('wte-today', 'd', 'daily',
+        new Date().toLocaleDateString(EN ? 'en-US' : 'vi-VN', { weekday: 'long', day: '2-digit', month: '2-digit' }),
+        EN ? 'daily<br>tasks' : 'việc<br>hằng ngày', false);
+      const weekHtml = checklist('wte-week', 'w', 'weekly',
+        `${EN ? 'This week' : 'Tuần này'} · ${dm(mon)} – ${dm(sun)}`,
+        EN ? 'weekly<br>tasks' : 'việc<br>hằng tuần', true);
 
-      container.innerHTML = todayHtml + personalHtml + WTE_GROUPS
+      // ── Box "Dự án & hướng dẫn tham gia" — đầu trang, trên checklist ──
+      const groupsHtml = personalHtml + WTE_GROUPS
         .filter(r => groups[r].length)
         .map(r => `<div id="wte-rank-${r}" class="wte-group">
              <div class="wte-group-label">${groupLabel(r)}</div>
              <div class="wte-rank-group wte-rank-group--${r}">${groups[r].map(p => cardHtml(p, !!p._personal)).join('')}</div>
            </div>`)
         .join('');
+      const nProj = myOther.length + WTE_GROUPS.reduce((n, r) => n + groups[r].length, 0);
+      const projHtml = `<section class="pj-box" id="wte-projects">
+          <div class="pj-head"><span class="pj-title">${EN ? 'Projects & how to join' : 'Dự án & hướng dẫn tham gia'}</span><span class="pj-sub">${nProj}</span></div>
+          ${groupsHtml}
+        </section>`;
+
+      container.innerHTML = projHtml + todayHtml + weekHtml;
       syncTodayRing();
       observeRankSections();
     }
 
-    // Tick "Hôm nay": lưu localStorage { day, keys } — sang ngày mới tự về 0. Chỉ trên máy đang dùng.
-    const DONE_STORE = 'wte-done';
+    // Tick checklist: lưu localStorage { period, keys } — ngày ('d') / tuần ('w', tính từ thứ Hai).
+    // Sang ngày/tuần mới tự về 0. Chỉ trên máy đang dùng.
     const todayStr = () => new Date().toLocaleDateString('sv-SE');   // YYYY-MM-DD theo giờ máy
-    function loadDone(day) {
-      try { const o = JSON.parse(localStorage.getItem(DONE_STORE) || '{}'); return new Set(o.day === day ? o.keys : []); }
+    const weekStr = () => { const d = new Date(); d.setDate(d.getDate() - (d.getDay() + 6) % 7); return d.toLocaleDateString('sv-SE'); };
+    const TICK = { d: ['wte-done', todayStr], w: ['wte-done-week', weekStr] };
+    function loadDone(scope) {
+      const [key, period] = TICK[scope];
+      try { const o = JSON.parse(localStorage.getItem(key) || '{}'); return new Set(o.day === period() ? o.keys : []); }
       catch { return new Set(); }
     }
-    function saveDone(day, set) {
-      try { localStorage.setItem(DONE_STORE, JSON.stringify({ day, keys: [...set] })); } catch {}
+    function saveDone(scope, set) {
+      const [key, period] = TICK[scope];
+      try { localStorage.setItem(key, JSON.stringify({ day: period(), keys: [...set] })); } catch {}
     }
     function syncTodayRing() {
-      const box = document.getElementById('wte-today');
-      if (!box) return;
-      const all = box.querySelectorAll('input[data-k]');
-      const n = [...all].filter(x => x.checked).length;
-      const ring = box.querySelector('.today-ring');
-      ring.style.setProperty('--p', all.length ? Math.round(n / all.length * 100) : 0);
-      ring.querySelector('span').textContent = `${n}/${all.length}`;
+      ['wte-today', 'wte-week'].forEach(id => {
+        const box = document.getElementById(id);
+        if (!box) return;
+        const all = box.querySelectorAll('input[data-k]');
+        const n = [...all].filter(x => x.checked).length;
+        const ring = box.querySelector('.today-ring');
+        ring.style.setProperty('--p', all.length ? Math.round(n / all.length * 100) : 0);
+        ring.querySelector('span').textContent = `${n}/${all.length}`;
+      });
     }
     document.getElementById('wte-cards').addEventListener('change', e => {
       const k = e.target.dataset && e.target.dataset.k;
-      if (!k) return;
-      const day = todayStr();
-      const done = loadDone(day);
+      const scope = e.target.dataset && e.target.dataset.s;
+      if (!k || !TICK[scope]) return;
+      const done = loadDone(scope);
       e.target.checked ? done.add(k) : done.delete(k);
-      saveDone(day, done);
+      saveDone(scope, done);
       syncTodayRing();
     });
 

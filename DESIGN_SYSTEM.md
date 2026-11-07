@@ -9,7 +9,8 @@ Nguồn: repo_personal_design/tokens.json → export_web.py → web.css → desi
 - Nhãn đầu ô: chữ 14/600 xám + icon 16, không còn dải header xám.
 - CV: lưới 4 cột desktop / 2 cột ≤1024 — hero (span 2) · ô VÀNG "500+ Community" · ô "Say hi" (nút nền canvas, phẳng) · Experience (chip năm + nội dung) · Highlights (mỗi ảnh một ô) · Available for (viên canvas).
 - Valuation: 3 ô trên bảng — Mặt bằng định giá = ô VÀNG (số không bút dạ, nút Dự đoán nền đen chữ vàng), Hero or Zero = ô ĐEN `#161616` (số giữ bút dạ), Narrative = ô trắng. Bảng nằm trong ô trắng bên dưới, header nền trắng chữ xám. Công thức/SSR không đổi.
-- Work: đầu trang "Hôm nay" = ô vàng (ngày · số việc · vòng tiến độ) + ô checklist gom MỌI task DAILY theo thứ tự l2g → cá nhân → w2e → S…C; tick lưu localStorage `wte-done` theo ngày, chỉ trên máy đang dùng. Dự án là ô `<details>` gập: logo 40 · chip rank (đen chữ vàng cho l2g/w2e/S) · tên · thẻ; mở ra (trải 2 cột) = link Website/X/Discord + Get Started + Weekly. DAILY không lặp trong ô dự án. Lưới ô dự án 4 cột desktop / 2 cột ≤1024 và mobile.
+- Work (user chốt 07/11): thứ tự **Box "Dự án & hướng dẫn tham gia" → checklist Hôm nay → checklist Tuần này**. Box dự án = 1 ô trắng, nhóm theo l2g/cá nhân/w2e/S…C (id `wte-rank-*` cho thanh rank), mỗi dự án 1 hàng `<details>` gập: logo 36 · tên · thẻ · ⋮ (admin) · mũi tên; mở ra = link Website/X/Discord + Get Started. Checklist ngày = ô vàng + danh sách mọi DAILY; checklist tuần = ô đen (vòng vàng) + mọi WEEKLY; thứ tự l2g → cá nhân → w2e → S…C. Tick lưu localStorage (`wte-done` theo ngày, `wte-done-week` theo tuần từ thứ Hai), chỉ trên máy đang dùng. Daily/Weekly không lặp trong hàng dự án. Hàng tiêu đề trang nằm thẳng trên nền canvas, không có nền trắng; nút + là viên tròn trắng không viền.
+- Bảng TGE mobile: thiếu chỗ thì BỎ BỚT yếu tố, không bắt kéo ngang — ẩn Narrative/TGE/ATL, ô ×ATH bỏ phần "đáy →" chỉ còn "đỉnh (×N)" (`.ath-from`, cột đo bằng `--ck5m`).
 - Nút liên hệ, link trong ô, nút Dự đoán: phẳng. Nút điều khiển nổi (Admin, camera, rank bar, mèo) giữ bóng.
 
 ## Phân vai màu hiện hành
@@ -41,7 +42,7 @@ Giữ nội dung tiếng Anh và tagline Sharing POVs on Crypto and AI. Hero por
 
 - Khi mở tab Valuation, bảng giữ thứ tự TGE cũ→mới và tự cuộn dọc tới cuối để thấy dự án mới nhất; chờ dữ liệu tải xong nếu cần. Chỉ cuộn bảng, không cuộn page; các lần render khác không ép người dùng về cuối.
 - Narrative dùng đúng một nhóm chính/dự án trong17 nhóm: stablechain, layer-1, layer-2, infra, ai, zk, privacy, identity, rwa, defi, trading, payment, bitcoin, prediction, game, social, desci. Chọn theo tag và mô tả SURF; ZK proving khác Privacy. Không nhân một dự án vào nhiều nhóm khi tính trung vị.
-- Bảng hiện8 token trên desktop và mobile, hàng40, header56. Tổng cao56+8×40+viền2+scrollbar. Cột đo theo content, header/body cùng cột và cuộn đồng bộ. Mobile ẩn Narrative/TGE/ATL; thiếu chỗ cuộn trong bảng, không tràn page.
+- Bảng hiện8 token trên desktop và mobile, hàng40, header56. Tổng cao56+8×40+viền2+scrollbar. Cột đo theo content, header/body cùng cột và cuộn đồng bộ. Mobile ẩn Narrative/TGE/ATL và phần "đáy →" của ×ATH để vừa khung, không kéo ngang.
 - ATH `đầu → cuối (×N)` một hàng: hai số đen đậm600; chỉ `(×N)` cam #F5B301 đậm600, cả bảng chính/popup và ATH tuần đầu. N=cuối/đầu từ số gốc, làm tròn2; client/server cùng công thức.
 - Ticker dưới VC FDV300M đen đậm; từ300M cam #F5B301 đậm; không chấm màu.
 - Ba box phụ cố định328, nội dung dài cuộn trong thân. Desktop3 cột, tablet2, mobile2 cột bằng nhau; không box nào tự span cả hàng. Nhãn/tên trái, số phải; hàng min56 để hiện đủ dữ liệu.
