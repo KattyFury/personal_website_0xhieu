@@ -2,6 +2,16 @@
 
 Nguồn: repo_personal_design/tokens.json → export_web.py → web.css → design-tokens.css. Quy tắc product 0xhieu-xyz được user chốt 2026-11-01, ưu tiên hơn profile chung và mọi log màu cũ.
 
+## Bento V2 — user chốt 07/11/2026 (ƯU TIÊN hơn mọi mục bên dưới nếu mâu thuẫn)
+
+- Nền trang canvas `#F2F2F0`; mọi khối là ô (tile) trắng bo 20, không viền, không bóng; ô cách nhau 12 (mobile 10). Kẻ mảnh trong ô `--hair #ECECEA` (thay `--line` trong bảng/danh sách/task).
+- Navbar: viên trắng nổi, tab là viên, tab đang chọn nền vàng `#F5B301` chữ đen. VI/EN: máng trắng, thumb đen chữ trắng.
+- Nhãn đầu ô: chữ 14/600 xám + icon 16, không còn dải header xám.
+- CV: lưới 4 cột desktop / 2 cột ≤1024 — hero (span 2) · ô VÀNG "500+ Community" · ô "Say hi" (nút nền canvas, phẳng) · Experience (chip năm + nội dung) · Highlights (mỗi ảnh một ô) · Available for (viên canvas).
+- Valuation: 3 ô trên bảng — Mặt bằng định giá = ô VÀNG (số không bút dạ, nút Dự đoán nền đen chữ vàng), Hero or Zero = ô ĐEN `#161616` (số giữ bút dạ), Narrative = ô trắng. Bảng nằm trong ô trắng bên dưới, header nền trắng chữ xám. Công thức/SSR không đổi.
+- Work: đầu trang "Hôm nay" = ô vàng (ngày · số việc · vòng tiến độ) + ô checklist gom MỌI task DAILY theo thứ tự l2g → cá nhân → w2e → S…C; tick lưu localStorage `wte-done` theo ngày, chỉ trên máy đang dùng. Dự án là ô `<details>` gập: logo 40 · chip rank (đen chữ vàng cho l2g/w2e/S) · tên · thẻ; mở ra (trải 2 cột) = link Website/X/Discord + Get Started + Weekly. DAILY không lặp trong ô dự án. Lưới ô dự án 4 cột desktop / 2 cột ≤1024 và mobile.
+- Nút liên hệ, link trong ô, nút Dự đoán: phẳng. Nút điều khiển nổi (Admin, camera, rank bar, mèo) giữ bóng.
+
 ## Phân vai màu hiện hành
 
 - Tone trắng-xám-đen (user chốt 04/11/2026). Trang và thân box trắng #FFFFFF; header box/bảng, popup và DAILY xám trung tính #E5E5E5 (token product `--ds-color-surface`, user chốt 06/11/2026 thay mist #ECF0F8 ngả xanh); viền line #DCE3EE.

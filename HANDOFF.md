@@ -21,6 +21,8 @@ Chốt bàn giao: 06/11/2026 (Asia/Saigon). Code đang live: commit mới nhất
 
 ## Design đang dùng
 
+- **07/11/2026: site chuyển sang giao diện Bento V2** (anh chọn từ 3 mockup ở `docs/redesign-2026-11/`). Luật chi tiết: mục "Bento V2" đầu `DESIGN_SYSTEM.md` — ưu tiên hơn các gạch đầu dòng cũ bên dưới khi mâu thuẫn (header xám, viền line, Work 2 thẻ/hàng, thanh DAILY trong thẻ…).
+
 Chi tiết chuẩn tại [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md), ưu tiên hiện trạng này hơn các log cũ.
 
 - Tone trắng-xám-đen (anh chốt 04/11/2026). Text thường đen; phụ xám; cam `#F5B301` chỉ cho nút, control đang chọn và highlight. Highlight = bút dạ: chữ đen đậm600 trên nền cam (06/11). CẤM cam đất `#B84A0C` và nền kem `#FEF5D9`.
