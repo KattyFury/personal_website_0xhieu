@@ -1,0 +1,98 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>V1 Editorial</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"><style>
+*{box-sizing:border-box;margin:0;padding:0}body{background:#ddd;font-family:Inter,system-ui,sans-serif;color:#0A0A0A;
+-webkit-font-smoothing:antialiased;display:flex;gap:40px;padding:40px;align-items:flex-start}
+.screen{width:390px;flex:none;overflow:hidden;position:relative}a{color:inherit;text-decoration:none}
+img{display:block}.num{font-variant-numeric:tabular-nums}
+
+.screen{background:#fff;padding-bottom:40px}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid #EDEDED}
+.brand{display:flex;gap:8px;align-items:center;font-weight:700;font-size:15px}.brand img{width:28px;height:28px;border-radius:6px}
+.nav nav{display:flex;gap:16px;font-size:14px;color:#737373}.nav nav a.on{color:#0A0A0A;font-weight:600;box-shadow:inset 0 -2px #F5B301;padding-bottom:4px}
+.wrap{padding:0 20px}
+.kicker{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#737373;font-weight:600}
+.hero{padding:40px 20px 32px}.hero .row{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.hero .row img{width:56px;height:56px;border-radius:50%;object-fit:cover}
+.hero .who b{display:block;font-size:17px}.hero .who span{font-size:13px;color:#737373;display:flex;gap:4px;align-items:center}
+.hero h1{font-family:'Instrument Serif',serif;font-weight:400;font-size:52px;line-height:1;letter-spacing:-.02em}
+.hero h1 i{background:linear-gradient(transparent 58%,#F5B301 58%,#F5B301 92%,transparent 92%)}
+.hero p{margin-top:18px;font-size:16px;line-height:1.55;color:#404040}
+.cta{display:flex;gap:8px;margin-top:24px}.cta a{flex:1;display:flex;gap:6px;align-items:center;justify-content:center;height:44px;
+border:1px solid #D4D4D4;border-radius:999px;font-size:14px;font-weight:600}.cta a.pri{background:#F5B301;border-color:#F5B301}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #EDEDED;border-bottom:1px solid #EDEDED;margin:0 20px}
+.stats div{padding:16px 0}.stats div+div{border-left:1px solid #EDEDED;padding-left:14px}
+.stats b{font-family:'Instrument Serif',serif;font-size:32px;font-weight:400;display:block;line-height:1}.stats span{font-size:12px;color:#737373}
+.sec{padding:36px 20px 0}.sec h2{font-family:'Instrument Serif',serif;font-weight:400;font-size:32px;margin:6px 0 16px}
+.job{display:grid;grid-template-columns:72px 1fr;gap:12px;padding:16px 0;border-top:1px solid #EDEDED}
+.job .y{font-size:13px;color:#737373;font-weight:600;padding-top:2px}.job b{font-size:16px;display:block;margin-bottom:6px}
+.job li{list-style:none;font-size:14px;line-height:1.5;color:#404040;padding-left:12px;position:relative;margin-top:4px}
+.job li:before{content:'';position:absolute;left:0;top:9px;width:4px;height:4px;background:#A3A3A3;border-radius:50%}
+.rail{display:flex;gap:12px;overflow:hidden;margin-right:-20px}.rail figure{width:240px;flex:none}
+.rail img{width:240px;height:160px;object-fit:cover;border-radius:12px}.rail figcaption{font-size:13px;color:#525252;margin-top:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chips span{border:1px solid #D4D4D4;border-radius:999px;padding:8px 14px;font-size:14px}
+/* valuation */
+.ph{padding:28px 20px 16px;display:flex;justify-content:space-between;align-items:flex-end}
+.ph h1{font-family:'Instrument Serif',serif;font-weight:400;font-size:40px;line-height:1}
+.seg{display:flex;border:1px solid #D4D4D4;border-radius:999px;padding:3px;font-size:12px;font-weight:600}
+.seg span{padding:5px 10px;border-radius:999px;color:#737373}.seg span.on{background:#0A0A0A;color:#fff}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);margin:0 20px;border:1px solid #EDEDED;border-radius:16px}
+.kpis div{padding:14px 12px}.kpis div+div{border-left:1px solid #EDEDED}.kpis span{font-size:11px;color:#737373;display:block;margin-bottom:6px}
+.kpis b{font-size:22px;font-weight:700}.kpis b.hi{background:#F5B301;padding:0 4px}
+.btn{display:flex;justify-content:center;align-items:center;height:48px;margin:12px 20px 0;background:#F5B301;border-radius:999px;font-weight:600;font-size:15px}
+.tbl{margin:28px 0 0}.tbl .h{display:flex;justify-content:space-between;align-items:baseline;padding:0 20px 10px}
+.tbl .h b{font-size:17px}.tbl .h span{font-size:12px;color:#737373}
+table{width:100%;border-collapse:collapse;font-size:14px}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#737373;
+font-weight:600;text-align:right;padding:8px 0;border-bottom:1px solid #0A0A0A}th:first-child,td:first-child{text-align:left;padding-left:20px}
+th:last-child,td:last-child{padding-right:20px}td{padding:12px 0;text-align:right;border-bottom:1px solid #EDEDED}
+td b{font-weight:600}td small{display:block;font-size:11px;color:#737373;font-weight:400}.mk{background:#F5B301;padding:0 4px;font-weight:600}
+.bars{padding:0 20px}.bar{display:grid;grid-template-columns:92px 1fr 52px;gap:10px;align-items:center;padding:8px 0;font-size:14px}
+.bar i{height:10px;background:#F5B301;border-radius:999px;display:block}.bar small{color:#737373}.bar b{text-align:right}
+.hz{margin:0 20px;border-top:1px solid #EDEDED}.hz div{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #EDEDED;font-size:15px}
+.hz small{color:#737373;font-size:12px;margin-left:8px}
+/* work */
+.today{margin:0 20px;border:1px solid #EDEDED;border-radius:16px;overflow:hidden}
+.today .th{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:#FAFAFA;border-bottom:1px solid #EDEDED}
+.today .th b{font-size:15px}.prog{font-size:12px;color:#525252;display:flex;gap:8px;align-items:center}
+.prog i{width:64px;height:6px;border-radius:9px;background:#EDEDED;position:relative;overflow:hidden}.prog i:after{content:'';position:absolute;inset:0 70% 0 0;background:#F5B301}
+.task{display:grid;grid-template-columns:22px 1fr;gap:12px;padding:12px 16px;border-bottom:1px solid #F2F2F2;font-size:14px;line-height:1.45}
+.task .cb{width:20px;height:20px;border:1.5px solid #A3A3A3;border-radius:6px;margin-top:1px;display:grid;place-items:center}
+.task.done .cb{background:#F5B301;border-color:#F5B301}.task.done p{color:#A3A3A3;text-decoration:line-through}
+.task small{display:flex;gap:6px;align-items:center;font-size:12px;color:#737373;margin-top:4px}
+.tag{font-size:11px;font-weight:600;border-radius:4px;padding:1px 6px;border:1px solid #D4D4D4;color:#404040}.tag.k{background:#0A0A0A;color:#fff;border-color:#0A0A0A}
+.lg{width:16px;height:16px;border-radius:50%;object-fit:cover;flex:none}.lg-txt{display:grid;place-items:center;background:#EDEDED;font-size:10px;font-weight:700}
+.plist{margin:0 20px}.pg{font-size:12px;font-weight:600;color:#737373;padding:16px 0 6px;text-transform:uppercase;letter-spacing:.08em}
+.prow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #F2F2F2;font-size:15px}
+.prow .lg{width:28px;height:28px}.prow span.n{flex:1;font-weight:600}.prow svg{color:#A3A3A3}
+</style></head><body><section class="screen" id="cv"><header class="nav"><span class="brand"><img src="assets/icon.png" alt="">0xhieu.xyz</span><nav><a class="on">CV</a><a class="">Valuation</a><a class="">Work</a></nav></header>
+<div class="hero"><div class="row"><img src="assets/pfp.png" alt=""><div class="who"><b>Hieu Nguyen</b><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-8 12-8 12s-8-7-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>Hanoi, Vietnam</span></div></div>
+<div class="kicker">Crypto · AI · Community</div>
+<h1 style="margin-top:10px">Sharing <i>POVs</i> on Crypto and AI</h1>
+<p>I believe AI is the future of knowledge work, robots are the future of manual labor, and crypto is the future of money.</p>
+<div class="cta"><a class="pri"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.7 16H20L8.3 4z"/><path d="M4 20l6.8-6.8M13.2 10.8L20 4"/></svg>Follow</a><a><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 4.5 2.5 11.8l6 2.2 2.3 6.5 3.4-4.2 4.8 3.6z"/><path d="m8.5 14 13-9.5"/></svg>Telegram</a><a><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email</a></div></div>
+<div class="stats"><div><b>500+</b><span>Telegram members</span></div><div><b>6</b><span>Top Yapper projects</span></div><div><b>4 yrs</b><span>in crypto</span></div></div>
+<div class="sec"><div class="kicker">01 — Experience</div><h2>What I've done</h2>
+<div class="job"><div class="y">2026</div><div><b>Community Builder &amp; Builder</b><ul><li>Grew a Telegram community from 0 to 500+ members in Q1 2026</li><li>Helped grow Arc&#x27;s community through ELI12-style content &amp; Arc meetups</li><li>Built products on Arc: github.com/KattyFury</li></ul></div></div><div class="job"><div class="y">2025</div><div><b>Content Creator &amp; Contributor</b><ul><li>Ambassador: $RECALL. Top Yapper: $NEWT, $RECALL, $MIRA, $RLS, $SENT, $ZAMA</li><li>OG Contributor: $SOMI, $RECALL, $RLS, $SENT, $ZAMA</li></ul></div></div><div class="job"><div class="y">2023–24</div><div><b>Investment Analyst</b><ul><li>Analyzed crypto markets to support spot investment decisions for a small fund</li></ul></div></div></div>
+<div class="sec"><div class="kicker">02 — Highlights</div><h2>Proof of work</h2>
+<div class="rail"><figure><img src="assets/2.webp" alt=""><figcaption>Recall Ambassador &amp; top Yapper</figcaption></figure><figure><img src="assets/4.webp" alt=""><figcaption>Telegram community, 0 → 500+</figcaption></figure></div></div>
+<div class="sec"><div class="kicker">03 — Available for</div><h2 style="margin-bottom:12px">Let's work</h2><div class="chips"><span>Ambassador</span><span>Community Building & Moderation</span><span>Content Collaborations</span></div></div></section><section class="screen" id="val"><header class="nav"><span class="brand"><img src="assets/icon.png" alt="">0xhieu.xyz</span><nav><a class="">CV</a><a class="on">Valuation</a><a class="">Work</a></nav></header>
+<div class="ph"><div><div class="kicker">Altcoin watch</div><h1 style="margin-top:6px">Valuation</h1></div><div class="seg"><span class="on">VI</span><span>EN</span></div></div>
+<div class="kpis"><div><span>Thị trường</span><b class="hi">Bình thường</b></div><div><span>Hệ số TGE</span><b class="num">×5.22</b></div><div><span>Phạt FDV≥300M</span><b class="num">×0.60</b></div></div>
+<a class="btn">Dự đoán FDV TGE</a>
+<div class="tbl"><div class="h"><b>8 TGE mới nhất</b><span>×VC FDV · mới → cũ</span></div>
+<table><tr><th>Ticker</th><th>×TGE</th><th>×ATH</th><th>×Now</th></tr><tr><td><b>AXIS</b><small>ai</small></td><td class="num">3.71</td><td class="num">5.09 <span class="mk">×1.37</span></td><td class="num">1.74</td></tr><tr><td><b>DNA</b><small>ai</small></td><td class="num">4.41</td><td class="num">4.87 <span class="mk">×1.10</span></td><td class="num">2.59</td></tr><tr><td><b>CT</b><small>defi</small></td><td class="num">6.81</td><td class="num">10.20 <span class="mk">×1.50</span></td><td class="num">2.05</td></tr><tr><td><b>TMX</b><small>defi</small></td><td class="num">6.04</td><td class="num">8.41 <span class="mk">×1.39</span></td><td class="num">0.14</td></tr><tr><td><b>DOS</b><small>infra</small></td><td class="num">4.52</td><td class="num">15.70 <span class="mk">×3.47</span></td><td class="num">2.30</td></tr><tr><td><b>GRVT</b><small>trading</small></td><td class="num">1.42</td><td class="num">2.66 <span class="mk">×1.87</span></td><td class="num">1.17</td></tr><tr><td><b>ARX</b><small>privacy</small></td><td class="num">9.00</td><td class="num">14.01 <span class="mk">×1.56</span></td><td class="num">7.19</td></tr><tr><td><b>RE</b><small>rwa</small></td><td class="num">3.53</td><td class="num">8.73 <span class="mk">×2.47</span></td><td class="num">2.49</td></tr></table></div>
+<div class="sec"><div class="kicker"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4 0 7-3 7-7 0-5-5-7-5-12-3 2-6 5-6 9-1-1-2-2-2-4-2 2-1 5-1 7 0 4 3 7 7 7z"/></svg> Narrative đang hot</div><h2 style="font-size:26px">Median ×TGE</h2></div>
+<div class="bars"><div class="bar"><span>stablechain<br><small>2 dự án</small></span><i style="width:100%"></i><b class="num">×75.3</b></div><div class="bar"><span>layer-2<br><small>3 dự án</small></span><i style="width:28%"></i><b class="num">×5.8</b></div><div class="bar"><span>ai<br><small>13 dự án</small></span><i style="width:24%"></i><b class="num">×4.2</b></div><div class="bar"><span>defi<br><small>4 dự án</small></span><i style="width:23%"></i><b class="num">×4.1</b></div><div class="bar"><span>layer-1<br><small>9 dự án</small></span><i style="width:23%"></i><b class="num">×3.9</b></div></div>
+<div class="sec"><div class="kicker"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20z"/><path d="M12 10v5M12 18h.01"/></svg> Hero or Zero</div><h2 style="font-size:26px">×Now ≥ 15</h2></div>
+<div class="hz"><div><span><b>ENA</b><small>TGE 02/04/24</small></span><span class="mk num">×30.4</span></div><div><span><b>STABLE</b><small>TGE 08/12/25</small></span><span class="mk num">×22.3</span></div></div></section><section class="screen" id="work"><header class="nav"><span class="brand"><img src="assets/icon.png" alt="">0xhieu.xyz</span><nav><a class="">CV</a><a class="">Valuation</a><a class="on">Work</a></nav></header>
+<div class="ph"><div><div class="kicker">Thứ Bảy, 07/11</div><h1 style="margin-top:6px">Hôm nay</h1></div><div class="seg"><span class="on">VI</span><span>EN</span></div></div>
+<div class="today"><div class="th"><b>Việc hằng ngày · 14</b><span class="prog">2/14<i></i></span></div><div class="task done"><span class="cb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span><div><p>Học 20 từ mới + nghe 1 podcast</p>
+<small><span class="lg lg-txt">E</span>English (ví dụ) <span class="tag k">l2g</span></small></div></div><div class="task done"><span class="cb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span><div><p>$PRIM x Kaito</p>
+<small><img class="lg" src="https://unavatar.io/twitter/KaitoAI" alt="">Kaito <span class="tag k">w2e</span></small></div></div><div class="task"><span class="cb"></span><div><p>$ZETA x Kaito</p>
+<small><img class="lg" src="https://unavatar.io/twitter/KaitoAI" alt="">Kaito <span class="tag k">w2e</span></small></div></div><div class="task"><span class="cb"></span><div><p>Dùng Grok quét GA, có thì tham gia</p>
+<small><img class="lg" src="https://unavatar.io/twitter/grok" alt="">Tham gia GA trên X <span class="tag k">w2e</span></small></div></div><div class="task"><span class="cb"></span><div><p>Điểm danh + làm hết nhiệm vụ + bet để nhận tối đa point</p>
+<small><img class="lg" src="https://unavatar.io/twitter/binance" alt="">Binance Pick <span class="tag k">w2e</span></small></div></div><div class="task"><span class="cb"></span><div><p>Tìm cách kiếm càng nhiều badge càng tốt</p>
+<small><img class="lg" src="https://unavatar.io/twitter/squeekchain" alt="">Squeekchain <span class="tag k">w2e</span></small></div></div><div class="task"><span class="cb"></span><div><p>Đọc Content, xem Video, tham gia Event hằng ngày</p>
+<small><img class="lg" src="https://unavatar.io/twitter/arc" alt="">Arc <span class="tag k">S</span></small></div></div><div class="task"><span class="cb"></span><div><p>Đăng bài và thảo luận mỗi ngày trong Arc House và trên X</p>
+<small><img class="lg" src="https://unavatar.io/twitter/arc" alt="">Arc <span class="tag k">S</span></small></div></div><div class="task"><span class="cb"></span><div><p>Sử dụng sản phẩm của dự án hằng ngày trong công việc</p>
+<small><img class="lg" src="https://unavatar.io/twitter/SurfAIHQ" alt="">Surf <span class="tag">A</span></small></div></div></div>
+<div class="sec" style="padding-top:28px"><div class="kicker">Đang theo dõi</div><h2 style="font-size:26px;margin-bottom:4px">Dự án</h2></div>
+<div class="plist"><div class="pg">Rank S</div><div class="prow"><img class="lg" src="https://unavatar.io/twitter/flop_labs" alt=""><span class="n">Flop Labs</span><span class="tag">ai</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></div><div class="pg">Rank A</div><div class="prow"><img class="lg" src="https://unavatar.io/twitter/SeismicSys" alt=""><span class="n">Seismic</span><span class="tag">layer-1</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></div><div class="pg">Rank B</div><div class="prow"><img class="lg" src="https://unavatar.io/twitter/primus_labs" alt=""><span class="n">Primus</span><span class="tag">privacy</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></div></div></section></body></html>
