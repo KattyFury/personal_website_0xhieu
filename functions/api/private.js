@@ -26,9 +26,18 @@ const cleanLink = v => {
 };
 // Mỗi mục Get Started / Daily / Weekly là danh sách {text, link} — form cho thêm dòng bằng nút +.
 // Dòng không có chữ thì bỏ; cắt tối đa 20 dòng để 1 request không nhồi được data khổng lồ vào KV.
+// Giờ báo (tuỳ chọn): "HH:MM" 24h · thứ (tuỳ chọn, việc tuần): 1 = thứ Hai … 7 = Chủ nhật.
+const cleanTime = v => /^([01]\d|2[0-3]):[0-5]\d$/.test(String(v ?? '')) ? String(v) : '';
+const cleanDow  = v => { const n = Number(v); return Number.isInteger(n) && n >= 1 && n <= 7 ? n : 0; };
 const itemList = v => (Array.isArray(v) ? v : [])
   .slice(0, 20)
-  .map(it => ({ text: clean(it?.text, 500), link: cleanLink(it?.link) }))
+  .map(it => {
+    const out = { text: clean(it?.text, 500), link: cleanLink(it?.link) };
+    const time = cleanTime(it?.time), dow = cleanDow(it?.dow);
+    if (time) out.time = time;
+    if (dow)  out.dow  = dow;
+    return out;
+  })
   .filter(it => it.text);
 
 // rank/visibility chỉ nhận đúng giá trị hợp lệ, sai hoặc thiếu thì rơi về mặc định an toàn
