@@ -57,7 +57,7 @@ Mọi gạch đầu dòng cũ bên dưới file đó (header xám, viền, radiu
 
 **Dropdown "Dự án & hướng dẫn tham gia"**
 - Mặc định gập; đổi ngôn ngữ thì giữ nguyên trạng thái mở/gập.
-- Bên trong chia nhóm: Learn-to-grow / Cá nhân / Work-to-earn / Rank S…C. Nhãn nhóm viết hoa chữ đầu.
+- Bên trong chia nhóm theo thứ tự **Learn-to-grow (cao nhất) → Cá nhân → Work-to-earn → Rank S…C**. Nhãn nhóm viết hoa chữ đầu.
 - Mỗi dự án KHÔNG gập: logo · tên · thẻ `High potential`/`Low potential` + narrative · ⋮ (admin).
 - Ngay dưới là 1 hàng chip cao 30: Website · X (icon) · Discord (icon) · **Hướng dẫn tham gia**.
   - Chip Hướng dẫn tham gia nền đen chữ vàng, mở bài đăng X.

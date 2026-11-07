@@ -2774,13 +2774,13 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         EN ? 'weekly<br>tasks' : 'việc<br>hằng tuần', true);
 
       // ── Box "Dự án & hướng dẫn tham gia" — đầu trang, trên checklist ──
-      const groupsHtml = personalHtml + WTE_GROUPS
-        .filter(r => groups[r].length)
-        .map(r => `<div id="wte-rank-${r}" class="wte-group">
+      // Thứ tự nhóm (user chốt 08/11): Learn-to-grow cao nhất → Cá nhân → Work-to-earn → Rank S…C.
+      const rankGroupHtml = r => `<div id="wte-rank-${r}" class="wte-group">
              <div class="wte-group-label">${groupLabel(r)}</div>
              <div class="wte-rank-group wte-rank-group--${r}">${groups[r].map(p => cardHtml(p, !!p._personal)).join('')}</div>
-           </div>`)
-        .join('');
+           </div>`;
+      const groupsHtml = (groups.LEARN.length ? rankGroupHtml('LEARN') : '') + personalHtml
+        + WTE_GROUPS.filter(r => r !== 'LEARN' && groups[r].length).map(rankGroupHtml).join('');
       const nProj = myOther.length + WTE_GROUPS.reduce((n, r) => n + groups[r].length, 0);
       // Dropdown: mặc định GẬP, chỉ 1 hàng tiêu đề (user chốt 07/11). Render lại giữ nguyên trạng thái mở/gập.
       const wasOpen = !!document.querySelector('#wte-projects[open]');
