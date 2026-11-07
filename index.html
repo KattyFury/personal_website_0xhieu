@@ -1167,7 +1167,7 @@
 
       <!-- Hàng đầu: tiêu đề TRÁI · Admin + VI|EN phải -->
       <div class="ard-subtabs panel-head" id="ard-subtabs">
-        <div class="val-intro"><span id="wte-title">Hôm nay</span></div>
+        <div class="val-intro"><span id="wte-title">Work-to-earn</span></div>
         <div class="val-head-ctrl" id="ard-wte-controls">
           <button class="lang-dd-btn" id="admin-btn" title="Task cá nhân">Admin</button>
           <button class="language-switch" id="work-language-switch" type="button" role="switch" aria-label="English" aria-checked="false">
@@ -2731,7 +2731,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
 
     // ── Render all cards ──────────────────────────────
     function renderWTE() {
-      document.getElementById('wte-title').textContent = wteLang === 'EN' ? 'Today' : 'Hôm nay';
+      document.getElementById('wte-title').textContent = 'Work-to-earn';
       fitIntroTitles();
       const container = document.getElementById('wte-cards');
       const projects  = wteData[wteLang];
