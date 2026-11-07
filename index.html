@@ -569,7 +569,7 @@
       color: var(--ink); white-space: normal; overflow-wrap: anywhere;
     }
     .wte-tag .wte-ico { width: 16px; height: 16px; }
-    /* Thẻ quan trọng nền đen chữ trắng: rank w2e/S, high-potential, narrative top 5 của Trending Narratives
+    /* Thẻ quan trọng nền đen chữ trắng: nhóm l2g/w2e, rank S, high-potential, narrative top 5 của Trending Narratives
        (Valuation). Còn lại trắng viền chữ đen (user chốt 2026-11-06). */
     .wte-tag--strong { background: var(--ink); border-color: var(--ink); color: var(--ground); }
 
@@ -600,13 +600,13 @@
 
     /* Một thanh rank liền: một vùng sáng trượt, native range hỗ trợ kéo/phím. */
     .rank-bar {
-      --rank-index: 0; position: relative; isolation: isolate; width: 248px; height: 48px;
-      display: grid; grid-template-columns: repeat(5, 1fr); align-items: center; padding: 4px;
+      --rank-index: 0; --rank-count: 6; position: relative; isolation: isolate; width: calc(var(--rank-count) * 48px + 8px); height: 48px;
+      display: grid; grid-template-columns: repeat(var(--rank-count), 1fr); align-items: center; padding: 4px;
       background: var(--mist); border-radius: 16px; box-shadow: var(--shadow);
     }
     .rank-bar::before {
       content: ''; position: absolute; z-index: -1; left: 4px; top: 4px; bottom: 4px;
-      width: calc((100% - 8px) / 5); border-radius: 8px; background: var(--ds-accent);
+      width: calc((100% - 8px) / var(--rank-count)); border-radius: 8px; background: var(--ds-accent);
       transform: translateX(calc(var(--rank-index) * 100%)); transition: transform .18s ease;
     }
     .rank-bar [data-rank] {
@@ -614,6 +614,7 @@
       font-size: 16px; font-weight: 600; line-height: 24px; letter-spacing: -.011em;
     }
     .rank-bar [data-rank].active { color: var(--ink); }
+    .rank-bar [data-rank][hidden] { display: none; }
     #rank-slider {
       position: absolute; z-index: 2; inset: 4px; width: calc(100% - 8px); height: 40px;
       padding: 0; margin: 0; opacity: 0; appearance: none; -webkit-appearance: none;
@@ -1117,12 +1118,13 @@
 
   <div id="rank-filter-float" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:50">
     <div class="rank-bar" id="rank-filter">
-      <span class="active" data-rank="INCOME" aria-hidden="true">w2e</span>
+      <span class="active" data-rank="LEARN" aria-hidden="true">l2g</span>
+      <span data-rank="INCOME" aria-hidden="true">w2e</span>
       <span data-rank="S" aria-hidden="true">S</span>
       <span data-rank="A" aria-hidden="true">A</span>
       <span data-rank="B" aria-hidden="true">B</span>
       <span data-rank="C" aria-hidden="true">C</span>
-      <input id="rank-slider" type="range" min="0" max="4" step="1" value="0" aria-label="Nhóm công việc" aria-valuetext="Work to Earn (w2e)">
+      <input id="rank-slider" type="range" min="0" max="5" step="1" value="0" aria-label="Nhóm công việc" aria-valuetext="learn-to-grow (l2g)">
     </div>
   </div>
 
@@ -1775,15 +1777,25 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     // Rank filter: click → scroll, scroll → highlight
     const rankBar = document.getElementById('rank-filter');
     const rankSlider = document.getElementById('rank-slider');
-    const rankLabels = [...rankBar.querySelectorAll('[data-rank]')];
+    const allRankLabels = [...rankBar.querySelectorAll('[data-rank]')];
+    let rankLabels = allRankLabels;
     let rankDragging = false;
     rankSlider.max = rankLabels.length - 1;
+    // l2g toàn task cá nhân → khách không có nhóm này: ẩn nút trên thanh, thanh co lại.
+    function syncRankLabels() {
+      allRankLabels.forEach(l => { l.hidden = l.dataset.rank === 'LEARN' && !document.getElementById('wte-rank-LEARN'); });
+      rankLabels = allRankLabels.filter(l => !l.hidden);
+      rankBar.style.setProperty('--rank-count', rankLabels.length);
+      rankSlider.max = rankLabels.length - 1;
+      const cur = rankBar.querySelector('[data-rank].active');
+      setActiveRankBtn(cur && !cur.hidden ? cur.dataset.rank : rankLabels[0].dataset.rank);
+    }
     function setActiveRankBtn(rank) {
       const index = rankLabels.findIndex(label => label.dataset.rank === rank);
       if (index < 0) return;
       rankBar.style.setProperty('--rank-index', index);
       rankSlider.value = index;
-      rankSlider.setAttribute('aria-valuetext', rank === 'INCOME' ? 'Work to Earn (w2e)' : 'Rank ' + rank);
+      rankSlider.setAttribute('aria-valuetext', GROUP_NAME[rank] ? `${GROUP_NAME[rank]} (${RANK_LABEL[rank]})` : 'Rank ' + rank);
       rankLabels.forEach(label => label.classList.toggle('active', label.dataset.rank === rank));
     }
     function scrollToSelectedRank() {
@@ -1818,6 +1830,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     let rankObserver = null;
     function observeRankSections() {
       if (rankObserver) rankObserver.disconnect();
+      syncRankLabels();
       const sections = document.querySelectorAll('[id^="wte-rank-"]');
       if (!sections.length) return;
       rankObserver = new IntersectionObserver(() => {
@@ -2454,7 +2467,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     //   1. Dropdown "Phân loại" trong form admin (thêm/sửa task)
     //   2. Thứ tự card trong mỗi nhóm (typeOrder() bên dưới)
     // Muốn đổi thứ tự ưu tiên hay thêm/bớt thẻ → sửa DUY NHẤT mảng này.
-    const WTE_TYPES = ['Work-to-Earn','Stablechain','Trading','Layer-1','Infra','AI','Layer-2','Prediction',
+    const WTE_TYPES = ['Learn-to-Grow','Work-to-Earn','Stablechain','Trading','Layer-1','Infra','AI','Layer-2','Prediction',
                        'Bitcoin','Payment','DeFi','Identity','Privacy','Game','Others','END'];
 
     // Project chưa điền phân loại (hoặc thẻ lạ) xếp cuối nhóm.
@@ -2464,10 +2477,12 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     };
 
     // ── QUY ĐỊNH: thang rank của Work to Earn ───────────────────────────
-    // 5 nhóm, xếp từ trên xuống. MỌI thứ liên quan tới rank đọc từ đây:
+    // 6 nhóm, xếp từ trên xuống. MỌI thứ liên quan tới rank đọc từ đây:
+    //   l2g (LEARN) việc HỌC mỗi ngày (user thêm 07/11/2026), xếp trên cả w2e.
+    //               Như INCOME: suy ra từ thẻ phân loại 'Learn-to-Grow', không có rank.
     //   $ (INCOME)  gradient thương hiệu — việc RA TIỀN ngắn hạn.
     //               KHÔNG phải rank: nhóm này suy ra từ thẻ phân loại
-    //               WTE_INCOME_TYPE, bỏ qua rank lưu trong KV, và chỗ badge
+    //               thẻ 'Work-to-Earn', bỏ qua rank lưu trong KV, và chỗ badge
     //               rank hiện "w2e" thay cho chữ.
     //   S           tím  #6155F5 — kèo 10K
     //   A           xanh dương #0088FF — kèo 1K
@@ -2475,14 +2490,17 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     //   C           trắng (viền xám) — kèo rác
     // Thêm/đổi nhóm → sửa 3 hằng số dưới đây, rồi thêm class `.rank-*` +
     // `.wte-card--*` trong CSS và nút cùng `data-rank` trong #rank-filter.
-    const WTE_INCOME_TYPE = 'Work-to-Earn';
-    const WTE_GROUPS      = ['INCOME','S','A','B','C'];
-    const WTE_RANKS       = WTE_GROUPS.filter(g => g !== 'INCOME'); // rank chọn tay được trong form admin
-    const RANK_LABEL      = { INCOME: 'w2e', S: 'S', A: 'A', B: 'B', C: 'C' };
+    // Phân loại → nhóm cố định (không có rank). Khớp TYPE_GROUPS trong functions/api/private.js.
+    const WTE_TYPE_GROUP  = { 'Learn-to-Grow': 'LEARN', 'Work-to-Earn': 'INCOME' };
+    const isTypeGroup     = g => Object.values(WTE_TYPE_GROUP).includes(g);
+    const WTE_GROUPS      = ['LEARN','INCOME','S','A','B','C'];
+    const WTE_RANKS       = WTE_GROUPS.filter(g => !isTypeGroup(g)); // rank chọn tay được trong form admin
+    const RANK_LABEL      = { LEARN: 'l2g', INCOME: 'w2e', S: 'S', A: 'A', B: 'B', C: 'C' };
+    const GROUP_NAME      = { LEARN: 'learn-to-grow', INCOME: 'work-to-earn' };
 
     // Tiêu đề nhóm — SUY RA từ RANK_LABEL, không khai lại danh sách thứ 2.
     // INCOME = "work-to-earn" (không phải rank, viết thường như thẻ phân loại); còn lại "Rank: S" — khớp chữ trên thẻ rank của card.
-    const groupLabel = r => (r === 'INCOME' ? 'work-to-earn' : `Rank: ${RANK_LABEL[r]}`);
+    const groupLabel = r => GROUP_NAME[r] || `Rank: ${RANK_LABEL[r]}`;
 
     // Rank "SS" (S+) của thang cũ đọc thành S, để project trong KV chưa sửa
     // tay vẫn hiện đúng chỗ thay vì rơi khỏi mọi nhóm.
@@ -2496,7 +2514,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     };
 
     const groupOf = p => {
-      if (p.type === WTE_INCOME_TYPE) return 'INCOME';
+      if (WTE_TYPE_GROUP[p.type]) return WTE_TYPE_GROUP[p.type];
       return p.rank === 'SS' ? 'S' : p.rank;
     };
 
@@ -2663,7 +2681,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
             <span class="wte-name-wrap">${logoHtml}${nameHtml}</span>
             <span class="wte-socials">${p.twitter ? `<a class="wte-social" href="${p.twitter}" target="_blank" rel="noopener" title="X" aria-label="X">${wteIcon('x')}</a>` : ''}${p.discord ? `<a class="wte-social" href="${p.discord}" target="_blank" rel="noopener" title="Discord" aria-label="Discord">${wteIcon('discord')}</a>` : ''}</span>
             ${adminUnlocked ? `<button class="wte-opt" data-id="${p.id}" title="Sửa task" aria-label="Sửa task">${wteIcon('more')}</button>` : ''}
-            <span class="wte-tags">${potLv ? `<span class="wte-tag wte-pot--${potLv}${strong(potLv === 'high')}">${wteIcon(potLv)}${potLv}-potential</span>` : ''}${p.type ? `<span class="wte-tag wte-narr${strong(g === 'INCOME' || topNarr.has(p.type.toLowerCase()))}">${tagCase(p.type)}</span>` : ''}${g === 'INCOME' ? '' : `<b class="wte-tag wte-rank-v rank-${g}${strong(g === 'S')}">rank: ${RANK_LABEL[g] || g}</b>`}</span>
+            <span class="wte-tags">${potLv ? `<span class="wte-tag wte-pot--${potLv}${strong(potLv === 'high')}">${wteIcon(potLv)}${potLv}-potential</span>` : ''}${p.type ? `<span class="wte-tag wte-narr${strong(isTypeGroup(g) || topNarr.has(p.type.toLowerCase()))}">${tagCase(p.type)}</span>` : ''}${isTypeGroup(g) ? '' : `<b class="wte-tag wte-rank-v rank-${g}${strong(g === 'S')}">rank: ${RANK_LABEL[g] || g}</b>`}</span>
           </div>
           ${section('Get Started', p.getStarted, 'getStarted')}
           ${section('DAILY', p.daily, 'daily')}
@@ -2681,12 +2699,17 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       Object.values(groups).forEach(g => g.sort((a, b) =>
         (isHigh(a) - isHigh(b)) || (isHot(a) - isHot(b)) || (typeOrder(a) - typeOrder(b))));
 
+      // Task cá nhân phân loại Learn-to-Grow vào nhóm learn-to-grow (chỉ admin thấy), không vào "Cá nhân".
+      const myTasks = adminUnlocked ? (wteLang === 'EN' && personalTasksEN.length ? personalTasksEN : personalTasks) : [];
+      myTasks.filter(p => groupOf(p) === 'LEARN').forEach(p => groups.LEARN.push({ ...p, _personal: true }));
+      const myOther = myTasks.filter(p => groupOf(p) !== 'LEARN');
+
       // Nhóm "Cá nhân" nằm TRÊN cùng (trên cả nhóm $). Id cố tình KHÔNG bắt đầu bằng "wte-rank-"
       // để scroll-spy của thanh lọc $/S/A/B/C không nhận nhầm nhóm này.
-      const personalHtml = (adminUnlocked && personalTasks.length)
+      const personalHtml = myOther.length
         ? `<div id="wte-personal" class="wte-group">
              <div class="wte-group-label">${wteLang === 'EN' ? 'Personal' : 'Cá nhân'}</div>
-             <div class="wte-rank-group">${(wteLang === 'EN' && personalTasksEN.length ? personalTasksEN : personalTasks).map(p => cardHtml(p, true)).join('')}</div>
+             <div class="wte-rank-group">${myOther.map(p => cardHtml(p, true)).join('')}</div>
            </div>`
         : '';
 
@@ -2694,7 +2717,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         .filter(r => groups[r].length)
         .map(r => `<div id="wte-rank-${r}" class="wte-group">
              <div class="wte-group-label">${groupLabel(r)}</div>
-             <div class="wte-rank-group wte-rank-group--${r}">${groups[r].map(p => cardHtml(p)).join('')}</div>
+             <div class="wte-rank-group wte-rank-group--${r}">${groups[r].map(p => cardHtml(p, !!p._personal)).join('')}</div>
            </div>`)
         .join('');
       observeRankSections();
@@ -2731,9 +2754,11 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     // Phân loại Work-to-Earn → nhóm $, không có rank (card cũng không hiện thẻ rank):
     // ẩn hẳn ô Rank. Đổi sang phân loại khác thì ô hiện lại, rank đã chọn vẫn giữ nguyên trong select.
     function ptSyncRank() {
-      $('pt-rank-field').style.display = $('pt-type').value === WTE_INCOME_TYPE ? 'none' : '';
+      $('pt-rank-field').style.display = WTE_TYPE_GROUP[$('pt-type').value] ? 'none' : '';
     }
     $('pt-type').addEventListener('change', ptSyncRank);
+    // Learn-to-Grow là việc học của riêng anh → mặc định Personal (vẫn đổi tay được).
+    $('pt-type').addEventListener('change', () => { if ($('pt-type').value === 'Learn-to-Grow') $('pt-visibility').value = 'personal'; });
     // đổi phân loại / chọn rank → tắt lỗi "Chọn rank trước khi lưu" còn sót từ lần bấm trước
     ['pt-type', 'pt-rank'].forEach(id => $(id).addEventListener('change', () => { ptError.style.display = 'none'; }));
 
@@ -2904,7 +2929,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     }
 
     async function submitPtask() {
-      const income = $('pt-type').value === WTE_INCOME_TYPE;
+      const income = !!WTE_TYPE_GROUP[$('pt-type').value];
       if (!income && !$('pt-rank').value) { showMsg(ptError, 'Chọn rank trước khi lưu'); return; }
       const task = {
         name:       $('pt-name').value,

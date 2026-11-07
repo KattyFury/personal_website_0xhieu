@@ -31,7 +31,8 @@ Chi tiết chuẩn tại [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md), ưu tiên hiện 
 - VI/EN: một native button role=switch, một thumb trượt, không phải2 nút tròn. Desktop80×40/mobile64×32. Shadow trên control tổng.
 - Thẻ trong header card Work (06/11): nền đen chữ trắng cho rank S, nhãn work-to-earn (thay rank w2e), high-potential, narrative top 5 của box Narrative đang hot (lấy `narrativeRanking()` lúc render, tự đổi theo data). Còn lại trắng viền chữ đen; không còn chữ xám trên thẻ.
 - Work mỗi dự án một thẻ: desktop2/hàng, ≤900px1/hàng. DAILY nền xám trung tính, không viền cam; task đen đậm400, rê chuột mới đậm600. Task không cắt chữ.
-- Rank Work: một thanh liền248×48 với vùng cam trượt qua w2e/S/A/B/C (`$` trông giống `S` nên đã đổi). Kéo/click/phím và scroll spy. Pointer move/up theo window để cuộn không làm mất thao tác. Nhãn rank trong card nền trắng/viền/chữ xám, đồng cấp nhãn phân loại.
+- Nhóm **learn-to-grow (l2g)** (07/11): phân loại `Learn-to-Grow`, xếp trên cả w2e, không có rank (như w2e). Việc học hằng ngày của anh → form mặc định Personal; card l2g cá nhân nằm trong nhóm learn-to-grow (không vào "Cá nhân"), chỉ admin thấy. Khách không có card l2g thì nút l2g trên thanh tự ẩn. Server: `TYPE_GROUPS` trong `functions/api/private.js` khớp `WTE_TYPE_GROUP` trong index.html.
+- Rank Work: một thanh liền 48px/ô (l2g/w2e/S/A/B/C, co theo số nút đang hiện) với vùng cam trượt qua (`$` trông giống `S` nên đã đổi). Kéo/click/phím và scroll spy. Pointer move/up theo window để cuộn không làm mất thao tác. Nhãn rank trong card nền trắng/viền/chữ xám, đồng cấp nhãn phân loại.
 - CV hero top96/48, section gap64/32, body16/24. Giữ nội dung và tagline `Sharing POVs on Crypto and AI`.
 
 ## Valuation: UI và dữ liệu

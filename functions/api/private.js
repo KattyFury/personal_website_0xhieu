@@ -35,6 +35,8 @@ const itemList = v => (Array.isArray(v) ? v : [])
 // LƯU Ý: khớp WTE_RANKS trong index.html (mục "AIRDROP — Work to Earn") — đổi thang rank
 // thì sửa cả 2 chỗ, không chỉ client.
 const RANKS = ['S', 'A', 'B', 'C'];
+// Phân loại có nhóm riêng, không có rank — khớp WTE_TYPE_GROUP trong index.html
+const TYPE_GROUPS = ['Learn-to-Grow', 'Work-to-Earn'];
 const cleanRank = v => RANKS.includes(v) ? v : 'C';
 // Tiềm năng 2 mức 'high' | 'low' ('' = chưa điền). Số 1-3 của thang sao cũ quy đổi
 // ≥2 = high, 1 = low — khớp potLevel trong index.html.
@@ -53,7 +55,7 @@ const sanitize = t => ({
   website:    cleanLink(t.website),
   potential:  cleanPotential(t.potential),
   type:       clean(t.type, 60),
-  rank:       t.type === 'Work-to-Earn' ? '' : cleanRank(t.rank),   // nhóm $ không có rank (WTE_INCOME_TYPE)
+  rank:       TYPE_GROUPS.includes(t.type) ? '' : cleanRank(t.rank),   // nhóm $ không có rank (WTE_INCOME_TYPE)
   visibility: cleanVisibility(t.visibility),
   getStarted: itemList(t.getStarted),
   daily:      itemList(t.daily),
