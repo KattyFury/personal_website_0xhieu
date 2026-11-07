@@ -626,17 +626,8 @@
     .wte-rank-group { display: flex; flex-direction: column; }
     .wte-rank-group .wte-card { width: 100%; min-width: 0; display: block; border-radius: 0; background: none; border-top: 1px solid var(--hair); }
 
-    /* Hàng dự án (summary): logo · tên + thẻ · nút sửa (admin) · mũi tên gập */
-    .wte-card-head {
-      padding: 10px 0; list-style: none; cursor: pointer;
-      display: flex; align-items: center; gap: 12px;
-    }
-    .wte-card-head::-webkit-details-marker { display: none; }
-    .wte-card-head::after {
-      content: ''; flex: none; width: 8px; height: 8px; margin: 0 6px 4px 0;
-      border-right: 2px solid var(--grey); border-bottom: 2px solid var(--grey); transform: rotate(45deg); transition: transform .15s;
-    }
-    .wte-card[open] > .wte-card-head::after { margin: 4px 6px 0 0; transform: rotate(-135deg); }
+    /* Hàng dự án (không gập, user chốt 08/11): logo · tên + thẻ · nút sửa (admin); dưới là link + Hướng dẫn tham gia */
+    .wte-card-head { padding: 12px 0 8px; display: flex; align-items: center; gap: 12px; }
     .wte-card-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
     .wte-logo { display: block; flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; object-fit: cover; background: var(--mist); }
     .wte-card-head .wte-logo, .wte-logo-txt { width: 36px; height: 36px; border-radius: 10px; }
@@ -659,17 +650,20 @@
     .wte-card-head .wte-opt { flex: none; width: 28px; height: 28px; box-shadow: none; }
     .wte-card-head .wte-opt .wte-ico { width: 16px; height: 16px; }
 
-    /* Thân ô khi mở */
-    .wte-card-body { padding: 0 0 8px 48px; }
-    .wte-socials { display: flex; gap: 8px; padding-bottom: 8px; }
+    /* Hàng link ngay dưới tên (thẳng mép chữ tên): Website · X · Discord · Hướng dẫn tham gia → bài đăng X */
+    .wte-socials { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 0 12px 48px; }
+    /* Chip link gọn (user 08/11): cao 30, chữ Nhãn — Website · X · Discord · Hướng dẫn tham gia nằm chung 1 hàng */
     .wte-social {
-      font-size: var(--ds-type-button-size); line-height: var(--ds-type-button-line); font-weight: 600; letter-spacing: var(--ds-type-button-tracking);
-      height: 36px; padding: 0 12px; border-radius: 10px; gap: 6px;
+      font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking);
+      height: 30px; padding: 0 10px; border-radius: 10px; gap: 5px;
       display: inline-flex; align-items: center; justify-content: center;
       background: var(--canvas); color: var(--ink); text-decoration: none; box-shadow: none !important;
     }
     .wte-social:hover { background: var(--mist); }
-    .wte-social .wte-ico { width: 16px; height: 16px; }
+    .wte-social--icon { width: 30px; padding: 0; }
+    .wte-social--guide { background: var(--ink); color: var(--accent); }
+    .wte-social--guide:hover { background: var(--ink); color: var(--ground); }
+    .wte-social .wte-ico { width: 14px; height: 14px; }
     .wte-section { min-width: 0; padding: 8px 0; border-top: 1px solid var(--hair); }
     .wte-section-label {
       font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking);
@@ -846,8 +840,8 @@
     .wl-modal input, .wl-modal select { height: 40px; border-radius: 8px; }
     .wl-modal .predict-btn-primary, .wl-modal .predict-btn-secondary, .wl-modal .val-del-btn { min-height: 40px; height: auto; padding: 8px 12px; border-radius: 8px; }
     @media (pointer: coarse) {
-      .wte-task-row--link, .wte-social, .wte-opt { min-height: 44px; }
-      .wte-social, .wte-opt { min-width: 44px; }
+      .wte-task-row--link, .wte-opt { min-height: 44px; }
+      .wte-opt { min-width: 44px; }
       .predict-link, .wl-modal input, .wl-modal select,
       .wl-modal .predict-btn-primary, .wl-modal .predict-btn-secondary, .wl-modal .val-del-btn { min-height: 44px; }
     }
@@ -940,11 +934,11 @@
       /* Work */
       .wte-task-row { min-height: 44px; }
       #wte-cards { gap: 20px; }
+      .wte-socials { padding-left: 0; }   /* mobile: hàng link chạy hết ngang để nằm 1 dòng */
       .today { gap: 10px; }
       .today-hero { min-height: 116px; padding: 16px 116px 16px 16px; }
       .today-ring { right: 16px; width: 80px; height: 80px; margin-top: -40px; }
       .today-ring span { width: 62px; height: 62px; }
-      .wte-card-body { padding: 0 0 8px; }
 
 
       #cat-btn  { right: 16px; bottom: 16px; }
@@ -2512,7 +2506,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     const WTE_GROUPS      = ['LEARN','INCOME','S','A','B','C'];
     const WTE_RANKS       = WTE_GROUPS.filter(g => !isTypeGroup(g)); // rank chọn tay được trong form admin
     const RANK_LABEL      = { LEARN: 'l2g', INCOME: 'w2e', S: 'S', A: 'A', B: 'B', C: 'C' };
-    const GROUP_NAME      = { LEARN: 'learn-to-grow', INCOME: 'work-to-earn' };
+    const GROUP_NAME      = { LEARN: 'Learn-to-grow', INCOME: 'Work-to-earn' };   // viết hoa chữ đầu như 'Cá nhân' (cùng cấp)
 
     // Tiêu đề nhóm — SUY RA từ RANK_LABEL, không khai lại danh sách thứ 2.
     // INCOME = "work-to-earn" (không phải rank, viết thường như thẻ phân loại); còn lại "Rank: S" — khớp chữ trên thẻ rank của card.
@@ -2683,29 +2677,32 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
           ? `<img class="${cls}" src="https://unavatar.io/twitter/${handle}" alt="" loading="lazy" />`
           : `<span class="wte-logo-txt">${(p.name || '?').trim().charAt(0)}</span>`;
       };
-      // Hàng dự án: <details> gập sẵn — logo · tên · thẻ; mở ra = hướng dẫn tham gia.
+      // Hàng dự án: logo · tên · High/Low potential · narrative; ngay dưới là Website · X · Discord · Hướng dẫn tham gia.
       const cardHtml = (p, personal = false) => {
         const cardId = personal
           ? 'wte-personal-' + p.id
           : 'wte-card-' + p.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
         const potLv = potLevel(p.potential);
         const g = groupOf(p);
+        // "Hướng dẫn tham gia" = link Get Started có chữ hướng dẫn/tham gia (bài đăng X); không có thì link đầu tiên.
+        const gs = (p.getStarted || []).filter(x => x.link);
+        const guide = gs.find(x => /hướng dẫn|tham gia|how to|guide/i.test(x.text || '')) || gs[0];
+        const EN = wteLang === 'EN';
         const links = [
           p.website ? `<a class="wte-social" href="${p.website}" target="_blank" rel="noopener">${wteIcon('link')}Website</a>` : '',
-          p.twitter ? `<a class="wte-social" href="${p.twitter}" target="_blank" rel="noopener" aria-label="X">${wteIcon('x')}X</a>` : '',
-          p.discord ? `<a class="wte-social" href="${p.discord}" target="_blank" rel="noopener" aria-label="Discord">${wteIcon('discord')}Discord</a>` : '',
+          p.twitter ? `<a class="wte-social wte-social--icon" href="${p.twitter}" target="_blank" rel="noopener" aria-label="X" title="X">${wteIcon('x')}</a>` : '',
+          p.discord ? `<a class="wte-social wte-social--icon" href="${p.discord}" target="_blank" rel="noopener" aria-label="Discord" title="Discord">${wteIcon('discord')}</a>` : '',
+          guide ? `<a class="wte-social wte-social--guide" href="${guide.link}" target="_blank" rel="noopener">${EN ? 'How to join' : 'Hướng dẫn tham gia'}${wteIcon('link')}</a>` : '',
         ].join('');
-        // Mở ra = hướng dẫn tham gia (link + Get Started). Daily/Weekly đã gom lên checklist ngày/tuần.
-        const body = (links ? `<div class="wte-socials">${links}</div>` : '')
-          + section('Get Started', p.getStarted || [], 'getStarted');
-        return `<details class="wte-card wte-card--${g}" id="${cardId}">
-          <summary class="wte-card-head">${logoOf(p)}
+        const potText = potLv === 'high' ? 'High potential' : potLv === 'low' ? 'Low potential' : potLv;
+        return `<div class="wte-card wte-card--${g}" id="${cardId}">
+          <div class="wte-card-head">${logoOf(p)}
             <span class="wte-card-main"><span class="wte-name">${p.name}</span>
-              <span class="wte-tags">${potLv ? `<span class="wte-tag wte-pot--${potLv}${strong(potLv === 'high')}">${wteIcon(potLv)}${potLv}</span>` : ''}${p.type ? `<span class="wte-tag wte-narr${strong(isTypeGroup(g) || topNarr.has(p.type.toLowerCase()))}">${tagCase(p.type)}</span>` : ''}</span></span>
+              <span class="wte-tags">${potLv ? `<span class="wte-tag wte-pot--${potLv}${strong(potLv === 'high')}">${wteIcon(potLv)}${potText}</span>` : ''}${p.type ? `<span class="wte-tag wte-narr${strong(isTypeGroup(g) || topNarr.has(p.type.toLowerCase()))}">${tagCase(p.type)}</span>` : ''}</span></span>
             ${adminUnlocked ? `<button class="wte-opt" data-id="${p.id}" title="Sửa task" aria-label="Sửa task">${wteIcon('more')}</button>` : ''}
-          </summary>
-          <div class="wte-card-body">${body || `<div class="today-empty">${wteLang === 'EN' ? 'No guide yet' : 'Chưa có hướng dẫn'}</div>`}</div>
-        </details>`;
+          </div>
+          ${links ? `<div class="wte-socials">${links}</div>` : ''}
+        </div>`;
       };
 
       // Trong mỗi nhóm (user chốt 06/11): 1) high-potential lên trước, 2) narrative đang hot
