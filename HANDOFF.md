@@ -67,6 +67,7 @@ Mọi gạch đầu dòng cũ bên dưới file đó (header xám, viền, radiu
 **Checklist Hôm nay (anh chốt 09/11, thay 2 checklist ngày/tuần riêng)**
 - Một ô vàng (ngày, số việc, vòng tiến độ) + một danh sách gộp mọi việc rơi vào hôm nay. Thứ tự l2g → cá nhân → w2e → S…C. Việc tuần có thêm thẻ `tuần`/`weekly`.
 - Form vẫn tách Daily task và Weekly task. Không chọn ngày: việc ngày hiện mọi ngày, việc tuần hiện thứ Hai + thứ Ba.
+- Ô tick to 32 (vùng bấm 44): bấm ô mới gạch việc; bấm phần còn lại của hàng mở link công việc ở tab mới. Việc không có link thì hàng không bấm được.
 - Tick việc ngày về 0 mỗi ngày; tick việc tuần giữ đến hết tuần (thứ Hai về 0), nên tick việc tuần rồi thì các ngày khác trong tuần nó vẫn đã tick.
 - Tick lưu localStorage `wte-done` / `wte-done-week`, **chỉ trên máy đang dùng**, giữ 2 kỳ gần nhất. Đồng bộ tick giữa các máy qua KV chưa làm.
 

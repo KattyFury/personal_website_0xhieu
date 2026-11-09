@@ -146,7 +146,7 @@
     .header-home:hover span, .val-intro-clickable:hover > span, .box-title-btn:hover, .wte-name:hover,
     .nav-btn:not(:disabled):hover, .lang-btn:hover, .lang-dd-btn:not(.is-plus):hover, .social-btn:hover,
     .predict-link:hover, .predict-btn-primary:hover, .predict-btn-secondary:hover, .val-del-btn:hover, .retry-btn:hover,
-    .pt-delete:hover, .val-row:hover, .wte-task-row--link:hover .wte-task-text, #tge-section tbody tr.row-editable:hover td {
+    .pt-delete:hover, .val-row:hover, .wte-task-row--link:hover .wte-task-text, a.dt-body:hover .dt-text,#tge-section tbody tr.row-editable:hover td {
       color: var(--ink);
       font-weight: 600;
     }
@@ -578,27 +578,30 @@
     .sc.is-late .sc-state { color: var(--red-text); }
     .sc.is-done .sc-time { opacity: .45; }
     .sc.is-done .sc-text { color: var(--muted); text-decoration: line-through; }
-    .dt { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-top: 1px solid var(--hair); }
+    /* Hàng việc: bấm ô tròn = tick; bấm phần còn lại của hàng = mở link công việc */
+    .dt { display: flex; align-items: center; gap: 12px; border-top: 1px solid var(--hair); }
     .dt:first-child { border-top: 0; }
-    .dt-check { flex: 1; min-width: 0; display: flex; align-items: flex-start; gap: 12px; cursor: pointer; }
+    .dt-check { position: relative; flex: none; display: grid; cursor: pointer; }
+    .dt-check::after { content: ""; position: absolute; inset: -6px; }   /* vùng bấm 44 */
     .dt-check input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .dt-body { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; padding: 12px 0; color: inherit; text-decoration: none; }
     .dt-box {
-      flex: none; width: 24px; height: 24px; border: 2px solid var(--line); border-radius: 50%;
+      flex: none; width: 32px; height: 32px; border: 2px solid var(--line); border-radius: 50%;
       display: grid; place-items: center; color: var(--accent); transition: background .15s, border-color .15s;
     }
-    .dt-box .wte-ico { width: 14px; height: 14px; stroke-width: 3; opacity: 0; }
+    .dt-box .wte-ico { width: 18px; height: 18px; stroke-width: 3; opacity: 0; }
     .dt-check input:checked + .dt-box { background: var(--ink); border-color: var(--ink); }
     .dt-check input:checked + .dt-box .wte-ico { opacity: 1; }
     .dt-check input:focus-visible + .dt-box { outline: 2px solid var(--ink); outline-offset: 2px; }
-    .dt-main { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+    .dt-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
     .dt-text { font-size: var(--ds-type-content-size); line-height: var(--ds-type-content-line); font-weight: 400; letter-spacing: var(--ds-type-content-tracking); color: var(--ink); overflow-wrap: anywhere; }
-    .dt-check input:checked ~ .dt-main .dt-text { color: var(--muted); text-decoration: line-through; }
+    .dt:has(input:checked) .dt-text { color: var(--muted); text-decoration: line-through; }
     .dt-meta { font-size: var(--ds-type-secondary-size); line-height: var(--ds-type-secondary-line); font-weight: 400; letter-spacing: var(--ds-type-secondary-tracking); display: flex; flex-wrap: wrap; align-items: center; gap: 6px; color: var(--grey); }
     .dt-when { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
     .dt-meta .wte-logo, .sc-main .wte-logo { width: 20px; height: 20px; border-radius: 50%; }
     .dt-meta .wte-tag { font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking); min-height: 20px; padding: 0 6px; }
     .dt-link { flex: none; width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; color: var(--grey); background: var(--canvas); }
-    .dt-link:hover { color: var(--ink); background: var(--mist); }
+    a.dt-body:hover .dt-link { color: var(--ink); background: var(--mist); }
     .dt-link .wte-ico { width: 16px; height: 16px; }
 
     /* Box "Dự án & hướng dẫn tham gia" (đầu trang Work): 1 ô trắng, mỗi dự án 1 hàng gập/mở */
@@ -2793,11 +2796,11 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       const doneNow = { d: loadDone('d'), w: loadDone('w') };
       const rows = ordered.flatMap(todayItems).map(({ p, item, s, k, time }) => {
         const g = groupOf(p);
+        const main = `<span class="dt-main"><span class="dt-text">${item.text}</span>
+                <span class="dt-meta">${time ? `<span class="dt-when">${time}</span>` : ''}${logoOf(p)}${p.name}<span class="wte-tag${strong(isTypeGroup(g) || g === 'S')}">${RANK_LABEL[g] || g}</span>${s === 'w' ? weeklyTag : ''}</span></span>`;
         return `<div class="dt">
-            <label class="dt-check"><input type="checkbox" data-s="${s}" data-k="${k}"${doneNow[s].has(k) ? ' checked' : ''} /><span class="dt-box">${wteIcon('check')}</span>
-              <span class="dt-main"><span class="dt-text">${item.text}</span>
-                <span class="dt-meta">${time ? `<span class="dt-when">${time}</span>` : ''}${logoOf(p)}${p.name}<span class="wte-tag${strong(isTypeGroup(g) || g === 'S')}">${RANK_LABEL[g] || g}</span>${s === 'w' ? weeklyTag : ''}</span></span></label>
-            ${item.link ? `<a class="dt-link" href="${item.link}" target="_blank" rel="noopener" aria-label="Link">${wteIcon('link')}</a>` : ''}
+            <label class="dt-check"><input type="checkbox" aria-label="${EN ? 'Done' : 'Xong'}" data-s="${s}" data-k="${k}"${doneNow[s].has(k) ? ' checked' : ''} /><span class="dt-box">${wteIcon('check')}</span></label>
+            ${item.link ? `<a class="dt-body" href="${item.link}" target="_blank" rel="noopener">${main}<span class="dt-link">${wteIcon('link')}</span></a>` : `<div class="dt-body">${main}</div>`}
           </div>`;
       });
       const todayDate = new Date().toLocaleDateString(EN ? 'en-US' : 'vi-VN',
