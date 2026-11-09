@@ -803,31 +803,16 @@
     }
     .pt-day[aria-pressed="true"] { background: var(--accent); }
     .pt-time { display: flex; align-items: center; gap: 8px; }
-    .pt-time-btn {
-      font-size: var(--ds-type-input-size); line-height: var(--ds-type-input-line); font-weight: 600; letter-spacing: var(--ds-type-input-tracking);
-      width: 96px; height: 40px; padding: 0; border: none; border-radius: 10px; cursor: pointer;
-      font-family: var(--font); font-variant-numeric: tabular-nums; background: var(--canvas); color: var(--ink);
+    .wl-modal .pt-time-input {
+      font-weight: 600; width: 96px; height: 40px; padding: 0; border: none; border-radius: 10px;
+      text-align: center; font-variant-numeric: tabular-nums; background: var(--canvas);
     }
-    .pt-time-btn.is-empty { font-weight: 400; color: var(--muted); }
+    .wl-modal .pt-time-input::placeholder { font-weight: 400; }
     .pt-time-clear {
       font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking);
       padding: 0; border: none; background: none; cursor: pointer; font-family: var(--font); color: var(--grey);
     }
-    .pt-time-btn.is-empty + .pt-time-clear { display: none; }
-    .pt-wheel { grid-column: 1 / -1; position: relative; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .pt-wheel[hidden] { display: none; }
-    .pt-wheel::before { content: ""; position: absolute; left: 0; right: 0; top: 40px; height: 40px; border-radius: 10px; background: var(--canvas); }
-    .pt-wheel-sep { position: relative; font-size: var(--ds-type-content-size); line-height: var(--ds-type-content-line); font-weight: 600; letter-spacing: var(--ds-type-content-tracking); color: var(--ink); }
-    .pt-wheel-col {
-      position: relative; width: 64px; height: 120px; padding: 40px 0; box-sizing: border-box; overflow-y: auto; overscroll-behavior: contain;
-      scroll-snap-type: y mandatory; scrollbar-width: none; -ms-overflow-style: none;
-      -webkit-mask-image: linear-gradient(transparent, #000 35%, #000 65%, transparent); mask-image: linear-gradient(transparent, #000 35%, #000 65%, transparent);
-    }
-    .pt-wheel-col::-webkit-scrollbar { display: none; }
-    .pt-wheel-n {
-      font-size: var(--ds-type-content-size); line-height: var(--ds-type-content-line); font-weight: 600; letter-spacing: var(--ds-type-content-tracking);
-      height: 40px; display: grid; place-items: center; scroll-snap-align: center; cursor: pointer; font-variant-numeric: tabular-nums; color: var(--ink);
-    }
+    .pt-time-input:placeholder-shown + .pt-time-clear { display: none; }
     .pt-row-add {
       align-self: flex-start; width: 40px; height: 40px; padding: 0; border-radius: var(--ds-product-control-radius); cursor: pointer;
       display: inline-flex; align-items: center; justify-content: center;
@@ -860,7 +845,7 @@
     @media (pointer: coarse) {
       .wte-task-row--link, .wte-opt { min-height: 44px; }
       .wte-opt { min-width: 44px; }
-      .predict-link, .wl-modal input, .wl-modal select, .pt-day, .pt-time-btn,
+      .predict-link, .wl-modal input, .wl-modal select, .pt-day,
       .wl-modal .predict-btn-primary, .wl-modal .predict-btn-secondary, .wl-modal .val-del-btn { min-height: 44px; }
     }
     @media (max-width: 1024px) {
@@ -3052,7 +3037,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     // 3 nhóm nhiều dòng: mỗi dòng = việc + link, bấm + để thêm dòng
     const PT_GROUPS = { gs: 'Việc cần làm để bắt đầu', daily: 'Việc làm mỗi ngày', weekly: 'Việc làm mỗi tuần' };
 
-    // Lịch TUỲ CHỌN kiểu iPhone: chọn nhiều ngày + giờ 24h bằng bánh xe, theo đồng hồ của ngôn ngữ đang xem.
+    // Optional schedule: multiple days + typed 24h time, on the clock of the current language.
     const DOW_SHORT = { VI: ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'], EN: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] };
     function ptWhenHtml(key) {
       if (key === 'gs') return '';
@@ -3063,48 +3048,17 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
           <div class="pt-days">${DOW_SHORT[wteLang].map((d, i) => `<button type="button" class="pt-day" data-d="${i + 1}" aria-pressed="false">${d}</button>`).join('')}</div>
           <span class="pt-when-note">${note}</span>
           <span class="pt-when-label">${EN ? 'Time (UTC)' : 'Giờ (GMT+7)'}</span>
-          <div class="pt-time"><button type="button" class="pt-time-btn is-empty">--:--</button><button type="button" class="pt-time-clear">${EN ? 'Clear' : 'Bỏ giờ'}</button></div>
-          <div class="pt-wheel" hidden></div>
+          <div class="pt-time"><input type="text" class="pt-time-input" inputmode="numeric" maxlength="5" placeholder="--:--" autocomplete="off" aria-label="${EN ? 'Time, 24-hour' : 'Giờ, dạng 24h'}" /><button type="button" class="pt-time-clear">${EN ? 'Clear' : 'Bỏ giờ'}</button></div>
         </div>`;
     }
-    function ptSetTime(row, value) {
-      const btn = row.querySelector('.pt-time-btn');
-      btn.dataset.v = value;
-      btn.textContent = value || '--:--';
-      btn.classList.toggle('is-empty', !value);
-    }
-    const PT_WHEEL_ROW = 40;   // khớp chiều cao .pt-wheel-n
-    const ptWheelCol = count => `<div class="pt-wheel-col">${Array.from({ length: count }, (_, n) => `<div class="pt-wheel-n">${pad2(n)}</div>`).join('')}</div>`;
-    // Bấm giờ: bánh xe mở ngay dưới hàng (như app Lời nhắc), cuộn tới đâu giờ đổi tới đó.
-    function ptToggleWheel(row) {
-      const wheel = row.querySelector('.pt-wheel');
-      const opening = wheel.hidden;
-      document.querySelectorAll('#ptask-form .pt-wheel').forEach(w => { w.hidden = true; });
-      if (!opening) return;
-      if (!wheel.firstChild) {
-        wheel.innerHTML = `${ptWheelCol(24)}<span class="pt-wheel-sep">:</span>${ptWheelCol(60)}`;
-        wheel.querySelectorAll('.pt-wheel-col').forEach(col => {
-          col.addEventListener('scroll', () => {
-            if (wheel.hidden) return;
-            const [h, m] = [...wheel.querySelectorAll('.pt-wheel-col')].map(c => pad2(Math.round(c.scrollTop / PT_WHEEL_ROW)));
-            ptSetTime(row, `${h}:${m}`);
-          });
-          col.addEventListener('click', e => {
-            const n = e.target.closest('.pt-wheel-n');
-            if (n) col.scrollTop = [...col.children].indexOf(n) * PT_WHEEL_ROW;
-          });
-        });
-        wheel.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') wheel.hidden = true; });
-      }
-      wheel.hidden = false;
-      if (!row.querySelector('.pt-time-btn').dataset.v) ptSetTime(row, '00:00');
-      const parts = row.querySelector('.pt-time-btn').dataset.v.split(':').map(Number);
-      wheel.querySelectorAll('.pt-wheel-col').forEach((col, i) => { col.scrollTop = parts[i] * PT_WHEEL_ROW; });
-    }
-    // Every scroll over an open wheel rewrites the time, so close it as soon as the user moves on.
-    const ptCloseWheels = () => document.querySelectorAll('#ptask-form .pt-wheel').forEach(w => { w.hidden = true; });
-    ptaskModal.addEventListener('pointerdown', e => { if (!e.target.closest('.pt-wheel, .pt-time-btn')) ptCloseWheels(); });
-    ptaskModal.addEventListener('scroll', e => { if (!e.target.closest('.pt-wheel-col')) ptCloseWheels(); }, true);
+    const ptSetTime = (row, value) => { row.querySelector('.pt-time-input').value = value; };
+    // 24h only: "9" → 09:00, "930" → 09:30, "1100" → 11:00. Returns '' if invalid.
+    const ptParseTime = s => {
+      const d = String(s).replace(/\D/g, '');
+      if (!d || d.length > 4) return '';
+      const [h, m] = d.length <= 2 ? [+d, 0] : [+d.slice(0, -2), +d.slice(-2)];
+      return h < 24 && m < 60 ? `${pad2(h)}:${pad2(m)}` : '';
+    };
     function ptAddRow(key) {
       const row = document.createElement('div');
       row.className = 'pt-item calc-field';
@@ -3118,11 +3072,13 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'));
       }));
       if (key !== 'gs') {
-        row.querySelector('.pt-time-btn').addEventListener('click', () => ptToggleWheel(row));
-        row.querySelector('.pt-time-clear').addEventListener('click', () => {
-          row.querySelector('.pt-wheel').hidden = true;
-          ptSetTime(row, '');
+        const timeInput = row.querySelector('.pt-time-input');
+        timeInput.addEventListener('input', () => {
+          const d = timeInput.value.replace(/\D/g, '').slice(0, 4);
+          timeInput.value = d.length > 2 ? `${d.slice(0, 2)}:${d.slice(2)}` : d;
         });
+        timeInput.addEventListener('blur', () => { timeInput.value = ptParseTime(timeInput.value) || timeInput.value; });
+        row.querySelector('.pt-time-clear').addEventListener('click', () => ptSetTime(row, ''));
       }
       $('pt-' + key + '-items').appendChild(row);
       return row;
@@ -3134,7 +3090,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         const it = { text: r.querySelector('.pt-item-text').value, link: r.querySelector('.pt-item-link').value };
         if (r.querySelector('.pt-when')) {
           const days = [...r.querySelectorAll('.pt-day[aria-pressed="true"]')].map(b => Number(b.dataset.d));
-          const saved = shiftWhen(days, r.querySelector('.pt-time-btn').dataset.v || '', SAVED_CLOCK - wteClock());
+          const saved = shiftWhen(days, ptParseTime(r.querySelector('.pt-time-input').value), SAVED_CLOCK - wteClock());
           if (saved.time) it.time = saved.time;
           if (saved.days.length) it.days = saved.days;
         }
@@ -3196,6 +3152,10 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       if (!$('pt-potential').value) { showMsg(ptError, 'Chọn tiềm năng trước khi lưu'); return; }
       if (!$('pt-type').value) { showMsg(ptError, 'Chọn phân loại trước khi lưu'); return; }
       if (!income && !$('pt-rank').value) { showMsg(ptError, 'Chọn rank trước khi lưu'); return; }
+      if ([...document.querySelectorAll('#ptask-form .pt-time-input')].some(i => i.value && !ptParseTime(i.value))) {
+        showMsg(ptError, wteLang === 'EN' ? 'Invalid time. Use 24-hour format, e.g. 11:00' : 'Giờ không hợp lệ. Nhập dạng 24h, ví dụ 11:00');
+        return;
+      }
       const task = {
         name:       $('pt-name').value,
         twitter:    $('pt-twitter').value,
