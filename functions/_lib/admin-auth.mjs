@@ -1,16 +1,16 @@
-// Quyền admin dùng chung cho /api/private, /api/val, /api/val-fetch. Có 2 đường vào:
-//   1. Mật khẩu ADMIN_PASS trong body (ô nhập tay + bot giá trên VPS).
-//   2. Token của máy đã tick "Nhớ máy này": cookie HttpOnly, JS trên trang không đọc được.
+// Admin rights shared by /api/private, /api/val, /api/val-fetch. Two ways in:
+//   1. ADMIN_PASS in the body (manual input + price bot on the VPS).
+//   2. Token of a machine with "Nhớ máy này" ticked: HttpOnly cookie, unreadable by page JS.
 //
-// KV chỉ lưu hash của token, lộ KV cũng không dùng được. Hash trộn cả ADMIN_PASS nên
-// đổi ADMIN_PASS là mọi máy đã nhớ mất quyền cùng lúc.
-// Thu hồi 1 máy: xoá key `admin-device:<hash>` trong KV WORK (metadata ghi máy + ngày tạo).
+// KV stores only the token's hash, so a KV leak is useless. The hash mixes in ADMIN_PASS, so
+// changing ADMIN_PASS revokes every remembered machine at once.
+// Revoke one machine: delete key `admin-device:<hash>` in KV WORK (metadata records machine + creation date).
 
 const COOKIE = 'cvAdminDevice';
-const COOKIE_MAX_AGE = 400 * 24 * 60 * 60;   // 400 ngày — mức tối đa Chrome cho phép
+const COOKIE_MAX_AGE = 400 * 24 * 60 * 60;   // 400 days, the maximum Chrome allows
 const hex = bytes => [...new Uint8Array(bytes)].map(b => b.toString(16).padStart(2, '0')).join('');
 
-// So sánh không rò rỉ thời gian (chống dò mật khẩu bằng cách đo độ trễ)
+// Constant-time comparison (prevents guessing the password by timing)
 function safeEqual(a, b) {
   if (a.length !== b.length) return false;
   let diff = 0;
@@ -21,7 +21,7 @@ function safeEqual(a, b) {
 const deviceKey = async (token, env) => 'admin-device:' +
   hex(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`${token}:${env.ADMIN_PASS}`)));
 
-// 'pass' = đúng mật khẩu · 'device' = máy đã nhớ · null = không có quyền
+// 'pass' = correct password · 'device' = remembered machine · null = no access
 export async function adminVia(request, body, env) {
   if (!env.ADMIN_PASS) return null;
   if (safeEqual(String(body.pass ?? ''), String(env.ADMIN_PASS))) return 'pass';
@@ -30,7 +30,7 @@ export async function adminVia(request, body, env) {
   return await env.WORK.get(await deviceKey(token, env)) ? 'device' : null;
 }
 
-// Cấp token mới cho máy này, trả về giá trị header Set-Cookie
+// Issue a new token for this machine, return the Set-Cookie header value
 export async function rememberDevice(request, env) {
   const token = hex(crypto.getRandomValues(new Uint8Array(32)));
   await env.WORK.put(await deviceKey(token, env), '1', {

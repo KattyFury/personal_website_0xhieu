@@ -1,10 +1,10 @@
-// Cổng riêng tư cho Airdrop → Work: task cá nhân lưu trong Cloudflare KV.
-// Mật khẩu được kiểm tra Ở SERVER — không nằm trong index.html, không dò được bằng F12.
+// Private gateway for Airdrop → Work: personal tasks stored in Cloudflare KV.
+// The password is checked ON THE SERVER: not in index.html, not discoverable with F12.
 //
 //   KV binding : WORK          (Cloudflare Pages → Settings → Bindings)
-//   Secret     : ADMIN_PASS    (Cloudflare Pages → Settings → Environment variables, chọn "Encrypt")
+//   Secret     : ADMIN_PASS    (Cloudflare Pages → Settings → Environment variables, choose "Encrypt")
 //
-// Sai mật khẩu → trả 401 và KHÔNG trả về bất kỳ dữ liệu nào.
+// Wrong password → 401 and NO data returned.
 
 import { adminVia, rememberDevice } from '../_lib/admin-auth.mjs';
 
@@ -15,19 +15,19 @@ const json = (obj, status = 200) => new Response(JSON.stringify(obj), {
   headers: { 'content-type': 'application/json', 'cache-control': 'no-store' },
 });
 
-// Cắt độ dài + bỏ < > để nội dung không phá HTML khi render bằng innerHTML
+// Limit length + strip < > so content can't break HTML rendered with innerHTML
 const clean = (v, max) => String(v ?? '').replace(/[<>]/g, '').trim().slice(0, max);
-// Chỉ nhận link http/https — chặn javascript: nhét vào thuộc tính href
-// Gõ thiếu https:// (VD "binance.com", "x.com/binance") thì tự thêm; không giống link thì bỏ
+// Accept only http/https links, blocking javascript: in href
+// Missing https:// (e.g. "binance.com", "x.com/binance") is added; anything not link-like is dropped
 const cleanLink = v => {
   let s = clean(v, 500);
   if (s && !/^[a-z][a-z0-9+.-]*:/i.test(s) && /^[^\s/]+\.[^\s]+$/.test(s)) s = 'https://' + s;
   return /^https?:\/\/\S+$/i.test(s) ? s : '';
 };
-// Mỗi mục Get Started / Daily / Weekly là danh sách {text, link} — form cho thêm dòng bằng nút +.
-// Dòng không có chữ thì bỏ; cắt tối đa 20 dòng để 1 request không nhồi được data khổng lồ vào KV.
-// Lịch (tuỳ chọn), lưu theo GMT+7: giờ "HH:MM" 24h · days = các thứ, 1 = thứ Hai … 7 = Chủ nhật.
-// `dow` (1 thứ duy nhất) là field cũ, gặp thì đổi sang days.
+// Each Get Started / Daily / Weekly section is a list of {text, link}; the form adds rows with +.
+// Rows with no text are dropped; capped at 20 rows so one request can't stuff KV.
+// Schedule (optional), stored in GMT+7: "HH:MM" 24h · days = weekdays, 1 = Monday … 7 = Sunday.
+// `dow` (single weekday) is an old field, converted to days.
 const cleanTime = v => /^([01]\d|2[0-3]):[0-5]\d$/.test(String(v ?? '')) ? String(v) : '';
 const cleanDow  = v => { const n = Number(v); return Number.isInteger(n) && n >= 1 && n <= 7 ? n : 0; };
 const cleanDays = it => [...new Set((Array.isArray(it?.days) ? it.days : [it?.dow]).map(cleanDow).filter(Boolean))].sort((a, b) => a - b);
@@ -42,15 +42,15 @@ const itemList = v => (Array.isArray(v) ? v : [])
   })
   .filter(it => it.text);
 
-// rank/visibility chỉ nhận đúng giá trị hợp lệ, sai hoặc thiếu thì rơi về mặc định an toàn
-// LƯU Ý: khớp WTE_RANKS trong index.html (mục "AIRDROP — Work to Earn") — đổi thang rank
-// thì sửa cả 2 chỗ, không chỉ client.
+// rank/visibility accept only valid values; wrong or missing fall back to a safe default
+// NOTE: matches WTE_RANKS in index.html (section "AIRDROP — Work to Earn"); changing the rank scale
+// means editing both places, not only the client.
 const RANKS = ['S', 'A', 'B', 'C'];
-// Phân loại có nhóm riêng, không có rank — khớp WTE_TYPE_GROUP trong index.html
+// Categories with their own group and no rank; matches WTE_TYPE_GROUP in index.html
 const TYPE_GROUPS = ['Learn-to-Grow', 'Work-to-Earn'];
 const cleanRank = v => RANKS.includes(v) ? v : 'C';
-// Tiềm năng 2 mức 'high' | 'low' ('' = chưa điền). Số 1-3 của thang sao cũ quy đổi
-// ≥2 = high, 1 = low — khớp potLevel trong index.html.
+// Potential 2 levels 'high' | 'low' ('' = unset). Old star-scale numbers 1-3 map to
+// ≥2 = high, 1 = low, matching potLevel in index.html.
 const cleanPotential = v => {
   if (v === 'high' || v === 'low') return v;
   const n = parseInt(v, 10) || 0;
@@ -58,7 +58,7 @@ const cleanPotential = v => {
 };
 const cleanVisibility = v => v === 'public' ? 'public' : 'personal';
 
-// Làm sạch các ô người dùng nhập — dùng chung cho add và update (chỉ id là không lấy từ client)
+// Sanitize user inputs, shared by add and update (only id isn't taken from the client)
 const sanitize = t => ({
   name:       clean(t.name, 120) || 'Không tên',
   twitter:    cleanLink(t.twitter),
@@ -66,7 +66,7 @@ const sanitize = t => ({
   website:    cleanLink(t.website),
   potential:  cleanPotential(t.potential),
   type:       clean(t.type, 60),
-  rank:       TYPE_GROUPS.includes(t.type) ? '' : cleanRank(t.rank),   // nhóm $ không có rank (WTE_INCOME_TYPE)
+  rank:       TYPE_GROUPS.includes(t.type) ? '' : cleanRank(t.rank),   // $ group has no rank (WTE_INCOME_TYPE)
   visibility: cleanVisibility(t.visibility),
   getStarted: itemList(t.getStarted),
   daily:      itemList(t.daily),
@@ -85,7 +85,7 @@ export async function onRequestPost({ request, env }) {
 
   const via = await adminVia(request, body, env);
   if (!via) {
-    await new Promise(r => setTimeout(r, 400));   // làm chậm việc dò mật khẩu hàng loạt
+    await new Promise(r => setTimeout(r, 400));   // slow down bulk password guessing
     return json({ ok: false, error: 'wrong-pass' }, 401);
   }
 
@@ -93,7 +93,7 @@ export async function onRequestPost({ request, env }) {
 
   if (body.action === 'list') {
     const res = json({ ok: true, tasks: await readTasks(kv) });
-    // Chỉ cấp token khi vừa gõ đúng mật khẩu — máy đã nhớ không tự đẻ thêm token được
+    // Issue a token only right after a correct password; remembered machines can't mint more
     if (body.rememberDevice && via === 'pass') res.headers.append('set-cookie', await rememberDevice(request, env));
     return res;
   }
@@ -113,7 +113,7 @@ export async function onRequestPost({ request, env }) {
     const tasks = await readTasks(kv);
     const i = tasks.findIndex(t => t.id === id);
     if (i < 0) return json({ ok: false, error: 'not-found' }, 404);
-    tasks[i] = { ...tasks[i], ...sanitize(body.task || {}) };   // chỉ giữ nguyên id
+    tasks[i] = { ...tasks[i], ...sanitize(body.task || {}) };   // only keep the id
     await writeTasks(kv, tasks);
     return json({ ok: true, tasks });
   }

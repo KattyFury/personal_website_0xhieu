@@ -8,7 +8,7 @@ VAL = json.loads((D / 'val.json').read_text(encoding='utf-8'))
 WORK = json.loads((D / 'work.json').read_text(encoding='utf-8'))
 e = html.escape
 
-# ── nội dung CV (nguyên văn site) ─────────────────────────────
+# ── CV content (verbatim from the site) ─────────────────────────────
 EXP = [
     ('2026', 'Community Builder & Builder', [
         'Grew a Telegram community from 0 to 500+ members in Q1 2026',
@@ -32,7 +32,7 @@ NARR = [('stablechain', 75.3, 2), ('layer-2', 5.8, 3), ('ai', 4.2, 13), ('defi',
 HERO = [('ENA', '02/04/24', 30.4), ('STABLE', '08/12/25', 22.3)]
 f2 = lambda x: f'{x:.2f}'
 
-# ── Work: gom DAILY lên đầu ───────────────────────────────────
+# ── Work: gather DAILY at the top ───────────────────────────────────
 ORDER = {'LEARN': 0, 'INCOME': 1, 'S': 2, 'A': 3, 'B': 4, 'C': 5}
 def grp(p):
     if p['type'] == 'Learn-to-Grow': return 'LEARN'
@@ -89,7 +89,7 @@ def page(title, css, cv, val, work):
             f'<section class="screen" id="val">{val}</section><section class="screen" id="work">{work}</section></body></html>')
 
 # ═════════════════════════════════════════════════════════════
-# V1 — EDITORIAL: trắng, chữ lớn, 1 cột đọc như tạp chí
+# V1 EDITORIAL: white, large type, one column reading like a magazine
 # ═════════════════════════════════════════════════════════════
 V1CSS = """
 .screen{background:#fff;padding-bottom:40px}
@@ -193,7 +193,7 @@ def v1():
     return page('V1 Editorial', V1CSS, cv, val, work)
 
 # ═════════════════════════════════════════════════════════════
-# V2 — BENTO: nền xám nhạt, ô trắng bo 20, ô vàng nhấn
+# V2 BENTO: light grey background, white tiles radius 20, yellow accent tile
 # ═════════════════════════════════════════════════════════════
 V2CSS = """
 .screen{background:#F2F2F0;padding:0 12px 32px}
@@ -266,7 +266,7 @@ def v2():
     return page('V2 Bento', V2CSS, cv, val, work)
 
 # ═════════════════════════════════════════════════════════════
-# V3 — YELLOW BLOCK: khối vàng làm nền cho chữ đen, viền đen 2px, bóng cứng
+# V3 YELLOW BLOCK: yellow block behind black text, 2 px black border, hard shadow
 # ═════════════════════════════════════════════════════════════
 V3CSS = """
 .screen{background:#FFFDF7;padding-bottom:32px;font-family:Inter,sans-serif}

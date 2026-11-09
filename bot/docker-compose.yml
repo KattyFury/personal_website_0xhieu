@@ -1,12 +1,12 @@
-# Đang chạy trên VPS tại /opt/val-price-bot (ssh vps).
+# Running on the VPS at /opt/val-price-bot (ssh vps).
 #
 #   cd bot
-#   cp .env.example .env     rồi điền secret vào .env
+#   cp .env.example .env     then fill secrets in .env
 #   docker compose up -d --build
 #   docker compose logs -f
 #
-# Container tự bật lại khi Docker/PC khởi động lại (restart: unless-stopped).
-# Bot chạy NGAY 1 lượt lúc khởi động, sau đó mỗi ngày đúng RUN_AT_HOUR.
+# Container restarts when Docker/PC restarts (restart: unless-stopped).
+# The bot runs one round AT STARTUP, then daily at RUN_AT_HOUR.
 
 services:
   val-price-bot:
@@ -17,4 +17,4 @@ services:
     env_file: .env
     environment:
       TZ: Asia/Ho_Chi_Minh
-    # Không mount volume: bot không giữ trạng thái gì, mọi thứ nằm ở KV trên Cloudflare.
+    # No mounted volume: the bot keeps no state, everything is in Cloudflare KV.

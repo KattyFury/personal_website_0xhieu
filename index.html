@@ -14,14 +14,14 @@
   <link rel="icon" type="image/png" href="icon.png?v=4" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=4" />
 
-  <!-- Preview khi share link lên X / Telegram / Facebook -->
+  <!-- Preview when sharing links on X / Telegram / Facebook -->
   <meta property="og:type" content="profile" />
   <meta property="og:site_name" content="0xhieu.xyz" />
   <meta property="og:url" content="https://0xhieu.xyz/" />
   <meta property="og:title" content="Hieu Nguyen — Sharing POVs on Crypto and AI" />
   <meta property="og:description" content="AI is the future. Crypto is the money of the future. Valuation · Work." />
-  <!-- ?v=N BẮT BUỘC tăng mỗi lần thay ảnh: X/Telegram/Facebook cache ảnh preview theo URL,
-       giữ nguyên URL cũ thì chúng vẫn hiện ảnh cũ dù file đã thay trên server -->
+  <!-- ?v=N MUST increase with each image change: X/Telegram/Facebook cache previews by URL,
+       so with the same URL they keep showing the old image even after the file changes -->
   <meta property="og:image" content="https://0xhieu.xyz/og.png?v=8" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -30,7 +30,7 @@
   <meta name="twitter:site" content="@nguyen0xhieu" />
   <meta name="twitter:creator" content="@nguyen0xhieu" />
 
-  <!-- Để Google hiểu đây là trang cá nhân của một người, không phải blog vô danh -->
+  <!-- So Google understands this is one person's page, not an anonymous blog -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -48,39 +48,39 @@
   <link rel="stylesheet" href="/design-tokens.css?v=4-55458c049a91">
   <style>
     /* ══════════════════════════════════════════════════════════════
-       0xhieu.xyz — MỘT stylesheet duy nhất, viết theo thành phần.
-       Theo design system nguyen0xhieu (Figma `hieu`), riêng site này:
-       ĐEN thay vai trò 0x Blue (mèo đen), nền TRẮNG (mắt kính trắng),
-       VÀNG MẮT MÈO #F5B301 chỉ cho nút và highlight. Luật ở DESIGN_SYSTEM.md.
-       Mobile gom hết về khối @media cuối file.
+       0xhieu.xyz: ONE stylesheet, organized by component.
+       Per the nguyen0xhieu design system (Figma `hieu`), site-specific:
+       BLACK takes 0x Blue's role (black cat), WHITE background (white glasses),
+       CAT-EYE YELLOW #F5B301 only for buttons and highlights. Rules in DESIGN_SYSTEM.md.
+       Mobile is gathered in the final @media block.
        ══════════════════════════════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      /* màu — 3 cấp chữ ink/grey/muted, không thêm cấp xám thứ 4 */
+      /* colors: 3 text levels ink/grey/muted, no fourth grey */
       --ground:     var(--ds-color-ground);
       --ink:        var(--ds-color-ink);
       --scrim:      rgba(0,0,0,.48);
       --red-text:   var(--ds-color-red-text);
       --red-soft:   var(--ds-color-red-soft);
-      /* bóng — DUY NHẤT 1 shadow: X0 Y2 Blur8, đen 32% */
+      /* shadow: ONLY 1 shadow: X0 Y2 Blur8, black 32% */
       --shadow: var(--ds-shadow-overlay);
-      /* font hệ thống Apple, máy khác tự lùi về font hệ thống */
+      /* Apple system font, other machines fall back to their system font */
       --font: var(--ds-font-web);
-      /* Khung tối đa 1280px (gồm padding), user duyệt cho cả ba trang. */
+      /* Max frame 1280 px (including padding), user approved for all three pages. */
       --navbar:  56px;
-      --gutter: 24px;     /* Một khung ngang chung cho CV, Valuation và Work. */
-      --modal-w: 384px;    /* popup nhỏ = 4 cột; popup rộng = 2× */
+      --gutter: 24px;     /* One horizontal frame shared by CV, Valuation and Work. */
+      --modal-w: 384px;    /* small popup = 4 columns; wide popup = 2× */
     }
 
     html { overflow-y: scroll; }
-    /* Mở popup/lightbox → khoá cuộn trang nền. Không khoá thì chạm ô nhập trên mobile là trình duyệt cuộn
-       cả trang nền để đưa ô lên → popup giật, nhảy (lỗi 2026-10-24). */
+    /* Opening a popup/lightbox → lock background scroll. Otherwise tapping an input on mobile makes the browser scroll
+       the whole page to bring it up → the popup jumps (bug 2026-10-24). */
     html:has(.wl-modal-backdrop.open), html:has(#lightbox.open) { overflow: hidden; }
 
-    /* ── Thanh cuộn chuẩn (html + .thin-scroll) ─────────────────
-       CHỈ style bằng ::-webkit-scrollbar. KHÔNG set scrollbar-width/-color cho
-       Chromium: từ bản 121, 2 thuộc tính đó vô hiệu hoá ::-webkit-scrollbar. */
+    /* ── Standard scrollbar (html + .thin-scroll) ─────────────────
+       Style ONLY with ::-webkit-scrollbar. Do NOT set scrollbar-width/-color for
+       Chromium: since v121 those two properties disable ::-webkit-scrollbar. */
     html, .thin-scroll { scrollbar-gutter: stable; }
     html::-webkit-scrollbar, .thin-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
     html::-webkit-scrollbar-track, .thin-scroll::-webkit-scrollbar-track,
@@ -96,11 +96,11 @@
       font-size: var(--ds-type-content-size); line-height: var(--ds-type-content-line); font-weight: 400; letter-spacing: var(--ds-type-content-tracking);
       --content: var(--ds-workspace-frame-max-width);
       --accent: var(--ds-accent);
-      --grey: var(--ds-color-grey);      /* chữ phụ: grey = muted = xám trung tính #525252 (user chốt 06/11) — khai ở body để nhận màu product */
+      --grey: var(--ds-color-grey);      /* secondary text: grey = muted = neutral grey #525252 (user decided 11/06), declared on body to take the product color */
       --muted: var(--ds-color-muted);
-      --line: var(--ds-color-line);      /* khai ở body (không phải :root) để nhận màu line của product = xám #A3A3A3 (user chốt 06/11), hết ánh xanh #DCE3EE */
-      --mist: var(--ds-color-surface);   /* xám trung tính #E5E5E5 của site (user chốt 2026-11-06) */
-      /* Bento (user chọn V2 ngày 07/11/2026): nền canvas xám ấm, ô trắng bo 20, kẻ mảnh nhạt bên trong ô. */
+      --line: var(--ds-color-line);      /* declared on body (not :root) to take the product line color = grey #A3A3A3 (user decided 11/06), no more blue-tinted #DCE3EE */
+      --mist: var(--ds-color-surface);   /* the site's neutral grey #E5E5E5 (user decided 2026-11-06) */
+      /* Bento (user chose V2 on 2026-11-07): warm grey canvas, white tiles radius 20, light hairlines inside tiles. */
       --canvas: #F2F2F0;
       --tile: #FFFFFF;
       --tile-r: 20px;
@@ -113,11 +113,11 @@
     }
     :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
-    /* Icon Lucide (khung 24, nét 2) — cỡ 16/20/24 */
+    /* Lucide icons (24 frame, stroke 2), sizes 16/20/24 */
     .wte-ico { display: block; width: 20px; height: 20px; flex-shrink: 0; }
 
     /* ══ NAVBAR ═══════════════════════════════════════════════════
-       Bento: thanh viên trắng nổi trên canvas · tab là viên, tab đang chọn nền vàng chữ đen. */
+       Bento: white pill bar floating on canvas · tabs are pills, the selected tab yellow with black text. */
     header { position: sticky; top: 0; z-index: 100; max-width: var(--content); margin: 0 auto; padding: 12px var(--gutter) 0; }
     .header-inner {
       height: var(--navbar); padding: 0 8px 0 16px; border-radius: 9999px;
@@ -125,7 +125,7 @@
       background: rgba(255,255,255,.9); box-shadow: 0 1px 2px rgba(0,0,0,.06);
       -webkit-backdrop-filter: saturate(1.8) blur(12px); backdrop-filter: saturate(1.8) blur(12px);
     }
-    /* logo mèo 32 + chữ 20 */
+    /* cat logo 32 + text 20 */
     .header-home {
       font-size: var(--ds-type-header-size); line-height: var(--ds-type-header-line); font-weight: 700; letter-spacing: var(--ds-type-header-tracking);
       display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0;
@@ -142,7 +142,7 @@
     .nav-btn.active { background: var(--accent); color: var(--ink); }
     .nav-btn:hover { color: var(--ink); }
 
-    /* ── HOVER ĐỒNG BỘ: chữ quan trọng đen và đậm600. KHÔNG đổi màu nền box, KHÔNG nhích box. */
+    /* ── UNIFIED HOVER: important text black and bold 600. NO box background change, NO box shift. */
     .header-home:hover span, .val-intro-clickable:hover > span, .box-title-btn:hover, .wte-name:hover,
     .nav-btn:not(:disabled):hover, .lang-btn:hover, .lang-dd-btn:not(.is-plus):hover, .social-btn:hover,
     .predict-link:hover, .predict-btn-primary:hover, .predict-btn-secondary:hover, .val-del-btn:hover, .retry-btn:hover,
@@ -150,16 +150,16 @@
       color: var(--ink);
       font-weight: 600;
     }
-    /* Chữ có độ rộng tự do: đậm bằng viền chữ cùng màu để không nhích. */
+    /* Free-width text: bold via same-color text stroke so it doesn't shift. */
     .social-btn:hover { font-weight: 600; }
     .social-btn:hover, .tl-bullets a:hover, .info-modal-link:hover { -webkit-text-stroke: .6px currentColor; }
     .lang-dd-btn.is-plus:hover { background: var(--mist); }
     .nav-btn:disabled, .nav-btn:disabled:hover { color: var(--muted); cursor: default; }
 
-    /* ══ KHUNG CHUNG của Valuation · Work ═════════════════════════
-       Hàng đầu: tiêu đề TRÁI · cụm nút PHẢI (flex đẩy nhau, không bao giờ chồng).
-       ⚠️ Đừng quay lại kiểu tiêu đề canh giữa + nút absolute: màn hẹp là chữ chui
-       xuống dưới nút (dính 2 lần, bỏ hẳn 2026-08-17). */
+    /* ══ SHARED FRAME for Valuation · Work ═════════════════════════
+       Top row: title LEFT · button group RIGHT (flex pushes apart, never overlapping).
+       ⚠️ Don't return to centered title + absolute buttons: on narrow screens the text slips
+       under the buttons (happened twice, dropped 2026-08-17). */
     #valuation-view, #airdrop-view { display: none; }
     #valuation-view, #tge-modal {
       --val-header-height: var(--ds-val-header-height);
@@ -174,13 +174,13 @@
       position: static; display: flex; align-items: center; justify-content: space-between; gap: 16px;
       padding: 16px 0;
     }
-    /* tiêu đề màn = web-h3 24/32 */
+    /* screen title = web-h3 24/32 */
     .val-intro {
       font-size: var(--ds-type-page-size); line-height: var(--ds-type-page-line); font-weight: 700; letter-spacing: var(--ds-type-page-tracking);
       flex: 1; min-width: 0; min-height: 40px; padding: 0; overflow: hidden;
       display: flex; align-items: center; justify-content: flex-start; text-align: left; color: var(--ink);
     }
-    /* Tiêu đề dài (VI Valuation) xuống tối đa 2 dòng thay vì bị cắt mất nửa câu */
+    /* Long titles (VI Valuation) wrap to at most 2 lines instead of being cut mid-sentence */
     .val-intro > span {
       min-width: 0; max-width: 100%;
       display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
@@ -189,7 +189,7 @@
     .val-intro-clickable { cursor: pointer; }
     .val-head-ctrl { position: static; flex-shrink: 0; display: flex; align-items: center; gap: 16px; }
 
-    /* Nút Admin = nút nhỏ (cao 40, đệm 16, web-label 14) · nút phụ: trắng chữ đen + shadow */
+    /* Admin button = small button (height 40, padding 16, web-label 14) · secondary button: white, black text + shadow */
     .lang-dd-btn {
       font-size: var(--ds-type-button-size); line-height: var(--ds-type-button-line); font-weight: 600; letter-spacing: var(--ds-type-button-tracking);
       min-width: 88px; height: 40px; padding: 0 16px; border-radius: var(--ds-product-control-radius);
@@ -198,14 +198,14 @@
       font-family: var(--font); color: var(--ink);
       cursor: pointer; white-space: nowrap; transition: background .15s;
     }
-    /* Đã mở khoá admin → nút Admin thành [+]: icon plus.svg 20×20 */
+    /* Admin unlocked → Admin button becomes [+]: plus.svg icon 20×20 */
     .lang-dd-btn.is-plus { position: relative; min-width: 40px; width: 40px; padding: 0; font-size: 0; }
     .lang-dd-btn.is-plus::before {
       content: ''; width: 20px; height: 20px; background: var(--ink);
       -webkit-mask: url(plus.svg) center / contain no-repeat; mask: url(plus.svg) center / contain no-repeat;
     }
 
-    /* Toggle VI/EN — máng mist dạng viên, viên đang chọn đen chữ trắng */
+    /* VI/EN toggle: mist pill track, selected pill black with white text */
     .lang-toggle {
       display: flex; height: 40px; overflow: visible;
       background: var(--mist); border-radius: 9999px;
@@ -218,7 +218,7 @@
       cursor: pointer; transition: background .15s, color .15s;
     }
     .lang-btn.active { background: var(--ds-primary); color: var(--ground); }
-    /* VI/EN là một công tắc có một thumb trượt; không dùng hai nút tròn. */
+    /* VI/EN is one switch with one sliding thumb; no two round buttons. */
     .language-switch {
       font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking);
       position: relative; isolation: isolate; width: 80px; height: 40px; padding: 4px;
@@ -237,12 +237,12 @@
     .language-switch[aria-checked="true"] .language-option--en { color: var(--ground); }
     @media (prefers-reduced-motion: reduce) { .language-switch::before { transition: none; } }
 
-    /* Ô bento chung cho Valuation và Work: trắng, bo 20, không viền, không bóng. */
+    /* Shared bento tile for Valuation and Work: white, radius 20, no border, no shadow. */
     .val-card, .wte-card {
       background: var(--tile); border-radius: var(--tile-r);
       border: none; box-shadow: none; overflow: hidden;
     }
-    /* Nhãn đầu ô: chữ nhỏ xám + icon, không còn dải nền xám (bento). */
+    /* Tile top label: small grey text + icon, no grey band (bento). */
     .vc-q1 {
       font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking);
       grid-row: 1; margin: 0; padding: 16px 16px 8px; align-self: stretch;
@@ -251,7 +251,7 @@
     }
     .vc-q1 .wte-ico { width: 16px; height: 16px; color: currentColor; }
 
-    /* Task compact: cao theo chữ, kẻ phân cách, không bọc thẻ từng dòng. */
+    /* Compact tasks: height by text, separators, no card per row. */
     .wte-task-row {
       font-size: var(--ds-type-content-size); line-height: var(--ds-type-content-line); font-weight: 400; letter-spacing: var(--ds-type-content-tracking);
       position: relative; min-height: 40px; padding: 4px 0;
@@ -266,7 +266,7 @@
     .wte-task-icon .wte-ico { width: 16px; height: 16px; }
     .wte-task-row--link:hover .wte-task-icon { color: var(--ink); }
 
-    /* Nút ⋮ của admin (card Work). ::after nới vùng bấm. */
+    /* Admin ⋮ button (Work cards). ::after widens the hit area. */
     .wte-opt, .modal-corner-close, .calc-reset-btn, .pt-item-del {
       position: relative; flex-shrink: 0; width: 40px; height: 40px; padding: 0; border: none; border-radius: var(--ds-product-control-radius);
       display: inline-flex; align-items: center; justify-content: center;
@@ -274,7 +274,7 @@
     }
     .wte-opt:hover, .modal-corner-close:hover, .calc-reset-btn:hover, .pt-item-del:hover { background: var(--mist); color: var(--ink); }
 
-    /* Báo lỗi tải data + nút thử lại */
+    /* Data load error + retry button */
     .data-error { font-size: var(--ds-type-note-size); line-height: var(--ds-type-note-line); font-weight: 400; letter-spacing: var(--ds-type-note-tracking); padding: 24px 0; text-align: center; color: var(--grey); }
     .retry-btn {
       font-size: var(--ds-type-button-size); line-height: var(--ds-type-button-line); font-weight: 600; letter-spacing: var(--ds-type-button-tracking);
@@ -284,22 +284,22 @@
     }
     .retry-btn:disabled { background: var(--mist); color: var(--muted); box-shadow: none; cursor: default; }
 
-    /* ══ CV — lưới bento ═════════════════════════════════════════
-       Desktop 4 cột: hero 2 · ô vàng 1 · liên hệ 1, rồi Experience / Highlights / Available trải hết.
-       ≤1024: 2 cột. Mọi ô cách nhau 12. */
+    /* ══ CV: bento grid ═════════════════════════════════════════
+       Desktop 4 columns: hero 2 · yellow tile 1 · contact 1, then Experience / Highlights / Available full width.
+       ≤1024: 2 columns. All tiles 12 apart. */
     main { max-width: var(--content); margin: 0 auto; padding: 12px var(--gutter) 0; }
     #cv-view main { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: stretch; }
     .tile { min-width: 0; padding: var(--tile-pad); border-radius: var(--tile-r); background: var(--tile); }
     .tile--wide { grid-column: 1 / -1; }
     .tile--accent { background: var(--accent); }
-    /* nhãn đầu ô (h2) = chữ nhỏ xám + icon */
+    /* tile top label (h2) = small grey text + icon */
     #cv-view h2 {
       font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking);
       display: flex; align-items: center; gap: 6px; margin-bottom: 12px; color: var(--grey);
     }
     #cv-view h2 .wte-ico { width: 16px; height: 16px; color: currentColor; }
 
-    /* Hero: ảnh vuông bo 18 · tên 28 · châm ngôn 32 đậm800 · niềm tin xám */
+    /* Hero: square image radius 18 · name 28 · motto 32 bold 800 · belief grey */
     .hero { grid-column: span 2; display: flex; flex-direction: column; }
     .hero-top { display: flex; align-items: center; gap: 16px; }
     .pfp { flex: none; width: 72px; height: 72px; border-radius: 20px; overflow: hidden; background: var(--ink); }
@@ -315,12 +315,12 @@
     .hero-tagline { font-size: var(--ds-type-display-size); line-height: var(--ds-type-display-line); font-weight: 700; letter-spacing: var(--ds-type-display-tracking); margin-top: auto; padding-top: 24px; color: var(--ink); }
     .hero-belief { font-size: var(--ds-type-content-size); line-height: var(--ds-type-content-line); font-weight: 400; letter-spacing: var(--ds-type-content-tracking); margin-top: 8px; max-width: 560px; color: var(--grey); }
 
-    /* Ô vàng: số lớn */
+    /* Yellow tile: big number */
     .stat-big { font-size: var(--ds-type-display-size); line-height: var(--ds-type-display-line); font-weight: 700; letter-spacing: var(--ds-type-display-tracking); color: var(--ink); }
     .stat-cap { font-size: var(--ds-type-secondary-size); line-height: var(--ds-type-secondary-line); font-weight: 400; letter-spacing: var(--ds-type-secondary-tracking); margin-top: 8px; color: var(--ink); }
     .tile--accent h2 { color: var(--ink) !important; opacity: .7; }
 
-    /* Ô liên hệ: nút xếp dọc nền canvas */
+    /* Contact tile: stacked canvas buttons */
     .socials { display: flex; flex-direction: column; gap: 8px; }
     .social-btn {
       font-size: var(--ds-type-button-size); line-height: var(--ds-type-button-line); font-weight: 600; letter-spacing: var(--ds-type-button-tracking);
@@ -333,7 +333,7 @@
     .social-btn:hover { background: var(--mist); }
     .social-btn svg { width: 20px; height: 20px; flex-shrink: 0; color: var(--ink); }
 
-    /* Experience: mỗi mốc 1 hàng = chip năm + nội dung, kẻ mảnh giữa các hàng */
+    /* Experience: each milestone one row = year chip + content, hairlines between rows */
     .timeline { display: flex; flex-direction: column; }
     .tl-item { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 16px; padding: 16px 0; border-top: 1px solid var(--hair); }
     .tl-item:first-child { border-top: 0; padding-top: 0; }
@@ -351,7 +351,7 @@
     .tl-bullets a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
     .tl-bullets a:hover { color: var(--ink); }
 
-    /* Highlights: mỗi ảnh là một ô trắng; 3 cột desktop, 2 cột mobile */
+    /* Highlights: each image is a white tile; 3 columns desktop, 2 mobile */
     #highlights { grid-column: 1 / -1; }
     #highlights h2 { padding: 4px 4px 0; }
     #highlights-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
@@ -360,7 +360,7 @@
     .hl-caption { font-size: var(--ds-type-secondary-size); line-height: var(--ds-type-secondary-line); font-weight: 600; letter-spacing: var(--ds-type-secondary-tracking); padding: 10px 4px 2px; color: var(--ink); }
     .hl-empty { font-size: var(--ds-type-note-size); line-height: var(--ds-type-note-line); font-weight: 400; letter-spacing: var(--ds-type-note-tracking); grid-column: 1/-1; padding: 48px 0; text-align: center; color: var(--grey); }
 
-    /* Available for: viên nền canvas */
+    /* Available for: canvas pills */
     .avail-list { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
     .avail-list li {
       font-size: var(--ds-type-content-size); line-height: var(--ds-type-content-line); font-weight: 600; letter-spacing: var(--ds-type-content-tracking);
@@ -375,7 +375,7 @@
     .footer-links a:hover { color: var(--ink); }
     .footer-links a svg { width: 20px; height: 20px; }
 
-    /* Lightbox ảnh highlight */
+    /* Highlight image lightbox */
     #lightbox {
       display: none; position: fixed; inset: 0; z-index: 999; padding: 24px;
       align-items: center; justify-content: center; background: var(--scrim); cursor: zoom-out;
@@ -391,7 +391,7 @@
     }
 
     /* ══ VALUATION ════════════════════════════════════════════════ */
-    /* Nút icon 40×40, icon 20. Mask đặt ở ::before (Chromium hit-test theo vùng mask). */
+    /* Icon button 40×40, icon 20. Mask on ::before (Chromium hit-tests by mask area). */
     .camera-btn {
       position: relative; flex-shrink: 0; width: 40px; height: 40px; padding: 0;
       border: none; border-radius: 16px; background: var(--ground); box-shadow: var(--shadow); cursor: pointer;
@@ -403,8 +403,8 @@
     .camera-btn[disabled] { background: var(--mist); box-shadow: none; cursor: default; }
     .camera-btn[disabled]::before { background: var(--muted); }
 
-    /* Bảng altcoin: cột rộng theo nội dung đã đo, ATH đủ chỗ cho cặp số + tỷ số trên một hàng.
-       Màn hẹp cuộn ngang trong bảng, header đồng bộ với thân. */
+    /* Altcoin table: columns sized by measured content, ATH has room for number pair + ratio on one row.
+       Narrow screens scroll horizontally inside the table, header synced with body. */
     #tge-section {
       display: flex; flex-direction: column; max-height: calc(var(--val-header-height) + 320px + 2px + var(--val-scrollbar-height, 0px)); margin-top: 12px; overflow: hidden;
       background: var(--tile); border: none; border-radius: var(--tile-r);
@@ -425,7 +425,7 @@
     #tge-section th:nth-child(5), #tge-section td:nth-child(5), .tge-modal-body th:nth-child(5), .tge-modal-body td:nth-child(5) { width: calc(var(--ck5, 232px) + 16px); }
     #tge-section th:nth-child(6), #tge-section td:nth-child(6), .tge-modal-body th:nth-child(6), .tge-modal-body td:nth-child(6) { width: calc(var(--ck6, 56px) + 16px); }
     #tge-section th:nth-child(7), #tge-section td:nth-child(7), .tge-modal-body th:nth-child(7), .tge-modal-body td:nth-child(7) { width: calc(var(--ck7, 64px) + 16px); }
-    /* header bảng = web-label 14/600 */
+    /* table header = web-label 14/600 */
     #tge-section thead th {
       font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking);
       position: sticky; top: 0; z-index: 2; height: var(--val-header-height); border: none; background: var(--tile); box-shadow: inset 0 -1px 0 var(--hair);
@@ -438,10 +438,10 @@
     }
     #tge-section tbody tr:last-child td { box-shadow: none; }
     #tge-section tbody tr.row-editable { cursor: pointer; }
-    /* Ticker luôn đậm: vcFDV ≥ $300M cam, dưới ngưỡng đen.
-       Chữ 3 cấp: số ink · narrative, ×ATL, đáy-trước-đỉnh, ×ATM < 1 grey · ngày TGE muted (meta).
-       Số cần chú ý = bút dạ: chữ đen đậm 600 trên nền cam #F5B301 (×TGE ≥ 13, tỷ số ATH, ticker FDV cao, số chính 3 box kể cả Hero or Zero) — user chốt 2026-11-06.
-       ĐỎ = nguy hiểm (×ATM ≥ 15, badge soft). */
+    /* Ticker always bold: vcFDV ≥ $300M orange, below black.
+       3 text levels: numbers ink · narrative, ×ATL, low-before-peak, ×ATM < 1 grey · TGE date muted (meta).
+       Notable numbers = marker: bold 600 black text on orange #F5B301 (×TGE ≥ 13, ATH ratio, high-FDV ticker, main numbers in 3 boxes including Hero or Zero), user decided 2026-11-06.
+       RED = danger (×ATM ≥ 15, soft badge). */
     .val-table td.td-ticker { font-weight: 600; color: var(--ink); }
     #tge-section td.td-ticker { font-weight: 600; }
     .ath-gain { display: inline; margin-left: 4px; }
@@ -460,8 +460,8 @@
     .val-table .m-danger { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; border-radius: 9999px; background: var(--red-soft); color: var(--red-text); font-weight: 600; }
     .val-empty { font-size: var(--ds-type-note-size); line-height: var(--ds-type-note-line); font-weight: 400; letter-spacing: var(--ds-type-note-tracking); padding: 40px 16px; text-align: center; color: var(--grey); }
 
-    /* ── Popup bảng dài (bấm tiêu đề): clone thead/tbody của bảng trên ──
-       JS đo --ck1..7 = bề rộng ô dài nhất mỗi cột để cả cột thẳng mép trái. */
+    /* ── Long table popup (tap title): clones thead/tbody of the table above ──
+       JS measures --ck1..7 = longest cell width per column so each column aligns left. */
     .wl-modal.wl-modal--wide { width: calc(var(--modal-w) * 2); max-width: 100%; }
     .tge-modal-body { display: flex; flex-direction: column; max-height: 78vh; max-height: 78svh; overflow: hidden; }
     .tge-modal-head { flex: none; overflow: hidden; scrollbar-gutter: auto; }
@@ -487,8 +487,8 @@
     .tge-modal-body th:nth-child(5) .ck, .tge-modal-body td:nth-child(5) .ck { min-width: var(--ck5, 0px); }
     .tge-modal-body th:nth-child(6) .ck, .tge-modal-body td:nth-child(6) .ck { min-width: var(--ck6, 0px); }
 
-    /* Ba ô phân tích (bento): Mặt bằng định giá = ô VÀNG, Hero or Zero = ô ĐEN, Narrative = ô trắng.
-       Cao cố định, nội dung dài cuộn trong ô. */
+    /* Three analysis tiles (bento): Mặt bằng định giá = YELLOW tile, Hero or Zero = BLACK tile, Narrative = white tile.
+       Fixed height, long content scrolls inside the tile. */
     .val-boxes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: start; }
     .val-boxes > .val-card { height: var(--ds-val-panel-height); min-width: 0; display: grid; grid-template-rows: auto minmax(0, 1fr); }
     .vc-q234 { grid-row: 2; min-height: 0; padding: 0 16px 16px; overflow-y: auto; }
@@ -514,21 +514,21 @@
     }
     .danger-empty { font-size: var(--ds-type-note-size); line-height: var(--ds-type-note-line); font-weight: 400; letter-spacing: var(--ds-type-note-tracking); padding: 8px 0; color: var(--grey); }
 
-    /* Ô vàng: chữ đen, kẻ đen mờ; số không cần bút dạ (đã nằm trên nền vàng) */
+    /* Yellow tile: black text, faint black lines; numbers need no marker (already on yellow) */
     .val-card--accent { background: var(--accent); }
     .val-card--accent .vc-q1, .val-card--accent .lr-label { color: var(--ink); }
     .val-card--accent .vc-q1 { opacity: .75; }
     .val-card--accent .list-row { border-bottom-color: rgba(0,0,0,.14); }
     .val-card--accent .lr-val { font-size: var(--ds-type-header-size); line-height: var(--ds-type-header-line); font-weight: 700; letter-spacing: var(--ds-type-header-tracking); padding: 0; background: none; }
     .val-card--accent .rt-items { height: 100%; }
-    /* Ô đen: chữ trắng, số giữ bút dạ vàng */
+    /* Black tile: white text, numbers keep the yellow marker */
     .val-card--dark { background: var(--dark-tile); color: var(--ground); }
     .val-card--dark .vc-q1, .val-card--dark .lr-meta, .val-card--dark .danger-empty { color: #A3A3A3; }
     .val-card--dark .list-row { color: var(--ground); border-bottom-color: rgba(255,255,255,.12); }
     .val-card--dark .lr-val { font-size: var(--ds-type-header-size); line-height: var(--ds-type-header-line); font-weight: 700; letter-spacing: var(--ds-type-header-tracking); }
     .val-card--dark .thin-scroll::-webkit-scrollbar-thumb { background: #525252; }
 
-    /* Nút Dự đoán: nền đen chữ vàng trên ô vàng; hover đảo màu */
+    /* Predict button: black with yellow text on the yellow tile; hover inverts */
     .predict-link {
       font-size: var(--ds-type-button-size); line-height: var(--ds-type-button-line); font-weight: 600; letter-spacing: var(--ds-type-button-tracking);
       width: 100%; min-height: 44px; padding: 8px 12px; border-radius: 14px;
@@ -539,8 +539,8 @@
     }
 
     /* ══ WORK (bento) ═════════════════════════════════════════════
-       1) "Hôm nay": ô vàng đếm việc + vòng tiến độ, rồi ô checklist gom MỌI task DAILY (tick lưu theo ngày trên máy).
-       2) Dự án: ô nhỏ gập (logo · tên · rank · thẻ), bấm mở → Get Started / Weekly / link. Mở thì ô trải hết hàng. */
+       1) "Hôm nay": yellow tile counts tasks + progress ring, then a checklist tile with ALL DAILY tasks (ticks saved per day on the device).
+       2) Projects: small collapsed tile (logo · name · rank · tags), tap to open → Get Started / Weekly / links. Open tiles span the row. */
     #wte-cards { display: flex; flex-direction: column; gap: 24px; }
     .today { display: grid; gap: 12px; }
     .today-hero { position: relative; min-height: 132px; padding: 20px 128px 20px 20px; border-radius: var(--tile-r); background: var(--accent); }
@@ -557,7 +557,7 @@
     }
     .today-list { padding: 4px 16px; border-radius: var(--tile-r); background: var(--tile); }
     .today-empty { font-size: var(--ds-type-note-size); line-height: var(--ds-type-note-line); font-weight: 400; letter-spacing: var(--ds-type-note-tracking); padding: 16px 0; color: var(--grey); }
-    /* "Lịch hôm nay": việc có giờ báo, xếp theo giờ — kế tiếp = chip vàng, quá giờ chưa tick = chip đỏ */
+    /* "Lịch hôm nay": timed tasks sorted by time; next = yellow chip, overdue unticked = red chip */
     .sched { padding: 16px 16px 6px; border-radius: var(--tile-r); background: var(--tile); }
     .sched-head { font-size: var(--ds-type-header-size); line-height: var(--ds-type-header-line); font-weight: 600; letter-spacing: var(--ds-type-header-tracking); display: flex; align-items: center; gap: 8px; color: var(--ink); }
     .sched-head .wte-ico { width: 20px; height: 20px; }
@@ -578,11 +578,11 @@
     .sc.is-late .sc-state { color: var(--red-text); }
     .sc.is-done .sc-time { opacity: .45; }
     .sc.is-done .sc-text { color: var(--muted); text-decoration: line-through; }
-    /* Hàng việc: bấm ô tròn = tick; bấm phần còn lại của hàng = mở link công việc */
+    /* Task row: tap circle = tick; tap the rest = open the task link */
     .dt { display: flex; align-items: center; gap: 12px; border-top: 1px solid var(--hair); }
     .dt:first-child { border-top: 0; }
     .dt-check { position: relative; flex: none; display: grid; cursor: pointer; }
-    .dt-check::after { content: ""; position: absolute; inset: -6px; }   /* vùng bấm 44 */
+    .dt-check::after { content: ""; position: absolute; inset: -6px; }   /* hit area 44 */
     .dt-check input { position: absolute; opacity: 0; width: 1px; height: 1px; }
     .dt-body { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; padding: 12px 0; color: inherit; text-decoration: none; }
     .dt-box {
@@ -604,7 +604,7 @@
     a.dt-body:hover .dt-link { color: var(--ink); background: var(--mist); }
     .dt-link .wte-ico { width: 16px; height: 16px; }
 
-    /* Box "Dự án & hướng dẫn tham gia" (đầu trang Work): 1 ô trắng, mỗi dự án 1 hàng gập/mở */
+    /* "Hướng dẫn tham gia" box (top of Work): one white tile, one collapsible row per project */
     .wte-group { padding-top: 12px; scroll-margin-top: 80px; }
     .wte-group-label {
       font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking);
@@ -613,7 +613,7 @@
     .wte-rank-group { display: flex; flex-direction: column; }
     .wte-rank-group .wte-card { width: 100%; min-width: 0; display: block; border-radius: 0; background: none; border-top: 1px solid var(--hair); }
 
-    /* Hàng dự án (không gập, user chốt 08/11): logo · tên + thẻ · nút sửa (admin); dưới là link + Hướng dẫn tham gia */
+    /* Project row (non-collapsing, user decided 11/08): logo · name + tags · edit button (admin); below it links + Hướng dẫn tham gia */
     .wte-card-head { padding: 12px 0 8px; display: flex; align-items: center; gap: 12px; }
     .wte-card-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
     .wte-logo { display: block; flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; object-fit: cover; background: var(--mist); }
@@ -631,14 +631,14 @@
       color: var(--ink); white-space: normal; overflow-wrap: anywhere;
     }
     .wte-tag .wte-ico { width: 14px; height: 14px; }
-    /* Thẻ quan trọng (high-potential, narrative top 5, nhóm l2g/w2e) nền đen chữ trắng */
+    /* Important tags (high-potential, top 5 narrative, l2g/w2e groups) black with white text */
     .wte-tag--strong { background: var(--ink); color: var(--ground); }
     .wte-card-head .wte-opt { flex: none; width: 28px; height: 28px; box-shadow: none; }
     .wte-card-head .wte-opt .wte-ico { width: 16px; height: 16px; }
 
-    /* Hàng link ngay dưới tên (thẳng mép chữ tên): Website · X · Discord · Hướng dẫn tham gia → bài đăng X */
+    /* Link row right under the name (aligned to the name): Website · X · Discord · Hướng dẫn tham gia → X post */
     .wte-socials { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 0 12px 48px; }
-    /* Chip link gọn (user 08/11): cao 30, chữ Nhãn — Website · X · Discord · Hướng dẫn tham gia nằm chung 1 hàng */
+    /* Compact link chips (user 11/08): height 30, Label text; Website · X · Discord · Hướng dẫn tham gia on one row */
     .wte-social {
       font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking);
       height: 30px; padding: 0 10px; border-radius: 10px; gap: 5px;
@@ -658,10 +658,10 @@
     .wte-task-item { font-size: var(--ds-type-content-size); line-height: var(--ds-type-content-line); font-weight: 400; letter-spacing: var(--ds-type-content-tracking); display: block; margin: 0; color: var(--ink); }
     .wte-task-item:last-child .wte-task-row { border-bottom: 0; }
     .wte-task-row { flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 40px; padding: 4px 0; border-bottom-color: var(--hair); text-decoration: none; }
-    /* Task luôn hiện đủ chữ: xuống dòng bao nhiêu cũng được, KHÔNG cắt "…" (user chốt 2026-10-28) */
+    /* Tasks always show full text: wrap as needed, NO "…" truncation (user decided 2026-10-28) */
     .wte-task-text { flex: 1; min-width: 0; white-space: normal; overflow-wrap: anywhere; }
 
-    /* ══ NÚT MÈO (Agent) — mới có vỏ, bấm hiện "coming soon" ════════ */
+    /* ══ CAT BUTTON (Agent): shell only, tap shows "coming soon" ════════ */
     #cat-btn {
       position: fixed; right: 32px; bottom: 32px; z-index: 80;
       width: 48px; height: 48px; padding: 0; border: none; border-radius: 50%; overflow: hidden;
@@ -681,7 +681,7 @@
     #cat-hint.show { opacity: 1; }
 
     /* ══ POPUP ════════════════════════════════════════════════════
-       thẻ nổi trắng radius 16 · nút cao 48 radius 16 (chính = đen, phụ = trắng) · ô nhập cao 48 nền mist */
+       floating white card radius 16 · button height 48 radius 16 (main = black, secondary = white) · input height 48 mist background */
     .wl-modal-backdrop {
       display: none; position: fixed; inset: 0; z-index: 200; padding: 16px;
       align-items: flex-start; justify-content: center; background: var(--scrim);
@@ -696,7 +696,7 @@
     .wl-modal-title { font-size: var(--ds-type-header-size); line-height: var(--ds-type-header-line); font-weight: 600; letter-spacing: var(--ds-type-header-tracking); padding-right: 40px; color: var(--ink); }
     #ptask-modal .wl-modal-title { padding-right: 0; text-align: center; }
     .info-modal-body { font-size: var(--ds-type-content-size); line-height: var(--ds-type-content-line); font-weight: 400; letter-spacing: var(--ds-type-content-tracking); color: var(--ink); white-space: pre-line; }
-    .info-key { font-weight: 600; color: var(--ink); }   /* câu chốt của popup giải thích */
+    .info-key { font-weight: 600; color: var(--ink); }   /* closing sentence of the explanation popup */
     .shot-modal { align-items: center; text-align: center; }
     #shot-modal-img { display: block; width: 100%; max-height: 56vh; max-height: 56svh; object-fit: contain; border: 1px solid var(--line); border-radius: 16px; }
     .shot-modal-hint { font-size: var(--ds-type-note-size); line-height: var(--ds-type-note-line); font-weight: 400; letter-spacing: var(--ds-type-note-tracking); color: var(--grey); }
@@ -708,7 +708,7 @@
 
     .modal-corner-close { position: absolute; top: 8px; right: 8px; }
 
-    /* Ô nhập — cao 48, đệm 16, nền mist, viền line 1px; khi chọn viền 2px đen */
+    /* Input: height 48, padding 16, mist background, 1 px line border; on focus 2 px black border */
     .calc-field { display: flex; flex-direction: column; gap: 8px; }
     .calc-field label, .pt-group > label { font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking); color: var(--grey); }
     .wl-modal input, .wl-modal select {
@@ -729,7 +729,7 @@
     .wl-modal input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
     .wl-modal input[type=number] { -moz-appearance: textfield; }
 
-    /* Nút — cao 48, đệm 24, bo 16, có shadow */
+    /* Button: height 48, padding 24, radius 16, with shadow */
     .predict-actions { margin-top: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .predict-btn-primary, .predict-btn-secondary, .val-del-btn {
       font-size: var(--ds-type-button-size); line-height: var(--ds-type-button-line); font-weight: 600; letter-spacing: var(--ds-type-button-tracking);
@@ -744,10 +744,10 @@
     }
     .predict-link:hover { background: var(--ground); color: var(--ink); }
     .predict-btn-secondary, .val-del-btn { background: var(--ground); color: var(--ink); }
-    /* Xoá hỏi lại 1 nhịp — bấm lần 1 đổi sang trạng thái này */
+    /* Delete confirm: first tap switches to this state */
     .val-del-btn.confirm { background: var(--red-text); color: var(--ground); }
 
-    /* Dự đoán FDV TGE */
+    /* TGE FDV prediction */
     #calc-form { display: flex; flex-direction: column; gap: 16px; }
     #calc-result {
       position: relative; margin-top: 8px; padding: 16px; border-radius: var(--ds-product-card-radius);
@@ -759,10 +759,10 @@
       font-variant-numeric: tabular-nums; color: var(--ink);
     }
     #calc-res-sub .res-price { font-size: var(--ds-type-secondary-size); line-height: var(--ds-type-secondary-line); font-weight: 400; letter-spacing: var(--ds-type-secondary-tracking); font-variant-numeric: tabular-nums; color: var(--grey); }
-    /* ✕ TRONG ô kết quả = "tính lại" (modal vẫn mở) — khác ✕ góc popup = "thoát" */
+    /* ✕ INSIDE the result box = "recalculate" (modal stays open), unlike the corner ✕ = "exit" */
     .calc-reset-btn { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); }
 
-    /* Admin Valuation: danh sách + form sửa */
+    /* Admin Valuation: list + edit form */
     .val-count { font-size: var(--ds-type-note-size); line-height: var(--ds-type-note-line); font-weight: 400; letter-spacing: var(--ds-type-note-tracking); color: var(--grey); }
     .val-list-head, .val-row { display: grid; grid-template-columns: 80px 96px 1fr 120px 64px; align-items: center; gap: 8px; }
     .val-list-head { font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking); padding: 0 16px 8px; border-bottom: 1px solid var(--line); color: var(--grey); }
@@ -780,7 +780,7 @@
     #val-form-fields .predict-actions button { min-width: 0; }
     .vf-fetch-status { font-size: var(--ds-type-note-size); line-height: var(--ds-type-note-line); font-weight: 400; letter-spacing: var(--ds-type-note-tracking); color: var(--grey); overflow-wrap: anywhere; }
 
-    /* Form task cá nhân (cuộn trong popup, ẩn thanh cuộn) */
+    /* Personal task form (scrolls inside popup, hidden scrollbar) */
     #ptask-form {
       max-height: 62vh; max-height: 62svh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px;
       scrollbar-width: none; -ms-overflow-style: none;
@@ -791,7 +791,7 @@
     .pt-items { display: flex; flex-direction: column; gap: 8px; }
     .pt-item-head { display: flex; align-items: center; gap: 8px; }
     .pt-item-head input { flex: 1; }
-    /* Lịch (tuỳ chọn) kiểu iPhone: 7 nút ngày chọn nhiều + giờ bấm ra bánh xe cuộn */
+    /* Schedule (optional): 7 multi-select day buttons + typed 24h time */
     .pt-when { display: grid; grid-template-columns: max-content minmax(0, 1fr); align-items: center; gap: 8px 12px; }
     .pt-when-label { font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking); color: var(--grey); }
     .pt-when-note { grid-column: 2; font-size: var(--ds-type-note-size); line-height: var(--ds-type-note-line); font-weight: 400; letter-spacing: var(--ds-type-note-tracking); color: var(--grey); }
@@ -827,16 +827,16 @@
     }
 
     /* ══ MÀN VỪA ══════════════════════════════════════════════════ */
-    /* Web profiles: CV spacious; Valuation/Work và popup thao tác compact. */
+    /* Web profiles: CV spacious; Valuation/Work and action popups compact. */
     #cv-view main { padding-bottom: 96px; }
     .val-head-ctrl { gap: 12px; }
     .val-head-ctrl .lang-dd-btn, .val-head-ctrl .camera-btn { border: none; border-radius: 9999px; background: var(--tile); }
     .val-head-ctrl .lang-dd-btn { min-width: 0; padding: 0 12px; }
     .val-head-ctrl .lang-dd-btn.is-plus { padding: 0; }
-    /* Bóng cho nút và icon control; thẻ/nhãn chỉ đọc giữ phẳng. */
-    /* Bento: chỉ nút điều khiển nổi có bóng; nút liên hệ/link trong ô phẳng. */
+    /* Shadow for control buttons and icons; read-only cards/labels stay flat. */
+    /* Bento: only floating control buttons have shadow; contact/link buttons in tiles are flat. */
     button:not(.nav-btn):not(.wte-opt):not(.predict-link) { box-shadow: var(--shadow); }
-    #ptask-form button, #pt-delete { box-shadow: none; }   /* nút trong form (+, x, ngày, giờ, xoá) nằm phẳng, không nổi */
+    #ptask-form button, #pt-delete { box-shadow: none; }   /* form buttons (+, x, day, time, delete) are flat */
     .predict-btn-primary, .retry-btn, .lang-btn.active { color: var(--ds-on-primary); }
     .predict-btn-primary:hover, .retry-btn:hover, .lang-btn.active:hover { color: var(--ground); }
     button:disabled, .social-btn[aria-disabled="true"], .wte-social[aria-disabled="true"] { box-shadow: none; }
@@ -855,8 +855,8 @@
       .val-boxes > .val-card:last-child { grid-column: 1 / -1; }
       .wte-rank-group { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
-    /* ══ MOBILE (≤640): lưới web 393 — lề 16, khối cách 32, section 48.
-       Chữ tối thiểu 14. Tiêu đề lớn đổi sang web-mobile-*. */
+    /* ══ MOBILE (≤640): web 393 grid, margin 16, blocks 32 apart, sections 48.
+       Minimum text 14. Large titles switch to web-mobile-*. */
     @media (max-width: 640px) {
       :root { --gutter: 16px; --navbar: 56px; }
       body[data-ds-product="0xhieu-xyz"] { --gutter: 16px; }
@@ -887,7 +887,7 @@
       /* Khung chung */
       .panel-head { padding: 12px 0; }
       .panel-head { gap: 8px; }
-      /* Valuation luôn một hàng; thu gọn nút và co chữ theo phần ngang còn lại. */
+      /* Valuation always on one row; shrink buttons and text to the remaining width. */
       #valuation-view .panel-head { flex-wrap: nowrap; }
       #valuation-view .val-intro { flex: 1; min-width: 0; }
       #valuation-view .val-intro > span { white-space: nowrap; }
@@ -898,7 +898,7 @@
       #valuation-view .lang-dd-btn.is-plus { width: 32px; min-width: 32px; padding: 0; }
       #valuation-view .lang-toggle { height: 32px; }
       #valuation-view .lang-btn { height: 32px; min-width: 28px; padding: 0 8px; }
-      /* Tiêu đề dài không cắt "…": fitIntroTitles() lùi dần page → header → content cho vừa */
+      /* Long titles aren't cut with "…": fitIntroTitles() steps down page → header → content to fit */
       .val-intro { height: auto; }
       .val-intro > span { display: block; -webkit-line-clamp: unset; white-space: nowrap; }
       .val-head-ctrl { gap: 8px; }
@@ -909,8 +909,8 @@
       #airdrop-view .val-head-ctrl .lang-btn { min-width: 28px; padding: 0 4px; }
       .language-switch { width: 64px; height: 32px; }
 
-      /* Valuation — thiếu chỗ thì BỎ BỚT, không bắt kéo ngang (user chốt 07/11): ẩn Narrative + TGE + ×ATL,
-         ×ATH bỏ phần "đáy →" chỉ còn "đỉnh (×N)" */
+      /* Valuation: when short on room, DROP columns, no horizontal scroll (user decided 11/07): hide Narrative + TGE + ×ATL,
+         ×ATH drops the "low →" part, leaving "peak (×N)" */
       #tge-section .val-table { min-width: calc(var(--ck1, 64px) + var(--ck4, 56px) + var(--ck5m, 120px) + var(--ck7, 64px) + 64px); }
       #tge-section th:nth-child(5), #tge-section td:nth-child(5) { width: calc(var(--ck5m, 120px) + 16px); }
       #tge-section .ath-from { display: none; }
@@ -937,7 +937,7 @@
       /* Work */
       .wte-task-row { min-height: 44px; }
       #wte-cards { gap: 20px; }
-      .wte-socials { padding-left: 0; }   /* mobile: hàng link chạy hết ngang để nằm 1 dòng */
+      .wte-socials { padding-left: 0; }   /* mobile: link row spans the width to stay on one line */
       .today { gap: 10px; }
       .today-hero { min-height: 116px; padding: 16px 116px 16px 16px; }
       .today-ring { right: 16px; width: 80px; height: 80px; margin-top: -40px; }
@@ -1120,15 +1120,15 @@
         </div>
       </div>
 
-      <!-- 4 box nội dung (Recent TGE multiples / Danger Zone / Trending Narratives / Watchlist theo narrative),
-           gộp chung 1 lưới 6-slot (3 cột) để tất cả tự động bằng nhau; slot 5-6 dành cho box tương lai -->
+      <!-- 4 content boxes (Recent TGE multiples / Danger Zone / Trending Narratives / Watchlist by narrative),
+           in one 6-slot grid (3 columns) so all sizes match; slots 5-6 reserved for future boxes -->
       <div class="val-boxes" id="val-metrics">
 
-        <!-- 1. Mặt bằng định giá — ô VÀNG (bento) -->
+        <!-- 1. Mặt bằng định giá: YELLOW tile (bento) -->
         <div class="val-card val-card--accent">
           <div class="vc-q1"><svg class="wte-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg><span id="tge-title-text" class="box-title-btn" role="button" tabindex="0" title="Giải thích">Valuation baseline</span></div>
           <div class="vc-q234 rt-items">
-            <!-- Dòng danh sách: nhãn trái · giá trị phải -->
+            <!-- List row: label left · value right -->
             <div class="list-row"><span class="lr-label" id="tge-cond-label">Market condition</span><span class="lr-val" id="market-condition-lvl">—</span></div>
             <div class="list-row"><span class="lr-label" id="tge-coef-label">TGE multiple</span><span class="lr-val" id="tge-coef">—</span></div>
             <div class="list-row"><span class="lr-label" id="tge-penalty-label">Penalty FDV ≥ $300M</span><span class="lr-val" id="tge-penalty">—</span></div>
@@ -1138,7 +1138,7 @@
           </div>
         </div>
 
-        <!-- 2. Hero or Zero — ô ĐEN (bento) -->
+        <!-- 2. Hero or Zero: BLACK tile (bento) -->
         <div class="val-card val-card--dark">
           <div class="vc-q1"><svg class="wte-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><span id="danger-title-text" class="box-title-btn" role="button" tabindex="0" title="Giải thích">Hero or Zero</span></div>
           <div id="danger-list" class="vc-q234 thin-scroll"></div>
@@ -1155,7 +1155,7 @@
 
       <!-- TOP: TGE table -->
       <div id="tge-section">
-        <!-- Header CỐ ĐỊNH (không nằm trong vùng scroll) -->
+        <!-- FIXED header (outside the scroll area) -->
         <div id="tge-head-wrap" class="thin-scroll">
           <table class="val-table">
             <thead>
@@ -1171,7 +1171,7 @@
             </thead>
           </table>
         </div>
-        <!-- Body SCROLL (scrollbar chỉ bao đúng phần data từ OP trở xuống) -->
+        <!-- SCROLL body (scrollbar covers only data from OP down) -->
         <div class="val-table-scroll thin-scroll">
           <table class="val-table val-table-body">
             <tbody id="tge-tbody"></tbody>
@@ -1185,7 +1185,7 @@
   <div id="airdrop-view" style="display:none">
     <div class="ard-wrap">
 
-      <!-- Hàng đầu: tiêu đề TRÁI · Admin + VI|EN phải -->
+      <!-- Top row: title LEFT · Admin + VI|EN right -->
       <div class="ard-subtabs panel-head" id="ard-subtabs">
         <div class="val-intro"><span id="wte-title">work-to-earn</span></div>
         <div class="val-head-ctrl" id="ard-wte-controls">
@@ -1211,7 +1211,7 @@
   </div>
 
   <!-- Rank filter floating bar (WTE only) -->
-  <!-- Nút mèo (Agent) — hiện ở cả 4 tab, mới dựng vỏ -->
+  <!-- Cat button (Agent): on all 4 tabs, shell only -->
   <button id="cat-btn" aria-label="Agent (coming soon)" title="Agent (coming soon)">
     <img src="icon.png?v=4" width="80" height="80" alt="" />
   </button>
@@ -1225,7 +1225,7 @@
   </div>
 
   <!-- Predict TGE FDV modal -->
-  <!-- Admin Valuation: danh sách dự án (bấm "+") -->
+  <!-- Admin Valuation: project list (tap "+") -->
   <div class="wl-modal-backdrop" id="val-list-modal">
     <div class="wl-modal wl-modal--wide">
       <button class="modal-corner-close" id="val-list-close" aria-label="Đóng"><svg class="wte-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
@@ -1240,7 +1240,7 @@
     </div>
   </div>
 
-  <!-- Admin Valuation: form thêm / sửa 1 dự án -->
+  <!-- Admin Valuation: add / edit one project form -->
   <div class="wl-modal-backdrop" id="val-form-modal">
     <div class="wl-modal">
       <button class="modal-corner-close" id="val-form-close" aria-label="Đóng"><svg class="wte-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
@@ -1309,7 +1309,7 @@
   </div>
 
   <!-- Info popup: Danger Zone -->
-  <!-- Mobile: hiện khi trình duyệt không cho mở bảng chia sẻ ngay sau lúc vẽ ảnh -->
+  <!-- Mobile: shown when the browser won't open the share sheet right after drawing -->
   <div class="wl-modal-backdrop" id="shot-modal">
     <div class="wl-modal shot-modal">
       <div class="wl-modal-title" id="shot-modal-title">Lưu ảnh</div>
@@ -1334,7 +1334,7 @@
     </div>
   </div>
 
-  <!-- Admin: nhập mật khẩu để mở task cá nhân -->
+  <!-- Admin: enter password to open personal tasks -->
   <div class="wl-modal-backdrop" id="admin-modal">
     <div class="wl-modal">
       <div class="wl-modal-title">Task cá nhân</div>
@@ -1351,7 +1351,7 @@
     </div>
   </div>
 
-  <!-- Admin: form thêm/sửa task cá nhân (tất cả các ô đều optional) -->
+  <!-- Admin: add/edit personal task form (all fields optional) -->
   <div class="wl-modal-backdrop" id="ptask-modal">
     <div class="wl-modal wl-modal--wide">
       <div class="wl-modal-title" id="pt-title">Thêm task cá nhân</div>
@@ -1393,7 +1393,7 @@
         <div class="ptask-row">
           <div class="calc-field" id="pt-rank-field">
             <label>Rank</label>
-            <!-- option đổ bằng JS từ WTE_RANKS — xem QUY ĐỊNH rank ở phần JS -->
+            <!-- options filled by JS from WTE_RANKS, see the rank RULE in the JS -->
             <select id="pt-rank" required></select>
           </div>
           <div class="calc-field">
@@ -1421,7 +1421,7 @@
         </div>
       </div>
       <div class="admin-msg" id="pt-error" style="display:none"></div>
-      <!-- chỉ hiện khi đang sửa task có sẵn -->
+      <!-- shown only when editing an existing task -->
       <button type="button" class="pt-delete" id="pt-delete" style="display:none">Xoá task này</button>
       <div class="predict-actions">
         <button class="predict-btn-secondary" id="pt-cancel">Cancel</button>
@@ -1430,7 +1430,7 @@
     </div>
   </div>
 
-  <!-- Admin: xác nhận trước khi xoá task cá nhân -->
+  <!-- Admin: confirm before deleting a personal task -->
   <div class="wl-modal-backdrop" id="pdel-modal">
     <div class="wl-modal">
       <div class="wl-modal-title">Xoá task này?</div>
@@ -1467,8 +1467,8 @@
     const closeTge = () => tgeModal.classList.remove('open');
     document.getElementById('tge-intro').addEventListener('click', () => {
       tgeModalBody.innerHTML = '';
-      // Giữ nguyên cấu trúc "header tách khỏi vùng scroll" như bảng inline (2 bảng rời,
-      // cùng lane .thin-scroll nên 6 cột vẫn thẳng hàng) → scrollbar popup giống hệt inline
+      // Keep the "header separate from scroll area" structure like the inline table (2 separate tables,
+      // same .thin-scroll lane so 6 columns align) → popup scrollbar identical to inline
       const head = document.querySelector('#tge-head-wrap .val-table thead');
       const body = document.querySelector('#tge-section .val-table-body tbody');
       if (head && body) {
@@ -1497,9 +1497,9 @@
 
     // ── Predict TGE FDV modal ────────────────────────
     const predictModal = document.getElementById('predict-modal');
-    // 4 đường đóng modal (nút ✕ góc, nút Đóng, click nền, phím Esc) đều đi qua closePredict()
-    // → luôn reset về form trống. Trước 2026-08-05 chỉ có nút ✕ "tính lại" TRONG ô kết quả nên
-    // đóng bằng cách khác rồi mở lại vẫn thấy kết quả của lần tính trước.
+    // All 4 ways to close the modal (corner ✕, Close button, backdrop click, Esc) go through closePredict()
+    // → always resets to an empty form. Before 2026-08-05 only the ✕ "recalculate" INSIDE the result box did, so
+    // closing another way and reopening still showed the previous result.
     const closePredict = () => {
       predictModal.classList.remove('open');
       document.getElementById('calc-result').style.display = 'none';
@@ -1514,32 +1514,32 @@
     predictModal.addEventListener('click', e => { if (e.target === predictModal) closePredict(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closePredict(); });
 
-    // ── Info popups (giải thích số liệu 3 box Valuation) + toggle EN|VI ──
+    // ── Info popups (explain the numbers in 3 Valuation boxes) + EN|VI toggle ──
     let valLang = 'VI';
     const valLanguageSwitch = document.getElementById('val-language-switch');
 
-    // ĐÍCH DANH mọi nhãn UI TĨNH của tab Valuation (id → bản EN/VI), áp bằng innerHTML nên
-    // được phép nhúng thẻ (vd <span class="td-size"> cho chú thích nhỏ).
-    // LUẬT: chỉ dịch nhãn UI. KHÔNG dịch nội dung data (ticker, tên narrative
-    // như "Trading"/"Stablechain", ngày tháng, số) — xem mục quy tắc dịch trong HANDOFF.md.
-    // Thêm nhãn tĩnh mới ở đâu thì PHẢI khai báo ở đây, nếu không nó sẽ kẹt tiếng Anh khi ở mode VI.
+    // EXPLICIT list of every STATIC UI label of the Valuation tab (id → EN/VI text), applied via innerHTML so
+    // tags are allowed (e.g. <span class="td-size"> for small notes).
+    // RULE: translate UI labels only. Do NOT translate data (tickers, narrative names
+    // like "Trading"/"Stablechain", dates, numbers); see the translation rules in HANDOFF.md.
+    // Any new static label MUST be declared here, or it stays English in VI mode.
     const VAL_HEAD_LABELS = {
-      // headline + 3 tiêu đề box
+      // headline + 3 box titles
       'val-headline-text':       { EN: 'Altcoin watch', VI: 'Quan sát altcoin' },
       'tge-title-text':          { EN: 'Valuation baseline', VI: 'Mặt bằng định giá' },
       'danger-title-text':       { EN: 'Hero or Zero', VI: 'Hero or Zero' },
       'narr-title-text':         { EN: 'Trending Narratives', VI: 'Narrative đang hot' },
-      // nội dung box Recent TGE multiples + header bảng
+      // Recent TGE multiples box content + table header
       'tge-coef-label':          { EN: 'TGE multiple', VI: 'Hệ số TGE' },
       'tge-penalty-label':       { EN: 'Penalty FDV ≥ $300M', VI: 'Phạt FDV ≥ $300M' },
       'tge-cond-label':          { EN: 'Market condition', VI: 'Điều kiện thị trường' },
-      'tge-date-th':             { EN: 'TGE', VI: 'TGE' },   // cột ngày TGE — 2 ngôn ngữ dùng chung 1 chữ cho gọn (mobile)
-      // tiêu đề 4 popup (3 info + predict) — tiêu đề nằm trong HTML tĩnh nên dễ bị quên
+      'tge-date-th':             { EN: 'TGE', VI: 'TGE' },   // TGE date column: both languages share one word for compactness (mobile)
+      // titles of 4 popups (3 info + predict); titles are in static HTML and easily forgotten
       'info-tge-modal-title':    { EN: 'Valuation baseline', VI: 'Mặt bằng định giá' },
       'info-danger-modal-title': { EN: 'Hero or Zero', VI: 'Hero or Zero' },
       'info-narr-modal-title':   { EN: 'Trending Narratives', VI: 'Narrative đang hot' },
       'predict-modal-title':     { EN: 'Predict TGE FDV', VI: 'Dự đoán FDV TGE' },
-      // form Predict TGE FDV (nút mở + 3 label + 2 nút hành động)
+      // Predict TGE FDV form (open button + 3 labels + 2 action buttons)
       'predict-open-btn':        { EN: 'Predict TGE FDV', VI: 'Dự đoán FDV TGE' },
       'calc-raise-label':        { EN: 'Fundraising ($M)', VI: 'Số tiền gọi vốn ($M)' },
       'calc-alloc-label':        { EN: 'VC Alloc (%)', VI: '% phân bổ cho VC' },
@@ -1547,20 +1547,20 @@
       'predict-cancel':          { EN: 'Close', VI: 'Đóng' },
       'calc-btn':                { EN: 'Calculate', VI: 'Tính toán' },
     };
-    // placeholder không phải nội dung element nên phải set riêng, không gộp vào VAL_HEAD_LABELS được
+    // placeholder isn't element content so it's set separately, not via VAL_HEAD_LABELS
     const VAL_PLACEHOLDERS = {
       'calc-raise':  { EN: 'e.g. 30', VI: 'vd: 30' },
       'calc-alloc':  { EN: 'e.g. 20', VI: 'vd: 20' },
       'calc-supply': { EN: 'e.g. 21M, 10B', VI: 'vd: 21M, 10B' },
     };
-    // tooltip/aria của các nút chỉ có icon (không có chữ) — cũng là nhãn tĩnh nên phải dịch
+    // tooltip/aria of icon-only buttons: also static labels, so translated
     const VAL_TITLES = {
       'val-shot-btn':        { EN: 'Screenshot this dashboard', VI: 'Chụp ảnh dashboard' },
     };
-    // ⚠️ MỌI vòng lặp ở đây PHẢI bỏ qua id không tồn tại. Hàm này chạy ở top-level
-    // nên một getElementById trả null là ném lỗi và giết TOÀN BỘ phần script còn lại
-    // (routeFromPath không chạy → site kẹt ở tab CV). Đã dính đúng bẫy này ngày
-    // 2026-09-21 khi bỏ box Watchlist mà quên gỡ nhãn 'wlb-title-text'.
+    // ⚠️ EVERY loop here MUST skip missing ids. This function runs at top level,
+    // so one null getElementById throws and kills ALL remaining script
+    // (routeFromPath doesn't run → site stuck on the CV tab). Hit this exact trap on
+    // 2026-09-21 when removing the Watchlist box but forgetting label 'wlb-title-text'.
     function applyValHeadLabels() {
       for (const [id, labels] of Object.entries(VAL_HEAD_LABELS)) {
         const el = document.getElementById(id);
@@ -1579,13 +1579,13 @@
       fitIntroTitles();
     }
 
-    // Tiêu đề panel (.val-intro) dài quá chỗ (mobile, VI) → thu nhỏ chữ từng nấc 1px
-    // cho tới khi vừa tối đa 2 dòng, thay vì cắt mất chữ. Chạy lại khi đổi ngôn ngữ
-    // và khi khung đổi kích thước (kể cả lúc tab đang ẩn được mở ra).
+    // Panel title (.val-intro) too long (mobile, VI) → shrink text 1 px at a time
+    // until it fits at most 2 lines, instead of cutting text. Reruns on language change
+    // and frame resize (including when a hidden tab opens).
     function fitIntroTitles() {
       document.querySelectorAll('.val-intro > span').forEach(span => {
         span.style.fontSize = ''; span.style.lineHeight = ''; span.style.letterSpacing = '';
-        if (!span.offsetWidth) return;                       // tab đang ẩn, đo sau
+        if (!span.offsetWidth) return;                       // tab hidden, measure later
         if (matchMedia('(max-width: 640px)').matches) {
           for (const [size, lh] of [[20, 26], [16, 22], [14, 20]]) {   // page → header → content (mobile)
             span.style.fontSize = size + 'px'; span.style.lineHeight = lh + 'px';
@@ -1594,14 +1594,14 @@
           }
           return;
         }
-        // kiểu chức năng (desktop): page 32/40 → header 20/28 → content 16/24 → secondary 14/20
+        // functional styles (desktop): page 32/40 → header 20/28 → content 16/24 → secondary 14/20
         for (const [size, lh] of [[32, 40], [20, 28], [16, 24], [14, 20]]) {
           span.style.fontSize = size + 'px'; span.style.lineHeight = lh + 'px';
           if (span.scrollHeight <= 2 * lh + 1 && span.scrollWidth <= span.clientWidth) break;
         }
       });
     }
-    // Chỉ đo lại khi BỀ NGANG đổi — chiều cao đổi là do chính fitIntroTitles gây ra
+    // Remeasure only when WIDTH changes; height changes come from fitIntroTitles itself
     const introWidths = new WeakMap();
     const introObserver = new ResizeObserver(entries => {
       if (entries.some(en => introWidths.get(en.target) !== en.contentRect.width)) fitIntroTitles();
@@ -1610,12 +1610,12 @@
     document.querySelectorAll('.val-intro').forEach(el => introObserver.observe(el));
     applyValHeadLabels();
 
-    /* ── Nội dung info popup (icon "i" cạnh tiêu đề mỗi box) ──────────────────────
-       QUY ĐỊNH TRÌNH BÀY (chốt 2026-08-05, đổi 2026-10-24 theo design system — KHÔNG emoji):
-       mỗi ý một dòng đánh số "1." "2." · giữa các ý cách nhau ĐÚNG 1 dòng trống ·
-       chốt lại bằng một câu ĐẬM (<b class="info-key">). Viết cho người KHÔNG rành đọc số.
-       Xuống dòng trong template literal là xuống dòng thật vì .info-modal-body
-       dùng `white-space: pre-line` (đừng thay bằng <br>). */
+    /* ── Info popup content ("i" icon beside each box title) ──────────────────────
+       PRESENTATION RULE (decided 2026-08-05, changed 2026-10-24 per design system, NO emoji):
+       one numbered point per line "1." "2." · EXACTLY 1 blank line between points ·
+       end with a BOLD sentence (<b class="info-key">). Written for people NOT used to reading numbers.
+       Newlines in the template literal are real line breaks because .info-modal-body
+       uses `white-space: pre-line` (don't replace with <br>). */
     const DANGER_INFO = {
       VI: `Dự án có FDV hiện tại từ 15 lần định giá vốn VC trở lên.
 
@@ -1644,9 +1644,9 @@ The count includes eligible projects in that primary group, not every project sh
 
 This measures valuation at TGE, not current momentum. Small groups can change rank easily.`,
     };
-    // dùng bởi calculator Predict TGE FDV ở cuối file (khi data không đủ để chạy predictFDV)
+    // used by the Predict TGE FDV calculator at the end of the file (when data can't run predictFDV)
     const NOT_ENOUGH_DATA = { VI: 'Không đủ dữ liệu để dự đoán', EN: 'Not enough data to predict' };
-    // câu chốt (đậm) của popup Recent TGE multiples — chọn theo Market condition đang hiện
+    // closing (bold) sentence of the Recent TGE multiples popup, chosen by the displayed Market condition
     const TGE_MARKET_LINE = {
       VI: {
         Weak:   'Điều kiện thị trường: Yếu.',
@@ -1660,9 +1660,9 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       },
     };
 
-    // coef/pen/level là số ĐANG hiển thị trên box (renderTgeInfo đọc thẳng từ DOM lúc mở popup,
-    // không tính lại) → popup luôn khớp với con số user đang nhìn thấy. penN = số dự án FDV cao dùng để tính,
-    // penGrp = nhóm điều kiện thị trường ('Weak' | 'Normal+Strong').
+    // coef/pen/level are the numbers SHOWN on the box (renderTgeInfo reads the DOM when opening,
+    // without recalculating) → the popup always matches what the user sees. penN = number of high-FDV projects used,
+    // penGrp = market condition group ('Weak' | 'Normal+Strong').
     function tgeInfoHTML(coef, pen, penN, penGrp, level) {
       const line = TGE_MARKET_LINE[valLang][level]
         || (valLang === 'VI' ? 'Chưa đủ dữ liệu để đọc thị trường.' : 'Not enough data yet to read the market.');
@@ -1696,15 +1696,15 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     function renderTgeInfo() {
       const coef  = document.getElementById('tge-coef').textContent;
       const penEl = document.getElementById('tge-penalty');
-      const level = document.getElementById('market-condition-lvl').dataset.level;   // luôn key tiếng Anh (Weak/Normal/Strong), không phải chữ đang hiển thị
+      const level = document.getElementById('market-condition-lvl').dataset.level;   // always the English key (Weak/Normal/Strong), not the displayed text
       document.getElementById('info-tge-body').innerHTML = tgeInfoHTML(coef, penEl.textContent, penEl.dataset.n || '0', penEl.dataset.grp, level);
       document.getElementById('info-tge-predict-link').addEventListener('click', () => {
         closeInfoTge();
         predictModal.classList.add('open');
       });
     }
-    // Figma không vẽ icon ⓘ → trigger nằm ở chính tiêu đề box. Helper này có guard
-    // null (thiếu id thì bỏ qua, không giết script) và nhận cả Enter/Space cho bàn phím.
+    // Figma draws no ⓘ icon → the trigger is the box title. This helper guards
+    // null (missing id is skipped, script survives) and accepts Enter/Space for keyboards.
     function bindBoxInfo(titleId, open) {
       const el = document.getElementById(titleId);
       if (!el) return;
@@ -1740,20 +1740,20 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       valLang = lang;
       valLanguageSwitch.setAttribute('aria-checked', String(lang === 'EN'));
       applyValHeadLabels();
-      renderAnalysis(); renderDanger(); renderNarratives();   // Weak/Normal/Strong, empty-state, badge "PUMP LÁO" đều phụ thuộc valLang
+      renderAnalysis(); renderDanger(); renderNarratives();   // Weak/Normal/Strong, empty state, badge "PUMP LÁO" all depend on valLang
       if (infoTgeModal.classList.contains('open')) renderTgeInfo();
       if (infoDangerModal.classList.contains('open')) document.getElementById('info-danger-body').innerHTML = DANGER_INFO[valLang];
       if (infoNarrModal.classList.contains('open')) document.getElementById('info-narratives-body').textContent = NARRATIVES_INFO[valLang];
     }
     valLanguageSwitch.addEventListener('click', () => switchValLang(valLang === 'VI' ? 'EN' : 'VI'));
 
-    /* ── Chụp ảnh dashboard Valuation (nút camera cạnh toggle EN|VI) ────────────────
-       html2canvas nạp TỪ CHÍNH DOMAIN (html2canvas-pro.min.js nằm trong repo, không CDN
-       bên thứ 3) và chỉ nạp lúc bấm lần đầu — người vào đọc bình thường không phải
-       tải ~195KB lib. Không backend, không key: vẽ ảnh hoàn toàn trong máy user. */
-    // LIB: html2canvas-pro (fork của html2canvas). Bản gốc 1.4.1 ném lỗi
-    // "unsupported color function color" vì CSS dùng color-mix() → Chrome trả màu
-    // dạng color(srgb …) mà lib cũ không đọc được → nút chụp hỏng hoàn toàn (2026-10-05).
+    /* ── Valuation dashboard screenshot (camera button beside EN|VI toggle) ────────────────
+       html2canvas loads FROM THE SAME DOMAIN (html2canvas-pro.min.js in the repo, no third-party
+       CDN) and only on first click, so ordinary readers don't
+       download ~195KB. No backend, no key: drawn entirely on the user's machine. */
+    // LIB: html2canvas-pro (fork of html2canvas). Original 1.4.1 throws
+    // "unsupported color function color" because CSS uses color-mix() → Chrome returns colors as
+    // color(srgb …), which the old lib can't read → the capture button broke entirely (2026-10-05).
     const shotBtn = document.getElementById('val-shot-btn');
     let h2cLoading = null;
     const h2cFn = g => typeof g === 'function' ? g : g?.default;
@@ -1772,25 +1772,25 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     async function renderValuationPng() {
       const html2canvas = await loadHtml2Canvas();
       const wrap = document.querySelector('#valuation-view .val-wrap');
-      // Cắt ảnh ngay dưới 3 ô (bảng TGE bị loại thì vẫn chừa chỗ trống nếu không cắt chiều cao).
+      // Crop right under the 3 tiles (the removed TGE table would otherwise leave blank space).
       const boxes = wrap.querySelector('.val-boxes');
       const height = Math.ceil(boxes.getBoundingClientRect().bottom - wrap.getBoundingClientRect().top) + 16;
       const canvas = await html2canvas(wrap, {
         scale: 2,
-        height,                                                          // nét trên màn retina
-        backgroundColor: getComputedStyle(document.body).backgroundColor,   // .val-wrap trong suốt
+        height,                                                          // sharp on retina
+        backgroundColor: getComputedStyle(document.body).backgroundColor,   // .val-wrap is transparent
         logging: false,
-        // Loại khỏi ảnh cụm nút (Admin · VI/EN · camera): điều khiển, không phải nội dung.
-        // Ảnh CHỈ gồm tiêu đề + 3 ô đầu trang (Mặt bằng định giá · Hero or Zero · Narrative),
-        // bỏ bảng TGE bên dưới (user chốt 07/11).
+        // Exclude the button group (Admin · VI/EN · camera) from the image: controls, not content.
+        // The image includes ONLY the title + the 3 top tiles (Mặt bằng định giá · Hero or Zero · Narrative),
+        // excluding the TGE table below (user decided 11/07).
         ignoreElements: el => el.classList?.contains('val-head-ctrl') || el.id === 'tge-section',
       });
       return new Promise((res, rej) => canvas.toBlob(b => b ? res(b) : rej(new Error('toBlob rỗng')), 'image/png'));
     }
 
-    // NƠI LƯU: mobile → bảng chia sẻ của máy (chọn "Lưu hình ảnh" → vào app Ảnh, cách
-    // DUY NHẤT web lưu được vào thư viện ảnh). Desktop → hộp thoại lưu mở sẵn ở thư mục
-    // Desktop (Chrome/Edge); trình duyệt không có hộp thoại đó → tải về như thường.
+    // SAVE TARGET: mobile → the device share sheet (choose "Lưu hình ảnh" → Photos app, the
+    // ONLY way the web can save to the photo library). Desktop → save dialog opening at the
+    // Desktop folder (Chrome/Edge); browsers without that dialog download normally.
     const isTouchPhone = matchMedia('(pointer: coarse)').matches;
     const shotModal = document.getElementById('shot-modal');
     let shotFile = null, shotUrl = null;
@@ -1809,13 +1809,13 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url; a.download = name; a.click();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);   // revoke ngay lập tức có thể huỷ download
+      setTimeout(() => URL.revokeObjectURL(url), 1000);   // revoking immediately can cancel the download
     }
 
     shotBtn.addEventListener('click', async () => {
       const name = `0xhieu-valuation-${new Date().toISOString().slice(0, 10)}.png`;
-      // Desktop: mở hộp thoại lưu NGAY lúc bấm (trước khi vẽ) — để lâu sau cú bấm
-      // trình duyệt sẽ chặn vì hết "user gesture".
+      // Desktop: open the save dialog IMMEDIATELY on click (before drawing); long after the click
+      // the browser blocks it for lacking a "user gesture".
       let handle = null;
       if (!isTouchPhone && window.showSaveFilePicker) {
         try {
@@ -1824,8 +1824,8 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
             types: [{ description: 'PNG', accept: { 'image/png': ['.png'] } }],
           });
         } catch (err) {
-          if (err.name === 'AbortError') return;              // user bấm Huỷ
-          handle = null;                                      // lỗi khác → tải về như thường
+          if (err.name === 'AbortError') return;              // user pressed Cancel
+          handle = null;                                      // other error → download normally
         }
       }
       shotBtn.disabled = true;
@@ -1838,8 +1838,8 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
           try {
             await navigator.share({ files: [shotFile] });
           } catch (err) {
-            if (err.name === 'AbortError') return;            // user đóng bảng chia sẻ
-            // Vẽ ảnh lâu quá → mất "user gesture" → mở popup, bấm thêm 1 lần để chia sẻ
+            if (err.name === 'AbortError') return;            // user closed the share sheet
+            // Drawing took too long → "user gesture" lost → open a popup, one more tap to share
             const vi = valLang === 'VI';
             document.getElementById('shot-modal-title').textContent = vi ? 'Lưu ảnh' : 'Save image';
             document.getElementById('shot-modal-save').textContent  = vi ? 'Lưu vào Ảnh' : 'Save to Photos';
@@ -1886,8 +1886,8 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       if (push) history.pushState({}, '', '/valuation');
     }
 
-    // Airdrop chỉ còn 1 nội dung (Work to Earn) từ 2026-08-06 nên không còn cơ chế
-    // chuyển sub-tab: vào tab là hiện luôn card Work + thanh lọc rank.
+    // Airdrop has only one content (Work to Earn) since 2026-08-06, so no more
+    // sub-tab switching: entering the tab shows Work cards + the rank filter.
     function showAirdrop(push = true) {
       hideAllViews();
       document.body.dataset.dsProfile = 'compact';
@@ -1913,10 +1913,10 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     window.addEventListener('popstate', routeFromPath);
 
     let publicData = [];
-    let valProjects = [];   // bản GỐC từ KV (data nhập tay) — form admin sửa trên bản này
-    let publicDataError = false;   // tải /api/val hỏng → hiện lỗi thật, không kẹt "Loading…"
+    let valProjects = [];   // ORIGINAL from KV (manual data); the admin form edits this copy
+    let publicDataError = false;   // failed /api/val → show the real error, not stuck on "Loading…"
 
-    // ── Khối báo lỗi + nút thử lại, dùng chung cho Valuation / Work ──
+    // ── Error block + retry button, shared by Valuation / Work ──
     function errBox(retryFn, en) {
       return `<div class="data-error">${en ? 'Could not load data.' : 'Không tải được dữ liệu.'}
         <button class="retry-btn" onclick="${retryFn}(this)">${en ? 'Retry' : 'Thử lại'}</button></div>`;
@@ -1924,9 +1924,9 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     async function retryValuation(btn) { if (btn) btn.disabled = true; await fetchPublicData(); renderAll(); }
     async function retryWTE(btn)       { if (btn) btn.disabled = true; await fetchWTE();       renderWTE(); }
 
-    // Nguồn data: KV qua /api/val (đã bỏ hẳn Google Sheet, 2026-09-22).
-    // `projects` = data nhập tay · `prices` = giá do job ghi. Hai key TÁCH RIÊNG trong KV
-    // nên admin sửa dự án và job ghi giá không bao giờ ghi đè nhau — gộp lại ở đây thôi.
+    // Data source: KV via /api/val (Google Sheet fully removed, 2026-09-22).
+    // `projects` = manual data · `prices` = prices written by the job. Two SEPARATE KV keys
+    // so admin edits and the price job never overwrite each other; merged only here.
     async function fetchPublicData() {
       try {
         const res = await fetch('/api/val');
@@ -1949,9 +1949,9 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
               priceTGE:     p.priceTGE,
               ath:          px.ath || 0,
               athDate:      px.athDate || '',
-              preAth:       px.preAth || 0,      // đáy TRƯỚC khi lập ATH — ghép chung ô với ×ATH
-              athWick:      !!px.athWick,        // bot xác nhận ATH rơi đúng ngày mở giao dịch
-              atl:          px.atl || 0,         // đáy THẬT SỰ (all-time low), đứng cột riêng
+              preAth:       px.preAth || 0,      // low BEFORE the ATH, shares a cell with ×ATH
+              athWick:      !!px.athWick,        // bot confirmed the ATH fell on the trading open date
+              atl:          px.atl || 0,         // TRUE low (all-time low), its own column
               currentPrice: px.atm || 0,
             };
           });
@@ -2008,14 +2008,14 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
     }
 
-    // Market condition từ median ×TGE: Strong ≥13 · Normal 4.3–13 · Weak <4.3
+    // Market condition from median ×TGE: Strong ≥13 · Normal 4.3–13 · Weak <4.3
     const marketLevel = med => med >= 13 ? 'Strong' : med >= 4.3 ? 'Normal' : 'Weak';
 
-    // Phạt FDV cao (chốt 2026-10-27) — k đi theo điều kiện thị trường HIỆN TẠI, vì data cho thấy
-    // thời Weak phạt ×0.25, Normal ×0.61, Strong ×0.60. Mỗi TGE gắn điều kiện lúc nó ra (median 6 TGE
-    // ngay trước, cùng luật box); nhóm Weak riêng, Normal+Strong gộp. Mỗi dự án lớn chia cho median dự án
-    // nhỏ CÙNG điều kiện (Strong mặt bằng ×13, Normal ×4.7 — so chéo là sai), k = median các tỉ số đó.
-    // Toàn bộ lịch sử (Normal/Strong chủ yếu ở 2023–2024). Dưới 5 dự án lớn → null = không phạt.
+    // High-FDV penalty (decided 2026-10-27): k follows CURRENT market conditions, because data shows
+    // Weak penalizes ×0.25, Normal ×0.61, Strong ×0.60. Each TGE gets its condition at launch (median of the previous 6
+    // TGEs, same rule as the box); Weak separate, Normal+Strong combined. Each large project is divided by the small-project median
+    // of the SAME condition (Strong level ×13, Normal ×4.7, cross-comparing is wrong), k = median of those ratios.
+    // Full history (Normal/Strong mostly 2023–2024). Under 5 large projects → null = no penalty.
     const PENALTY_MIN_HIGH = 5;
     const isHighFDV = e => e.fundraising / (e.vcAlloc / 100) >= FDV_SPLIT_MAIN;
     function fdvPenalty(entries, level) {
@@ -2030,7 +2030,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       const ratios = pool.filter(x => x.hi && loMed[x.lvl]).map(x => x.m / loMed[x.lvl]);
       return { k: ratios.length >= PENALTY_MIN_HIGH ? median(ratios) : null, n: ratios.length, grp: grp.join('+') };
     }
-    // ×TGE đã quy về mức chuẩn: dự án FDV cao chia cho k để không kéo tụt hệ số chung
+    // Normalized ×TGE: high-FDV projects divided by k so they don't drag the general coefficient down
     const normMultiple = (e, pen) => pen.k && isHighFDV(e) ? multiple(e) / pen.k : multiple(e);
 
     // Parse supply: handles "10B", "500M", plain numbers, and thousand-separated numbers
@@ -2061,11 +2061,11 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     }
 
     // ── Render table ──────────────────────────────────
-    // Ngưỡng chia FDV cao/thấp — dùng CHUNG cho chữ đậm ở cột Ticker và cho
-    // dòng "Phạt FDV ≥ $300M" trong box Hệ số TGE, để người đọc nối được 2 chỗ.
+    // FDV high/low threshold, SHARED by bold in the Ticker column and
+    // the "Phạt FDV ≥ $300M" line in the TGE coefficient box, so readers can connect them.
     const FDV_SPLIT_MAIN = 300e6;
 
-    // Bội số hiển thị: bỏ dấu × (header đã mang), dấu thập phân theo ngôn ngữ đang chọn
+    // Display multiple: no × (the header carries it), decimal mark per selected language
     function fmtMult(n, dp = 2) {
       if (!(n > 0)) return '—';
       const t = n.toFixed(dp);
@@ -2087,26 +2087,26 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
 
       tbody.innerHTML = sorted.map(e => {
         const xTGE  = multiple(e);
-        // LUẬT ATH: chỉ tính là đỉnh thật nếu nó rơi SAU ngày TGE hơn MỘT TUẦN.
-        // Trong vòng 1 tuần thì đó là râu nến những ngày đầu lên sàn, không phải
-        // đỉnh do thị trường thật sự đẩy lên. (Trước 2026-09-22 ngưỡng là 24h.)
+        // ATH RULE: counts as a true peak only if it falls MORE THAN A WEEK AFTER TGE.
+        // Within 1 week it's a wick from the first listing days, not a
+        // peak really driven by the market. (Before 2026-09-22 the threshold was 24h.)
         const ATH_MIN_DAYS = 7;
-        // Ngoài luật 1 tuần, còn tin thêm cờ athWick do bot đặt: có sàn list token
-        // nhưng KHÔNG sàn nào có nến trước ATH → đỉnh đó rơi đúng ngày mở giao dịch,
-        // dù ngày TGE trong kho ghi cách đó cả tháng (NEWT là ca thật).
+        // Beyond the 1-week rule, also trust the bot's athWick flag: an exchange lists the token
+        // but NO exchange has candles before the ATH → the peak fell on the trading open date,
+        // even if the stored TGE date is a month away (NEWT is a real case).
         const athTooEarly = e.athWick || !e.athDate || !e.tgeDate ||
           (new Date(e.athDate) - new Date(e.tgeDate)) <= ATH_MIN_DAYS * 86400000;
         const xATH  = athTooEarly ? 0 : xMult(e.ath, e);
         const xATM  = xMult(e.currentPrice, e);
         const vcFDV = e.vcAlloc > 0 ? e.fundraising / (e.vcAlloc / 100) : 0;
-        // Ticker ĐẬM = FDV cao (≥$300M) · THƯỜNG = thấp
+        // BOLD ticker = high FDV (≥$300M) · NORMAL = low
         const hi = vcFDV >= FDV_SPLIT_MAIN ? ' fdv-hi' : '';
-        const xATL = e.atl ? xMult(e.atl, e) : null;              // đáy thật sự
-        const xPre = e.preAth ? xMult(e.preAth, e) : null;         // đáy trước khi lập ATH
-        // Ô ×ATH mang 2 con số: đáy-trước-đỉnh → đỉnh. Đọc thành "chiều xuống bao nhiêu
-        // rồi mới bật lên bấy nhiêu" (OP: 1,62 → 19,80). Không có số trước thì hiện mình đỉnh.
-        // Ca ĐẶC BIỆT (2026-10-05): ATH rơi trong tuần đầu lên sàn → không phải đỉnh thường,
-        // Vẫn hiện ×TGE → ×ATH; hai số đen, chỉ tỷ số (×N) nhấn xanh.
+        const xATL = e.atl ? xMult(e.atl, e) : null;              // true low
+        const xPre = e.preAth ? xMult(e.preAth, e) : null;         // low before the ATH
+        // The ×ATH cell carries 2 numbers: low-before-peak → peak. Read as "fell this much
+        // then rebounded that much" (OP: 1.62 → 19.80). With no earlier number, show only the peak.
+        // SPECIAL case (2026-10-05): ATH within the first listing week → not a normal peak,
+        // Still show ×TGE → ×ATH; both numbers black, only the ratio (×N) highlighted blue.
         const athEarly = athTooEarly && e.ath > 0 && (e.athWick || (e.athDate && e.tgeDate));
         const athGain = (start, end) => start > 0 && end > 0 && Number.isFinite(end / start)
           ? `<span class="ath-gain">(×${fmtMult(end / start)})</span>` : '';
@@ -2115,7 +2115,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
           : athEarly
             ? `<span class="ath-from"><span class="ath-early">${fmtMult(xTGE)}</span> <span class="ath-arrow">→</span> </span><span class="ath-early">${fmtMult(xMult(e.ath, e))}</span>${athGain(xTGE, xMult(e.ath, e))}`
             : '—';
-        // Cam chỉ ở chỗ mang nghĩa (ngưỡng trùng Market condition ≥13 và Danger Zone ≥15)
+        // Orange only where it means something (thresholds match Market condition ≥13 and Danger Zone ≥15)
         const tgeCls = xTGE >= 13 ? 'm-hot' : '';
         const atmCls = xATM >= 15 ? 'm-danger' : (xATM > 0 && xATM < 1 ? 'm-low' : '');
         const wrap = (cls, txt) => cls ? `<span class="${cls}">${txt}</span>` : txt;
@@ -2130,8 +2130,8 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         </tr>`;
       }).join('');
 
-      // Đo yếu tố dài nhất TỪNG CỘT (kể cả header) → --ck1..--ck6 (probe ẩn tái tạo đúng cấu trúc bảng
-      // để CSS theo cột áp dụng đúng font; không đo bảng thật vì có thể đang display:none)
+      // Measure each COLUMN's longest item (including header) → --ck1..--ck6 (a hidden probe replicates the table structure
+      // so column CSS applies the right font; the real table may be display:none)
       const probe = document.createElement('div');
       probe.style.cssText = 'position:absolute;left:-9999px;top:0;visibility:hidden;width:2000px;';
       for (let i = 1; i <= 7; i++) probe.style.setProperty('--ck' + i, '0px');
@@ -2157,7 +2157,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         probe.querySelectorAll(`th:nth-child(${i}) .ck, td:nth-child(${i}) .ck`).forEach(s => { w = Math.max(w, s.getBoundingClientRect().width); });
         document.documentElement.style.setProperty('--ck' + i, Math.ceil(w) + 'px');
       }
-      // Mobile bỏ phần "đáy →" của ×ATH (chỉ còn đỉnh + (×N)) → đo lại cột 5 không có phần đó.
+      // Mobile drops the "low →" part of ×ATH (only peak + (×N)) → remeasure column 5 without it.
       probe.querySelectorAll('.ath-from').forEach(x => { x.style.display = 'none'; });
       let w5 = 0;
       probe.querySelectorAll('th:nth-child(5) .ck, td:nth-child(5) .ck').forEach(x => { w5 = Math.max(w5, x.getBoundingClientRect().width); });
@@ -2176,8 +2176,8 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       const entries  = allEntries();
       const sorted   = [...entries].sort((a, b) => new Date(b.tgeDate) - new Date(a.tgeDate));
 
-      // 1. Market condition — median của 6 deal TGE gần nhất (backtest 2026-07-27:
-      // flicker rate N=6 thấp ngang N=4 nhưng mượt hơn, không trễ như N=8 → gộp short+mid làm 1)
+      // 1. Market condition: median of the 6 latest TGE deals (backtest 2026-07-27:
+      // N=6 flicker rate as low as N=4 but smoother, no lag like N=8 → merged short+mid into one)
       const condEl = document.getElementById('market-condition-lvl');
 
       // Valid multiples sorted newest → oldest
@@ -2194,10 +2194,10 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       const LEVELS = ['Strong', 'Normal', 'Weak'];
       const LEVELS_VI = { Strong: 'Mạnh', Normal: 'Bình thường', Weak: 'Yếu' };
       const levelEN = recent6.length ? LEVELS[lvlIdx] : null;
-      condEl.dataset.level = levelEN || '';   // luôn giữ key tiếng Anh gốc (Weak/Normal/Strong) cho info popup dùng, bất kể đang hiện ngôn ngữ nào
+      condEl.dataset.level = levelEN || '';   // always keep the original English key (Weak/Normal/Strong) for the info popup, whatever language is shown
       condEl.textContent = levelEN ? (valLang === 'VI' ? LEVELS_VI[levelEN] : levelEN) : '—';
 
-      // 2. Recent TGE multiples — 1 hệ số chung (dự án FDV cao đã quy về chuẩn) + mức phạt FDV cao
+      // 2. Recent TGE multiples: one general coefficient (high-FDV projects normalized) + high-FDV penalty
       const pen = fdvPenalty(entries, levelEN);
       const allValid = sorted
         .map(e => ({ m: normMultiple(e, pen), date: e.tgeDate }))
@@ -2220,8 +2220,8 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       penEl.dataset.grp = pen.grp;
     }
 
-    // ── Danger Zone: token đang ở ×ATM ≥ 15 — VC lãi quá lớn, sell pressure cực đại ──
-    // TGE < 30 ngày mà đã vào vùng này = pump láo, cảnh báo đặc biệt
+    // ── Danger Zone: tokens at ×ATM ≥ 15, huge VC profit, maximum sell pressure ──
+    // TGE < 30 days and already in this zone = fake pump, special warning
     function renderDanger() {
       const listEl = document.getElementById('danger-list');
       const ALERT_DAYS = 30 * 24 * 3600 * 1000;
@@ -2230,7 +2230,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       const danger = allEntries()
         .map(e => ({ e, xATM: xMult(e.currentPrice, e) }))
         .filter(x => x.xATM >= 15)
-        .sort((a, b) => new Date(b.e.tgeDate) - new Date(a.e.tgeDate)); // mới nhất lên đầu
+        .sort((a, b) => new Date(b.e.tgeDate) - new Date(a.e.tgeDate)); // newest first
 
       if (!danger.length) {
         listEl.innerHTML = `<div class="danger-empty">${valLang === 'VI' ? 'Chưa có dự án đạt ngưỡng ×15' : 'No projects at or above ×15'}</div>`;
@@ -2249,18 +2249,18 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       }).join('');
     }
 
-    // ── Trending Narratives: xếp hạng TẤT CẢ narrative từ 02/2025 tới nay ──
-    // Xếp theo median ×TGE (giá lúc list, phản ánh niềm tin thị trường ngay
-    // từ đầu) thay vì ×ATH — tránh bị 1 coin pump đơn lẻ về sau kéo cả nhóm
-    // trông như "trending" dù ban đầu thị trường không tin (vd Identity: H
-    // ×0.76, BILL ×0.9 lúc TGE — đều bị chê — nhưng H pump ×16.9 sau đó kéo
-    // median ATH lên ảo). Dùng median (không phải trung bình) để 1 dự án dị
-    // (kiểu MYX ×380) không kéo lệch cả nhóm. Không lọc theo số dự án hay
-    // ngưỡng ×TGE — hiện đủ mọi narrative có data, kể cả 1 dự án hoặc bị
-    // thị trường chê lúc TGE, để không ẩn thông tin.
+    // ── Trending Narratives: rank ALL narratives from 2025-02 to now ──
+    // Ranked by median ×TGE (listing price, reflecting market belief from the start)
+    // rather than ×ATH, to avoid one later-pumping coin pulling the whole group
+    // into "trending" though the market initially disbelieved (e.g. Identity: H
+    // ×0.76, BILL ×0.9 at TGE, both disliked, but H pumped ×16.9 later, inflating
+    // median ATH). Median (not mean) so one outlier
+    // (like MYX ×380) doesn't skew the group. No filter by project count or
+    // ×TGE threshold: show every narrative with data, even with 1 project or
+    // disliked at TGE, so nothing is hidden.
     const NARRATIVE_SINCE = '2025-02-01';
 
-    // Xếp hạng narrative theo median ×TGE — nguồn của box Trending Narratives.
+    // Rank narratives by median ×TGE, source of the Trending Narratives box.
     function narrativeRanking() {
       const groups = {};
       allEntries().forEach(e => {
@@ -2323,9 +2323,9 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     function predictFDV(raise, allocPct, entries) {
       const vcFDV = raise / (allocPct / 100);
 
-      // Dùng mọi dự án, ×TGE dự án FDV cao đã quy về chuẩn (khớp box Hệ số TGE);
-      // dự án đang đoán có FDV ≥ $300M thì nhân mức phạt ở STEP 7
-      const pen = fdvPenalty(entries, document.getElementById('market-condition-lvl').dataset.level);   // cùng điều kiện đang hiện trên box
+      // Uses all projects, high-FDV ×TGE normalized (matching the TGE coefficient box);
+      // a guessed project with FDV ≥ $300M gets the penalty at STEP 7
+      const pen = fdvPenalty(entries, document.getElementById('market-condition-lvl').dataset.level);   // same condition as shown on the box
       const k = pen.k && vcFDV >= FDV_SPLIT_MAIN ? pen.k : 1;
 
       // Valid entries sorted newest-first
@@ -2384,7 +2384,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       const maxC = Math.max(...clean);
       const base_mult = Math.max(minC, Math.min(maxC, wMed));
 
-      // STEP 7 — Outputs (final multiple = base_mult × k phạt FDV cao)
+      // STEP 7: Outputs (final multiple = base_mult × high-FDV penalty k)
       const exp = vcFDV * base_mult * k;
       const lo  = vcFDV * minC * k;
       const hi  = vcFDV * maxC * k;
@@ -2457,7 +2457,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         const res = await fetch('highlights.txt');
         if (!res.ok) throw new Error();
         const text = await res.text();
-        // Mỗi dòng "tên-ảnh | caption"; dòng trống hoặc bắt đầu bằng # bị bỏ qua
+        // Each line "image-name | caption"; blank lines or lines starting with # are skipped
         const items = text.split('\n')
           .map(l => l.trim())
           .filter(l => l && !l.startsWith('#'))
@@ -2492,50 +2492,50 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     // AIRDROP — Work to Earn
     // ══════════════════════════════════════════════════
 
-    // ── QUY ĐỊNH: WTE_TYPES là NGUỒN DUY NHẤT cho thẻ phân loại ─────────
-    // Thứ tự trong mảng = thứ tự ưu tiên hiển thị. Dùng chung 2 chỗ:
-    //   1. Dropdown "Phân loại" trong form admin (thêm/sửa task)
-    //   2. Thứ tự card trong mỗi nhóm (typeOrder() bên dưới)
-    // Muốn đổi thứ tự ưu tiên hay thêm/bớt thẻ → sửa DUY NHẤT mảng này.
+    // ── RULE: WTE_TYPES is the ONLY SOURCE for category tags ─────────
+    // Array order = display priority. Shared by 2 places:
+    //   1. The "Phân loại" dropdown in the admin form (add/edit task)
+    //   2. Card order within each group (typeOrder() below)
+    // To change priority or add/remove tags → edit ONLY this array.
     const WTE_TYPES = ['Learn-to-Grow','Work-to-Earn','Stablechain','Trading','Layer-1','Infra','AI','Layer-2','Prediction',
                        'Bitcoin','Payment','DeFi','Identity','Privacy','Game','Others','END'];
 
-    // Project chưa điền phân loại (hoặc thẻ lạ) xếp cuối nhóm.
+    // Projects without a category (or an unknown tag) sort last in the group.
     const typeOrder = p => {
       const i = WTE_TYPES.indexOf(p.type);
       return i === -1 ? WTE_TYPES.length : i;
     };
 
-    // ── QUY ĐỊNH: thang rank của Work to Earn ───────────────────────────
-    // 6 nhóm, xếp từ trên xuống. MỌI thứ liên quan tới rank đọc từ đây:
-    //   l2g (LEARN) việc HỌC mỗi ngày (user thêm 07/11/2026), xếp trên cả w2e.
-    //               Như INCOME: suy ra từ thẻ phân loại 'Learn-to-Grow', không có rank.
-    //   $ (INCOME)  gradient thương hiệu — việc RA TIỀN ngắn hạn.
-    //               KHÔNG phải rank: nhóm này suy ra từ thẻ phân loại
-    //               thẻ 'Work-to-Earn', bỏ qua rank lưu trong KV, và chỗ badge
-    //               rank hiện "w2e" thay cho chữ.
-    //   S           tím  #6155F5 — kèo 10K
-    //   A           xanh dương #0088FF — kèo 1K
-    //   B           xanh lá #34C759 — kèo xxx
-    //   C           trắng (viền xám) — kèo rác
-    // Thêm/đổi nhóm → sửa 3 hằng số dưới đây, rồi thêm class `.rank-*` +
+    // ── RULE: Work to Earn rank scale ───────────────────────────
+    // 6 groups, top to bottom. EVERYTHING about rank reads from here:
+    //   l2g (LEARN) daily LEARNING tasks (user added 2026-11-07), above w2e.
+    //               Like INCOME: derived from the 'Learn-to-Grow' category, no rank.
+    //   $ (INCOME)  brand gradient: short-term MONEY-MAKING work.
+    //               NOT a rank: this group derives from the category tag
+    //               tag 'Work-to-Earn', ignores the KV-stored rank, and the
+    //               rank badge shows "w2e" instead of a letter.
+    //   S           purple #6155F5: 10K play
+    //   A           blue #0088FF: 1K play
+    //   B           green #34C759: xxx play
+    //   C           white (grey border): junk play
+    // To add/change a group → edit the 3 constants below, then add class `.rank-*` +
     // `.wte-card--*` trong CSS.
-    // Phân loại → nhóm cố định (không có rank). Khớp TYPE_GROUPS trong functions/api/private.js.
+    // Category → fixed group (no rank). Matches TYPE_GROUPS in functions/api/private.js.
     const WTE_TYPE_GROUP  = { 'Learn-to-Grow': 'LEARN', 'Work-to-Earn': 'INCOME' };
     const isTypeGroup     = g => Object.values(WTE_TYPE_GROUP).includes(g);
     const WTE_GROUPS      = ['LEARN','INCOME','S','A','B','C'];
-    const WTE_RANKS       = WTE_GROUPS.filter(g => !isTypeGroup(g)); // rank chọn tay được trong form admin
+    const WTE_RANKS       = WTE_GROUPS.filter(g => !isTypeGroup(g)); // ranks selectable in the admin form
     const RANK_LABEL      = { LEARN: 'l2g', INCOME: 'w2e', S: 'S', A: 'A', B: 'B', C: 'C' };
-    const GROUP_NAME      = { LEARN: 'learn-to-grow', INCOME: 'work-to-earn' };   // luôn viết thường, đúng 1 kiểu (user chốt 09/11)
+    const GROUP_NAME      = { LEARN: 'learn-to-grow', INCOME: 'work-to-earn' };   // always lowercase, one style (user decided 11/09)
 
-    // Tiêu đề nhóm — SUY RA từ RANK_LABEL, không khai lại danh sách thứ 2.
-    // INCOME = "work-to-earn" (không phải rank, viết thường như thẻ phân loại); còn lại "Rank: S" — khớp chữ trên thẻ rank của card.
+    // Group title: DERIVED from RANK_LABEL, no second list.
+    // INCOME = "work-to-earn" (not a rank, lowercase like the category tag); others "Rank: S", matching the card's rank tag.
     const groupLabel = r => GROUP_NAME[r] || `Rank: ${RANK_LABEL[r]}`;
 
-    // Rank "SS" (S+) của thang cũ đọc thành S, để project trong KV chưa sửa
-    // tay vẫn hiện đúng chỗ thay vì rơi khỏi mọi nhóm.
-    // Tiềm năng 2 mức 'high' | 'low' ('' = chưa điền). Project cũ trong KV còn
-    // lưu số 1-3 của thang sao cũ → quy đổi: ≥2 = high, 1 = low. Khớp
+    // Old-scale rank "SS" (S+) reads as S, so projects not yet edited in KV
+    // still show correctly instead of falling out of every group.
+    // Potential 2 levels 'high' | 'low' ('' = unset). Old KV projects may still
+    // store star-scale 1-3 → map: ≥2 = high, 1 = low. Matches
     // cleanPotential trong functions/api/private.js.
     const potLevel = v => {
       if (v === 'high' || v === 'low') return v;
@@ -2552,12 +2552,12 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     let wteLang   = 'VI';
     let wteView   = 'projects';   // Work toggle: 'projects' (default) | 'tasks'
 
-    // ── Lịch của việc: thứ + giờ LƯU theo GMT+7; VI xem GMT+7, EN xem UTC (user chốt 09/11) ──
-    const SAVED_CLOCK = 420;                                  // phút lệch so với UTC của giờ đã lưu
-    const wteClock = () => wteLang === 'EN' ? 0 : SAVED_CLOCK;   // ... của đồng hồ đang xem
-    const wteNow   = () => new Date(Date.now() + wteClock() * 60000);   // đọc bằng getUTC* / toISOString
+    // ── Task schedule: weekday + time STORED in GMT+7; VI shows GMT+7, EN shows UTC (user decided 11/09) ──
+    const SAVED_CLOCK = 420;                                  // minutes offset from UTC of the stored time
+    const wteClock = () => wteLang === 'EN' ? 0 : SAVED_CLOCK;   // ... of the clock being viewed
+    const wteNow   = () => new Date(Date.now() + wteClock() * 60000);   // read with getUTC* / toISOString
     const pad2     = n => String(n).padStart(2, '0');
-    // Dời giờ đi delta phút; qua nửa đêm thì các thứ dời theo. Không có giờ thì giữ nguyên.
+    // Shift the time by delta minutes; past midnight the weekdays shift too. No time means unchanged.
     function shiftWhen(days, time, delta) {
       if (!time || !delta) return { days, time };
       const [h, m] = time.split(':').map(Number);
@@ -2569,8 +2569,8 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         time: `${pad2(Math.floor(min / 60))}:${pad2(min % 60)}`,
       };
     }
-    const savedDays = it => it.days?.length ? it.days : it.dow ? [it.dow] : [];   // `dow` là field cũ
-    // Không chọn ngày: việc ngày = mọi ngày ([]), việc tuần = thứ Hai + thứ Ba.
+    const savedDays = it => it.days?.length ? it.days : it.dow ? [it.dow] : [];   // `dow` is an old field
+    // No day chosen: daily task = every day ([]), weekly task = Monday + Tuesday.
     const whenView = (it, scope) => {
       const days = savedDays(it);
       return shiftWhen(days.length ? days : scope === 'w' ? [1, 2] : [], it.time || '', wteClock() - SAVED_CLOCK);
@@ -2578,7 +2578,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     let wteLoaded = { VI: false, EN: false };
     let wteError  = false;
 
-    // ── Fetch project công khai từ KV (qua /api/wte, không cần mật khẩu) ─
+    // ── Fetch public projects from KV (via /api/wte, no password) ─
     async function fetchWTE() {
       if (wteLoaded.VI) return;
       try {
@@ -2595,8 +2595,8 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       }
     }
 
-    // ── Auto-translate VI → EN (Google Translate, dùng chung) ─
-    // Trả về { out, ok }: ok = false nếu có lượt gọi Google lỗi (khi đó phần lỗi giữ nguyên tiếng Việt).
+    // ── Auto-translate VI → EN (Google Translate, shared) ─
+    // Returns { out, ok }: ok = false if a Google call failed (failed parts stay Vietnamese).
     async function gtranslate(texts) {
       let ok = true;
       const SEP = '\n[|||]\n';
@@ -2618,8 +2618,8 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       return { out: results.flat(), ok };
     }
 
-    // Dịch VI → EN: nội dung task của card public + task cá nhân, và TÊN card nếu tên có dấu tiếng Việt
-    // (tên dự án như Kaito, Flop Labs giữ nguyên). Google lỗi thì KHÔNG đánh dấu xong → lần bấm EN sau dịch lại.
+    // Translate VI → EN: task content of public + personal cards, and the card NAME if it has Vietnamese diacritics
+    // (project names like Kaito, Flop Labs stay). On Google errors NOT marked done → the next EN tap retranslates.
     const HAS_VN = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
     let personalTasksEN = [];
     let wteTranslating = null;
@@ -2649,10 +2649,10 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       wteData.EN = pubEN;
       personalTasksEN = perEN;
       wteLoaded.EN = ok;
-      if (wteLang === 'EN') renderWTE();   // dịch xong (kể cả lúc user bấm EN trước khi data về) → vẽ lại ngay
+      if (wteLang === 'EN') renderWTE();   // translation done (even if the user tapped EN before data arrived) → redraw now
     }
 
-    // ── Icon SVG dùng chung cả site (nét 1.5, tô bằng currentColor) ──
+    // ── Site-wide SVG icons (stroke 1.5, filled by currentColor) ──
     const WTE_ICON = {
       INSIGHTS:   '<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/>',
       LEARN:      '<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5z"/><path d="M4 19a2 2 0 0 1 2-2h13"/>',
@@ -2671,7 +2671,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       low:        '<path d="M16 17h6v-6"/><path d="m22 17-8.5-8.5-5 5L2 7"/>',
       check:      '<path d="M20 6 9 17l-5-5"/>',
     };
-    // Chữ trên thẻ viết thường hết, chỉ "AI" (và chữ rank $ S A B C) viết hoa. Chỉ đổi lúc hiện — data giữ nguyên.
+    // Tag text is all lowercase, only "AI" (and rank letters $ S A B C) uppercase. Display only; data unchanged.
     const tagCase = t => t.toLowerCase().replace(/\bai\b/g, 'AI');
     const wteIcon = (k, cls = '') =>
       `<svg class="wte-ico ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${WTE_ICON[k] || ''}</svg>`;
@@ -2703,7 +2703,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       const container = document.getElementById('wte-cards');
       const projects  = wteData[wteLang];
 
-      // vẫn render nếu sheet chưa về nhưng đã có task cá nhân trong KV
+      // still render if the sheet hasn't arrived but personal tasks exist in KV
       if (!projects.length && !(adminUnlocked && personalTasks.length)) {
         container.innerHTML = wteError
           ? errBox('retryWTE', wteLang === 'EN')
@@ -2711,17 +2711,17 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         return;
       }
 
-      // Narrative top 5 của box Trending Narratives (Valuation) — so tên không phân biệt hoa thường.
-      // Work-to-Earn không có bên Valuation: thẻ đó là "rank" w2e của nhóm nên luôn đen.
+      // Top 5 narratives of the Trending Narratives box (Valuation), name match case-insensitive.
+      // Work-to-Earn isn't in Valuation: that tag is the group's "rank" w2e so always black.
       const topNarr = new Set(narrativeRanking().slice(0, 5).map(g => g.name.toLowerCase()));
       const strong  = on => on ? ' wte-tag--strong' : '';
-      // Logo: ảnh X của dự án; không có hoặc tải lỗi thì mặt mèo.
+      // Logo: the project's X image; missing or failed → cat face.
       const CAT_LOGO = '/icon.png?v=4';
       const logoOf = (p, cls = 'wte-logo') => {
         const handle = p.twitter ? p.twitter.replace(/.*twitter\.com\/|.*x\.com\/|^@/, '').split('?')[0].trim() : '';
         return `<img class="${cls}" src="${handle ? `https://unavatar.io/twitter/${handle}?fallback=false` : CAT_LOGO}" alt="" loading="lazy" onerror="this.onerror=null;this.src='${CAT_LOGO}'" />`;
       };
-      // Hàng dự án: logo · tên · High/Low potential · narrative; ngay dưới là Website · X · Discord · Hướng dẫn tham gia.
+      // Project row: logo · name · High/Low potential · narrative; below it Website · X · Discord · Hướng dẫn tham gia.
       const cardHtml = (p, personal = false) => {
         const cardId = personal
           ? 'wte-personal-' + p.id
@@ -2746,9 +2746,9 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         </div>`;
       };
 
-      // Trong mỗi nhóm (user chốt 06/11): 1) high-potential lên trước, 2) narrative đang hot
-      // (top 5 Trending Narratives) lên trước, 3) thứ tự thẻ phân loại của WTE_TYPES.
-      // Bằng nhau hết thì giữ nguyên thứ tự trong KV (sort của JS là stable).
+      // Within each group (user decided 11/06): 1) high-potential first, 2) hot narratives
+      // (Trending Narratives top 5) first, 3) WTE_TYPES category order.
+      // Ties keep KV order (JS sort is stable).
       const isHigh = p => potLevel(p.potential) === 'high' ? 0 : 1;
       const isHot  = p => (p.type && topNarr.has(p.type.toLowerCase())) ? 0 : 1;
       const groups = Object.fromEntries(WTE_GROUPS.map(g => [g, []]));
@@ -2756,13 +2756,13 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       Object.values(groups).forEach(g => g.sort((a, b) =>
         (isHigh(a) - isHigh(b)) || (isHot(a) - isHot(b)) || (typeOrder(a) - typeOrder(b))));
 
-      // Learn-to-grow LÀ việc cá nhân (user chốt 08/11): nằm trong nhóm "Cá nhân", xếp TRÊN CÙNG nhóm đó.
-      // myOther = toàn bộ việc cá nhân, l2g lên đầu. (l2g public, nếu có, vẫn ở nhóm Learn-to-grow riêng.)
+      // Learn-to-grow IS personal work (user decided 11/08): inside the "Cá nhân" group, at its TOP.
+      // myOther = all personal work, l2g first. (Public l2g, if any, stays in its own Learn-to-grow group.)
       const myTasks = adminUnlocked ? (wteLang === 'EN' && personalTasksEN.length ? personalTasksEN : personalTasks) : [];
-      // Trong nhóm Cá nhân: Learn-to-grow → Work-to-earn → S → A → B → C (sort ổn định, giữ thứ tự KV trong cùng loại)
+      // In the Personal group: Learn-to-grow → Work-to-earn → S → A → B → C (stable sort, KV order within a type)
       const myOther = [...myTasks].sort((a, b) => WTE_GROUPS.indexOf(groupOf(a)) - WTE_GROUPS.indexOf(groupOf(b)));
 
-      // Nhóm "Cá nhân" nằm TRÊN cùng.
+      // The "Cá nhân" group sits on TOP.
       const personalHtml = myOther.length
         ? `<div id="wte-personal" class="wte-group">
              <div class="wte-group-label">${wteLang === 'EN' ? 'Personal' : 'Cá nhân'}</div>
@@ -2770,11 +2770,11 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
            </div>`
         : '';
 
-      // ── Checklist "Hôm nay": gộp việc ngày + việc tuần rơi vào hôm nay (l2g → cá nhân → w2e → S … C) ──
+      // ── "Hôm nay" checklist: merges daily tasks + weekly tasks due today (l2g → personal → w2e → S … C) ──
       const EN = wteLang === 'EN';
       const ordered = [...myOther, ...groups.LEARN,
                        ...WTE_GROUPS.filter(r => r !== 'LEARN').flatMap(r => groups[r])];
-      const dowToday = (wteNow().getUTCDay() + 6) % 7 + 1;   // 1 = thứ Hai … 7 = CN, theo đồng hồ đang xem
+      const dowToday = (wteNow().getUTCDay() + 6) % 7 + 1;   // 1 = Monday … 7 = Sunday, by the clock being viewed
       const todayItems = p => [['daily', 'd'], ['weekly', 'w']].flatMap(([field, s]) =>
         (p[field] || []).map((item, i) => ({ p, item, s, k: (p.id || p.name) + '#' + i, ...whenView(item, s) })))
         .filter(x => !x.days.length || x.days.includes(dowToday));
@@ -2800,14 +2800,14 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
           <div class="today-list">${rows.join('') || `<div class="today-empty">${EN ? 'Nothing yet' : 'Chưa có việc'}</div>`}</div>
         </section>`;
 
-      // ── Box "Dự án & hướng dẫn tham gia" — đầu trang, trên checklist ──
-      // Thứ tự nhóm (user chốt 08/11): Cá nhân (l2g trên cùng) → Work-to-earn → Rank S…C.
+      // ── "Hướng dẫn tham gia" box: top of page, above the checklist ──
+      // Group order (user decided 11/08): Cá nhân (l2g on top) → Work-to-earn → Rank S…C.
       const rankGroupHtml = r => `<div id="wte-rank-${r}" class="wte-group">
              <div class="wte-group-label">${groupLabel(r)}</div>
              <div class="wte-rank-group wte-rank-group--${r}">${groups[r].map(p => cardHtml(p, !!p._personal)).join('')}</div>
            </div>`;
       const groupsHtml = personalHtml + WTE_GROUPS.filter(r => groups[r].length).map(rankGroupHtml).join('');
-      // ── "Lịch hôm nay": các việc của hôm nay có giờ, xếp theo giờ. Không có thì không hiện ô. ──
+      // ── "Lịch hôm nay": today's timed tasks, sorted by time. None means no box. ──
       const sched = ordered.flatMap(todayItems).filter(x => x.time).sort((a, b) => a.time.localeCompare(b.time));
       const schedHtml = sched.length ? `<section class="sched" id="wte-sched">
           <div class="sched-head">${wteIcon('daily')}${EN ? "Today's schedule · UTC" : 'Lịch hôm nay · GMT+7'}</div>
@@ -2825,13 +2825,13 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       syncTodayRing();
     }
 
-    // Tick checklist: lưu localStorage { "YYYY-MM-DD": keys } — theo ngày ('d') / theo tuần ('w', tính từ thứ Hai),
-    // đúng đồng hồ đang xem. Giữ 2 kỳ gần nhất vì VI và EN có thể đang ở 2 ngày khác nhau. Chỉ trên máy đang dùng.
+    // Checklist ticks: localStorage { "YYYY-MM-DD": keys }, per day ('d') / per week ('w', from Monday),
+    // by the clock being viewed. Keeps the 2 latest periods since VI and EN may be on different days. This device only.
     const todayStr = () => wteNow().toISOString().slice(0, 10);
     const weekStr = () => { const d = wteNow(); d.setUTCDate(d.getUTCDate() - (d.getUTCDay() + 6) % 7); return d.toISOString().slice(0, 10); };
     const TICK = { d: ['wte-done', todayStr], w: ['wte-done-week', weekStr] };
     function readDone(key) {
-      try { const o = JSON.parse(localStorage.getItem(key) || '{}'); return o.day ? { [o.day]: o.keys } : o; }   // o.day = dạng lưu cũ
+      try { const o = JSON.parse(localStorage.getItem(key) || '{}'); return o.day ? { [o.day]: o.keys } : o; }   // o.day = old storage format
       catch { return {}; }
     }
     function loadDone(scope) {
@@ -2845,7 +2845,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       Object.keys(store).sort().slice(0, -2).forEach(old => delete store[old]);
       try { localStorage.setItem(key, JSON.stringify(store)); } catch {}
     }
-    // Lịch hôm nay: đã tick → gạch · quá giờ chưa tick → đỏ "Quá giờ" · việc có giờ kế tiếp → vàng "Sắp tới"
+    // Today's schedule: ticked → struck through · overdue unticked → red "Quá giờ" · next timed task → yellow "Sắp tới"
     function syncSchedule() {
       const box = document.getElementById('wte-sched');
       if (!box) return;
@@ -2895,15 +2895,15 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     });
 
     // ══════════════════════════════════════════════════
-    // ADMIN — task cá nhân (lưu Cloudflare KV, mở bằng mật khẩu)
-    // Mật khẩu kiểm tra ở server (functions/api/private.js), không nằm trong file này.
+    // ADMIN: personal tasks (Cloudflare KV, opened with a password)
+    // Password is checked on the server (functions/api/private.js), not in this file.
     // ══════════════════════════════════════════════════
 
     let adminPass     = sessionStorage.getItem('cvAdminPass') || '';
     let adminUnlocked = false;
     let personalTasks = [];
     let pendingDelId  = null;
-    let ptEditId      = null;   // null = form đang thêm mới · có id = đang sửa task đó
+    let ptEditId      = null;   // null = form is adding · id = editing that task
 
     const $ = id => document.getElementById(id);
     const adminBtn   = $('admin-btn');
@@ -2914,23 +2914,23 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     const ptError    = $('pt-error');
     const pdelModal  = $('pdel-modal');
 
-    // Đổ dropdown từ hằng số khai ở mục Work to Earn — KHÔNG hardcode option
-    // trong HTML, để form admin không bao giờ lệch với thang rank / thẻ đang dùng.
+    // Fill dropdowns from constants in Work to Earn; NO hardcoded options
+    // in HTML, so the admin form never drifts from the rank scale / tags in use.
     $('pt-type').innerHTML = '<option value="" disabled hidden>Chọn phân loại</option>' +
       WTE_TYPES.map(t => `<option value="${t}">${tagCase(t)}</option>`).join('');
-    // Rank bắt buộc (trừ Work-to-Earn) → KHÔNG có lựa chọn "—": dòng đầu chỉ là gợi ý "Chọn rank", không chọn được.
+    // Rank required (except Work-to-Earn) → NO "—" option: the first line is only a "Chọn rank" hint, unselectable.
     $('pt-rank').innerHTML = '<option value="" disabled hidden>Chọn rank</option>' +
       WTE_RANKS.map(r => `<option value="${r}">${RANK_LABEL[r]}</option>`).join('');
 
-    // Phân loại Work-to-Earn → nhóm $, không có rank (card cũng không hiện thẻ rank):
-    // ẩn hẳn ô Rank. Đổi sang phân loại khác thì ô hiện lại, rank đã chọn vẫn giữ nguyên trong select.
+    // Work-to-Earn category → $ group, no rank (the card shows no rank tag either):
+    // hide the Rank field. Switching category shows it again, with the selected rank kept.
     function ptSyncRank() {
       $('pt-rank-field').style.display = WTE_TYPE_GROUP[$('pt-type').value] ? 'none' : '';
     }
     $('pt-type').addEventListener('change', ptSyncRank);
-    // Learn-to-Grow là việc học của riêng anh → mặc định Personal (vẫn đổi tay được).
+    // Learn-to-Grow is the owner's own learning → default Personal (still changeable).
     $('pt-type').addEventListener('change', () => { if ($('pt-type').value === 'Learn-to-Grow') $('pt-visibility').value = 'personal'; });
-    // đổi phân loại / chọn rank → tắt lỗi "Chọn rank trước khi lưu" còn sót từ lần bấm trước
+    // category change / rank pick → clear a leftover "Chọn rank trước khi lưu" error
     ['pt-potential', 'pt-type', 'pt-rank'].forEach(id => $(id).addEventListener('change', () => { ptError.style.display = 'none'; }));
 
     async function apiPrivate(action, extra = {}) {
@@ -2951,10 +2951,10 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       adminUnlocked = on;
       adminBtn.classList.toggle('is-plus', on);
       adminBtn.title       = on ? 'Thêm task cá nhân' : 'Task cá nhân';
-      syncValAdminBtn();   // ... và tab Valuation
+      syncValAdminBtn();   // ... and the Valuation tab
     }
 
-    // Valuation: giống Work — mở khoá xong nút Admin thành [+] (mở danh sách dự án)
+    // Valuation: like Work, after unlocking the Admin button becomes [+] (opens the project list)
     function syncValAdminBtn() {
       const btn = document.getElementById('val-admin-btn');
       if (!btn) return;
@@ -2965,13 +2965,13 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
 
     function showMsg(el, text) { el.textContent = text; el.style.display = ''; }
 
-    // /api/private trả về TOÀN BỘ task (cá nhân + public) — tách ra 2 phần hiển thị:
-    // personalTasks (chỉ admin thấy) và wteData.VI (gộp chung với card public, giống hệt
-    // trước đây đọc từ Google Sheet). Đổi wteData.VI thì bản dịch EN cũ không còn đúng nữa.
+    // /api/private returns ALL tasks (personal + public), split for display:
+    // personalTasks (admin only) and wteData.VI (merged with public cards, exactly
+    // as read from Google Sheet before). Changing wteData.VI invalidates the old EN translation.
     function applyTaskList(allTasks) {
       const tasks = allTasks || [];
-      // Task cũ (thêm trước khi có field visibility) không có field này — coi như personal,
-      // đúng với hành vi gốc của chúng (trước đây mọi task trong KV đều là cá nhân).
+      // Old tasks (before the visibility field) lack it: treat as personal,
+      // matching their original behavior (every KV task used to be personal).
       personalTasks = tasks.filter(t => t.visibility !== 'public');
       wteData.VI    = tasks.filter(t => t.visibility === 'public');
       wteLoaded.VI  = true;
@@ -2986,7 +2986,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       renderWTE();
     }
 
-    // ── Mở khoá ───────────────────────────────────────
+    // ── Unlock ───────────────────────────────────────
     async function tryUnlock() {
       const pass = adminInput.value.trim();
       if (!pass) return;
@@ -3000,7 +3000,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         showMsg(adminError, r.status === 401 ? 'Sai mật khẩu' : (r.error || 'Không kết nối được'));
         return;
       }
-      // Máy đã nhớ giữ token trong cookie HttpOnly nên không cần cất mật khẩu vào storage
+      // Remembered machines keep the token in an HttpOnly cookie, so no password in storage
       if (remember) {
         sessionStorage.removeItem('cvAdminPass');
         localStorage.setItem('cvAdminDevice', '1');
@@ -3012,8 +3012,8 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       await refreshTasksView(r.tasks);
     }
 
-    // Valuation dùng CHUNG mật khẩu với Work (1 ADMIN_PASS duy nhất).
-    // Mở khoá ở tab nào thì cả 3 tab cùng mở — xem setAdminUnlocked().
+    // Valuation SHARES the password with Work (one ADMIN_PASS).
+    // Unlocking on any tab unlocks all 3, see setAdminUnlocked().
     $('val-admin-btn').addEventListener('click', () => {
       if (adminUnlocked) { openValList(); return; }
       adminInput.value = '';
@@ -3033,8 +3033,8 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     $('admin-cancel').addEventListener('click', () => adminModal.classList.remove('open'));
     adminInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
 
-    // ── Form thêm / sửa task ──────────────────────────
-    // 3 nhóm nhiều dòng: mỗi dòng = việc + link, bấm + để thêm dòng
+    // ── Add / edit task form ──────────────────────────
+    // 3 multi-row groups: each row = task + link, press + to add a row
     const PT_GROUPS = { gs: 'Việc cần làm để bắt đầu', daily: 'Việc làm mỗi ngày', weekly: 'Việc làm mỗi tuần' };
 
     // Optional schedule: multiple days + typed 24h time, on the clock of the current language.
@@ -3084,7 +3084,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       return row;
     }
 
-    // Dòng trống bị bỏ qua — chỉ gửi lên dòng có nội dung
+    // Blank rows are skipped; only rows with content are sent
     const ptItems = key => [...$('pt-' + key + '-items').querySelectorAll('.pt-item')]
       .map(r => {
         const it = { text: r.querySelector('.pt-item-text').value, link: r.querySelector('.pt-item-link').value };
@@ -3104,7 +3104,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       });
     });
 
-    // Đổ nội dung task có sẵn vào 1 nhóm; không có dòng nào thì để 1 dòng trống
+    // Fill an existing task into a group; with no rows, keep 1 blank row
     function ptFillRows(key, items) {
       const wrap = $('pt-' + key + '-items');
       wrap.innerHTML = '';
@@ -3121,7 +3121,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       if (!wrap.children.length) ptAddRow(key);
     }
 
-    // task = undefined → thêm mới · task = object → sửa task đó
+    // task = undefined → add · task = object → edit that task
     function openPtaskForm(task) {
       ptEditId = task ? task.id : null;
       $('pt-name').value      = task?.name || '';
@@ -3129,7 +3129,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       $('pt-discord').value   = task?.discord || '';
       $('pt-website').value   = task?.website || '';
       $('pt-potential').value = potLevel(task?.potential);
-      $('pt-rank').value       = task?.rank === 'SS' ? 'S' : (task?.rank || '');   // rank cũ SS → S (như groupOf)
+      $('pt-rank').value       = task?.rank === 'SS' ? 'S' : (task?.rank || '');   // old rank SS → S (like groupOf)
       $('pt-type').value      = task?.type || '';
       ptSyncRank();
       $('pt-visibility').value = task?.visibility || 'personal';
@@ -3141,9 +3141,9 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       $('pt-delete').style.display = task ? '' : 'none';
       ptError.style.display = 'none';
       ptaskModal.classList.add('open');
-      // focus ngay, KHÔNG setTimeout: popup đã display:flex ở dòng trên rồi.
-      // Bản cũ hoãn 50ms nên nếu gõ sớm hơn thì focus nhảy về ô Tên giữa chừng,
-      // chữ đang gõ ở ô khác rơi hết vào ô Tên.
+      // focus immediately, NO setTimeout: the popup is already display:flex above.
+      // The old 50 ms delay made focus jump to the Name field mid-typing,
+      // sending text typed elsewhere into Name.
       $('pt-name').focus();
     }
 
@@ -3163,7 +3163,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         website:    $('pt-website').value,
         potential:  $('pt-potential').value,
         type:       $('pt-type').value,
-        rank:       income ? '' : $('pt-rank').value,   // nhóm $ không có rank
+        rank:       income ? '' : $('pt-rank').value,   // $ group has no rank
         visibility: $('pt-visibility').value,
         getStarted: ptItems('gs'),
         daily:      ptItems('daily'),
@@ -3182,16 +3182,16 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     $('pt-add').addEventListener('click', submitPtask);
     $('pt-cancel').addEventListener('click', () => ptaskModal.classList.remove('open'));
 
-    // ── Bấm ⋮ trên card (cá nhân hoặc public) → mở form sửa ─
+    // ── Tap ⋮ on a card (personal or public) → open the edit form ─
     document.getElementById('wte-cards').addEventListener('click', e => {
       const btn = e.target.closest('.wte-opt');
       if (!btn) return;
-      e.preventDefault();   // nút nằm trong <summary>: bấm sửa không làm ô gập/mở
+      e.preventDefault();   // the button is inside <summary>: tapping edit doesn't toggle the box
       const task = [...personalTasks, ...wteData.VI].find(t => t.id === btn.dataset.id);
       if (task) openPtaskForm(task);
     });
 
-    // ── Xoá: chữ đỏ trong form sửa → hỏi xác nhận ─────
+    // ── Delete: red text in the edit form → confirm ─────
     $('pt-delete').addEventListener('click', () => {
       if (!ptEditId) return;
       pendingDelId = ptEditId;
@@ -3207,24 +3207,24 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       $('pdel-ok').disabled = false;
       pendingDelId = null;
       pdelModal.classList.remove('open');
-      ptaskModal.classList.remove('open');       // xoá xong thì đóng luôn form sửa
+      ptaskModal.classList.remove('open');       // after deleting, close the edit form too
       if (r.ok) await refreshTasksView(r.tasks);
     });
 
-    // Bấm ra ngoài popup = đóng. TRỪ form thêm task (ptaskModal) — bấm nhầm ra ngoài
-    // là mất hết nội dung đang gõ, nên chỉ nút Cancel mới đóng được.
+    // Clicking outside the popup closes it, EXCEPT the add-task form (ptaskModal): a stray click
+    // would lose all typed content, so only Cancel closes it.
     [adminModal, pdelModal].forEach(m => {
       m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
     });
 
-    // Đã mở khoá ở phiên này hoặc máy đã nhớ → tự lấy lại task, không phải gõ mật khẩu lần nữa.
-    // Khách thường không có cờ cvAdminDevice nên không gọi /api/private.
+    // Already unlocked this session or remembered machine → reload tasks without retyping the password.
+    // Ordinary visitors have no cvAdminDevice flag, so /api/private isn't called.
     (async () => {
       if (!adminPass && !localStorage.getItem('cvAdminDevice')) return;
       const r = await apiPrivate('list');
       if (r.ok) { setAdminUnlocked(true); await refreshTasksView(r.tasks); return; }
       adminPass = ''; sessionStorage.removeItem('cvAdminPass');
-      if (r.status === 401) localStorage.removeItem('cvAdminDevice');   // lỗi mạng thì giữ cờ, lần sau thử lại
+      if (r.status === 401) localStorage.removeItem('cvAdminDevice');   // on network error keep the flag, retry next time
     })();
 
     // ── Language toggle (EN|VI) ────────────────────────
@@ -3241,7 +3241,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     workLanguageSwitch.addEventListener('click', () => switchLang(wteLang === 'VI' ? 'EN' : 'VI'));
 
     // ── Init ─────────────────────────────────────────
-    routeFromPath(); // tất cả biến đã khai báo xong, an toàn để gọi
+    routeFromPath(); // all variables declared, safe to call
     (async () => {
       await Promise.all([fetchPublicData(), fetchWTE()]);
       renderAll();
@@ -3249,7 +3249,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       translateToEN();
     })();
 
-    // ── Nút mèo (Agent) — mới có vỏ, bấm vào chỉ báo là chưa xong ──
+    // ── Cat button (Agent): shell only, click just says it isn't ready ──
     (function () {
       const btn = document.getElementById('cat-btn');
       const hint = document.getElementById('cat-hint');
@@ -3262,17 +3262,17 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       });
     })();
 
-    // ══ ADMIN VALUATION — danh sách + form sửa dự án ═══════════════
-    // Dùng CHUNG mật khẩu với /api/private (1 ADMIN_PASS duy nhất).
+    // ══ ADMIN VALUATION: list + project edit form ═══════════════
+    // SHARES the password with /api/private (one ADMIN_PASS).
     const VAL_NARRATIVES = ['stablechain','layer-1','infra','ai','layer-2','prediction',
       'trading','bitcoin','payment','defi','identity','privacy','game','social','desci','rwa','zk'];
     const VF = ['ticker','tgeDate','narrative','fundraising','vcAlloc','totalSupply',
                 'priceTGE','cgId'];
     let vfFetchController = null, vfFetchEpoch = 0;
-    let vfEditing = null;   // ticker đang sửa; null = thêm mới
+    let vfEditing = null;   // ticker being edited; null = add
 
-    // 2 ô nhập theo lối viết tắt: gõ "6.8M" thay vì "6800000", "10B" thay vì 10 số 0.
-    // Đọc bằng parseSupply() có sẵn (đã xử lý K/M/B/T + dấu phân cách nghìn kiểu Việt/Mỹ).
+    // 2 inputs accept shorthand: type "6.8M" instead of "6800000", "10B" instead of 10 zeros.
+    // Read by the existing parseSupply() (handles K/M/B/T + Vietnamese/US thousands separators).
     const VF_SHORT = ['fundraising', 'totalSupply'];
     function fmtShort(n) {
       if (!(n > 0)) return '';
@@ -3327,7 +3327,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         document.getElementById('vf-' + k).value =
           (VF_SHORT.includes(k) && v !== '') ? fmtShort(v) : v;
       });
-      document.getElementById('vf-ticker').disabled = !!p;   // ticker là khoá chính, sửa = tạo bản ghi lạc
+      document.getElementById('vf-ticker').disabled = !!p;   // ticker is the primary key; editing would create a stray record
       const del = document.getElementById('vf-delete');
       del.style.display = p ? '' : 'none';
       del.classList.remove('confirm');
@@ -3398,7 +3398,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       VF.forEach(k => {
         const raw = document.getElementById('vf-' + k).value.trim();
         if (!VF_SHORT.includes(k) || !raw) { project[k] = raw; return; }
-        const n = parseSupply(raw);          // hiểu 6.8M · 10B · số thường
+        const n = parseSupply(raw);          // understands 6.8M · 10B · plain numbers
         if (!isFinite(n)) { badShort = raw; project[k] = ''; return; }
         project[k] = n;
       });
@@ -3426,7 +3426,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     async function deleteValProject() {
       if (!vfEditing) return;
       const btn = document.getElementById('vf-delete');
-      if (!vfDelArmed) {                 // xoá không hoàn tác được → hỏi lại một nhịp
+      if (!vfDelArmed) {                 // delete can't be undone → ask once more
         vfDelArmed = true;
         btn.classList.add('confirm');
         btn.textContent = 'Chắc chưa?';
@@ -3467,7 +3467,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     });
     document.getElementById('vf-delete').addEventListener('click', deleteValProject);
 
-    // Bấm thẳng vào một dòng trong bảng → mở form sửa (chỉ khi đã mở khoá)
+    // Click a table row → open the edit form (only when unlocked)
     document.getElementById('tge-tbody').addEventListener('click', e => {
       if (!adminUnlocked) return;
       const tr = e.target.closest('tr');

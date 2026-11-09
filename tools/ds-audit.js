@@ -1,9 +1,9 @@
-// Gác cổng design system: đo computed style MỌI phần tử hiển thị ở 3 tab × desktop 1440 / mobile 390 (+ 3 popup Valuation),
-// so với DESIGN_SYSTEM.md: CV spacious (nhịp 8); Valuation/Work/popup compact (nhịp 4, radius 8/16, ô nhập 40).
-//   node tools/ds-audit.js http://127.0.0.1:8787      (server local có SPA fallback + /api proxy)
+// Design system gate: measures computed style of EVERY visible element across 3 tabs × desktop 1440 / mobile 390 (+ 3 Valuation popups),
+// against DESIGN_SYSTEM.md: CV spacious (rhythm 8); Valuation/Work/popup compact (rhythm 4, radius 8/16, input 40).
+//   node tools/ds-audit.js http://127.0.0.1:8787      (local server with SPA fallback + /api proxy)
 //   node tools/ds-audit.js https://0xhieu.xyz
-// Kết quả đúng: TỔNG 0 (margin căn giữa tự động đã được bỏ qua). Mọi dòng in ra = lỗi phải sửa.
-// Chưa đo được: pseudo-element (::before/::after) và trạng thái hover — soát tay.
+// Correct result: TOTAL 0 (auto-centering margins already ignored). Every printed line = a bug to fix.
+// Not measurable: pseudo-elements (::before/::after) and hover states; check by hand.
 const { spawn } = require('child_process');
 const fs = require('fs'), os = require('os'), path = require('path');
 const BASE = process.argv[2] || 'http://127.0.0.1:8787';
@@ -13,7 +13,7 @@ const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'audit-'));
 const chrome = spawn(CHROME, ['--headless=new', '--disable-gpu', '--no-sandbox', '--hide-scrollbars', `--remote-debugging-port=${PORT}`, `--user-data-dir=${profile}`, 'about:blank']);
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-// Chạy trong trang: trả về danh sách vi phạm
+// Runs in the page: returns the violation list
 const PROBE = `(() => {
   const ALLOWED_COLORS = {
     '0,0,0':'ink','255,255,255':'ground','82,82,82':'grey/muted','229,229,229':'surface','163,163,163':'line',

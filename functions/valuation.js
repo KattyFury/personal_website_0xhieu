@@ -1,12 +1,12 @@
-// /valuation — điền sẵn số vào HTML để AI/bot tải trang về là đọc được ngay
-// (bình thường bảng + box "Recent TGE multiples" do JS vẽ sau khi tải → AI chỉ thấy "—").
+// /valuation: pre-fill numbers into HTML so AI/bots reading the page get them immediately
+// (normally the table + "Recent TGE multiples" box are drawn by JS after load, so AI sees only "—").
 //
-// Chỉ ĐỌC KV (val-projects + val-prices), không ghi gì, không đổi giao diện:
-// trình duyệt vẫn chạy JS như cũ và vẽ đè lên đúng các ô này bằng cùng con số.
+// Only READS KV (val-projects + val-prices), writes nothing, doesn't change the UI:
+// the browser still runs JS and redraws these same cells with the same numbers.
 //
-// ⚠️ Công thức dưới đây CHÉP từ index.html (multiple · xMult · renderAnalysis · renderTable).
-// Sửa công thức ở index.html thì phải sửa ở đây theo, không thì AI đọc ra số khác trang.
-// Số in theo kiểu EN (dấu chấm thập phân) vì nhãn tĩnh trong HTML là tiếng Anh.
+// ⚠️ The formulas below are COPIED from index.html (multiple · xMult · renderAnalysis · renderTable).
+// Change a formula in index.html and you must change it here, or AI reads different numbers from the page.
+// Numbers print in EN style (decimal point) because the static HTML labels are English.
 
 const readJson = async (kv, key, fallback) => {
   try { return JSON.parse(await kv.get(key) || JSON.stringify(fallback)); } catch { return fallback; }
@@ -36,15 +36,15 @@ function compute(projects, prices) {
                athWick: !!px.athWick, atl: px.atl || 0, currentPrice: px.atm || 0 };
     });
 
-  // Market condition — 6 deal TGE gần nhất (gộp mọi nhóm)
+  // Market condition: 6 latest TGE deals (all groups combined)
   const newest = [...entries].sort((a, b) => new Date(b.tgeDate) - new Date(a.tgeDate));
   const recent6 = newest.map(e => multiple(e)).filter(m => isFinite(m) && m > 0).slice(0, 6);
   const med = median(recent6);
   const condition = recent6.length ? (med >= 13 ? 'Strong' : med >= 4.3 ? 'Normal' : 'Weak') : '—';
 
-  // Phạt FDV cao theo điều kiện hiện tại (khớp fdvPenalty() ở index.html): mỗi TGE gắn điều kiện
-  // = median 6 TGE ngay trước; nhóm Weak riêng, Normal+Strong gộp; mỗi dự án ≥300M chia median dự án
-  // nhỏ cùng điều kiện, k = median các tỉ số; cần ≥ 5 dự án lớn
+  // High-FDV penalty by current conditions (matches fdvPenalty() in index.html): each TGE gets a condition
+  // = median of the previous 6 TGEs; Weak separate, Normal+Strong combined; each ≥300M project divided by the small-project
+  // median of the same condition, k = median of the ratios; needs ≥ 5 large projects
   const SPLIT = 300e6;
   const lvlOf = m => m >= 13 ? 'Strong' : m >= 4.3 ? 'Normal' : 'Weak';
   const grp = condition === 'Weak' ? ['Weak'] : ['Normal', 'Strong'];
@@ -58,7 +58,7 @@ function compute(projects, prices) {
   const k = ratios.length >= 5 ? median(ratios) : null;
   const penalty = k ? `×${k.toFixed(2)}` : '—';
 
-  // Hệ số TGE — 6 deal gần nhất (deal thứ 6 cách >60 ngày thì lấy 4), dự án FDV cao chia k
+  // TGE coefficient: 6 latest deals (if the 6th is >60 days old use 4), high-FDV projects divided by k
   const norm = newest.map(e => ({ m: k && vcFDVof(e) >= SPLIT ? multiple(e) / k : multiple(e), date: e.tgeDate }))
     .filter(x => isFinite(x.m) && x.m > 0);
   let n = Math.min(6, norm.length);
@@ -66,14 +66,14 @@ function compute(projects, prices) {
   const coefM = norm.slice(0, n).map(x => x.m);
   const coef = coefM.length ? `×${median(coefM).toFixed(2)}` : '—';
 
-  // Bảng — cũ → mới, đúng cột như trang
+  // Table: old → new, same columns as the page
   const rows = [...entries].sort((a, b) => new Date(a.tgeDate) - new Date(b.tgeDate)).map(e => {
     const athTooEarly = e.athWick || !e.athDate || !e.tgeDate ||
       (new Date(e.athDate) - new Date(e.tgeDate)) <= 7 * 86400000;
     const xATH = athTooEarly ? 0 : xMult(e.ath, e);
     const xPre = e.preAth ? xMult(e.preAth, e) : null;
     const xTGE = multiple(e), xATM = xMult(e.currentPrice, e);
-    // ATH tuần đầu vẫn hiện ×TGE → ×ATH: số đen, chỉ (×N) cam qua CSS chung.
+    // First-week ATH still shows ×TGE → ×ATH: black numbers, only (×N) orange via shared CSS.
     const athEarly = athTooEarly && e.ath > 0 && (e.athWick || (e.athDate && e.tgeDate));
     const athGain = (start, end) => start > 0 && end > 0 && Number.isFinite(end / start)
       ? `<span class="ath-gain">(×${fmtMult(end / start)})</span>` : '';
@@ -110,7 +110,7 @@ export async function onRequestGet({ request, env }) {
     ]);
     data = compute(projects, prices);
   } catch {
-    return page;   // lỗi thì trả trang gốc, JS tự vẽ như trước
+    return page;   // on error return the original page; JS draws as before
   }
 
   return new HTMLRewriter()

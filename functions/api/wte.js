@@ -1,7 +1,7 @@
-// Đọc danh sách project công khai của Airdrop → Work to Earn.
-// Dữ liệu nằm CHUNG kho KV với task cá nhân (xem functions/api/private.js) —
-// mỗi task có field visibility: "public" | "personal", endpoint này chỉ trả về "public".
-// Không cần mật khẩu vì đây vốn là data công khai (trước đây đọc từ Google Sheet).
+// Reads the public project list of Airdrop → Work to Earn.
+// Data shares the KV store with personal tasks (see functions/api/private.js);
+// each task has visibility: "public" | "personal", and this endpoint returns only "public".
+// No password since this is public data (previously read from Google Sheet).
 
 const KEY = 'personal-tasks';
 

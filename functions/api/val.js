@@ -1,21 +1,21 @@
-// Kho dữ liệu tab Valuation — thay hẳn Google Sheet (từ 2026-09-22).
+// Valuation tab data store, fully replacing Google Sheet (since 2026-09-22).
 //
-//   GET  /api/val   → công khai, KHÔNG cần mật khẩu (data để hiển thị cho khách)
-//   POST /api/val   → thêm / sửa / xoá dự án, BẮT BUỘC mật khẩu, kiểm tra Ở SERVER
-//                     action 'prices' dành cho job lấy giá hằng ngày (cũng cần mật khẩu)
+//   GET  /api/val   → public, NO password (data for visitors)
+//   POST /api/val   → add / edit / delete projects, password REQUIRED, checked ON THE SERVER
+//                     action 'prices' is for the daily price job (also needs the password)
 //
-//   KV binding : WORK         (dùng CHUNG kho với Work to Earn + AI, chỉ khác key)
-//   Secret     : ADMIN_PASS   (dùng CHUNG 1 mật khẩu với /api/private và /api/ai)
+//   KV binding : WORK         (SHARED store with Work to Earn + AI, only keys differ)
+//   Secret     : ADMIN_PASS   (SAME password as /api/private and /api/ai)
 //
-// HAI KEY TÁCH RIÊNG LÀ CÓ CHỦ ĐÍCH:
-//   val-projects → data nguồn, CHỈ admin ghi
-//   val-prices   → giá, CHỈ job ghi
-// Tách ra thì admin sửa dự án và job ghi giá không bao giờ đụng cùng một key,
-// nên không có chuyện bên này ghi đè mất thay đổi của bên kia.
+// TWO SEPARATE KEYS ON PURPOSE:
+//   val-projects → source data, admin writes ONLY
+//   val-prices   → prices, job writes ONLY
+// Separated, admin edits and the price job never touch the same key,
+// so neither side can overwrite the other's changes.
 //
-// KHÔNG lưu bất kỳ bội số nào (×TGE, ×ATL, ×ATH, ×ATM) — tất cả tính ở client lúc
-// render, một nguồn duy nhất. Bản cũ từng lưu sẵn ×TGE trong Sheet rồi dùng lẫn lộn
-// với số client tự tính, hai chỗ lệch nhau mà không ai biết.
+// NO multiples are stored (×TGE, ×ATL, ×ATH, ×ATM): all computed by the client at
+// render, one source. An older version stored ×TGE in the Sheet and mixed it
+// with client-computed numbers; the two silently diverged.
 
 import { adminVia } from '../_lib/admin-auth.mjs';
 
@@ -29,8 +29,8 @@ const json = (obj, status = 200) => new Response(JSON.stringify(obj), {
 
 const clean = (v, max) => String(v ?? '').replace(/[<>]/g, '').trim().slice(0, max);
 
-// 17 narrative đã chốt. Giá trị lạ → rơi về chuỗi rỗng để admin thấy mà sửa,
-// KHÔNG tự nhét vào một nhóm bừa (nhét bừa là làm lệch median của box Narrative).
+// 17 settled narratives. Unknown values → empty string so the admin sees and fixes them,
+// NEVER forced into an arbitrary group (that would skew the Narrative box median).
 const NARRATIVES = [
   'stablechain', 'layer-1', 'infra', 'ai', 'layer-2',
   'prediction', 'trading', 'bitcoin', 'payment', 'defi',
@@ -48,9 +48,9 @@ const num = v => {
 
 const cleanDate = v => /^\d{4}-\d{2}-\d{2}$/.test(String(v ?? '')) ? String(v) : '';
 
-// 7 trường BẮT BUỘC: thiếu một trong số này thì cả 4 cột bội số của dòng
-// đó ra gạch — dự án nằm trong bảng mà không nói gì, nên chặn ngay từ lúc lưu.
-// cgId và binanceSymbol CHO PHÉP trống: để nhập trước được dự án chưa lên sàn.
+// 7 REQUIRED fields: missing any leaves all 4 multiple columns of that row
+// as dashes, a project in the table saying nothing, so it's blocked at save.
+// cgId and binanceSymbol MAY be empty, to enter projects not yet listed.
 function sanitize(p) {
   return {
     ticker:        clean(p.ticker, 20).replace(/^\$/, '').toUpperCase(),
@@ -91,18 +91,18 @@ export async function onRequestPost({ request, env }) {
   try { body = await request.json(); } catch { return json({ ok: false, error: 'bad-json' }, 400); }
 
   if (!await adminVia(request, body, env)) {
-    await new Promise(r => setTimeout(r, 400));   // làm chậm việc dò mật khẩu hàng loạt
+    await new Promise(r => setTimeout(r, 400));   // slow down bulk password guessing
     return json({ ok: false, error: 'wrong-pass' }, 401);
   }
 
   const kv = env.WORK;
 
-  // Job lấy giá hằng ngày ghi vào key RIÊNG, không đụng data nhập tay.
+  // The daily price job writes to a SEPARATE key, leaving manual data alone.
   //
-  // ⚠️ `priceTGE` KHÔNG nằm trong danh sách này và không bao giờ được nằm:
-  // giá lúc TGE là dữ kiện lịch sử, chỉ có MỘT giá trị duy nhất, do chủ site
-  // nhập tay và cất ở val-projects. Job chỉ lấy thứ thay đổi theo ngày.
-  // Lọc theo whitelist để một job viết ẩu cũng không ghi đè được data nhập tay.
+  // ⚠️ `priceTGE` is NOT in this list and must never be:
+  // the TGE price is a historical fact with ONE value, entered by the site owner
+  // and stored in val-projects. The job only takes what changes daily.
+  // Whitelist filter so even a sloppy job can't overwrite manual data.
   const PRICE_FIELDS = ['atm', 'ath', 'athDate', 'atl', 'atlDate',
                        'preAth', 'preAthDate', 'athWick', 'updatedAt'];
   if (body.action === 'prices') {
@@ -164,7 +164,7 @@ export async function onRequestPost({ request, env }) {
     return json({ ok: true, projects: projects.filter(x => x.ticker !== t) });
   }
 
-  // Nhập hàng loạt — chỉ dùng cho lần chuyển data từ Google Sheet sang KV
+  // Bulk import, only for the Google Sheet to KV migration
   if (body.action === 'import') {
     if (!Array.isArray(body.projects)) return json({ ok: false, error: 'bad-projects' }, 400);
     const list = body.projects.map(sanitize);
