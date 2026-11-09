@@ -1,135 +1,32 @@
 # CLAUDE.md
 
-> How to work with me. Read this before every session.
+Personal site 0xhieu.xyz (repo `website_personal_0xhieu`). Current state: `HANDOFF.md`. Design rules: `DESIGN_SYSTEM.md`.
 
----
-
-## Who I Am
-
-**Châm ngôn / positioning (chốt 2026-08-18) — dùng NGUYÊN VĂN, KHÔNG dịch, KHÔNG viết lại:**
+## Positioning (use verbatim, never translate or rewrite)
 
 > ### Sharing POVs on Crypto and AI
 
-Niềm tin đứng sau câu này: **AI là tương lai, crypto là tiền tệ của tương lai.**
+Applies to `.hero-tagline`, meta description, `og:title` / `og:description` / `og:image:alt`, JSON-LD `description`, `og.png`, and any other profile. The CV tab and meta tags are always English. Vietnamese appears only on tabs with a VI/EN toggle (Valuation, Work).
 
-Mọi chỗ mô tả tôi ra bên ngoài phải dùng đúng câu trên: `.hero-tagline` của tab CV, `meta description`, `og:title` / `og:description` / `og:image:alt`, JSON-LD `description`, ảnh share `og.png`, và bất kỳ repo / profile nào khác của tôi.
+## Owner
 
-> ⚠️ **Tab CV là tiếng Anh, không có ngoại lệ.** Tiếng Việt chỉ được xuất hiện ở các tab có toggle VI/EN (Valuation · Work) và trong tài liệu nội bộ (`CLAUDE.md`, `HANDOFF.md`, comment code). Viết tagline / mô tả tiếng Việt vào phần CV hay thẻ meta = **sai**, đã xảy ra 2026-08-17 và phải sửa lại.
+Vietnamese vibecoder, not a programmer; builds by handing off to AI. Learns by building, decides fast, pushes back fast. Other projects (ezwallet, bots) live in separate repos: never pull their assets, code or secrets here.
 
-I'm a **Vietnamese vibecoder** — I have ideas, not a programming background. I build products by handing off to AI, not by writing every line myself.
+## Stack
 
-**How I learn and work:**
-- I learn by **actually building**, not from books or tutorials.
-- I want to **understand while building**, not sit through a lecture first.
-- I'm **decisive and push back fast** when output is off — don't guess and make me review later.
-- I **plan carefully in Claude Desktop**, then hand off to Claude Code to build step by step.
+- `index.html`: HTML + component CSS + inline JS. `design-tokens.css` is generated from `repo_personal_design`.
+- Cloudflare Pages project `0xhieu-xyz`, auto-deploys `main`. No smart contracts.
+- Backend is only the Pages Functions in `functions/api/`, sharing KV binding `WORK` and `ADMIN_PASS` (Cloudflare Dashboard, never in the repo). Reads are public; writes need the password or a remembered-device token.
+- `bot/`: Node job in Docker on the VPS (`/opt/val-price-bot`), writes daily prices to KV.
+- Calculation logic lives in `index.html` JS; KV keeps raw data only.
+- A new API key or backend for a public feature is almost certainly a misunderstanding.
+- Look at real data before writing code that reads it (`curl https://0xhieu.xyz/api/val`).
 
-**Background:** crypto research (VHG, 2023-2024). Now I do content + community at [0xhieu.xyz](https://0xhieu.xyz).
+## Working with me
 
-> Tôi có nhiều dự án khác (ví dụ ví **ezwallet**, các bot airdrop) nằm ở **repo riêng** dưới `D:\Files\Claude\`, **stack khác** (Solidity / Cloudflare Workers / bot Node). **Những thứ đó KHÔNG liên quan tới `cv`** — đừng lôi asset, code, hay secret của chúng vào đây.
-
----
-
-## This Project — `cv` (0xhieu.xyz)
-
-**Bản chất:** website cá nhân (`index.html` — HTML + component CSS + JS inline), dùng thêm **`design-tokens.css` xuất từ repo `repo_personal_design` v3** + một ít backend Cloudflare để lưu data. Đồng bộ bằng `python tools/sync-design-system.py`, kiểm bằng `python tools/check-design-system.py`. **KHÔNG smart contract.** Host trên **Cloudflare Pages** (project **`0xhieu-xyz`**, auto-deploy từ `main`).
-
-- **Backend DUY NHẤT** = 3 Pages Function ở `functions/api/` (`val.js` · `wte.js` · `private.js`), chung KV binding `WORK` và chung 1 mật khẩu `ADMIN_PASS` (đặt ở Cloudflare Dashboard, **không nằm trong repo**). Đọc công khai không cần mật khẩu; ghi thì cần mật khẩu hoặc token của máy đã "Nhớ máy này" (xem `HANDOFF.md`).
-- **`bot/`** — job Node chạy Docker trên VPS (`/opt/val-price-bot`), lấy giá hằng ngày (CoinGecko + Binance) ghi vào KV cho tab Valuation. Agent (nút mèo) sau này cũng đặt ở repo này.
-- **Data nằm trong Cloudflare KV**, sửa qua popup Admin trên site. **Không còn đọc Google Sheet** (từ 2026-09-22).
-- Nguồn ngoài gọi từ client, không key: **Google Translate** (gtx, dịch VI→EN) · **unavatar.io** (logo card Work).
-- **Logic tính toán** (bội số, Market Condition, Predict FDV…) nằm trong JS của `index.html`. KV chỉ giữ data gốc, **không lưu số tính sẵn**.
-- **Local:** `D:\Files\Claude\Big projects\cv` · **GitHub:** `KattyFury/website_personal_0xhieu` (đổi tên từ `cv` 2026-10-05)
-- Trạng thái chi tiết: **`HANDOFF.md`**. Luật thiết kế: **`DESIGN_SYSTEM.md`**.
-
-> ⚠️ Cần thêm API key / backend mới cho phần **công khai** → gần như chắc chắn là hiểu sai. Mọi thứ khách xem đều đọc qua 3 Function có sẵn.
-
-> ⚠️ **Xem data thật trước khi viết code đọc nó** (`curl https://0xhieu.xyz/api/val` …). Đừng đoán tên/định dạng trường.
-
----
-
-## How to Talk to Me
-
-- Respond in **Vietnamese**. Use English for code, technical terms, and proper nouns.
-- **No filler**: skip "Great question!", "Sure!", "Certainly!".
-- **Answer directly**. Short task = short answer.
-- **Don't dump theory** — build first, explain when needed.
-- **Don't assume I know jargon** — explain inline when using technical terms.
-- **Multiple approaches → show options, don't pick silently.**
-- **Not sure → say so, don't guess.**
-
----
-
-## How to Write Code
-
-- **Think before coding**: state assumptions before writing the first line.
-- **Stay in scope**: I asked to fix one function, fix one function. Don't touch other files.
-- **Ask before**: big refactors, architecture changes, anything touching >3 files.
-- **Simplicity first**: if 200 lines could be 50, rewrite it. No "flexibility" or "future-proofing" I didn't ask for.
-- **Summarize after every edit**: what changed, why.
-- **Loop until verified**: don't stop at "it should work" — verify it actually works (kéo data thật, mở trang xem).
-
----
-
-## When Editing Existing Code
-
-- **Touch only what you must**: don't "improve" adjacent code, comments, formatting.
-- **Don't refactor what isn't broken**: match existing style even if you'd do it differently.
-- **See unrelated dead code**: mention it, don't delete it.
-- **Clean up your own orphans**: imports / variables / functions made unused by YOUR changes → remove them.
-- **The test**: every changed line must trace back to my actual request.
-
----
-
-## My Workflow
-
-I work in this order. Don't skip steps:
-
-1. **Plan in Claude Desktop** — brainstorm, design, write spec
-2. **Generate spec file** — detailed `.md` for handoff
-3. **Hand off to Claude Code** — implement step by step, don't jump ahead
-
-When I'm in **planning phase**, don't rush to code. When I have a spec, don't re-design.
-
-**Sync:** mọi project có remote GitHub. Xong việc thì `git push` lên `main`. (cv không còn secret nào để lo commit nhầm.)
-
----
-
-## Absolute DON'Ts
-
-- ❌ Pick an approach silently when multiple options exist — present them and ask
-- ❌ Touch files unrelated to the request
-- ❌ Refactor code that's working fine
-- ❌ Delete dead code unless asked
-- ❌ Push to prod, drop databases, run irreversible commands without explicit confirmation
-- ❌ Lôi asset / code / secret của dự án khác (ezwallet, bot...) vào cv
-- ❌ Thêm backend / smart contract / API key ngoài 3 Function có sẵn
-- ❌ Viết code đọc data mà chưa xem data thật
-- ❌ Dump theory when I need to build
-- ❌ Assume I know technical terms
-- ❌ Stop at "it should work" — verify
-
----
-
-## Hard Decisions → Think Deeply
-
-For architecture choices, tradeoffs, or major decisions → use Extended Thinking. Don't propose hastily.
-
----
-
-## Required Process — HANDOFF.md
-
-Giữ `HANDOFF.md` ở root luôn phản ánh **đúng trạng thái hiện tại**: stack, data flow, decisions log, failed approaches. **Cập nhật sau mỗi session, xoá phần đã lỗi thời** — đừng để tồn đọng trạng thái cũ.
-
-- **Decisions Log** — `- [date]: [decision] — reason: [why]`
-- **Failed Approaches** — `- [date]: Tried [approach] → failed because [reason] → switched to [alternative]`
-
----
-
-## How to Know You're Doing It Right
-
-- Diffs contain only what I requested
-- No surprise refactors
-- Clarifying questions come **before** implementation, not after mistakes
-- No re-suggesting decisions already made
-- Code is simple the first time, no rewrite needed
+- Reply in English, short, no filler. Explain jargon inline. Multiple approaches: show options. Not sure: say so.
+- State assumptions first. Stay in scope; every changed line traces to the request. Don't refactor working code or delete unrelated dead code; remove orphans you create.
+- Ask before big refactors or architecture changes. Simplest code first.
+- Verify for real (real data, open the page). When I ask for a change, ship it and QA production; don't ask me to review a preview unless I ask for one.
+- New layout or design directions: show options first.
+- No secrets in the repo. Keep `HANDOFF.md` current after each session and delete what is stale.

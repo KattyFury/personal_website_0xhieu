@@ -605,18 +605,6 @@
     .dt-link .wte-ico { width: 16px; height: 16px; }
 
     /* Box "Dự án & hướng dẫn tham gia" (đầu trang Work): 1 ô trắng, mỗi dự án 1 hàng gập/mở */
-    .pj-box { border-radius: var(--tile-r); background: var(--tile); }
-    .pj-head { padding: 16px; list-style: none; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-    .pj-head::-webkit-details-marker { display: none; }
-    .pj-head::after {
-      content: ''; flex: none; width: 9px; height: 9px; margin: 0 6px 4px 0;
-      border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: rotate(45deg); transition: transform .15s;
-    }
-    .pj-box[open] > .pj-head::after { margin: 4px 6px 0 0; transform: rotate(-135deg); }
-    .pj-title { font-size: var(--ds-type-header-size); line-height: var(--ds-type-header-line); font-weight: 600; letter-spacing: var(--ds-type-header-tracking); flex: 1; min-width: 0; color: var(--ink); }
-    .pj-sub { font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking); flex: none; min-width: 28px; height: 24px; padding: 0 8px; border-radius: 9999px; display: grid; place-items: center; background: var(--canvas); color: var(--ink); }
-    .pj-body { padding: 0 16px 4px; }
-    .pj-body > .wte-group:first-child { padding-top: 0; }
     .wte-group { padding-top: 12px; scroll-margin-top: 80px; }
     .wte-group-label {
       font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking);
@@ -659,8 +647,6 @@
     }
     .wte-social:hover { background: var(--mist); }
     .wte-social--icon { width: 30px; padding: 0; }
-    .wte-social--guide { background: var(--ink); color: var(--accent); }
-    .wte-social--guide:hover { background: var(--ink); color: var(--ground); }
     .wte-social .wte-ico { width: 14px; height: 14px; }
     .wte-section { min-width: 0; padding: 8px 0; border-top: 1px solid var(--hair); }
     .wte-section-label {
@@ -976,6 +962,23 @@
       #cat-btn  { right: 16px; bottom: 16px; }
       #cat-hint { right: 16px; bottom: 80px; }
     }
+  
+    /* Work: toggle Projects (left, default) / Checklist (right); each project is one tile with its full detail */
+    .wte-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; border-radius: 9999px; background: var(--tile); }
+    #wte-cards .wte-tabs button {
+      font-size: var(--ds-type-header-size); line-height: var(--ds-type-header-line); font-weight: 600; letter-spacing: var(--ds-type-header-tracking);
+      min-width: 0; min-height: 48px; padding: 4px 12px; border: none; border-radius: 9999px; cursor: pointer;
+      font-family: var(--font); background: none; color: var(--grey); box-shadow: none; transition: background .15s, color .15s;
+    }
+    #wte-cards .wte-tabs button[aria-selected="true"] { background: var(--ink); color: var(--ground); }
+    .wte-view { display: flex; flex-direction: column; gap: 24px; }
+    .wte-view[hidden] { display: none; }
+    .wte-view .wte-group { padding-top: 0; }
+    .wte-rank-group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: start; }
+    .wte-rank-group .wte-card { padding: 4px 16px 8px; border-top: 0; border-radius: var(--tile-r); background: var(--tile); }
+    .wte-card .wte-socials { padding-left: 0; }
+    @media (max-width: 900px) { .wte-rank-group { grid-template-columns: minmax(0, 1fr); } }
+    @media (max-width: 640px) { .wte-rank-group { gap: 10px; } }
   </style>
 </head>
 <body data-ds-product="0xhieu-xyz" data-ds-profile="spacious">
@@ -2562,6 +2565,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
 
     let wteData   = { VI: [], EN: [] };
     let wteLang   = 'VI';
+    let wteView   = 'projects';   // Work toggle: 'projects' (default) | 'tasks'
 
     // ── Lịch của việc: thứ + giờ LƯU theo GMT+7; VI xem GMT+7, EN xem UTC (user chốt 09/11) ──
     const SAVED_CLOCK = 420;                                  // phút lệch so với UTC của giờ đã lưu
@@ -2739,15 +2743,11 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
           : 'wte-card-' + p.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
         const potLv = potLevel(p.potential);
         const g = groupOf(p);
-        // "Hướng dẫn tham gia" = link Get Started có chữ hướng dẫn/tham gia (bài đăng X); không có thì link đầu tiên.
-        const gs = (p.getStarted || []).filter(x => x.link);
-        const guide = gs.find(x => /hướng dẫn|tham gia|how to|guide/i.test(x.text || '')) || gs[0];
         const EN = wteLang === 'EN';
         const links = [
           p.website ? `<a class="wte-social" href="${p.website}" target="_blank" rel="noopener">${wteIcon('link')}Website</a>` : '',
           p.twitter ? `<a class="wte-social wte-social--icon" href="${p.twitter}" target="_blank" rel="noopener" aria-label="X" title="X">${wteIcon('x')}</a>` : '',
           p.discord ? `<a class="wte-social wte-social--icon" href="${p.discord}" target="_blank" rel="noopener" aria-label="Discord" title="Discord">${wteIcon('discord')}</a>` : '',
-          guide ? `<a class="wte-social wte-social--guide" href="${guide.link}" target="_blank" rel="noopener">${EN ? 'How to join' : 'Hướng dẫn tham gia'}${wteIcon('link')}</a>` : '',
         ].join('');
         const potText = potLv === 'high' ? (EN ? 'High potential' : 'Tiềm năng') : potLv === 'low' ? (EN ? 'Low potential' : 'Tiềm năng thấp') : potLv;
         return `<div class="wte-card wte-card--${g}" id="${cardId}">
@@ -2757,6 +2757,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
             ${adminUnlocked ? `<button class="wte-opt" data-id="${p.id}" title="Sửa task" aria-label="Sửa task">${wteIcon('more')}</button>` : ''}
           </div>
           ${links ? `<div class="wte-socials">${links}</div>` : ''}
+          ${section(EN ? 'Get started' : 'Bắt đầu', p.getStarted || [], 'getStarted')}${section(EN ? 'Daily task' : 'Việc hằng ngày', p.daily || [], 'daily')}${section(EN ? 'Weekly task' : 'Việc hằng tuần', p.weekly || [], 'weekly')}
         </div>`;
       };
 
@@ -2821,14 +2822,6 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
              <div class="wte-rank-group wte-rank-group--${r}">${groups[r].map(p => cardHtml(p, !!p._personal)).join('')}</div>
            </div>`;
       const groupsHtml = personalHtml + WTE_GROUPS.filter(r => groups[r].length).map(rankGroupHtml).join('');
-      const nProj = myOther.length + WTE_GROUPS.reduce((n, r) => n + groups[r].length, 0);
-      // Dropdown: mặc định GẬP, chỉ 1 hàng tiêu đề (user chốt 07/11). Render lại giữ nguyên trạng thái mở/gập.
-      const wasOpen = !!document.querySelector('#wte-projects[open]');
-      const projHtml = `<details class="pj-box" id="wte-projects"${wasOpen ? ' open' : ''}>
-          <summary class="pj-head"><span class="pj-title">${EN ? 'Projects & how to join' : 'Dự án & hướng dẫn tham gia'}</span><span class="pj-sub">${nProj}</span></summary>
-          <div class="pj-body">${groupsHtml}</div>
-        </details>`;
-
       // ── "Lịch hôm nay": các việc của hôm nay có giờ, xếp theo giờ. Không có thì không hiện ô. ──
       const sched = ordered.flatMap(todayItems).filter(x => x.time).sort((a, b) => a.time.localeCompare(b.time));
       const schedHtml = sched.length ? `<section class="sched" id="wte-sched">
@@ -2840,7 +2833,10 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
           </div>`).join('')}
         </section>` : '';
 
-      container.innerHTML = projHtml + todayHtml + schedHtml;
+      const tab = (view, label) => `<button type="button" role="tab" data-view="${view}" aria-selected="${wteView === view}">${label}</button>`;
+      const panel = (view, html) => `<div class="wte-view" data-view="${view}"${wteView === view ? '' : ' hidden'}>${html}</div>`;
+      container.innerHTML = `<div class="wte-tabs" role="tablist">${tab('projects', EN ? 'Projects & how to join' : 'Dự án & hướng dẫn tham gia')}${tab('tasks', EN ? 'Task checklist' : 'Checklist công việc')}</div>`
+        + panel('projects', groupsHtml) + panel('tasks', todayHtml + schedHtml);
       syncTodayRing();
     }
 
@@ -2896,6 +2892,13 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       ring.style.setProperty('--p', all.length ? Math.round(n / all.length * 100) : 0);
       ring.querySelector('span').textContent = `${n}/${all.length}`;
     }
+    document.getElementById('wte-cards').addEventListener('click', e => {
+      const btn = e.target.closest('.wte-tabs button');
+      if (!btn) return;
+      wteView = btn.dataset.view;
+      document.querySelectorAll('.wte-tabs button').forEach(b => b.setAttribute('aria-selected', String(b === btn)));
+      document.querySelectorAll('.wte-view').forEach(v => { v.hidden = v.dataset.view !== wteView; });
+    });
     document.getElementById('wte-cards').addEventListener('change', e => {
       const k = e.target.dataset && e.target.dataset.k;
       const scope = e.target.dataset && e.target.dataset.s;
