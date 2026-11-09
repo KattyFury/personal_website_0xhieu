@@ -2835,7 +2835,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
 
       const tab = (view, label) => `<button type="button" role="tab" data-view="${view}" aria-selected="${wteView === view}">${label}</button>`;
       const panel = (view, html) => `<div class="wte-view" data-view="${view}"${wteView === view ? '' : ' hidden'}>${html}</div>`;
-      container.innerHTML = `<div class="wte-tabs" role="tablist">${tab('projects', EN ? 'Projects & how to join' : 'Dự án & hướng dẫn tham gia')}${tab('tasks', EN ? 'Task checklist' : 'Checklist công việc')}</div>`
+      container.innerHTML = `<div class="wte-tabs" role="tablist">${tab('projects', EN ? 'Projects & how to join' : 'Hướng dẫn tham gia')}${tab('tasks', EN ? 'Task checklist' : 'Checklist công việc')}</div>`
         + panel('projects', groupsHtml) + panel('tasks', todayHtml + schedHtml);
       syncTodayRing();
     }
@@ -3091,15 +3091,20 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
           });
           col.addEventListener('click', e => {
             const n = e.target.closest('.pt-wheel-n');
-            if (n) col.scrollTo({ top: [...col.children].indexOf(n) * PT_WHEEL_ROW, behavior: 'smooth' });
+            if (n) col.scrollTop = [...col.children].indexOf(n) * PT_WHEEL_ROW;
           });
         });
+        wheel.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') wheel.hidden = true; });
       }
       wheel.hidden = false;
       if (!row.querySelector('.pt-time-btn').dataset.v) ptSetTime(row, '00:00');
       const parts = row.querySelector('.pt-time-btn').dataset.v.split(':').map(Number);
       wheel.querySelectorAll('.pt-wheel-col').forEach((col, i) => { col.scrollTop = parts[i] * PT_WHEEL_ROW; });
     }
+    // Every scroll over an open wheel rewrites the time, so close it as soon as the user moves on.
+    const ptCloseWheels = () => document.querySelectorAll('#ptask-form .pt-wheel').forEach(w => { w.hidden = true; });
+    ptaskModal.addEventListener('pointerdown', e => { if (!e.target.closest('.pt-wheel, .pt-time-btn')) ptCloseWheels(); });
+    ptaskModal.addEventListener('scroll', e => { if (!e.target.closest('.pt-wheel-col')) ptCloseWheels(); }, true);
     function ptAddRow(key) {
       const row = document.createElement('div');
       row.className = 'pt-item calc-field';
