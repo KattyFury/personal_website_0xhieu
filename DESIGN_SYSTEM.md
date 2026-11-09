@@ -2,6 +2,10 @@
 
 Nguồn: repo_personal_design/tokens.json → export_web.py → web.css → design-tokens.css. Quy tắc product 0xhieu-xyz được user chốt 2026-11-01, ưu tiên hơn profile chung và mọi log màu cũ.
 
+## Work — user chốt 09/11/2026 (ưu tiên hơn mô tả Work bên dưới nếu mâu thuẫn)
+
+Thứ tự trang: box dự án → checklist Hôm nay → Lịch hôm nay. Bỏ checklist tuần và ô đen, gộp thành 1 danh sách theo ngày (việc tuần có thẻ `tuần`). `learn-to-grow`, `work-to-earn` luôn viết thường, kể cả tiêu đề trang và nhãn nhóm. Thẻ tiềm năng VI: `Tiềm năng` / `Tiềm năng thấp`. Dự án không có logo dùng mặt mèo. Form: 7 nút ngày dạng viên (chọn = nền vàng) + giờ 24h dạng bánh xe mở ngay dưới hàng; nút trong form phẳng, không bóng.
+
 ## Kiểu chữ theo chức năng — user chốt 08/11/2026 (ưu tiên cao nhất)
 
 Nguồn sự thật: `D:\Files\Claude

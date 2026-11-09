@@ -555,10 +555,6 @@
       font-size: var(--ds-type-header-size); line-height: var(--ds-type-header-line); font-weight: 700; letter-spacing: var(--ds-type-header-tracking);
       width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); font-variant-numeric: tabular-nums; color: var(--ink);
     }
-    .today-hero--dark { background: var(--dark-tile); }
-    .today-hero--dark .today-date, .today-hero--dark .today-count { color: var(--ground); }
-    .today-hero--dark .today-ring { background: conic-gradient(var(--accent) calc(var(--p) * 1%), rgba(255,255,255,.16) 0); }
-    .today-hero--dark .today-ring span { background: var(--dark-tile); color: var(--accent); }
     .today-list { padding: 4px 16px; border-radius: var(--tile-r); background: var(--tile); }
     .today-empty { font-size: var(--ds-type-note-size); line-height: var(--ds-type-note-line); font-weight: 400; letter-spacing: var(--ds-type-note-tracking); padding: 16px 0; color: var(--grey); }
     /* "Lịch hôm nay": việc có giờ báo, xếp theo giờ — kế tiếp = chip vàng, quá giờ chưa tick = chip đỏ */
@@ -599,7 +595,7 @@
     .dt-check input:checked ~ .dt-main .dt-text { color: var(--muted); text-decoration: line-through; }
     .dt-meta { font-size: var(--ds-type-secondary-size); line-height: var(--ds-type-secondary-line); font-weight: 400; letter-spacing: var(--ds-type-secondary-tracking); display: flex; flex-wrap: wrap; align-items: center; gap: 6px; color: var(--grey); }
     .dt-when { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
-    .dt-meta .wte-logo, .dt-meta .wte-logo-txt, .sc-main .wte-logo, .sc-main .wte-logo-txt { font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking); width: 20px; height: 20px; border-radius: 50%; }
+    .dt-meta .wte-logo, .sc-main .wte-logo { width: 20px; height: 20px; border-radius: 50%; }
     .dt-meta .wte-tag { font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking); min-height: 20px; padding: 0 6px; }
     .dt-link { flex: none; width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; color: var(--grey); background: var(--canvas); }
     .dt-link:hover { color: var(--ink); background: var(--mist); }
@@ -630,8 +626,7 @@
     .wte-card-head { padding: 12px 0 8px; display: flex; align-items: center; gap: 12px; }
     .wte-card-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
     .wte-logo { display: block; flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; object-fit: cover; background: var(--mist); }
-    .wte-card-head .wte-logo, .wte-logo-txt { width: 36px; height: 36px; border-radius: 10px; }
-    .wte-logo-txt { font-size: var(--ds-type-content-size); line-height: var(--ds-type-content-line); font-weight: 600; letter-spacing: var(--ds-type-content-tracking); display: grid; place-items: center; flex-shrink: 0; background: var(--canvas); color: var(--ink); }
+    .wte-card-head .wte-logo { width: 36px; height: 36px; border-radius: 10px; }
     .wte-name {
       font-size: var(--ds-type-content-size); line-height: var(--ds-type-content-line); font-weight: 600; letter-spacing: var(--ds-type-content-tracking);
       min-width: 0; white-space: normal; overflow-wrap: anywhere; color: var(--ink); text-decoration: none;
@@ -807,10 +802,43 @@
     .pt-items { display: flex; flex-direction: column; gap: 8px; }
     .pt-item-head { display: flex; align-items: center; gap: 8px; }
     .pt-item-head input { flex: 1; }
-    /* Giờ báo (tuỳ chọn): việc ngày = giờ · việc tuần = thứ + giờ */
-    .pt-item-when { display: flex; align-items: center; gap: 8px; }
-    .pt-when-label { font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking); flex: none; color: var(--grey); }
-    .pt-item-when select, .pt-item-when input { flex: 1; min-width: 0; }
+    /* Lịch (tuỳ chọn) kiểu iPhone: 7 nút ngày chọn nhiều + giờ bấm ra bánh xe cuộn */
+    .pt-when { display: grid; grid-template-columns: max-content minmax(0, 1fr); align-items: center; gap: 8px 12px; }
+    .pt-when-label { font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking); color: var(--grey); }
+    .pt-when-note { grid-column: 2; font-size: var(--ds-type-note-size); line-height: var(--ds-type-note-line); font-weight: 400; letter-spacing: var(--ds-type-note-tracking); color: var(--grey); }
+    .pt-days { display: flex; gap: 4px; }
+    .pt-day {
+      font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking);
+      flex: 1 1 0; min-width: 0; height: 32px; padding: 0; border: none; border-radius: 9999px; cursor: pointer;
+      font-family: var(--font); background: var(--canvas); color: var(--ink); transition: background .15s;
+    }
+    .pt-day[aria-pressed="true"] { background: var(--accent); }
+    .pt-time { display: flex; align-items: center; gap: 8px; }
+    .pt-time-btn {
+      font-size: var(--ds-type-input-size); line-height: var(--ds-type-input-line); font-weight: 600; letter-spacing: var(--ds-type-input-tracking);
+      width: 96px; height: 40px; padding: 0; border: none; border-radius: 10px; cursor: pointer;
+      font-family: var(--font); font-variant-numeric: tabular-nums; background: var(--canvas); color: var(--ink);
+    }
+    .pt-time-btn.is-empty { font-weight: 400; color: var(--muted); }
+    .pt-time-clear {
+      font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking);
+      padding: 0; border: none; background: none; cursor: pointer; font-family: var(--font); color: var(--grey);
+    }
+    .pt-time-btn.is-empty + .pt-time-clear { display: none; }
+    .pt-wheel { grid-column: 1 / -1; position: relative; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .pt-wheel[hidden] { display: none; }
+    .pt-wheel::before { content: ""; position: absolute; left: 0; right: 0; top: 40px; height: 40px; border-radius: 10px; background: var(--canvas); }
+    .pt-wheel-sep { position: relative; font-size: var(--ds-type-content-size); line-height: var(--ds-type-content-line); font-weight: 600; letter-spacing: var(--ds-type-content-tracking); color: var(--ink); }
+    .pt-wheel-col {
+      position: relative; width: 64px; height: 120px; padding: 40px 0; box-sizing: border-box; overflow-y: auto; overscroll-behavior: contain;
+      scroll-snap-type: y mandatory; scrollbar-width: none; -ms-overflow-style: none;
+      -webkit-mask-image: linear-gradient(transparent, #000 35%, #000 65%, transparent); mask-image: linear-gradient(transparent, #000 35%, #000 65%, transparent);
+    }
+    .pt-wheel-col::-webkit-scrollbar { display: none; }
+    .pt-wheel-n {
+      font-size: var(--ds-type-content-size); line-height: var(--ds-type-content-line); font-weight: 600; letter-spacing: var(--ds-type-content-tracking);
+      height: 40px; display: grid; place-items: center; scroll-snap-align: center; cursor: pointer; font-variant-numeric: tabular-nums; color: var(--ink);
+    }
     .pt-row-add {
       align-self: flex-start; width: 40px; height: 40px; padding: 0; border-radius: var(--ds-product-control-radius); cursor: pointer;
       display: inline-flex; align-items: center; justify-content: center;
@@ -834,6 +862,7 @@
     /* Bóng cho nút và icon control; thẻ/nhãn chỉ đọc giữ phẳng. */
     /* Bento: chỉ nút điều khiển nổi có bóng; nút liên hệ/link trong ô phẳng. */
     button:not(.nav-btn):not(.wte-opt):not(.predict-link) { box-shadow: var(--shadow); }
+    #ptask-form button, #pt-delete { box-shadow: none; }   /* nút trong form (+, x, ngày, giờ, xoá) nằm phẳng, không nổi */
     .predict-btn-primary, .retry-btn, .lang-btn.active { color: var(--ds-on-primary); }
     .predict-btn-primary:hover, .retry-btn:hover, .lang-btn.active:hover { color: var(--ground); }
     button:disabled, .social-btn[aria-disabled="true"], .wte-social[aria-disabled="true"] { box-shadow: none; }
@@ -842,7 +871,7 @@
     @media (pointer: coarse) {
       .wte-task-row--link, .wte-opt { min-height: 44px; }
       .wte-opt { min-width: 44px; }
-      .predict-link, .wl-modal input, .wl-modal select,
+      .predict-link, .wl-modal input, .wl-modal select, .pt-day, .pt-time-btn,
       .wl-modal .predict-btn-primary, .wl-modal .predict-btn-secondary, .wl-modal .val-del-btn { min-height: 44px; }
     }
     @media (max-width: 1024px) {
@@ -1167,7 +1196,7 @@
 
       <!-- Hàng đầu: tiêu đề TRÁI · Admin + VI|EN phải -->
       <div class="ard-subtabs panel-head" id="ard-subtabs">
-        <div class="val-intro"><span id="wte-title">Work-to-earn</span></div>
+        <div class="val-intro"><span id="wte-title">work-to-earn</span></div>
         <div class="val-head-ctrl" id="ard-wte-controls">
           <button class="lang-dd-btn" id="admin-btn" title="Task cá nhân">Admin</button>
           <button class="language-switch" id="work-language-switch" type="button" role="switch" aria-label="English" aria-checked="false">
@@ -1359,15 +1388,15 @@
         <div class="ptask-row">
           <div class="calc-field">
             <label>Tiềm năng</label>
-            <select id="pt-potential">
-              <option value="">—</option>
-              <option value="high">High</option>
-              <option value="low">Low</option>
+            <select id="pt-potential" required>
+              <option value="" disabled hidden>Chọn tiềm năng</option>
+              <option value="high">Tiềm năng</option>
+              <option value="low">Tiềm năng thấp</option>
             </select>
           </div>
           <div class="calc-field">
             <label>Phân loại</label>
-            <select id="pt-type"></select>
+            <select id="pt-type" required></select>
           </div>
         </div>
         <div class="ptask-row">
@@ -2506,7 +2535,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     const WTE_GROUPS      = ['LEARN','INCOME','S','A','B','C'];
     const WTE_RANKS       = WTE_GROUPS.filter(g => !isTypeGroup(g)); // rank chọn tay được trong form admin
     const RANK_LABEL      = { LEARN: 'l2g', INCOME: 'w2e', S: 'S', A: 'A', B: 'B', C: 'C' };
-    const GROUP_NAME      = { LEARN: 'Learn-to-grow', INCOME: 'Work-to-earn' };   // viết hoa chữ đầu như 'Cá nhân' (cùng cấp)
+    const GROUP_NAME      = { LEARN: 'learn-to-grow', INCOME: 'work-to-earn' };   // luôn viết thường, đúng 1 kiểu (user chốt 09/11)
 
     // Tiêu đề nhóm — SUY RA từ RANK_LABEL, không khai lại danh sách thứ 2.
     // INCOME = "work-to-earn" (không phải rank, viết thường như thẻ phân loại); còn lại "Rank: S" — khớp chữ trên thẻ rank của card.
@@ -2530,6 +2559,30 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
 
     let wteData   = { VI: [], EN: [] };
     let wteLang   = 'VI';
+
+    // ── Lịch của việc: thứ + giờ LƯU theo GMT+7; VI xem GMT+7, EN xem UTC (user chốt 09/11) ──
+    const SAVED_CLOCK = 420;                                  // phút lệch so với UTC của giờ đã lưu
+    const wteClock = () => wteLang === 'EN' ? 0 : SAVED_CLOCK;   // ... của đồng hồ đang xem
+    const wteNow   = () => new Date(Date.now() + wteClock() * 60000);   // đọc bằng getUTC* / toISOString
+    const pad2     = n => String(n).padStart(2, '0');
+    // Dời giờ đi delta phút; qua nửa đêm thì các thứ dời theo. Không có giờ thì giữ nguyên.
+    function shiftWhen(days, time, delta) {
+      if (!time || !delta) return { days, time };
+      const [h, m] = time.split(':').map(Number);
+      const total = h * 60 + m + delta;
+      const dayShift = Math.floor(total / 1440);
+      const min = total - dayShift * 1440;
+      return {
+        days: days.map(d => (d - 1 + dayShift + 7) % 7 + 1).sort((a, b) => a - b),
+        time: `${pad2(Math.floor(min / 60))}:${pad2(min % 60)}`,
+      };
+    }
+    const savedDays = it => it.days?.length ? it.days : it.dow ? [it.dow] : [];   // `dow` là field cũ
+    // Không chọn ngày: việc ngày = mọi ngày ([]), việc tuần = thứ Hai + thứ Ba.
+    const whenView = (it, scope) => {
+      const days = savedDays(it);
+      return shiftWhen(days.length ? days : scope === 'w' ? [1, 2] : [], it.time || '', wteClock() - SAVED_CLOCK);
+    };
     let wteLoaded = { VI: false, EN: false };
     let wteError  = false;
 
@@ -2653,7 +2706,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
 
     // ── Render all cards ──────────────────────────────
     function renderWTE() {
-      document.getElementById('wte-title').textContent = 'Work-to-earn';
+      document.getElementById('wte-title').textContent = 'work-to-earn';
       fitIntroTitles();
       const container = document.getElementById('wte-cards');
       const projects  = wteData[wteLang];
@@ -2670,12 +2723,11 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       // Work-to-Earn không có bên Valuation: thẻ đó là "rank" w2e của nhóm nên luôn đen.
       const topNarr = new Set(narrativeRanking().slice(0, 5).map(g => g.name.toLowerCase()));
       const strong  = on => on ? ' wte-tag--strong' : '';
-      // Logo: ảnh X của dự án; không có thì chữ cái đầu.
+      // Logo: ảnh X của dự án; không có hoặc tải lỗi thì mặt mèo.
+      const CAT_LOGO = '/icon.png?v=4';
       const logoOf = (p, cls = 'wte-logo') => {
         const handle = p.twitter ? p.twitter.replace(/.*twitter\.com\/|.*x\.com\/|^@/, '').split('?')[0].trim() : '';
-        return handle
-          ? `<img class="${cls}" src="https://unavatar.io/twitter/${handle}" alt="" loading="lazy" />`
-          : `<span class="wte-logo-txt">${(p.name || '?').trim().charAt(0)}</span>`;
+        return `<img class="${cls}" src="${handle ? `https://unavatar.io/twitter/${handle}?fallback=false` : CAT_LOGO}" alt="" loading="lazy" onerror="this.onerror=null;this.src='${CAT_LOGO}'" />`;
       };
       // Hàng dự án: logo · tên · High/Low potential · narrative; ngay dưới là Website · X · Discord · Hướng dẫn tham gia.
       const cardHtml = (p, personal = false) => {
@@ -2694,7 +2746,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
           p.discord ? `<a class="wte-social wte-social--icon" href="${p.discord}" target="_blank" rel="noopener" aria-label="Discord" title="Discord">${wteIcon('discord')}</a>` : '',
           guide ? `<a class="wte-social wte-social--guide" href="${guide.link}" target="_blank" rel="noopener">${EN ? 'How to join' : 'Hướng dẫn tham gia'}${wteIcon('link')}</a>` : '',
         ].join('');
-        const potText = potLv === 'high' ? 'High potential' : potLv === 'low' ? 'Low potential' : potLv;
+        const potText = potLv === 'high' ? (EN ? 'High potential' : 'Tiềm năng') : potLv === 'low' ? (EN ? 'Low potential' : 'Tiềm năng thấp') : potLv;
         return `<div class="wte-card wte-card--${g}" id="${cardId}">
           <div class="wte-card-head">${logoOf(p)}
             <span class="wte-card-main"><span class="wte-name">${p.name}</span>
@@ -2729,49 +2781,35 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
            </div>`
         : '';
 
-      // ── Checklist ngày + tuần: gom mọi task DAILY / WEEKLY (l2g → cá nhân → w2e → S … C) ──
+      // ── Checklist "Hôm nay": gộp việc ngày + việc tuần rơi vào hôm nay (l2g → cá nhân → w2e → S … C) ──
       const EN = wteLang === 'EN';
       const ordered = [...myOther, ...groups.LEARN,
                        ...WTE_GROUPS.filter(r => r !== 'LEARN').flatMap(r => groups[r])];
-      // Giờ báo hiển thị: việc ngày "20:00" · việc tuần "T3 · 20:00" (hoặc chỉ thứ / chỉ giờ)
-      const DOW = EN ? ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] : ['', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
-      const whenLabel = (item, scope) => scope === 'w'
-        ? [item.dow ? DOW[item.dow] : '', item.time || ''].filter(Boolean).join(' · ')
-        : (item.time || '');
-      const checkRows = (field, scope) => {
-        const done = loadDone(scope);
-        const rows = [];
-        ordered.forEach(p => (p[field] || []).forEach((item, i) => {
-          const k = (p.id || p.name) + '#' + i;
-          const g = groupOf(p);
-          rows.push(`<div class="dt">
-            <label class="dt-check"><input type="checkbox" data-s="${scope}" data-k="${k}"${done.has(k) ? ' checked' : ''} /><span class="dt-box">${wteIcon('check')}</span>
+      const dowToday = (wteNow().getUTCDay() + 6) % 7 + 1;   // 1 = thứ Hai … 7 = CN, theo đồng hồ đang xem
+      const todayItems = p => [['daily', 'd'], ['weekly', 'w']].flatMap(([field, s]) =>
+        (p[field] || []).map((item, i) => ({ p, item, s, k: (p.id || p.name) + '#' + i, ...whenView(item, s) })))
+        .filter(x => !x.days.length || x.days.includes(dowToday));
+      const weeklyTag = `<span class="wte-tag">${EN ? 'weekly' : 'tuần'}</span>`;
+      const doneNow = { d: loadDone('d'), w: loadDone('w') };
+      const rows = ordered.flatMap(todayItems).map(({ p, item, s, k, time }) => {
+        const g = groupOf(p);
+        return `<div class="dt">
+            <label class="dt-check"><input type="checkbox" data-s="${s}" data-k="${k}"${doneNow[s].has(k) ? ' checked' : ''} /><span class="dt-box">${wteIcon('check')}</span>
               <span class="dt-main"><span class="dt-text">${item.text}</span>
-                <span class="dt-meta">${whenLabel(item, scope) ? `<span class="dt-when">${whenLabel(item, scope)}</span>` : ''}${logoOf(p)}${p.name}<span class="wte-tag${strong(isTypeGroup(g) || g === 'S')}">${RANK_LABEL[g] || g}</span></span></span></label>
+                <span class="dt-meta">${time ? `<span class="dt-when">${time}</span>` : ''}${logoOf(p)}${p.name}<span class="wte-tag${strong(isTypeGroup(g) || g === 'S')}">${RANK_LABEL[g] || g}</span>${s === 'w' ? weeklyTag : ''}</span></span></label>
             ${item.link ? `<a class="dt-link" href="${item.link}" target="_blank" rel="noopener" aria-label="Link">${wteIcon('link')}</a>` : ''}
-          </div>`);
-        }));
-        return rows;
-      };
-      const checklist = (id, scope, field, date, unit, dark) => {
-        const rows = checkRows(field, scope);
-        return `<section class="today" id="${id}">
-          <div class="today-hero${dark ? ' today-hero--dark' : ''}">
-            <div class="today-date">${date}</div>
-            <div class="today-count">${rows.length} ${unit}</div>
+          </div>`;
+      });
+      const todayDate = new Date().toLocaleDateString(EN ? 'en-US' : 'vi-VN',
+        { weekday: 'long', day: '2-digit', month: '2-digit', timeZone: EN ? 'UTC' : 'Asia/Ho_Chi_Minh' });
+      const todayHtml = `<section class="today" id="wte-today">
+          <div class="today-hero">
+            <div class="today-date">${todayDate}</div>
+            <div class="today-count">${rows.length} ${EN ? 'tasks<br>today' : 'việc<br>hôm nay'}</div>
             <div class="today-ring"><span></span></div>
           </div>
           <div class="today-list">${rows.join('') || `<div class="today-empty">${EN ? 'Nothing yet' : 'Chưa có việc'}</div>`}</div>
         </section>`;
-      };
-      const dm = d => `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}`;
-      const mon = new Date(weekStr() + 'T00:00'); const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
-      const todayHtml = checklist('wte-today', 'd', 'daily',
-        new Date().toLocaleDateString(EN ? 'en-US' : 'vi-VN', { weekday: 'long', day: '2-digit', month: '2-digit' }),
-        EN ? 'daily<br>tasks' : 'việc<br>hằng ngày', false);
-      const weekHtml = checklist('wte-week', 'w', 'weekly',
-        `${EN ? 'This week' : 'Tuần này'} · ${dm(mon)} – ${dm(sun)}`,
-        EN ? 'weekly<br>tasks' : 'việc<br>hằng tuần', true);
 
       // ── Box "Dự án & hướng dẫn tham gia" — đầu trang, trên checklist ──
       // Thứ tự nhóm (user chốt 08/11): Cá nhân (l2g trên cùng) → Work-to-earn → Rank S…C.
@@ -2788,47 +2826,47 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
           <div class="pj-body">${groupsHtml}</div>
         </details>`;
 
-      // ── "Lịch hôm nay": việc ngày có giờ + việc tuần rơi đúng thứ hôm nay. Không có thì không hiện ô. ──
-      const dowToday = (new Date().getDay() + 6) % 7 + 1;   // 1 = thứ Hai … 7 = CN
-      const sched = [];
-      ordered.forEach(p => {
-        (p.daily || []).forEach((item, i) => { if (item.time) sched.push({ p, item, s: 'd', k: (p.id || p.name) + '#' + i }); });
-        (p.weekly || []).forEach((item, i) => { if (item.dow === dowToday) sched.push({ p, item, s: 'w', k: (p.id || p.name) + '#' + i }); });
-      });
-      sched.sort((a, b) => (a.item.time || '').localeCompare(b.item.time || ''));
+      // ── "Lịch hôm nay": các việc của hôm nay có giờ, xếp theo giờ. Không có thì không hiện ô. ──
+      const sched = ordered.flatMap(todayItems).filter(x => x.time).sort((a, b) => a.time.localeCompare(b.time));
       const schedHtml = sched.length ? `<section class="sched" id="wte-sched">
-          <div class="sched-head">${wteIcon('daily')}${EN ? "Today's schedule" : 'Lịch hôm nay'}</div>
-          ${sched.map(({ p, item, s, k }) => `<div class="sc" data-s="${s}" data-k="${k}" data-time="${item.time || ''}">
-            <span class="sc-time">${item.time || (EN ? 'All day' : 'Cả ngày')}</span>
+          <div class="sched-head">${wteIcon('daily')}${EN ? "Today's schedule · UTC" : 'Lịch hôm nay · GMT+7'}</div>
+          ${sched.map(({ p, item, s, k, time }) => `<div class="sc" data-s="${s}" data-k="${k}" data-time="${time}">
+            <span class="sc-time">${time}</span>
             <span class="sc-main"><span class="sc-text">${item.text}</span>
-              <span class="dt-meta"><span class="sc-state"></span>${logoOf(p)}${p.name}${s === 'w' ? `<span class="wte-tag">${EN ? 'weekly' : 'tuần'}</span>` : ''}</span></span>
+              <span class="dt-meta"><span class="sc-state"></span>${logoOf(p)}${p.name}${s === 'w' ? weeklyTag : ''}</span></span>
           </div>`).join('')}
         </section>` : '';
 
-      container.innerHTML = projHtml + todayHtml + schedHtml + weekHtml;
+      container.innerHTML = projHtml + todayHtml + schedHtml;
       syncTodayRing();
     }
 
-    // Tick checklist: lưu localStorage { period, keys } — ngày ('d') / tuần ('w', tính từ thứ Hai).
-    // Sang ngày/tuần mới tự về 0. Chỉ trên máy đang dùng.
-    const todayStr = () => new Date().toLocaleDateString('sv-SE');   // YYYY-MM-DD theo giờ máy
-    const weekStr = () => { const d = new Date(); d.setDate(d.getDate() - (d.getDay() + 6) % 7); return d.toLocaleDateString('sv-SE'); };
+    // Tick checklist: lưu localStorage { "YYYY-MM-DD": keys } — theo ngày ('d') / theo tuần ('w', tính từ thứ Hai),
+    // đúng đồng hồ đang xem. Giữ 2 kỳ gần nhất vì VI và EN có thể đang ở 2 ngày khác nhau. Chỉ trên máy đang dùng.
+    const todayStr = () => wteNow().toISOString().slice(0, 10);
+    const weekStr = () => { const d = wteNow(); d.setUTCDate(d.getUTCDate() - (d.getUTCDay() + 6) % 7); return d.toISOString().slice(0, 10); };
     const TICK = { d: ['wte-done', todayStr], w: ['wte-done-week', weekStr] };
+    function readDone(key) {
+      try { const o = JSON.parse(localStorage.getItem(key) || '{}'); return o.day ? { [o.day]: o.keys } : o; }   // o.day = dạng lưu cũ
+      catch { return {}; }
+    }
     function loadDone(scope) {
       const [key, period] = TICK[scope];
-      try { const o = JSON.parse(localStorage.getItem(key) || '{}'); return new Set(o.day === period() ? o.keys : []); }
-      catch { return new Set(); }
+      return new Set(readDone(key)[period()] || []);
     }
     function saveDone(scope, set) {
       const [key, period] = TICK[scope];
-      try { localStorage.setItem(key, JSON.stringify({ day: period(), keys: [...set] })); } catch {}
+      const store = readDone(key);
+      store[period()] = [...set];
+      Object.keys(store).sort().slice(0, -2).forEach(old => delete store[old]);
+      try { localStorage.setItem(key, JSON.stringify(store)); } catch {}
     }
     // Lịch hôm nay: đã tick → gạch · quá giờ chưa tick → đỏ "Quá giờ" · việc có giờ kế tiếp → vàng "Sắp tới"
     function syncSchedule() {
       const box = document.getElementById('wte-sched');
       if (!box) return;
       const EN = wteLang === 'EN';
-      const now = new Date().toTimeString().slice(0, 5);
+      const now = wteNow().toISOString().slice(11, 16);
       let nextMarked = false;
       box.querySelectorAll('.sc').forEach(row => {
         const tick = document.querySelector(`#wte-cards input[data-s="${row.dataset.s}"][data-k="${CSS.escape(row.dataset.k)}"]`);
@@ -2847,15 +2885,13 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     setInterval(syncSchedule, 60000);
     function syncTodayRing() {
       syncSchedule();
-      ['wte-today', 'wte-week'].forEach(id => {
-        const box = document.getElementById(id);
-        if (!box) return;
-        const all = box.querySelectorAll('input[data-k]');
-        const n = [...all].filter(x => x.checked).length;
-        const ring = box.querySelector('.today-ring');
-        ring.style.setProperty('--p', all.length ? Math.round(n / all.length * 100) : 0);
-        ring.querySelector('span').textContent = `${n}/${all.length}`;
-      });
+      const box = document.getElementById('wte-today');
+      if (!box) return;
+      const all = box.querySelectorAll('input[data-k]');
+      const n = [...all].filter(x => x.checked).length;
+      const ring = box.querySelector('.today-ring');
+      ring.style.setProperty('--p', all.length ? Math.round(n / all.length * 100) : 0);
+      ring.querySelector('span').textContent = `${n}/${all.length}`;
     }
     document.getElementById('wte-cards').addEventListener('change', e => {
       const k = e.target.dataset && e.target.dataset.k;
@@ -2889,8 +2925,8 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
 
     // Đổ dropdown từ hằng số khai ở mục Work to Earn — KHÔNG hardcode option
     // trong HTML, để form admin không bao giờ lệch với thang rank / thẻ đang dùng.
-    $('pt-type').innerHTML = '<option value="">—</option>' +
-      WTE_TYPES.map(t => `<option value="${t}">${t}</option>`).join('');
+    $('pt-type').innerHTML = '<option value="" disabled hidden>Chọn phân loại</option>' +
+      WTE_TYPES.map(t => `<option value="${t}">${tagCase(t)}</option>`).join('');
     // Rank bắt buộc (trừ Work-to-Earn) → KHÔNG có lựa chọn "—": dòng đầu chỉ là gợi ý "Chọn rank", không chọn được.
     $('pt-rank').innerHTML = '<option value="" disabled hidden>Chọn rank</option>' +
       WTE_RANKS.map(r => `<option value="${r}">${RANK_LABEL[r]}</option>`).join('');
@@ -2904,7 +2940,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     // Learn-to-Grow là việc học của riêng anh → mặc định Personal (vẫn đổi tay được).
     $('pt-type').addEventListener('change', () => { if ($('pt-type').value === 'Learn-to-Grow') $('pt-visibility').value = 'personal'; });
     // đổi phân loại / chọn rank → tắt lỗi "Chọn rank trước khi lưu" còn sót từ lần bấm trước
-    ['pt-type', 'pt-rank'].forEach(id => $(id).addEventListener('change', () => { ptError.style.display = 'none'; }));
+    ['pt-potential', 'pt-type', 'pt-rank'].forEach(id => $(id).addEventListener('change', () => { ptError.style.display = 'none'; }));
 
     async function apiPrivate(action, extra = {}) {
       try {
@@ -3010,12 +3046,53 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     // 3 nhóm nhiều dòng: mỗi dòng = việc + link, bấm + để thêm dòng
     const PT_GROUPS = { gs: 'Việc cần làm để bắt đầu', daily: 'Việc làm mỗi ngày', weekly: 'Việc làm mỗi tuần' };
 
-    // Ô giờ báo — TUỲ CHỌN, để trống là việc không có giờ. Việc ngày: giờ · việc tuần: thứ + giờ.
-    const DOW_VI = ['', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật'];
+    // Lịch TUỲ CHỌN kiểu iPhone: chọn nhiều ngày + giờ 24h bằng bánh xe, theo đồng hồ của ngôn ngữ đang xem.
+    const DOW_SHORT = { VI: ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'], EN: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] };
     function ptWhenHtml(key) {
-      if (key === 'daily') return `<div class="pt-item-when"><span class="pt-when-label">Giờ báo (tuỳ chọn)</span><input type="time" class="pt-item-time" aria-label="Giờ báo" /></div>`;
-      if (key === 'weekly') return `<div class="pt-item-when"><span class="pt-when-label">Báo (tuỳ chọn)</span><select class="pt-item-dow" aria-label="Thứ"><option value="">Thứ —</option>${DOW_VI.slice(1).map((d, i) => `<option value="${i + 1}">${d}</option>`).join('')}</select><input type="time" class="pt-item-time" aria-label="Giờ báo" /></div>`;
-      return '';
+      if (key === 'gs') return '';
+      const EN = wteLang === 'EN';
+      const note = key === 'daily' ? (EN ? 'Empty: every day' : 'Để trống: mỗi ngày') : (EN ? 'Empty: Mon and Tue' : 'Để trống: thứ 2 và thứ 3');
+      return `<div class="pt-when">
+          <span class="pt-when-label">${EN ? 'Day' : 'Ngày'}</span>
+          <div class="pt-days">${DOW_SHORT[wteLang].map((d, i) => `<button type="button" class="pt-day" data-d="${i + 1}" aria-pressed="false">${d}</button>`).join('')}</div>
+          <span class="pt-when-note">${note}</span>
+          <span class="pt-when-label">${EN ? 'Time (UTC)' : 'Giờ (GMT+7)'}</span>
+          <div class="pt-time"><button type="button" class="pt-time-btn is-empty">--:--</button><button type="button" class="pt-time-clear">${EN ? 'Clear' : 'Bỏ giờ'}</button></div>
+          <div class="pt-wheel" hidden></div>
+        </div>`;
+    }
+    function ptSetTime(row, value) {
+      const btn = row.querySelector('.pt-time-btn');
+      btn.dataset.v = value;
+      btn.textContent = value || '--:--';
+      btn.classList.toggle('is-empty', !value);
+    }
+    const PT_WHEEL_ROW = 40;   // khớp chiều cao .pt-wheel-n
+    const ptWheelCol = count => `<div class="pt-wheel-col">${Array.from({ length: count }, (_, n) => `<div class="pt-wheel-n">${pad2(n)}</div>`).join('')}</div>`;
+    // Bấm giờ: bánh xe mở ngay dưới hàng (như app Lời nhắc), cuộn tới đâu giờ đổi tới đó.
+    function ptToggleWheel(row) {
+      const wheel = row.querySelector('.pt-wheel');
+      const opening = wheel.hidden;
+      document.querySelectorAll('#ptask-form .pt-wheel').forEach(w => { w.hidden = true; });
+      if (!opening) return;
+      if (!wheel.firstChild) {
+        wheel.innerHTML = `${ptWheelCol(24)}<span class="pt-wheel-sep">:</span>${ptWheelCol(60)}`;
+        wheel.querySelectorAll('.pt-wheel-col').forEach(col => {
+          col.addEventListener('scroll', () => {
+            if (wheel.hidden) return;
+            const [h, m] = [...wheel.querySelectorAll('.pt-wheel-col')].map(c => pad2(Math.round(c.scrollTop / PT_WHEEL_ROW)));
+            ptSetTime(row, `${h}:${m}`);
+          });
+          col.addEventListener('click', e => {
+            const n = e.target.closest('.pt-wheel-n');
+            if (n) col.scrollTo({ top: [...col.children].indexOf(n) * PT_WHEEL_ROW, behavior: 'smooth' });
+          });
+        });
+      }
+      wheel.hidden = false;
+      if (!row.querySelector('.pt-time-btn').dataset.v) ptSetTime(row, '00:00');
+      const parts = row.querySelector('.pt-time-btn').dataset.v.split(':').map(Number);
+      wheel.querySelectorAll('.pt-wheel-col').forEach((col, i) => { col.scrollTop = parts[i] * PT_WHEEL_ROW; });
     }
     function ptAddRow(key) {
       const row = document.createElement('div');
@@ -3026,6 +3103,16 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         </div>
         <input type="text" class="pt-item-link" placeholder="https://..." />${ptWhenHtml(key)}`;
       row.querySelector('.pt-item-del').addEventListener('click', () => row.remove());
+      row.querySelectorAll('.pt-day').forEach(b => b.addEventListener('click', () => {
+        b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'));
+      }));
+      if (key !== 'gs') {
+        row.querySelector('.pt-time-btn').addEventListener('click', () => ptToggleWheel(row));
+        row.querySelector('.pt-time-clear').addEventListener('click', () => {
+          row.querySelector('.pt-wheel').hidden = true;
+          ptSetTime(row, '');
+        });
+      }
       $('pt-' + key + '-items').appendChild(row);
       return row;
     }
@@ -3034,9 +3121,12 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     const ptItems = key => [...$('pt-' + key + '-items').querySelectorAll('.pt-item')]
       .map(r => {
         const it = { text: r.querySelector('.pt-item-text').value, link: r.querySelector('.pt-item-link').value };
-        const t = r.querySelector('.pt-item-time'), d = r.querySelector('.pt-item-dow');
-        if (t && t.value) it.time = t.value;
-        if (d && d.value) it.dow = Number(d.value);
+        if (r.querySelector('.pt-when')) {
+          const days = [...r.querySelectorAll('.pt-day[aria-pressed="true"]')].map(b => Number(b.dataset.d));
+          const saved = shiftWhen(days, r.querySelector('.pt-time-btn').dataset.v || '', SAVED_CLOCK - wteClock());
+          if (saved.time) it.time = saved.time;
+          if (saved.days.length) it.days = saved.days;
+        }
         return it;
       })
       .filter(it => it.text.trim());
@@ -3055,8 +3145,11 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         const row = ptAddRow(key);
         row.querySelector('.pt-item-text').value = it.text || '';
         row.querySelector('.pt-item-link').value = it.link || '';
-        if (row.querySelector('.pt-item-time')) row.querySelector('.pt-item-time').value = it.time || '';
-        if (row.querySelector('.pt-item-dow'))  row.querySelector('.pt-item-dow').value  = it.dow ? String(it.dow) : '';
+        if (key !== 'gs') {
+          const view = shiftWhen(savedDays(it), it.time || '', wteClock() - SAVED_CLOCK);
+          ptSetTime(row, view.time);
+          view.days.forEach(d => row.querySelector(`.pt-day[data-d="${d}"]`).setAttribute('aria-pressed', 'true'));
+        }
       });
       if (!wrap.children.length) ptAddRow(key);
     }
@@ -3089,6 +3182,8 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
 
     async function submitPtask() {
       const income = !!WTE_TYPE_GROUP[$('pt-type').value];
+      if (!$('pt-potential').value) { showMsg(ptError, 'Chọn tiềm năng trước khi lưu'); return; }
+      if (!$('pt-type').value) { showMsg(ptError, 'Chọn phân loại trước khi lưu'); return; }
       if (!income && !$('pt-rank').value) { showMsg(ptError, 'Chọn rank trước khi lưu'); return; }
       const task = {
         name:       $('pt-name').value,

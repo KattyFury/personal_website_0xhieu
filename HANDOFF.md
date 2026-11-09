@@ -1,6 +1,6 @@
 # HANDOFF — 0xhieu.xyz
 
-Chốt bàn giao: 08/11/2026 (Asia/Saigon). Code đang live: commit mới nhất trên main (08/11: Bento + kiểu chữ theo chức năng, box dự án hiện sẵn link + Hướng dẫn tham gia, lịch hẹn giờ). Handoff này thay các mô tả cũ; lịch sử ở git và [docs/handoff-history-through-2026-11-02.md](docs/handoff-history-through-2026-11-02.md)
+Chốt bàn giao: 09/11/2026 (Asia/Saigon). Code đang live: commit mới nhất trên main (09/11: gộp checklist theo ngày, chọn nhiều ngày + giờ kiểu iPhone; 08/11: Bento + kiểu chữ theo chức năng, box dự án hiện sẵn link + Hướng dẫn tham gia). Handoff này thay các mô tả cũ; lịch sử ở git và [docs/handoff-history-through-2026-11-02.md](docs/handoff-history-through-2026-11-02.md)
 
 Chốt bàn giao: 06/11/2026 (Asia/Saigon). Code đang live: commit mới nhất trên main (06/11: xám trung tính, bút dạ, thẻ Work đen/trắng). Handoff này thay các mô tả cũ; lịch sử được giữ ở [docs/handoff-history-through-2026-11-02.md](docs/handoff-history-through-2026-11-02.md).
 
@@ -49,32 +49,37 @@ Mọi gạch đầu dòng cũ bên dưới file đó (header xám, viền, radiu
 
 **App icon / favicon:** mèo bo góc (góc trong suốt), cache `?v=4`.
 
-## Work (08/11/2026)
+## Work (09/11/2026)
 
-**Tiêu đề trang:** "Work-to-earn" (cả VI và EN).
+**Tiêu đề trang:** "work-to-earn" (cả VI và EN). `learn-to-grow` / `work-to-earn` chỉ có 1 cách viết là viết thường, ở tiêu đề, nhãn nhóm, thẻ và dropdown form; giá trị lưu trong KV vẫn là `Learn-to-Grow` / `Work-to-Earn`.
 
-**Thứ tự trên trang:** dropdown "Dự án & hướng dẫn tham gia" → checklist Hôm nay → ô Lịch hôm nay → checklist Tuần này.
+**Thứ tự trên trang:** dropdown "Dự án & hướng dẫn tham gia" → checklist Hôm nay → ô Lịch hôm nay.
 
 **Dropdown "Dự án & hướng dẫn tham gia"**
 - Mặc định gập; đổi ngôn ngữ thì giữ nguyên trạng thái mở/gập.
-- Bên trong chia nhóm: **Cá nhân → Work-to-earn → Rank S…C**. Việc Learn-to-grow là việc cá nhân: nằm trong nhóm Cá nhân, xếp trên cùng; trong nhóm Cá nhân thứ tự là l2g → w2e → S…C (anh chốt 08/11, thay quy tắc cũ "l2g có nhóm riêng"). Nhãn nhóm viết hoa chữ đầu.
-- Mỗi dự án KHÔNG gập: logo · tên · thẻ `High potential`/`Low potential` + narrative · ⋮ (admin).
+- Bên trong chia nhóm: **Cá nhân → Work-to-earn → Rank S…C**. Việc Learn-to-grow là việc cá nhân: nằm trong nhóm Cá nhân, xếp trên cùng; trong nhóm Cá nhân thứ tự là l2g → w2e → S…C (anh chốt 08/11, thay quy tắc cũ "l2g có nhóm riêng").
+- Mỗi dự án KHÔNG gập: logo · tên · thẻ tiềm năng (VI `Tiềm năng`/`Tiềm năng thấp`, EN `High potential`/`Low potential`) + narrative · ⋮ (admin). Dự án không có X hoặc unavatar không có ảnh thì logo là mặt mèo `icon.png` (unavatar gọi kèm `?fallback=false` để trả 404 thay vì ảnh mặt cười mặc định).
 - Ngay dưới là 1 hàng chip cao 30: Website · X (icon) · Discord (icon) · **Hướng dẫn tham gia**.
   - Chip Hướng dẫn tham gia nền đen chữ vàng, mở bài đăng X.
   - Link lấy từ Get Started: ưu tiên mục có chữ hướng dẫn/tham gia; không có thì lấy link đầu tiên.
 - Mobile: hàng chip bỏ thụt trái để nằm 1 dòng.
 
-**Checklist**
-- Checklist ngày: ô vàng (ngày, số việc, vòng tiến độ) + danh sách mọi việc DAILY. Thứ tự l2g → cá nhân → w2e → S…C.
-- Checklist tuần: ô đen (vòng vàng) + mọi việc WEEKLY. Tick tự về 0 vào thứ Hai.
-- Tick lưu localStorage `wte-done` / `wte-done-week`, **chỉ trên máy đang dùng**. Đồng bộ tick giữa các máy qua KV chưa làm.
+**Checklist Hôm nay (anh chốt 09/11, thay 2 checklist ngày/tuần riêng)**
+- Một ô vàng (ngày, số việc, vòng tiến độ) + một danh sách gộp mọi việc rơi vào hôm nay. Thứ tự l2g → cá nhân → w2e → S…C. Việc tuần có thêm thẻ `tuần`/`weekly`.
+- Form vẫn tách Daily task và Weekly task. Không chọn ngày: việc ngày hiện mọi ngày, việc tuần hiện thứ Hai + thứ Ba.
+- Tick việc ngày về 0 mỗi ngày; tick việc tuần giữ đến hết tuần (thứ Hai về 0), nên tick việc tuần rồi thì các ngày khác trong tuần nó vẫn đã tick.
+- Tick lưu localStorage `wte-done` / `wte-done-week`, **chỉ trên máy đang dùng**, giữ 2 kỳ gần nhất. Đồng bộ tick giữa các máy qua KV chưa làm.
 
-**Giờ báo (tuỳ chọn)**
-- Form: việc ngày có `time` (HH:MM); việc tuần có `dow` (1 = T2 … 7 = CN) + `time`. Server `itemList` trong `functions/api/private.js` lọc và giữ 2 trường này.
-- Ô "Lịch hôm nay": gồm việc ngày có giờ và việc tuần rơi đúng thứ hôm nay.
+**Lịch của việc (tuỳ chọn)**
+- Form kiểu iPhone: 7 nút ngày chọn nhiều + giờ 24h bấm ra bánh xe cuộn, có "Bỏ giờ". Dùng cho cả việc ngày và việc tuần.
+- Dữ liệu: `days` (mảng, 1 = T2 … 7 = CN) + `time` (HH:MM), **luôn lưu theo GMT+7**. Field cũ `dow` vẫn đọc được, lưu lại sẽ thành `days`.
+- VI xem và nhập theo GMT+7, EN xem và nhập theo UTC. Giờ đổi qua nửa đêm thì thứ đổi theo (T5 03:00 GMT+7 = T4 20:00 UTC). "Hôm nay", tick và Lịch hôm nay đều theo đồng hồ của ngôn ngữ đang xem, không theo giờ máy.
+- Ô "Lịch hôm nay" gồm các việc của hôm nay có giờ.
   - Việc kế tiếp = chip vàng "Sắp tới"; quá giờ chưa tick = đỏ "Quá giờ"; đã tick = gạch ngang.
   - Tự cập nhật mỗi phút. Không có việc hẹn hôm nay thì ô không hiện.
 - **Chỉ báo trên web.** Anh chọn không dùng Telegram hay push.
+
+**Form:** Tiềm năng và Phân loại bắt buộc chọn, không còn lựa chọn "—". Các nút trong form (+, x, ngày, giờ, Xoá task) phẳng, không bóng.
 
 **Đã bỏ:** thanh kéo chọn rank l2g/w2e/S/A/B/C (anh nói không cần nữa).
 
@@ -166,6 +171,7 @@ Anh đề xuất dashboard quan sát dự án chưa TGE để tham gia airdrop: 
 
 ## Nhật ký bàn giao
 
+- **09/11/2026:** Work gộp checklist ngày và tuần thành 1 danh sách theo ngày; lịch chọn nhiều ngày + giờ bánh xe, GMT+7 cho VI và UTC cho EN; thẻ tiềm năng tiếng Việt; logo mặt mèo; learn-to-grow/work-to-earn viết thường; bỏ "—" trong form; bỏ bóng nút trong form. QA: Chrome local với KV giả, đồng hồ giả từ T2 đến CN, VI/EN, 1440/390, 38/38 đạt.
 - **08/11/2026:**
   - Design system v4 Bento, kiểu chữ đặt tên theo chức năng; site bỏ mọi cỡ px viết tay.
   - App icon bo góc.
