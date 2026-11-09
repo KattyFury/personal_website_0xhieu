@@ -26,17 +26,15 @@ const cleanLink = v => {
 };
 // Each Get Started / Daily / Weekly section is a list of {text, link}; the form adds rows with +.
 // Rows with no text are dropped; capped at 20 rows so one request can't stuff KV.
-// Schedule (optional), stored in GMT+7: "HH:MM" 24h · days = weekdays, 1 = Monday … 7 = Sunday.
+// Schedule (optional): days = weekdays, 1 = Monday … 7 = Sunday.
 // `dow` (single weekday) is an old field, converted to days.
-const cleanTime = v => /^([01]\d|2[0-3]):[0-5]\d$/.test(String(v ?? '')) ? String(v) : '';
 const cleanDow  = v => { const n = Number(v); return Number.isInteger(n) && n >= 1 && n <= 7 ? n : 0; };
 const cleanDays = it => [...new Set((Array.isArray(it?.days) ? it.days : [it?.dow]).map(cleanDow).filter(Boolean))].sort((a, b) => a - b);
 const itemList = v => (Array.isArray(v) ? v : [])
   .slice(0, 20)
   .map(it => {
     const out = { text: clean(it?.text, 500), link: cleanLink(it?.link) };
-    const time = cleanTime(it?.time), days = cleanDays(it);
-    if (time) out.time = time;
+    const days = cleanDays(it);
     if (days.length) out.days = days;
     return out;
   })

@@ -557,27 +557,6 @@
     }
     .today-list { padding: 4px 16px; border-radius: var(--tile-r); background: var(--tile); }
     .today-empty { font-size: var(--ds-type-note-size); line-height: var(--ds-type-note-line); font-weight: 400; letter-spacing: var(--ds-type-note-tracking); padding: 16px 0; color: var(--grey); }
-    /* "Lịch hôm nay": timed tasks sorted by time; next = yellow chip, overdue unticked = red chip */
-    .sched { padding: 16px 16px 6px; border-radius: var(--tile-r); background: var(--tile); }
-    .sched-head { font-size: var(--ds-type-header-size); line-height: var(--ds-type-header-line); font-weight: 600; letter-spacing: var(--ds-type-header-tracking); display: flex; align-items: center; gap: 8px; color: var(--ink); }
-    .sched-head .wte-ico { width: 20px; height: 20px; }
-    .sc { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-top: 1px solid var(--hair); }
-    .sched-head + .sc { margin-top: 8px; }
-    .sc-time {
-      font-size: var(--ds-type-data-size); line-height: var(--ds-type-data-line); font-weight: 600; letter-spacing: var(--ds-type-data-tracking);
-      flex: none; min-width: 60px; height: 30px; padding: 0 8px; border-radius: 8px; display: grid; place-items: center;
-      background: var(--canvas); font-variant-numeric: tabular-nums; color: var(--ink);
-    }
-    .sc-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-    .sc-text { font-size: var(--ds-type-content-size); line-height: var(--ds-type-content-line); font-weight: 400; letter-spacing: var(--ds-type-content-tracking); color: var(--ink); overflow-wrap: anywhere; }
-    .sc-state { font-weight: 600; }
-    .sc-state:empty { display: none; }
-    .sc.is-next .sc-time { background: var(--accent); }
-    .sc.is-next .sc-state { color: var(--ink); }
-    .sc.is-late .sc-time { background: var(--red-soft); color: var(--red-text); }
-    .sc.is-late .sc-state { color: var(--red-text); }
-    .sc.is-done .sc-time { opacity: .45; }
-    .sc.is-done .sc-text { color: var(--muted); text-decoration: line-through; }
     /* Task row: tap circle = tick; tap the rest = open the task link */
     .dt { display: flex; align-items: center; gap: 12px; border-top: 1px solid var(--hair); }
     .dt:first-child { border-top: 0; }
@@ -597,8 +576,7 @@
     .dt-text { font-size: var(--ds-type-content-size); line-height: var(--ds-type-content-line); font-weight: 400; letter-spacing: var(--ds-type-content-tracking); color: var(--ink); overflow-wrap: anywhere; }
     .dt:has(input:checked) .dt-text { color: var(--muted); text-decoration: line-through; }
     .dt-meta { font-size: var(--ds-type-secondary-size); line-height: var(--ds-type-secondary-line); font-weight: 400; letter-spacing: var(--ds-type-secondary-tracking); display: flex; flex-wrap: wrap; align-items: center; gap: 6px; color: var(--grey); }
-    .dt-when { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
-    .dt-meta .wte-logo, .sc-main .wte-logo { width: 20px; height: 20px; border-radius: 50%; }
+    .dt-meta .wte-logo { width: 20px; height: 20px; border-radius: 50%; }
     .dt-meta .wte-tag { font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking); min-height: 20px; padding: 0 6px; }
     .dt-link { flex: none; width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; color: var(--grey); background: var(--canvas); }
     a.dt-body:hover .dt-link { color: var(--ink); background: var(--mist); }
@@ -802,17 +780,6 @@
       font-family: var(--font); background: var(--canvas); color: var(--ink); transition: background .15s;
     }
     .pt-day[aria-pressed="true"] { background: var(--accent); }
-    .pt-time { display: flex; align-items: center; gap: 8px; }
-    .wl-modal .pt-time-input {
-      font-weight: 600; width: 96px; height: 40px; padding: 0; border: none; border-radius: 10px;
-      text-align: center; font-variant-numeric: tabular-nums; background: var(--canvas);
-    }
-    .wl-modal .pt-time-input::placeholder { font-weight: 400; }
-    .pt-time-clear {
-      font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking);
-      padding: 0; border: none; background: none; cursor: pointer; font-family: var(--font); color: var(--grey);
-    }
-    .pt-time-input:placeholder-shown + .pt-time-clear { display: none; }
     .pt-row-add {
       align-self: flex-start; width: 40px; height: 40px; padding: 0; border-radius: var(--ds-product-control-radius); cursor: pointer;
       display: inline-flex; align-items: center; justify-content: center;
@@ -2552,28 +2519,14 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     let wteLang   = 'VI';
     let wteView   = 'projects';   // Work toggle: 'projects' (default) | 'tasks'
 
-    // ── Task schedule: weekday + time STORED in GMT+7; VI shows GMT+7, EN shows UTC (user decided 11/09) ──
-    const SAVED_CLOCK = 420;                                  // minutes offset from UTC of the stored time
-    const wteClock = () => wteLang === 'EN' ? 0 : SAVED_CLOCK;   // ... of the clock being viewed
+    // ── Task days: 1 = Monday … 7 = Sunday. "Today" follows the language: VI = GMT+7, EN = UTC ──
+    const wteClock = () => wteLang === 'EN' ? 0 : 420;   // minutes offset from UTC of the clock being viewed
     const wteNow   = () => new Date(Date.now() + wteClock() * 60000);   // read with getUTC* / toISOString
-    const pad2     = n => String(n).padStart(2, '0');
-    // Shift the time by delta minutes; past midnight the weekdays shift too. No time means unchanged.
-    function shiftWhen(days, time, delta) {
-      if (!time || !delta) return { days, time };
-      const [h, m] = time.split(':').map(Number);
-      const total = h * 60 + m + delta;
-      const dayShift = Math.floor(total / 1440);
-      const min = total - dayShift * 1440;
-      return {
-        days: days.map(d => (d - 1 + dayShift + 7) % 7 + 1).sort((a, b) => a - b),
-        time: `${pad2(Math.floor(min / 60))}:${pad2(min % 60)}`,
-      };
-    }
     const savedDays = it => it.days?.length ? it.days : it.dow ? [it.dow] : [];   // `dow` is an old field
     // No day chosen: daily task = every day ([]), weekly task = Monday + Tuesday.
-    const whenView = (it, scope) => {
+    const viewDays = (it, scope) => {
       const days = savedDays(it);
-      return shiftWhen(days.length ? days : scope === 'w' ? [1, 2] : [], it.time || '', wteClock() - SAVED_CLOCK);
+      return days.length ? days : scope === 'w' ? [1, 2] : [];
     };
     let wteLoaded = { VI: false, EN: false };
     let wteError  = false;
@@ -2776,14 +2729,14 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
                        ...WTE_GROUPS.filter(r => r !== 'LEARN').flatMap(r => groups[r])];
       const dowToday = (wteNow().getUTCDay() + 6) % 7 + 1;   // 1 = Monday … 7 = Sunday, by the clock being viewed
       const todayItems = p => [['daily', 'd'], ['weekly', 'w']].flatMap(([field, s]) =>
-        (p[field] || []).map((item, i) => ({ p, item, s, k: (p.id || p.name) + '#' + i, ...whenView(item, s) })))
+        (p[field] || []).map((item, i) => ({ p, item, s, k: (p.id || p.name) + '#' + i, days: viewDays(item, s) })))
         .filter(x => !x.days.length || x.days.includes(dowToday));
       const weeklyTag = `<span class="wte-tag">${EN ? 'weekly' : 'tuần'}</span>`;
       const doneNow = { d: loadDone('d'), w: loadDone('w') };
-      const rows = ordered.flatMap(todayItems).map(({ p, item, s, k, time }) => {
+      const rows = ordered.flatMap(todayItems).map(({ p, item, s, k }) => {
         const g = groupOf(p);
         const main = `<span class="dt-main"><span class="dt-text">${item.text}</span>
-                <span class="dt-meta">${time ? `<span class="dt-when">${time}</span>` : ''}${logoOf(p)}${p.name}<span class="wte-tag${strong(isTypeGroup(g) || g === 'S')}">${RANK_LABEL[g] || g}</span>${s === 'w' ? weeklyTag : ''}</span></span>`;
+                <span class="dt-meta">${logoOf(p)}${p.name}<span class="wte-tag${strong(isTypeGroup(g) || g === 'S')}">${RANK_LABEL[g] || g}</span>${s === 'w' ? weeklyTag : ''}</span></span>`;
         return `<div class="dt">
             <label class="dt-check"><input type="checkbox" aria-label="${EN ? 'Done' : 'Xong'}" data-s="${s}" data-k="${k}"${doneNow[s].has(k) ? ' checked' : ''} /><span class="dt-box">${wteIcon('check')}</span></label>
             ${item.link ? `<a class="dt-body" href="${item.link}" target="_blank" rel="noopener">${main}<span class="dt-link">${wteIcon('link')}</span></a>` : `<div class="dt-body">${main}</div>`}
@@ -2807,21 +2760,10 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
              <div class="wte-rank-group wte-rank-group--${r}">${groups[r].map(p => cardHtml(p, !!p._personal)).join('')}</div>
            </div>`;
       const groupsHtml = personalHtml + WTE_GROUPS.filter(r => groups[r].length).map(rankGroupHtml).join('');
-      // ── "Lịch hôm nay": today's timed tasks, sorted by time. None means no box. ──
-      const sched = ordered.flatMap(todayItems).filter(x => x.time).sort((a, b) => a.time.localeCompare(b.time));
-      const schedHtml = sched.length ? `<section class="sched" id="wte-sched">
-          <div class="sched-head">${wteIcon('daily')}${EN ? "Today's schedule · UTC" : 'Lịch hôm nay · GMT+7'}</div>
-          ${sched.map(({ p, item, s, k, time }) => `<div class="sc" data-s="${s}" data-k="${k}" data-time="${time}">
-            <span class="sc-time">${time}</span>
-            <span class="sc-main"><span class="sc-text">${item.text}</span>
-              <span class="dt-meta"><span class="sc-state"></span>${logoOf(p)}${p.name}${s === 'w' ? weeklyTag : ''}</span></span>
-          </div>`).join('')}
-        </section>` : '';
-
       const tab = (view, label) => `<button type="button" role="tab" data-view="${view}" aria-selected="${wteView === view}">${label}</button>`;
       const panel = (view, html) => `<div class="wte-view" data-view="${view}"${wteView === view ? '' : ' hidden'}>${html}</div>`;
       container.innerHTML = `<div class="wte-tabs" role="tablist">${tab('projects', EN ? 'Projects & how to join' : 'Hướng dẫn tham gia')}${tab('tasks', EN ? 'Task checklist' : 'Checklist công việc')}</div>`
-        + panel('projects', groupsHtml) + panel('tasks', todayHtml + schedHtml);
+        + panel('projects', groupsHtml) + panel('tasks', todayHtml);
       syncTodayRing();
     }
 
@@ -2845,30 +2787,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       Object.keys(store).sort().slice(0, -2).forEach(old => delete store[old]);
       try { localStorage.setItem(key, JSON.stringify(store)); } catch {}
     }
-    // Today's schedule: ticked → struck through · overdue unticked → red "Quá giờ" · next timed task → yellow "Sắp tới"
-    function syncSchedule() {
-      const box = document.getElementById('wte-sched');
-      if (!box) return;
-      const EN = wteLang === 'EN';
-      const now = wteNow().toISOString().slice(11, 16);
-      let nextMarked = false;
-      box.querySelectorAll('.sc').forEach(row => {
-        const tick = document.querySelector(`#wte-cards input[data-s="${row.dataset.s}"][data-k="${CSS.escape(row.dataset.k)}"]`);
-        const done = !!(tick && tick.checked);
-        const t = row.dataset.time;
-        const late = !done && t && t < now;
-        const next = !done && !late && t && !nextMarked;
-        if (next) nextMarked = true;
-        row.classList.toggle('is-done', done);
-        row.classList.toggle('is-late', !!late);
-        row.classList.toggle('is-next', !!next);
-        row.querySelector('.sc-state').textContent = done ? (EN ? 'Done' : 'Xong')
-          : late ? (EN ? 'Overdue' : 'Quá giờ') : next ? (EN ? 'Up next' : 'Sắp tới') : '';
-      });
-    }
-    setInterval(syncSchedule, 60000);
     function syncTodayRing() {
-      syncSchedule();
       const box = document.getElementById('wte-today');
       if (!box) return;
       const all = box.querySelectorAll('input[data-k]');
@@ -3037,7 +2956,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     // 3 multi-row groups: each row = task + link, press + to add a row
     const PT_GROUPS = { gs: 'Việc cần làm để bắt đầu', daily: 'Việc làm mỗi ngày', weekly: 'Việc làm mỗi tuần' };
 
-    // Optional schedule: multiple days + typed 24h time, on the clock of the current language.
+    // Optional schedule: which weekdays the task falls on.
     const DOW_SHORT = { VI: ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'], EN: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] };
     function ptWhenHtml(key) {
       if (key === 'gs') return '';
@@ -3047,18 +2966,8 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
           <span class="pt-when-label">${EN ? 'Day' : 'Ngày'}</span>
           <div class="pt-days">${DOW_SHORT[wteLang].map((d, i) => `<button type="button" class="pt-day" data-d="${i + 1}" aria-pressed="false">${d}</button>`).join('')}</div>
           <span class="pt-when-note">${note}</span>
-          <span class="pt-when-label">${EN ? 'Time (UTC)' : 'Giờ (GMT+7)'}</span>
-          <div class="pt-time"><input type="text" class="pt-time-input" inputmode="numeric" maxlength="5" placeholder="--:--" autocomplete="off" aria-label="${EN ? 'Time, 24-hour' : 'Giờ, dạng 24h'}" /><button type="button" class="pt-time-clear">${EN ? 'Clear' : 'Bỏ giờ'}</button></div>
         </div>`;
     }
-    const ptSetTime = (row, value) => { row.querySelector('.pt-time-input').value = value; };
-    // 24h only: "9" → 09:00, "930" → 09:30, "1100" → 11:00. Returns '' if invalid.
-    const ptParseTime = s => {
-      const d = String(s).replace(/\D/g, '');
-      if (!d || d.length > 4) return '';
-      const [h, m] = d.length <= 2 ? [+d, 0] : [+d.slice(0, -2), +d.slice(-2)];
-      return h < 24 && m < 60 ? `${pad2(h)}:${pad2(m)}` : '';
-    };
     function ptAddRow(key) {
       const row = document.createElement('div');
       row.className = 'pt-item calc-field';
@@ -3071,15 +2980,6 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       row.querySelectorAll('.pt-day').forEach(b => b.addEventListener('click', () => {
         b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'));
       }));
-      if (key !== 'gs') {
-        const timeInput = row.querySelector('.pt-time-input');
-        timeInput.addEventListener('input', () => {
-          const d = timeInput.value.replace(/\D/g, '').slice(0, 4);
-          timeInput.value = d.length > 2 ? `${d.slice(0, 2)}:${d.slice(2)}` : d;
-        });
-        timeInput.addEventListener('blur', () => { timeInput.value = ptParseTime(timeInput.value) || timeInput.value; });
-        row.querySelector('.pt-time-clear').addEventListener('click', () => ptSetTime(row, ''));
-      }
       $('pt-' + key + '-items').appendChild(row);
       return row;
     }
@@ -3090,9 +2990,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         const it = { text: r.querySelector('.pt-item-text').value, link: r.querySelector('.pt-item-link').value };
         if (r.querySelector('.pt-when')) {
           const days = [...r.querySelectorAll('.pt-day[aria-pressed="true"]')].map(b => Number(b.dataset.d));
-          const saved = shiftWhen(days, ptParseTime(r.querySelector('.pt-time-input').value), SAVED_CLOCK - wteClock());
-          if (saved.time) it.time = saved.time;
-          if (saved.days.length) it.days = saved.days;
+          if (days.length) it.days = days;
         }
         return it;
       })
@@ -3113,9 +3011,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         row.querySelector('.pt-item-text').value = it.text || '';
         row.querySelector('.pt-item-link').value = it.link || '';
         if (key !== 'gs') {
-          const view = shiftWhen(savedDays(it), it.time || '', wteClock() - SAVED_CLOCK);
-          ptSetTime(row, view.time);
-          view.days.forEach(d => row.querySelector(`.pt-day[data-d="${d}"]`).setAttribute('aria-pressed', 'true'));
+          savedDays(it).forEach(d => row.querySelector(`.pt-day[data-d="${d}"]`).setAttribute('aria-pressed', 'true'));
         }
       });
       if (!wrap.children.length) ptAddRow(key);
@@ -3152,10 +3048,6 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       if (!$('pt-potential').value) { showMsg(ptError, 'Chọn tiềm năng trước khi lưu'); return; }
       if (!$('pt-type').value) { showMsg(ptError, 'Chọn phân loại trước khi lưu'); return; }
       if (!income && !$('pt-rank').value) { showMsg(ptError, 'Chọn rank trước khi lưu'); return; }
-      if ([...document.querySelectorAll('#ptask-form .pt-time-input')].some(i => i.value && !ptParseTime(i.value))) {
-        showMsg(ptError, wteLang === 'EN' ? 'Invalid time. Use 24-hour format, e.g. 11:00' : 'Giờ không hợp lệ. Nhập dạng 24h, ví dụ 11:00');
-        return;
-      }
       const task = {
         name:       $('pt-name').value,
         twitter:    $('pt-twitter').value,
