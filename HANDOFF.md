@@ -43,5 +43,6 @@ Current state as of 2026-11-09. History: git and `docs/handoff-history-through-2
 ## Open
 - Font: proposed loading Inter so all devices match; owner hasn't answered.
 - Pre-TGE airdrop dashboard: discussion only, see `docs/SURF_PRE_TGE_DASHBOARD.md`. Don't build without a decision.
-- Admin popups have not been visually reviewed since the 11-04 tone change.
+- Admin popups have not been visually reviewed since the 11-04 tone change, and the ⋮ edit button on the new project tiles has not been tried on production (needs the password).
+- Vietnamese code comments in `index.html` and `functions/` still need translating to English (app UI text stays).
 - unavatar sometimes fails for projects that have an X logo, so those show the cat; cause not confirmed.
