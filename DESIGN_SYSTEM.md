@@ -36,7 +36,7 @@ English only, tagline verbatim. 4-column grid desktop, 2 columns ≤1024: hero (
 - Full-width left/right toggle under the title, styled like VI/EN (white track, black selected, flat). Left "Projects & how to join" is the default; right "Task checklist".
 - Projects: one white tile each, 2 columns (1 at ≤900): logo, name, potential + narrative tags, Website / X / Discord chips, then Get started, Daily, Weekly. No logo → cat face.
 - Checklist: yellow tile (date, count, ring), one list of today's tasks, then "Today's schedule". Row: 32px circle ticks; the rest of the row opens the link.
-- Task form: 7 day pills (selected = accent), 24h wheel opening under the row; all form buttons flat.
+- Task form: 7 day pills (selected = accent), typed 24h time field; all form buttons flat.
 
 ## Layout
 Frame max 1280 including padding (24 desktop, 16 mobile). Popup radius 16, inputs white.
