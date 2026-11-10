@@ -18,11 +18,11 @@ Current state as of 2026-11-09. History: git and `docs/handoff-history-through-2
 ## Work
 - Title `work-to-earn`. Full-width toggle: left Projects (default), right Checklist. State lives in `wteView`.
 - **Projects:** groups Personal (l2g first, then w2e, S…C) → work-to-earn → Rank S…C. Each project is a tile: logo, name, potential tag (VI `Tiềm năng`/`Tiềm năng thấp`, EN `High/Low potential`), narrative, Website/X/Discord, then Get started, Daily, Weekly. Logo from unavatar with `?fallback=false`; missing or failed → `icon.png`. `TYPE_GROUPS` in `private.js` must match `WTE_TYPE_GROUP` in `index.html`.
-- **Checklist:** one list of what falls on today, order l2g → personal → w2e → S…C; weekly rows carry a `weekly` tag. No days chosen: daily = every day, weekly = Mon + Tue. Circle ticks; rest of the row opens the link. Daily ticks reset daily, weekly ticks last the week. Ticks are in localStorage (`wte-done`, `wte-done-week`, last 2 periods), this device only; no cross-device sync.
+- **Checklist:** one list of what falls on today, order l2g → personal → w2e → S…B, rank C never listed (admin included); weekly rows carry a `weekly` tag. No days chosen: daily = every day, weekly = Mon + Tue. Circle ticks; rest of the row opens the link. Daily ticks reset daily, weekly ticks last the week. Ticks are in localStorage (`wte-done`, `wte-done-week`, last 2 periods), this device only; no cross-device sync.
 - **Schedule:** each task has optional `days` (1=Mon … 7=Sun), no time of day. Legacy `dow` is read and becomes `days` on save; any old `time` is ignored and dropped on save. "Today" follows the viewer's language clock (VI GMT+7, EN UTC), not the machine.
 - **Form:** potential and type required. KV stores `Learn-to-Grow`/`Work-to-Earn`, display is lowercase.
 - l2g: type `Learn-to-Grow`, no rank, defaults to personal.
-- **Rank C is admin-only** (Projects and Checklist): `wte.js` drops it from the public API; admin gets it through `/api/private`.
+- **Rank C is admin-only** (Projects tab): `wte.js` drops it from the public API; admin gets it through `/api/private`.
 
 ## Valuation
 - Formulas: `vcFDV = fundraising / (vcAlloc/100)`; `×TGE = priceTGE × totalSupply / vcFDV`; `×ATM = currentPrice / (vcFDV/totalSupply)`.

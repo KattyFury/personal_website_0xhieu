@@ -2725,10 +2725,11 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
            </div>`
         : '';
 
-      // ── "Hôm nay" checklist: merges daily tasks + weekly tasks due today (l2g → personal → w2e → S … C) ──
+      // ── "Hôm nay" checklist: merges daily tasks + weekly tasks due today (l2g → personal → w2e → S … B) ──
       const EN = wteLang === 'EN';
       const ordered = [...myOther, ...groups.LEARN,
-                       ...WTE_GROUPS.filter(r => r !== 'LEARN').flatMap(r => groups[r])];
+                       ...WTE_GROUPS.filter(r => r !== 'LEARN').flatMap(r => groups[r])]
+        .filter(p => groupOf(p) !== 'C');   // rank C never appears in the checklist, even for admin
       const dowToday = (wteNow().getUTCDay() + 6) % 7 + 1;   // 1 = Monday … 7 = Sunday, by the clock being viewed
       const todayItems = p => [['daily', 'd'], ['weekly', 'w']].flatMap(([field, s]) =>
         (p[field] || []).map((item, i) => ({ p, item, s, k: (p.id || p.name) + '#' + i, days: viewDays(item, s) })))
