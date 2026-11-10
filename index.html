@@ -2523,10 +2523,11 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     const wteClock = () => wteLang === 'EN' ? 0 : 420;   // minutes offset from UTC of the clock being viewed
     const wteNow   = () => new Date(Date.now() + wteClock() * 60000);   // read with getUTC* / toISOString
     const savedDays = it => it.days?.length ? it.days : it.dow ? [it.dow] : [];   // `dow` is an old field
-    // No day chosen: daily task = every day ([]), weekly task = Monday + Tuesday.
+    // No day chosen: daily task = Monday to Friday (weekend only when picked), weekly task = Monday + Tuesday.
+    const DAILY_DEFAULT = [1, 2, 3, 4, 5];
     const viewDays = (it, scope) => {
       const days = savedDays(it);
-      return days.length ? days : scope === 'w' ? [1, 2] : [];
+      return days.length ? days : scope === 'w' ? [1, 2] : DAILY_DEFAULT;
     };
     let wteLoaded = { VI: false, EN: false };
     let wteError  = false;
@@ -2733,7 +2734,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       const dowToday = (wteNow().getUTCDay() + 6) % 7 + 1;   // 1 = Monday … 7 = Sunday, by the clock being viewed
       const todayItems = p => [['daily', 'd'], ['weekly', 'w']].flatMap(([field, s]) =>
         (p[field] || []).map((item, i) => ({ p, item, s, k: (p.id || p.name) + '#' + i, days: viewDays(item, s) })))
-        .filter(x => !x.days.length || x.days.includes(dowToday));
+        .filter(x => x.days.includes(dowToday));
       const weeklyTag = `<span class="wte-tag">${EN ? 'weekly' : 'tuần'}</span>`;
       const doneNow = { d: loadDone('d'), w: loadDone('w') };
       const rows = ordered.flatMap(todayItems).map(({ p, item, s, k }) => {
@@ -2961,24 +2962,24 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
 
     // Optional schedule: which weekdays the task falls on.
     const DOW_SHORT = { VI: ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'], EN: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] };
-    function ptWhenHtml(key) {
+    function ptWhenHtml(key, days) {
       if (key === 'gs') return '';
       const EN = wteLang === 'EN';
-      const note = key === 'daily' ? (EN ? 'Empty: every day' : 'Để trống: mỗi ngày') : (EN ? 'Empty: Mon and Tue' : 'Để trống: thứ 2 và thứ 3');
+      const note = key === 'daily' ? (EN ? 'Empty: Mon to Fri' : 'Để trống: thứ 2 đến thứ 6') : (EN ? 'Empty: Mon and Tue' : 'Để trống: thứ 2 và thứ 3');
       return `<div class="pt-when">
           <span class="pt-when-label">${EN ? 'Day' : 'Ngày'}</span>
-          <div class="pt-days">${DOW_SHORT[wteLang].map((d, i) => `<button type="button" class="pt-day" data-d="${i + 1}" aria-pressed="false">${d}</button>`).join('')}</div>
+          <div class="pt-days">${DOW_SHORT[wteLang].map((d, i) => `<button type="button" class="pt-day" data-d="${i + 1}" aria-pressed="${days.includes(i + 1)}">${d}</button>`).join('')}</div>
           <span class="pt-when-note">${note}</span>
         </div>`;
     }
-    function ptAddRow(key) {
+    function ptAddRow(key, days = key === 'daily' ? DAILY_DEFAULT : []) {
       const row = document.createElement('div');
       row.className = 'pt-item calc-field';
       row.innerHTML = `<div class="pt-item-head">
           <input type="text" class="pt-item-text" placeholder="${PT_GROUPS[key]}" />
           <button type="button" class="pt-item-del" title="Xoá dòng" aria-label="Xoá dòng">${wteIcon('close')}</button>
         </div>
-        <input type="text" class="pt-item-link" placeholder="https://..." />${ptWhenHtml(key)}`;
+        <input type="text" class="pt-item-link" placeholder="https://..." />${ptWhenHtml(key, days)}`;
       row.querySelector('.pt-item-del').addEventListener('click', () => row.remove());
       row.querySelectorAll('.pt-day').forEach(b => b.addEventListener('click', () => {
         b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'));
@@ -3010,12 +3011,10 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       const wrap = $('pt-' + key + '-items');
       wrap.innerHTML = '';
       (items || []).forEach(it => {
-        const row = ptAddRow(key);
+        const saved = savedDays(it);
+        const row = saved.length ? ptAddRow(key, saved) : ptAddRow(key);
         row.querySelector('.pt-item-text').value = it.text || '';
         row.querySelector('.pt-item-link').value = it.link || '';
-        if (key !== 'gs') {
-          savedDays(it).forEach(d => row.querySelector(`.pt-day[data-d="${d}"]`).setAttribute('aria-pressed', 'true'));
-        }
       });
       if (!wrap.children.length) ptAddRow(key);
     }
