@@ -772,7 +772,6 @@
     /* Schedule (optional): 7 multi-select day buttons + typed 24h time */
     .pt-when { display: grid; grid-template-columns: max-content minmax(0, 1fr); align-items: center; gap: 8px 12px; }
     .pt-when-label { font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking); color: var(--grey); }
-    .pt-when-note { grid-column: 2; font-size: var(--ds-type-note-size); line-height: var(--ds-type-note-line); font-weight: 400; letter-spacing: var(--ds-type-note-tracking); color: var(--grey); }
     .pt-days { display: flex; gap: 4px; }
     .pt-day {
       font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-line); font-weight: 600; letter-spacing: var(--ds-type-label-tracking);
@@ -2524,10 +2523,11 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     const wteNow   = () => new Date(Date.now() + wteClock() * 60000);   // read with getUTC* / toISOString
     const savedDays = it => it.days?.length ? it.days : it.dow ? [it.dow] : [];   // `dow` is an old field
     // No day chosen: daily task = Monday to Friday (weekend only when picked), weekly task = Monday + Tuesday.
-    const DAILY_DEFAULT = [1, 2, 3, 4, 5];
+    const DAILY_DEFAULT  = [1, 2, 3, 4, 5];
+    const WEEKLY_DEFAULT = [1, 2];
     const viewDays = (it, scope) => {
       const days = savedDays(it);
-      return days.length ? days : scope === 'w' ? [1, 2] : DAILY_DEFAULT;
+      return days.length ? days : scope === 'w' ? WEEKLY_DEFAULT : DAILY_DEFAULT;
     };
     let wteLoaded = { VI: false, EN: false };
     let wteError  = false;
@@ -2965,14 +2965,11 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     function ptWhenHtml(key, days) {
       if (key === 'gs') return '';
       const EN = wteLang === 'EN';
-      const note = key === 'daily' ? (EN ? 'Empty: Mon to Fri' : 'Để trống: thứ 2 đến thứ 6') : (EN ? 'Empty: Mon and Tue' : 'Để trống: thứ 2 và thứ 3');
       return `<div class="pt-when">
           <span class="pt-when-label">${EN ? 'Day' : 'Ngày'}</span>
-          <div class="pt-days">${DOW_SHORT[wteLang].map((d, i) => `<button type="button" class="pt-day" data-d="${i + 1}" aria-pressed="${days.includes(i + 1)}">${d}</button>`).join('')}</div>
-          <span class="pt-when-note">${note}</span>
-        </div>`;
+          <div class="pt-days">${DOW_SHORT[wteLang].map((d, i) => `<button type="button" class="pt-day" data-d="${i + 1}" aria-pressed="${days.includes(i + 1)}">${d}</button>`).join('')}</div>        </div>`;
     }
-    function ptAddRow(key, days = key === 'daily' ? DAILY_DEFAULT : []) {
+    function ptAddRow(key, days = key === 'daily' ? DAILY_DEFAULT : key === 'weekly' ? WEEKLY_DEFAULT : []) {
       const row = document.createElement('div');
       row.className = 'pt-item calc-field';
       row.innerHTML = `<div class="pt-item-head">
