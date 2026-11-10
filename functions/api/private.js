@@ -61,6 +61,7 @@ const sanitize = t => ({
   name:       clean(t.name, 120) || 'Không tên',
   twitter:    cleanLink(t.twitter),
   discord:    cleanLink(t.discord),
+  telegram:   cleanLink(t.telegram),
   website:    cleanLink(t.website),
   potential:  cleanPotential(t.potential),
   type:       clean(t.type, 60),

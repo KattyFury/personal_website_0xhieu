@@ -1322,10 +1322,14 @@
     <div class="wl-modal wl-modal--wide">
       <div class="wl-modal-title" id="pt-title">Thêm task cá nhân</div>
       <div id="ptask-form">
+        <div class="calc-field">
+          <label>Tiêu đề (tên dự án)</label>
+          <input type="text" id="pt-name" placeholder="Ví dụ: CreatorPad" />
+        </div>
         <div class="ptask-row">
           <div class="calc-field">
-            <label>Tiêu đề (tên dự án)</label>
-            <input type="text" id="pt-name" placeholder="Ví dụ: CreatorPad" />
+            <label>Link dự án</label>
+            <input type="text" id="pt-website" placeholder="Ví dụ: binance.com" />
           </div>
           <div class="calc-field">
             <label>Twitter</label>
@@ -1334,12 +1338,12 @@
         </div>
         <div class="ptask-row">
           <div class="calc-field">
-            <label>Link dự án</label>
-            <input type="text" id="pt-website" placeholder="Ví dụ: binance.com" />
-          </div>
-          <div class="calc-field">
             <label>Discord</label>
             <input type="text" id="pt-discord" placeholder="Ví dụ: https://discord.gg/binance" />
+          </div>
+          <div class="calc-field">
+            <label>Telegram</label>
+            <input type="text" id="pt-telegram" placeholder="Ví dụ: t.me/binance" />
           </div>
         </div>
         <div class="ptask-row">
@@ -2620,6 +2624,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       weekly:     '<path d="M8 2v3"/><path d="M16 2v3"/><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/>',
       x:          '<path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/>',
       discord:    '<path d="M8 12a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"/><path d="M14 12a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"/><path d="M15.5 17c0 1 1.5 3 2 3c1.5 0 2.833 -1.667 3.5 -3c.667 -1.667 .5 -5.833 -1.5 -11.5c-1.457 -1.015 -3 -1.34 -4.5 -1.5l-.972 1.923a11.913 11.913 0 0 0 -4.053 0l-.975 -1.923c-1.5 .16 -3.043 .485 -4.5 1.5c-2 5.667 -2.167 9.833 -1.5 11.5c.667 1.333 2 3 3.5 3c.5 0 2 -2 2 -3"/><path d="M7 16.5c3.5 1 6.5 1 10 0"/>',
+      telegram:   '<path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4"/>',
       close:      '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
       more:       '<circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/>',
       link:       '<path d="M7 7h10v10"/><path d="M7 17 17 7"/>',
@@ -2677,7 +2682,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         const handle = p.twitter ? p.twitter.replace(/.*twitter\.com\/|.*x\.com\/|^@/, '').split('?')[0].trim() : '';
         return `<img class="${cls}" src="${handle ? `https://unavatar.io/twitter/${handle}?fallback=false` : CAT_LOGO}" alt="" loading="lazy" onerror="this.onerror=null;this.src='${CAT_LOGO}'" />`;
       };
-      // Project row: logo · name · High/Low potential · narrative; below it Website · X · Discord · Hướng dẫn tham gia.
+      // Project row: logo · name · High/Low potential · narrative; below it Website · X · Discord · Telegram · Hướng dẫn tham gia.
       const cardHtml = (p, personal = false) => {
         const cardId = personal
           ? 'wte-personal-' + p.id
@@ -2689,6 +2694,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
           p.website ? `<a class="wte-social" href="${p.website}" target="_blank" rel="noopener">${wteIcon('link')}Website</a>` : '',
           p.twitter ? `<a class="wte-social wte-social--icon" href="${p.twitter}" target="_blank" rel="noopener" aria-label="X" title="X">${wteIcon('x')}</a>` : '',
           p.discord ? `<a class="wte-social wte-social--icon" href="${p.discord}" target="_blank" rel="noopener" aria-label="Discord" title="Discord">${wteIcon('discord')}</a>` : '',
+          p.telegram ? `<a class="wte-social wte-social--icon" href="${p.telegram}" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram">${wteIcon('telegram')}</a>` : '',
         ].join('');
         const potText = potLv === 'high' ? (EN ? 'High potential' : 'Tiềm năng') : potLv === 'low' ? (EN ? 'Low potential' : 'Tiềm năng thấp') : potLv;
         return `<div class="wte-card wte-card--${g}" id="${cardId}">
@@ -3022,6 +3028,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       $('pt-name').value      = task?.name || '';
       $('pt-twitter').value   = task?.twitter || '';
       $('pt-discord').value   = task?.discord || '';
+      $('pt-telegram').value  = task?.telegram || '';
       $('pt-website').value   = task?.website || '';
       $('pt-potential').value = potLevel(task?.potential);
       $('pt-rank').value       = task?.rank === 'SS' ? 'S' : (task?.rank || '');   // old rank SS → S (like groupOf)
@@ -3051,6 +3058,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         name:       $('pt-name').value,
         twitter:    $('pt-twitter').value,
         discord:    $('pt-discord').value,
+        telegram:   $('pt-telegram').value,
         website:    $('pt-website').value,
         potential:  $('pt-potential').value,
         type:       $('pt-type').value,
