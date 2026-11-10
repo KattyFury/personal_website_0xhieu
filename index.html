@@ -1351,7 +1351,7 @@
             <label>Tiềm năng</label>
             <select id="pt-potential" required>
               <option value="" disabled hidden>Chọn tiềm năng</option>
-              <option value="high">Tiềm năng</option>
+              <option value="high">Tiềm năng cao</option>
               <option value="low">Tiềm năng thấp</option>
             </select>
           </div>
@@ -2696,7 +2696,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
           p.discord ? `<a class="wte-social wte-social--icon" href="${p.discord}" target="_blank" rel="noopener" aria-label="Discord" title="Discord">${wteIcon('discord')}</a>` : '',
           p.telegram ? `<a class="wte-social wte-social--icon" href="${p.telegram}" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram">${wteIcon('telegram')}</a>` : '',
         ].join('');
-        const potText = potLv === 'high' ? (EN ? 'High potential' : 'Tiềm năng') : potLv === 'low' ? (EN ? 'Low potential' : 'Tiềm năng thấp') : potLv;
+        const potText = potLv === 'high' ? (EN ? 'High potential' : 'Tiềm năng cao') : potLv === 'low' ? (EN ? 'Low potential' : 'Tiềm năng thấp') : potLv;
         return `<div class="wte-card wte-card--${g}" id="${cardId}">
           <div class="wte-card-head">${logoOf(p)}
             <span class="wte-card-main"><span class="wte-name">${p.name}</span>
