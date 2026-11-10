@@ -22,6 +22,7 @@ Current state as of 2026-11-09. History: git and `docs/handoff-history-through-2
 - **Schedule:** each task has optional `days` (1=Mon … 7=Sun), no time of day. Legacy `dow` is read and becomes `days` on save; any old `time` is ignored and dropped on save. "Today" follows the viewer's language clock (VI GMT+7, EN UTC), not the machine.
 - **Form:** potential and type required. KV stores `Learn-to-Grow`/`Work-to-Earn`, display is lowercase.
 - l2g: type `Learn-to-Grow`, no rank, defaults to personal.
+- **Rank C is admin-only** (Projects and Checklist): `wte.js` drops it from the public API; admin gets it through `/api/private`.
 
 ## Valuation
 - Formulas: `vcFDV = fundraising / (vcAlloc/100)`; `×TGE = priceTGE × totalSupply / vcFDV`; `×ATM = currentPrice / (vcFDV/totalSupply)`.

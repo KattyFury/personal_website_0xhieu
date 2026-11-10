@@ -16,5 +16,6 @@ export async function onRequestGet({ env }) {
   let tasks = [];
   try { tasks = JSON.parse(await env.WORK.get(KEY) || '[]'); } catch { tasks = []; }
 
-  return json({ ok: true, projects: tasks.filter(t => t.visibility === 'public') });
+  // Rank C is admin-only: filtered here so it never reaches visitors. Admin gets it from /api/private.
+  return json({ ok: true, projects: tasks.filter(t => t.visibility === 'public' && t.rank !== 'C') });
 }

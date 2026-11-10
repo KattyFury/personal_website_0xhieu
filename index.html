@@ -2484,7 +2484,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     //   S           purple #6155F5: 10K play
     //   A           blue #0088FF: 1K play
     //   B           green #34C759: xxx play
-    //   C           white (grey border): junk play
+    //   C           white (grey border): junk play. Admin only (filtered in functions/api/wte.js)
     // To add/change a group → edit the 3 constants below, then add class `.rank-*` +
     // `.wte-card--*` trong CSS.
     // Category → fixed group (no rank). Matches TYPE_GROUPS in functions/api/private.js.
@@ -2538,6 +2538,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         const res  = await fetch('/api/wte');
         const data = await res.json();
         if (!data.ok) throw new Error(data.error || 'fetch failed');
+        if (wteLoaded.VI) return;   // admin list landed first and is fuller (has rank C): keep it
         wteData.VI = data.projects || [];
         wteLoaded.VI = true;
         wteError = false;
@@ -2590,6 +2591,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
         ['getStarted','daily','weekly'].forEach(f => (p[f] || []).forEach(item => texts.push(item.text || '')));
       }));
       const { out, ok } = await gtranslate(texts);
+      if (lists[0] !== wteData.VI) return doTranslateToEN();   // admin list replaced the data mid-translation
       let idx = 0;
       const [pubEN, perEN] = lists.map(list => list.map(p => {
         const en = { ...p };
