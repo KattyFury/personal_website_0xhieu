@@ -639,7 +639,7 @@
     /* Tasks always show full text: wrap as needed, NO "…" truncation (user decided 2026-10-28) */
     .wte-task-text { flex: 1; min-width: 0; white-space: normal; overflow-wrap: anywhere; }
     /* Daily tasks stand out: bold 600 (user 2026-11-12) */
-    .wte-section--daily .wte-task-item { font-weight: 600; }
+    .wte-section--daily .wte-task-row { font-weight: 600; }
     /* Hover on a linked task = Valuation marker (black 600 on accent); -4px margin keeps text in place */
     .wte-task-mk { margin: 0 -4px; padding: 0 4px; -webkit-box-decoration-break: clone; box-decoration-break: clone; transition: background .15s; }
     .wte-task-row--link:hover .wte-task-mk { background: var(--accent); color: var(--ink); font-weight: 600; }
