@@ -16,6 +16,7 @@ Use `--ds-type-<name>-size/line/tracking` (`display`, `page`, `header`, `content
 - Black: normal content. Muted text: `#525252`. No blue-tinted greys.
 - Accent only for buttons, active controls, highlights; text on accent is black.
 - Marker highlight (black 600 on accent, 4px side padding, square): ATH ratio, ticker with VC FDV ≥ 300M, ×TGE ≥ 13, main number in the Valuation boxes.
+- Hover: text links get the marker; buttons turn accent with black text. Not for selected toggles or destructive buttons. Never bold-only.
 - Red only for danger and destructive actions. Banned: `#B84A0C`, `#FEF5D9` (`tools/ds-audit.js` flags them).
 - Disabled uses a lighter color, never opacity.
 
