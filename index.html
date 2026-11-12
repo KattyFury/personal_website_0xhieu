@@ -143,16 +143,25 @@
     .nav-btn:hover { color: var(--ink); }
 
     /* ── UNIFIED HOVER: important text black and bold 600. NO box background change, NO box shift. */
-    .header-home:hover span, .val-intro-clickable:hover > span, .box-title-btn:hover, .wte-name:hover,
     .nav-btn:not(:disabled):hover, .lang-btn:hover, .lang-dd-btn:not(.is-plus):hover, .social-btn:hover,
     .predict-link:hover, .predict-btn-primary:hover, .predict-btn-secondary:hover, .val-del-btn:hover, .retry-btn:hover,
-    .pt-delete:hover, .val-row:hover, a.dt-body:hover .dt-text,#tge-section tbody tr.row-editable:hover td {
+    .pt-delete:hover, .val-row:hover, #tge-section tbody tr.row-editable:hover td {
       color: var(--ink);
       font-weight: 600;
     }
     /* Free-width text: bold via same-color text stroke so it doesn't shift. */
     .social-btn:hover { font-weight: 600; }
-    .social-btn:hover, .tl-bullets a:hover, .info-modal-link:hover { -webkit-text-stroke: .6px currentColor; }
+    .social-btn:hover { -webkit-text-stroke: .6px currentColor; }
+    /* ── TEXT HOVER = MARKER (user 2026-11-12): black 600 on accent, same as Valuation highlights.
+       -4px margin + 4px padding keeps text in place. On the yellow tile the marker turns black. */
+    .header-home span, .val-intro-clickable > span, .box-title-btn, .wte-name, .dt-text, .tl-bullets a, .info-modal-link {
+      margin: 0 -4px; padding: 0 4px; -webkit-box-decoration-break: clone; box-decoration-break: clone; transition: background .15s;
+    }
+    .header-home:hover span, .val-intro-clickable:hover > span, .box-title-btn:hover, .wte-name:hover,
+    a.dt-body:hover .dt-text, .tl-bullets a:hover, .info-modal-link:hover {
+      background: var(--accent); color: var(--ink); font-weight: 600;
+    }
+    .val-card--accent .box-title-btn:hover { background: var(--ink); color: var(--ground); }
     .lang-dd-btn.is-plus:hover { background: var(--mist); }
     .nav-btn:disabled, .nav-btn:disabled:hover { color: var(--muted); cursor: default; }
 
@@ -935,6 +944,14 @@
     .wte-card .wte-socials { padding-left: 0; }
     @media (max-width: 900px) { .wte-rank-group { grid-template-columns: minmax(0, 1fr); } }
     @media (max-width: 640px) { .wte-rank-group { gap: 10px; } }
+    /* ── BUTTON HOVER = ACCENT (user 2026-11-12): whole button turns yellow, black text.
+       Not for selected toggles (they show state) or destructive buttons (red rule). Kept last so it wins. */
+    .nav-btn:not(:disabled):not(.active):hover, .lang-btn:not(.active):hover, .lang-dd-btn:hover, .lang-dd-btn.is-plus:hover,
+    .social-btn:hover, .wte-social:hover, .wte-opt:hover, .modal-corner-close:hover, .calc-reset-btn:hover, .camera-btn:hover,
+    .predict-link:hover, .predict-btn-primary:hover, .predict-btn-secondary:hover, .retry-btn:hover, .pt-row-add:hover,
+    a.dt-body:hover .dt-link, .wte-task-row--link:hover .wte-task-icon, #wte-cards .wte-tabs button:not([aria-selected="true"]):hover {
+      background: var(--accent); color: var(--ink); border-color: var(--accent);
+    }
   </style>
 </head>
 <body data-ds-product="0xhieu-xyz" data-ds-profile="spacious">
