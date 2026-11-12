@@ -146,7 +146,7 @@
     .header-home:hover span, .val-intro-clickable:hover > span, .box-title-btn:hover, .wte-name:hover,
     .nav-btn:not(:disabled):hover, .lang-btn:hover, .lang-dd-btn:not(.is-plus):hover, .social-btn:hover,
     .predict-link:hover, .predict-btn-primary:hover, .predict-btn-secondary:hover, .val-del-btn:hover, .retry-btn:hover,
-    .pt-delete:hover, .val-row:hover, .wte-task-row--link:hover .wte-task-text, a.dt-body:hover .dt-text,#tge-section tbody tr.row-editable:hover td {
+    .pt-delete:hover, .val-row:hover, a.dt-body:hover .dt-text,#tge-section tbody tr.row-editable:hover td {
       color: var(--ink);
       font-weight: 600;
     }
@@ -638,6 +638,11 @@
     .wte-task-row { flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 40px; padding: 4px 0; border-bottom-color: var(--hair); text-decoration: none; }
     /* Tasks always show full text: wrap as needed, NO "…" truncation (user decided 2026-10-28) */
     .wte-task-text { flex: 1; min-width: 0; white-space: normal; overflow-wrap: anywhere; }
+    /* Daily tasks stand out: bold 600 (user 2026-11-12) */
+    .wte-section--daily .wte-task-item { font-weight: 600; }
+    /* Hover on a linked task = Valuation marker (black 600 on accent); -4px margin keeps text in place */
+    .wte-task-mk { margin: 0 -4px; padding: 0 4px; -webkit-box-decoration-break: clone; box-decoration-break: clone; transition: background .15s; }
+    .wte-task-row--link:hover .wte-task-mk { background: var(--accent); color: var(--ink); font-weight: 600; }
 
     /* ══ CAT BUTTON (Agent): shell only, tap shows "coming soon" ════════ */
     #cat-btn {
@@ -2640,7 +2645,7 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     // ── Render a task section ─────────────────────────
     function renderTasks(items) {
       return items.map(item => {
-        const inner = `<span class="wte-task-text">${item.text}</span>${item.link ? `<span class="wte-task-icon">${wteIcon('link')}</span>` : ''}`;
+        const inner = `<span class="wte-task-text"><span class="wte-task-mk">${item.text}</span></span>${item.link ? `<span class="wte-task-icon">${wteIcon('link')}</span>` : ''}`;
         const content = item.link
           ? `<a class="wte-task-row wte-task-row--link" href="${item.link}" target="_blank" rel="noopener">${inner}</a>`
           : `<span class="wte-task-row">${inner}</span>`;
