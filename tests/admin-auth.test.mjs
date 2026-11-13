@@ -37,7 +37,7 @@ test('remembered machine gets in with no password, and KV never holds the raw to
   const env = envOf(kv);
   const first = await call(env, { pass: 'test-password', rememberDevice: true });
   const header = first.headers.get('set-cookie');
-  for (const flag of ['HttpOnly', 'Secure', 'SameSite=Strict', 'Path=/api']) assert.ok(header.includes(flag), flag);
+  for (const flag of ['HttpOnly', 'Secure', 'SameSite=Strict', 'Path=/', 'Domain=0xhieu.xyz']) assert.ok(header.includes(flag), flag);
   const cookie = cookieOf(first);
   assert.ok(![...kv.data.keys()].some(k => k.includes(cookie.split('=')[1])));
   assert.equal((await call(env, {}, cookie)).status, 200);

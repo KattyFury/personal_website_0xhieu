@@ -36,5 +36,6 @@ export async function rememberDevice(request, env) {
   await env.WORK.put(await deviceKey(token, env), '1', {
     metadata: { device: (request.headers.get('user-agent') || '').slice(0, 200), createdAt: new Date().toISOString() },
   });
-  return `${COOKIE}=${token}; Path=/api; Max-Age=${COOKIE_MAX_AGE}; HttpOnly; Secure; SameSite=Strict`;
+  // Domain + Path=/ so hub.0xhieu.xyz (Creator Hub, same KV + password) also accepts this machine.
+  return `${COOKIE}=${token}; Domain=0xhieu.xyz; Path=/; Max-Age=${COOKIE_MAX_AGE}; HttpOnly; Secure; SameSite=Strict`;
 }

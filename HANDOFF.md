@@ -35,7 +35,7 @@ Current state as of 2026-11-09. History: git and `docs/handoff-history-through-2
 - Price bot: Docker on `ssh vps`, `/opt/val-price-bot`, container `val-price-bot`. Pushing the site does not update it. It must not touch priceTGE. See `bot/README.md`.
 
 ## Admin
-"Remember this device" issues a 400-day HttpOnly cookie token (`cvAdminDevice`), hash stored at KV `admin-device:<hash>` (`functions/_lib/admin-auth.mjs`). Revoke one device: delete its key. Revoke all: change `ADMIN_PASS` and update the bot on the VPS. Bot keeps using `ADMIN_PASS`.
+"Remember this device" issues a 400-day HttpOnly cookie token (`cvAdminDevice`), hash stored at KV `admin-device:<hash>` (`functions/_lib/admin-auth.mjs`). Revoke one device: delete its key. Revoke all: change `ADMIN_PASS` and update the bot on the VPS. Bot keeps using `ADMIN_PASS`. The cookie is `Domain=0xhieu.xyz; Path=/`, so hub.0xhieu.xyz (repo `personal_website_creatorhub`, same KV `WORK` = WATCHLIST + same password as its `HUB_PASSWORD`) accepts remembered devices too, and devices remembered on the hub work here. Changing `ADMIN_PASS` means changing `HUB_PASSWORD` too. Devices remembered before 2026-11-13 hold the old `Path=/api` cookie: tick "Nhớ máy này" once more to reach the hub.
 
 ## Testing
 - `node --test tests/*.mjs`; design checks in `DESIGN_SYSTEM.md`.
