@@ -33,7 +33,7 @@ English only, tagline verbatim. 4-column grid desktop, 2 columns ≤1024: hero (
 - Toolbar stays on one row.
 
 ## Work
-- Title `work-to-earn`. `learn-to-grow` / `work-to-earn` are always lowercase.
+- Title `work-to-earn`. `work-to-earn` is lowercase; `grow-to-KOL` keeps KOL uppercase (2026-11-14).
 - Full-width left/right toggle under the title, styled like VI/EN (white track, black selected, flat). Left "Projects & how to join" is the default; right "Task checklist".
 - Projects: one white tile each, 2 columns (1 at ≤900): logo, name, potential + narrative tags, Website / X / Discord / Telegram chips, then Get started, Daily, Weekly. No logo → cat face.
 - Checklist: yellow tile (date, count, ring), one list of today's tasks, then "Today's schedule". Row: 32px circle ticks; the rest of the row opens the link.

@@ -2517,8 +2517,9 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
     const isTypeGroup     = g => Object.values(WTE_TYPE_GROUP).includes(g);
     const WTE_GROUPS      = ['LEARN','INCOME','S','A','B','C'];
     const WTE_RANKS       = WTE_GROUPS.filter(g => !isTypeGroup(g)); // ranks selectable in the admin form
-    const RANK_LABEL      = { LEARN: 'l2g', INCOME: 'w2e', S: 'S', A: 'A', B: 'B', C: 'C' };
-    const GROUP_NAME      = { LEARN: 'learn-to-grow', INCOME: 'work-to-earn' };   // always lowercase, one style (user decided 11/09)
+    const RANK_LABEL      = { LEARN: 'g2k', INCOME: 'w2e', S: 'S', A: 'A', B: 'B', C: 'C' };
+    // Display only: KV still stores type 'Learn-to-Grow'. Shown as grow-to-KOL (user decided 2026-11-14, KOL uppercase).
+    const GROUP_NAME      = { LEARN: 'grow-to-KOL', INCOME: 'work-to-earn' };
 
     // Group title: DERIVED from RANK_LABEL, no second list.
     // INCOME = "work-to-earn" (not a rank, lowercase like the category tag); others "Rank: S", matching the card's rank tag.
@@ -2655,7 +2656,8 @@ This measures valuation at TGE, not current momentum. Small groups can change ra
       check:      '<path d="M20 6 9 17l-5-5"/>',
     };
     // Tag text is all lowercase, only "AI" (and rank letters $ S A B C) uppercase. Display only; data unchanged.
-    const tagCase = t => t.toLowerCase().replace(/\bai\b/g, 'AI');
+    const TYPE_DISPLAY = { 'Learn-to-Grow': 'grow-to-KOL' };
+    const tagCase = t => TYPE_DISPLAY[t] || t.toLowerCase().replace(/\bai\b/g, 'AI');
     const wteIcon = (k, cls = '') =>
       `<svg class="wte-ico ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${WTE_ICON[k] || ''}</svg>`;
 
